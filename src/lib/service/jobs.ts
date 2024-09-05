@@ -49,6 +49,12 @@ export interface Job {
 	jobType: string;
 }
 
+export interface StartGatheringJob {
+	userId: number;
+	monster: number;
+	jobDefId: string;
+}
+
 export interface JobsClientCfg {
 	apiBaseUrl: string;
 	masterdataBaseUrl: string;
@@ -67,6 +73,15 @@ export class JobsClient {
 	async getJobs(): Promise<Job[]> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs`);
 		const data = (await response.json()) as Job[];
+		return data;
+	}
+
+	async startJob(request: StartGatheringJob): Promise<number> {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/gathering`, {
+			method: 'POST',
+			body: JSON.stringify(request),
+		});
+		const data = await response.json();
 		return data;
 	}
 

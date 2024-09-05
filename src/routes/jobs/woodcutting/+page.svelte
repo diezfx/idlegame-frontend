@@ -3,8 +3,11 @@
 	import * as Card from '$lib/components/ui/card';
 	import type { Job, JobsClient } from '$lib/service/jobs';
 	import type { PageData } from './$types';
+	import * as Dialog from '$lib/components/ui/dialog';
 
 	let { data } = $props();
+
+	let openDialog = $state(false);
 </script>
 
 <h1>Woodcutting</h1>
@@ -20,11 +23,24 @@
 	{/each}
 	<Card.Root
 		onclick={() => {
-			console.log('test');
+			openDialog = true;
 		}}
 		class="button text-center text-green-500 text-2xl hover:bg-green-300">+</Card.Root
 	>
 </div>
+
+<Dialog.Root open={openDialog} onOpenChange={() => (openDialog = false)}>
+	<Dialog.Trigger>Open</Dialog.Trigger>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
+			<Dialog.Description>
+				This action cannot be undone. This will permanently delete your account and remove your data
+				from our servers.
+			</Dialog.Description>
+		</Dialog.Header>
+	</Dialog.Content>
+</Dialog.Root>
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
