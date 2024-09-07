@@ -1,10 +1,15 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import type { Monster } from '$lib/service/monsters';
-	let { monster, class: classname }: { monster: Monster; class: string } = $props();
+	import { cn } from '$lib/utils';
+	let {
+		monster,
+		class: classname,
+		...props
+	}: { monster: Monster; class?: string; [key: string]: any } = $props();
 </script>
 
-<Card.Root class="${classname} w-[350px]">
+<Card.Root {...props} class={cn(classname, 'w-[350px]')}>
 	<Card.Header>
 		<Card.Title>{monster.name}</Card.Title>
 		<!--<Card.Description>Card Description</Card.Description> -->

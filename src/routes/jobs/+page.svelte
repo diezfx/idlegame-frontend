@@ -1,17 +1,21 @@
 <script lang="ts">
-	import type { Job } from '$lib/service/jobs';
+	import { invalidate, invalidateAll } from '$app/navigation';
+	import { getJobsClientContext, type Job } from '$lib/service/jobs';
 	import JobView from '$lib/widgets/job.svelte';
 
 	export let data: { jobs: Job[] };
 
-	console.log(data);
+	const jobsClient = getJobsClientContext();
+
+	function stopJob(id: number) {
+		jobsClient.stopJob(id);
+		invalidateAll();
+	}
 </script>
 
 <h1>Jobs</h1>
-<div>
+<div class="grid grid-cols-3 gap-4">
 	{#each data.jobs as job}
-		<JobView {job} />
+		<JobView {job} onclick={() => stopJob(job.id)} />
 	{/each}
 </div>
-
-<h1 class="text-3xl font-bold underline">Hello world!</h1>

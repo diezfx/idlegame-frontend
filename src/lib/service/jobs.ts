@@ -1,28 +1,30 @@
 /*
-    "id": "spruce",
-    "jobType": "woodcutting",
-    "levelRequirement": 1,
-    "duration": "3s",
-    "rewards": {
-        "items": [
-            {
-                "id": "spruce",
-                "quantity": 1
-            }
-        ],
-        "experience": 1
-    },
-    "affinity": {
-        "elements": {
-        
-                "Air": 1,
-                "Earth": 3,
-                "Fire": 0.5,
-                "Water": 1
-            }
-    }
+	"id": "spruce",
+	"jobType": "woodcutting",
+	"levelRequirement": 1,
+	"duration": "3s",
+	"rewards": {
+		"items": [
+			{
+				"id": "spruce",
+				"quantity": 1
+			}
+		],
+		"experience": 1
+	},
+	"affinity": {
+		"elements": {
+	    
+				"Air": 1,
+				"Earth": 3,
+				"Fire": 0.5,
+				"Water": 1
+			}
+	}
 */
 
+import log from '$lib/log/log';
+import { getContext, setContext } from 'svelte';
 import type { Item } from './inventory';
 
 export interface JobMasterdata {
@@ -77,7 +79,7 @@ export class JobsClient {
 	}
 
 	async startJob(request: StartGatheringJob): Promise<number> {
-		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/gathering`, {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/gathering/`, {
 			method: 'POST',
 			body: JSON.stringify(request),
 		});
@@ -85,8 +87,24 @@ export class JobsClient {
 		return data;
 	}
 
+	async stopJob(jobId: number): Promise<void> {
+		const _ = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/${jobId}`, {
+			method: 'DELETE',
+		});
+
+	}
+
 	async getJobMasterdata(): Promise<JobMasterdata[]> {
 		const response = await this.fetch(`${this.masterDataBaseUrl}/jobs/gathering`);
 		return await response.json();
 	}
+}
+
+
+export function setJobsClientContext(jobClient: JobsClient): void {
+	setContext('jobsClient', jobClient);
+}
+
+export function getJobsClientContext(): JobsClient {
+	return getContext<JobsClient>('jobsClient');
 }

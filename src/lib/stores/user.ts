@@ -7,9 +7,7 @@ interface Userstore {
 }
 
 function setUserContext(user: Userstore) {
-	setContext('user', {
-		user,
-	});
+	setContext('user', user);
 }
 
 function getUserFromContext(): Userstore | undefined {

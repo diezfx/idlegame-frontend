@@ -1,7 +1,8 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import type { Job } from '$lib/service/jobs';
-	let { job }: { job: Job } = $props();
+	let { job, ...props }: { job: Job; [key: string]: any } = $props();
 
 	import { DateTime } from 'luxon';
 
@@ -26,19 +27,18 @@
 	};
 </script>
 
-<Card.Root class="w-[350px]">
+<Card.Root {...props} class="w-[350px]">
 	<Card.Header>
-		<Card.Title>Card Title</Card.Title>
-		<Card.Description>Card Description</Card.Description>
+		<Card.Title>{job.jobDefId}</Card.Title>
 	</Card.Header>
-	<Card.Content>
+	<Card.Content class="grid grid-cols-2">
+		<p>Monster</p>
 		<p>{job.monsterIds}</p>
+		<p>Updated</p>
 		<p>{timeAgo(DateTime.fromISO(job.updatedAt))}</p>
+		<p>Started</p>
 		<p>{timeAgo(DateTime.fromISO(job.startedAt))}</p>
-
-		<p>Card Content</p>
 	</Card.Content>
-	<Card.Footer>
-		<p>Card Footer</p>
-	</Card.Footer>
+
+	<Card.Footer class="justify-center"><Button class="bg-red-500">STOP</Button></Card.Footer>
 </Card.Root>

@@ -8,6 +8,6 @@
 <h1>Monsters</h1>
 <div class="grid grid-cols-3 gap-4">
 	{#each data.monsters as monster}
-		<MonsterView {monster} class="col-start-2" />
+		<MonsterView {monster} />
 	{/each}
 </div>

@@ -14,6 +14,7 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
         status: result.status,
         method: request.method,
         duration: Date.now() - startTime,
+        responseBody: await result.clone().json(),
     });
 
     return result;
@@ -22,7 +23,6 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 
 export const handle: Handle = async function ({ event, resolve }) {
     console.log('this is happening');
-    event.locals.user = event.cookies.get('user');
 
     event.locals.user = {
         userId: 1,

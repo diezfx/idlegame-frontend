@@ -3,6 +3,7 @@
 import type { InventoryClientCfg } from '$lib/service/inventory';
 import type { JobsClientCfg } from '$lib/service/jobs';
 import type { MonsterClientCfg } from '$lib/service/monsters';
+import { getContext, setContext } from 'svelte';
 
 export interface Config {
 	jobsClientCfg: JobsClientCfg;
@@ -23,4 +24,13 @@ export function loadConfig(): Config {
 			baseUrl: import.meta.env.VITE_API_BASE_URL,
 		},
 	};
+}
+
+export function setConfigContext(cfg: Config): void {
+	setContext('config', cfg
+	);
+}
+
+export function getConfigContext(): Config {
+	return getContext<Config>('config');
 }
