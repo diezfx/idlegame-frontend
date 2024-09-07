@@ -38,6 +38,13 @@
 		<p>{timeAgo(DateTime.fromISO(job.updatedAt))}</p>
 		<p>Started</p>
 		<p>{timeAgo(DateTime.fromISO(job.startedAt))}</p>
+
+		<p class="col-span-2">Rewards</p>
+
+		{#each job.rewards as reward}
+			<p>{reward.itemDefId}</p>
+			<p>{reward.quantity}</p>
+		{/each}
 	</Card.Content>
 
 	<Card.Footer class="justify-center"><Button class="bg-red-500">STOP</Button></Card.Footer>

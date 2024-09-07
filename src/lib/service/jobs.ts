@@ -41,6 +41,11 @@ export interface JobMasterdata {
 	};
 }
 
+export interface Reward {
+	itemDefId: string;
+	quantity: number;
+}
+
 export interface Job {
 	id: number;
 	jobDefId: string;
@@ -49,6 +54,7 @@ export interface Job {
 	updatedAt: string;
 	monsterIds: number[];
 	jobType: string;
+	rewards: Reward[];
 }
 
 export interface StartGatheringJob {

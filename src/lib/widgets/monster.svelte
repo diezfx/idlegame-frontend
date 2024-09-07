@@ -22,5 +22,12 @@
 
 		<div>Experience</div>
 		<p>{monster.experience}</p>
+		{#if monster.jobId}
+			<div>Current Job</div>
+			<p>{monster.jobId}</p>
+		{:else}
+			<div>Current Job</div>
+			<p>Idle</p>
+		{/if}
 	</Card.Content>
 </Card.Root>
