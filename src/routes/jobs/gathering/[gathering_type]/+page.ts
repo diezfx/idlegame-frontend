@@ -10,14 +10,15 @@ export const load: PageLoad = async ({ fetch, params }) => {
     const monsterClient = new MonsterClient(fetch, cfg.monsterClientCfg);
     const masterdata = jobsClient.getJobMasterdata();
 
-    let woodcuttingJobs = await masterdata;
-    woodcuttingJobs = woodcuttingJobs.filter((job) => job.jobType === 'woodcutting');
+    let activeGatheringJobs = await masterdata;
+    activeGatheringJobs = activeGatheringJobs.filter((job) => job.jobType === params.gathering_type);
     let activeJobs = await jobsClient.getJobs();
     log.debug('activeJobs', activeJobs);
-    activeJobs = activeJobs.filter((job) => job.jobType === 'woodcutting');
+    activeJobs = activeJobs.filter((job) => job.jobType === params.gathering_type);
 
     return {
-        masterdata: woodcuttingJobs,
+        gatheringType: params.gathering_type,
+        masterdata: activeGatheringJobs,
         jobs: activeJobs,
         monsters: await monsterClient.getMonsters(),
     };

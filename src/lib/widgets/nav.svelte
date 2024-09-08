@@ -26,11 +26,11 @@
 	</ul>
 	<p class="text-2xl">Jobs</p>
 	<ul>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/woodcutting')}">
-			<a href="/jobs/woodcutting">Woodcutting</a>
+		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/gathering/woodcutting')}">
+			<a href="/jobs/gathering/woodcutting">Woodcutting</a>
 		</li>
 		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/mining')}">
-			<a href="/mining">Mining</a>
+			<a href="/jobs/gathering/mining">Mining</a>
 		</li>
 		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/inventory')}">
 			<a href="/inventory">Inventory</a>
