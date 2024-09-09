@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import type { Job } from '$lib/service/jobs';
+	import type { Job, JobMasterdata } from '$lib/service/jobs';
 	let { job, ...props }: { job: Job; [key: string]: any } = $props();
 
 	import { DateTime } from 'luxon';
@@ -40,7 +40,6 @@
 		<p>{timeAgo(DateTime.fromISO(job.startedAt))}</p>
 
 		<p class="col-span-2">Rewards</p>
-
 		{#each job.rewards as reward}
 			<p>{reward.itemDefId}</p>
 			<p>{reward.quantity}</p>

@@ -27,6 +27,18 @@ import log from '$lib/log/log';
 import { getContext, setContext } from 'svelte';
 import type { Item } from './inventory';
 
+/*
+type ItemWithQuantity struct {
+	ID       string `json:"id"`
+	Quantity int    `json:"quantity"`
+}
+*/
+
+export interface ItemWithQuantity {
+	id: string;
+	quantity: number;
+}
+
 export interface JobMasterdata {
 	id: string;
 	jobType: string;
@@ -39,6 +51,7 @@ export interface JobMasterdata {
 	affinity: {
 		elements: Record<string, number>;
 	};
+	ingredients: ItemWithQuantity[];
 }
 
 export interface Reward {
@@ -55,9 +68,16 @@ export interface Job {
 	monsterIds: number[];
 	jobType: string;
 	rewards: Reward[];
+	ingredients: ItemWithQuantity[]
 }
 
 export interface StartGatheringJob {
+	userId: number;
+	monster: number;
+	jobDefId: string;
+}
+
+export interface StartProcessingJob {
 	userId: number;
 	monster: number;
 	jobDefId: string;
@@ -93,6 +113,15 @@ export class JobsClient {
 		return data;
 	}
 
+	async startProcessingJob(request: StartProcessingJob): Promise<number> {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/processing/`, {
+			method: 'POST',
+			body: JSON.stringify(request),
+		});
+		const data = await response.json();
+		return data;
+	}
+
 	async stopJob(jobId: number): Promise<void> {
 		const _ = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/${jobId}`, {
 			method: 'DELETE',
@@ -102,6 +131,11 @@ export class JobsClient {
 
 	async getJobMasterdata(): Promise<JobMasterdata[]> {
 		const response = await this.fetch(`${this.masterDataBaseUrl}/jobs/gathering`);
+		return await response.json();
+	}
+
+	async getProcessingJobMasterdata(): Promise<JobMasterdata[]> {
+		const response = await this.fetch(`${this.masterDataBaseUrl}/jobs/processing`);
 		return await response.json();
 	}
 }
