@@ -22,6 +22,8 @@
 
 		<div>Experience</div>
 		<p>{monster.experience}</p>
+		<div>Stamina</div>
+		<p>{monster.stamina}</p>
 		{#if monster.jobId}
 			<div>Current Job</div>
 			<p>{monster.jobId}</p>

@@ -31,6 +31,7 @@ export interface Monster {
     type: string;
     level: number;
     experience: number;
+    stamina: number,
 }
 
 export interface MonsterClientCfg {
