@@ -68,7 +68,7 @@ export interface Job {
 	monsterIds: number[];
 	jobType: string;
 	rewards: Reward[];
-	ingredients: ItemWithQuantity[]
+	ingredients: ItemWithQuantity[];
 }
 
 export interface StartGatheringJob {
@@ -126,7 +126,6 @@ export class JobsClient {
 		const _ = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/${jobId}`, {
 			method: 'DELETE',
 		});
-
 	}
 
 	async getJobMasterdata(): Promise<JobMasterdata[]> {
@@ -139,7 +138,6 @@ export class JobsClient {
 		return await response.json();
 	}
 }
-
 
 export function setJobsClientContext(jobClient: JobsClient): void {
 	setContext('jobsClient', jobClient);

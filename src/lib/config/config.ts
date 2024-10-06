@@ -27,8 +27,7 @@ export function loadConfig(): Config {
 }
 
 export function setConfigContext(cfg: Config): void {
-	setContext('config', cfg
-	);
+	setContext('config', cfg);
 }
 
 export function getConfigContext(): Config {

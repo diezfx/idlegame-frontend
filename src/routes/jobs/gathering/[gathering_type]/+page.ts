@@ -5,21 +5,21 @@ import { MonsterClient } from '$lib/service/monsters';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, params }) => {
-    const cfg = loadConfig();
-    const jobsClient = new JobsClient(fetch, cfg.jobsClientCfg);
-    const monsterClient = new MonsterClient(fetch, cfg.monsterClientCfg);
-    const masterdata = jobsClient.getJobMasterdata();
+	const cfg = loadConfig();
+	const jobsClient = new JobsClient(fetch, cfg.jobsClientCfg);
+	const monsterClient = new MonsterClient(fetch, cfg.monsterClientCfg);
+	const masterdata = jobsClient.getJobMasterdata();
 
-    let activeGatheringJobs = await masterdata;
-    activeGatheringJobs = activeGatheringJobs.filter((job) => job.jobType === params.gathering_type);
-    let activeJobs = await jobsClient.getJobs();
-    log.debug('activeJobs', activeJobs);
-    activeJobs = activeJobs.filter((job) => job.jobType === params.gathering_type);
+	let activeGatheringJobs = await masterdata;
+	activeGatheringJobs = activeGatheringJobs.filter((job) => job.jobType === params.gathering_type);
+	let activeJobs = await jobsClient.getJobs();
+	log.debug('activeJobs', activeJobs);
+	activeJobs = activeJobs.filter((job) => job.jobType === params.gathering_type);
 
-    return {
-        gatheringType: params.gathering_type,
-        masterdata: activeGatheringJobs,
-        jobs: activeJobs,
-        monsters: await monsterClient.getMonsters(),
-    };
+	return {
+		gatheringType: params.gathering_type,
+		masterdata: activeGatheringJobs,
+		jobs: activeJobs,
+		monsters: await monsterClient.getMonsters(),
+	};
 };
