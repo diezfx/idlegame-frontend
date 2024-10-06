@@ -98,6 +98,8 @@
 				<p>{job.levelRequirement}</p>
 				<div>Duration</div>
 				<p>{job.duration}</p>
+				<div>Stamina Cost</div>
+				<p>{job.staminaCost}</p>
 
 				<div>Experience</div>
 				<p>{job.rewards.experience}</p>

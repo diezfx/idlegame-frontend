@@ -44,6 +44,7 @@ export interface JobMasterdata {
 	jobType: string;
 	levelRequirement: number;
 	duration: string;
+	staminaCost: number;
 	rewards: {
 		items: Item[];
 		experience: number;
