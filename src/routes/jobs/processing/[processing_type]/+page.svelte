@@ -57,10 +57,10 @@
 	<Card.Root
 		onclick={() => {
 			openDialog = true;
-			selectedMonster;
 		}}
-		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card.Root
-	>
+		class="button text-center text-green-500 text-2xl hover:{selectedColor}"
+		>+
+	</Card.Root>
 </div>
 
 <div>Currently active Jobs</div>

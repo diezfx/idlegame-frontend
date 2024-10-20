@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
+	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import type { Monster } from '$lib/service/monsters';
 	import { cn } from '$lib/utils';
 	let {
@@ -31,5 +32,12 @@
 			<div>Current Job</div>
 			<p>Idle</p>
 		{/if}
+		<Separator class="col-span-2"></Separator>
+		<div class="col-span-2 font-bold">Equipment</div>
+		{#each monster.equippedItems as item}
+			<p>{item.itemId}</p>
+			<p>{item.quantity}</p>
+		{/each}
+		<p>{monster.jobId}</p>
 	</Card.Content>
 </Card.Root>

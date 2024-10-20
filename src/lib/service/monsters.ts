@@ -24,31 +24,37 @@
 ]
 */
 
+export interface EquippedItem {
+    itemId: string;
+    quantity: number;
+}
+
 export interface Monster {
-	id: number;
-	jobId: number | undefined;
-	name: string;
-	type: string;
-	level: number;
-	experience: number;
-	stamina: number;
+    id: number;
+    jobId: number | undefined;
+    name: string;
+    type: string;
+    level: number;
+    experience: number;
+    stamina: number;
+    equippedItems: EquippedItem[];
 }
 
 export interface MonsterClientCfg {
-	baseUrl: string;
+    baseUrl: string;
 }
 
 export class MonsterClient {
-	baseUrl: string;
-	fetch: any;
-	constructor(fetch: any, cfg: MonsterClientCfg) {
-		this.baseUrl = cfg.baseUrl;
-		this.fetch = fetch;
-	}
+    baseUrl: string;
+    fetch: any;
+    constructor(fetch: any, cfg: MonsterClientCfg) {
+        this.baseUrl = cfg.baseUrl;
+        this.fetch = fetch;
+    }
 
-	async getMonsters(): Promise<Monster[]> {
-		const response = await this.fetch(`${this.baseUrl}/v1.0/monsters`);
-		const data = (await response.json()) as Monster[];
-		return data;
-	}
+    async getMonsters(): Promise<Monster[]> {
+        const response = await this.fetch(`${this.baseUrl}/v1.0/monsters`);
+        const data = (await response.json()) as Monster[];
+        return data;
+    }
 }
