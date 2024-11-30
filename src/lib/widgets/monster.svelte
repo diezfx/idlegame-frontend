@@ -38,6 +38,5 @@
 			<p>{item.itemId}</p>
 			<p>{item.quantity}</p>
 		{/each}
-		<p>{monster.jobId}</p>
 	</Card.Content>
 </Card.Root>

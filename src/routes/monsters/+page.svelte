@@ -3,8 +3,9 @@
 	import type { Monster } from '$lib/service/monsters';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import log from '$lib/log/log';
 
-	let data: { monsters: Monster[] } = $props();
+	let { data } = $props();
 
 	let openDialog = $state(false);
 
