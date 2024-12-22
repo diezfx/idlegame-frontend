@@ -40,6 +40,13 @@ export interface Monster {
     equippedItems: EquippedItem[];
 }
 
+export interface EquipItem {
+    userId: number;
+    monster: number;
+    itemId: string;
+    quantity: number;
+}
+
 export interface MonsterClientCfg {
     baseUrl: string;
 }
@@ -56,5 +63,12 @@ export class MonsterClient {
         const response = await this.fetch(`${this.baseUrl}/v1.0/monsters`);
         const data = (await response.json()) as Monster[];
         return data;
+    }
+
+    async equipItem(equipItemCommand: EquipItem): Promise<void> {
+        const _ = await this.fetch(`${this.baseUrl}/v1.0/equipment`, {
+            method: 'POST',
+            body: JSON.stringify(equipItemCommand),
+        });
     }
 }

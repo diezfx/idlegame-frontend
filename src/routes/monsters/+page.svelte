@@ -35,11 +35,11 @@
 	<Dialog.Trigger>Open</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>
-			<Dialog.Title>Chose Monster</Dialog.Title>
+			<Dialog.Title>Chose Item to Equip</Dialog.Title>
 		</Dialog.Header>
 
-		{#each data.monsters as monster}
-			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+		{#each data.inventory.items as item}
+			<p>{item.id}</p>
 		{/each}
 	</Dialog.Content>
 </Dialog.Root>
