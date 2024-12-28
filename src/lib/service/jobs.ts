@@ -130,12 +130,12 @@ export class JobsClient {
 	}
 
 	async getJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/jobs/gathering`);
+		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/gathering`);
 		return await response.json();
 	}
 
 	async getProcessingJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/jobs/processing`);
+		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/processing`);
 		return await response.json();
 	}
 }

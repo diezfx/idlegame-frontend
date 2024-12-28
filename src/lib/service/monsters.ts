@@ -46,6 +46,11 @@ export interface EquipItem {
     itemId: string;
     quantity: number;
 }
+export interface UnEquipItem {
+    userId: number;
+    monster: number;
+    itemId: string;
+}
 
 export interface MonsterClientCfg {
     baseUrl: string;
@@ -68,6 +73,13 @@ export class MonsterClient {
     async equipItem(equipItemCommand: EquipItem): Promise<void> {
         const _ = await this.fetch(`${this.baseUrl}/v1.0/equipment`, {
             method: 'POST',
+            body: JSON.stringify(equipItemCommand),
+        });
+    }
+
+    async unEquipItem(equipItemCommand: UnEquipItem): Promise<void> {
+        const _ = await this.fetch(`${this.baseUrl}/v1.0/equipment`, {
+            method: 'DELETE',
             body: JSON.stringify(equipItemCommand),
         });
     }

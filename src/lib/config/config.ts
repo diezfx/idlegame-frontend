@@ -1,6 +1,7 @@
 // holds all configuration e.g. the api base url
 
 import type { InventoryClientCfg } from '$lib/service/inventory';
+import type { ItemsClientCfg } from '$lib/service/items';
 import type { JobsClientCfg } from '$lib/service/jobs';
 import type { MonsterClientCfg } from '$lib/service/monsters';
 import { getContext, setContext } from 'svelte';
@@ -9,6 +10,7 @@ export interface Config {
 	jobsClientCfg: JobsClientCfg;
 	monsterClientCfg: MonsterClientCfg;
 	inventoryClientCfg: InventoryClientCfg;
+	itemClientCfg: ItemsClientCfg;
 }
 
 export function loadConfig(): Config {
@@ -23,6 +25,10 @@ export function loadConfig(): Config {
 		inventoryClientCfg: {
 			baseUrl: import.meta.env.VITE_API_BASE_URL,
 		},
+		itemClientCfg: {
+			apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
+			masterdataBaseUrl: import.meta.env.VITE_MASTERDATA_BASE_URL,
+		}
 	};
 }
 
