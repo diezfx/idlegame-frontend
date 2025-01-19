@@ -17,6 +17,14 @@
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
+	let selectedItem: Item | undefined = $state(undefined);
+	let itemAmount = $state(1);
+
+	function reset(): void {
+		selectedMonster = undefined;
+		selectedItem = undefined;
+		itemAmount = 1;
+	}
 
 	// make a call to api to equip item
 	function dialogClicked(item: Item): void {
@@ -30,8 +38,9 @@
 			userId: user.userId,
 			monster: selectedMonster.id!!,
 			itemId: item.id,
-			quantity: item.quantity,
+			quantity: itemAmount,
 		});
+		reset();
 		invalidateAll();
 	}
 
@@ -50,8 +59,7 @@
 <div class="grid grid-cols-3 gap-4">
 	{#each data.monsters as monster}
 		<div>
-			<MonsterView {monster} itemDeleteAction={(itemID) => itemDeleteAction(monster.id, itemID)}
-			></MonsterView>
+			<MonsterView {monster} itemDeleteAction={(itemID) => itemDeleteAction(monster.id, itemID)}></MonsterView>
 			<Card
 				onclick={() => {
 					selectedMonster = monster;
@@ -74,17 +82,26 @@
 		<div class="grid grid-cols-1">
 			{#each data.inventory.items as item}
 				<button
-					onclick={() => dialogClicked(item)}
-					class="grid grid-cols-4 m-1 flex-grow hover:bg-green-200"
+					onclick={() => (selectedItem = item)}
+					class="grid grid-cols-4 m-1 flex-grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"
 				>
 					<p>{item.id}</p>
 					<p>{item.quantity}</p>
-					{#each data.itemMasterdata[item.id].effects as effect}
+					{#each data.itemMasterdata[item.id]?.effects as effect}
 						<p>{effect.type}</p>
 						<p>{effect.value}</p>
 					{/each}
 				</button>
 			{/each}
 		</div>
+		<div>Amount? {itemAmount}</div>
+		<input
+			disabled={selectedItem == undefined}
+			type="range"
+			min="1"
+			max={selectedItem?.quantity}
+			bind:value={itemAmount}
+		/>
+		<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Order</button>
 	</Dialog.Content>
 </Dialog.Root>

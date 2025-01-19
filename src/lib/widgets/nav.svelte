@@ -11,7 +11,7 @@
 	}
 </script>
 
-<nav class="float-left w-36 h-screen mx-4 bg-blue-50">
+<nav class="float-left w-40 h-screen p-4 mx-4 bg-blue-50">
 	<p class="text-2xl">Character</p>
 	<ul>
 		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs')}">
@@ -24,7 +24,7 @@
 			<a href="/inventory">Inventory</a>
 		</li>
 	</ul>
-	<p class="text-2xl">Jobs</p>
+	<p class="mt-4 text-2xl">Jobs</p>
 	<ul>
 		<p class="text-xl">Gathering</p>
 		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/gathering/woodcutting')}">

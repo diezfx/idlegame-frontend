@@ -12,7 +12,7 @@
 	setJobsClientContext(new JobsClient(fetch, data.config.jobsClientCfg));
 </script>
 
+<Nav />
 <div class="container">
-	<Nav />
 	{@render children()}
 </div>

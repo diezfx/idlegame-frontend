@@ -28,6 +28,10 @@
 		openDialog = false;
 		selectedMonster = m;
 	}
+	function reset(): void {
+		selectedMonster = undefined;
+		selectedJob = undefined;
+	}
 
 	function isSelectedJob(jobID: string): boolean {
 		return selectedJob?.id == jobID;
@@ -43,6 +47,7 @@
 			userId: user.userId,
 			monster: selectedMonster.id,
 		});
+		reset();
 		invalidateAll();
 	}
 </script>
