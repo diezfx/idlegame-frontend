@@ -44,7 +44,7 @@
 		invalidateAll();
 	}
 
-	async function itemDeleteAction(monsterId: number, itemId: string): void {
+	async function itemDeleteAction(monsterId: number, itemId: string): Promise<void> {
 		await monsterClient.unEquipItem({
 			userId: user.userId,
 			monster: monsterId,

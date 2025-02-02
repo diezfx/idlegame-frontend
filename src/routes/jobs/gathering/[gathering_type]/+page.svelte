@@ -90,10 +90,7 @@
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
-		<Card.Root
-			class={isSelectedJob(job.id) ? selectedColor : ''}
-			onclick={() => (selectedJob = job)}
-		>
+		<Card.Root class={isSelectedJob(job.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
 			<Card.Header>
 				<Card.Title>{job.id}</Card.Title>
 			</Card.Header>
