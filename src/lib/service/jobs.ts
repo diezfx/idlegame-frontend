@@ -26,6 +26,7 @@
 import log from '$lib/log/log';
 import { getContext, setContext } from 'svelte';
 import type { Item } from './inventory';
+import type { Monster } from './monsters';
 
 /*
 type ItemWithQuantity struct {
@@ -72,6 +73,14 @@ export interface Job {
 	ingredients: ItemWithQuantity[];
 }
 
+type BattleMonster = Monster & {
+	lastAttacked: string;
+};
+export interface BattleJob {
+	playerMonsters: BattleMonster[]
+	enemyMonsters: BattleMonster[]
+}
+
 export interface StartGatheringJob {
 	userId: number;
 	monster: number;
@@ -83,6 +92,13 @@ export interface StartProcessingJob {
 	monster: number;
 	jobDefId: string;
 }
+
+export interface StartBattleJob {
+	userId: number;
+	monster: number;
+	jobDefId: string;
+}
+
 
 export interface JobsClientCfg {
 	apiBaseUrl: string;
@@ -105,6 +121,12 @@ export class JobsClient {
 		return data;
 	}
 
+	async getBattleJob(jobId: number): Promise<Job & BattleJob> {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/battles/${jobId}`);
+		const data = (await response.json()) as Job & BattleJob;
+		return data;
+	}
+
 	async startJob(request: StartGatheringJob): Promise<number> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/gathering/`, {
 			method: 'POST',
@@ -116,6 +138,15 @@ export class JobsClient {
 
 	async startProcessingJob(request: StartProcessingJob): Promise<number> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/processing/`, {
+			method: 'POST',
+			body: JSON.stringify(request),
+		});
+		const data = await response.json();
+		return data;
+	}
+
+	async startBattleJob(request: StartBattleJob): Promise<number> {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/battles`, {
 			method: 'POST',
 			body: JSON.stringify(request),
 		});
@@ -136,6 +167,11 @@ export class JobsClient {
 
 	async getProcessingJobMasterdata(): Promise<JobMasterdata[]> {
 		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/processing`);
+		return await response.json();
+	}
+
+	async getBattleJobMasterdata(): Promise<JobMasterdata[]> {
+		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/battle`);
 		return await response.json();
 	}
 }

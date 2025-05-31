@@ -36,6 +36,9 @@ export interface Monster {
     type: string;
     level: number;
     experience: number;
+    health: number;
+    maxHealth: number;
+    attack_power: number;
     stamina: number;
     equippedItems: EquippedItem[];
 }

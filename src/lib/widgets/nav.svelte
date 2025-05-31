@@ -40,5 +40,9 @@
 		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/processing/woodworking')}">
 			<a href="/jobs/processing/woodworking">Woodworking</a>
 		</li>
+		<p class="text-xl">Battles</p>
+		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/battles')}">
+			<a href="/jobs/battles">Battles</a>
+		</li>
 	</ul>
 </nav>
