@@ -1,21 +1,39 @@
 <script lang="ts">
-	import { Progress as ProgressPrimitive } from 'bits-ui';
 	import { cn } from '$lib/utils.js';
-
-	type $$Props = ProgressPrimitive.Props;
-
-	let className: $$Props['class'] = undefined;
-	export let max: $$Props['max'] = 100;
-	export let value: $$Props['value'] = undefined;
-	export { className as class };
+	let { max, value, class: className }: { max: number; value: number; class?: string | undefined } = $props();
 </script>
 
-<ProgressPrimitive.Root
-	class={cn('bg-secondary relative h-4 w-full overflow-hidden rounded-full', className)}
-	{...$$restProps}
->
-	<div
-		class="bg-green h-full w-full flex-1 transition-all"
-		style={`transform: translateX(-${100 - (100 * (value ?? 0)) / (max ?? 1)}%)`}
-	></div>
-</ProgressPrimitive.Root>
+<div class={cn('progress-outer', className)}>
+	<div class="progress-inner" style={`width: ${(100 * (value ?? 0)) / (max ?? 1)}%`}></div>
+	<div class="progress-label">{value}/{max}</div>
+</div>
+
+<style>
+	.progress-outer {
+		background: #e5e7eb;
+		height: 1rem;
+		width: 100%;
+		border-radius: 0.5rem;
+		position: relative;
+		overflow: hidden;
+	}
+	.progress-inner {
+		background: #26e66c;
+		height: 100%;
+		transition: width 0.2s;
+	}
+	.progress-label {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: #1e293b;
+		pointer-events: none;
+	}
+</style>

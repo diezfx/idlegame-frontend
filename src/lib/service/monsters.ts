@@ -40,6 +40,7 @@ export interface Monster {
     maxHealth: number;
     attack_power: number;
     stamina: number;
+    maxStamina: number;
     equippedItems: EquippedItem[];
 }
 

@@ -47,9 +47,7 @@
 				<p>{item.itemId}</p>
 				<p>{item.quantity}</p>
 				{#if itemDeleteAction}
-					<button class="button text-red-500 text-2xl" onclick={() => itemDeleteAction(item.itemId)}
-						>-</button
-					>
+					<button class="button text-red-500 text-2xl" onclick={() => itemDeleteAction(item.itemId)}>-</button>
 				{/if}
 			{/each}
 		</div>
