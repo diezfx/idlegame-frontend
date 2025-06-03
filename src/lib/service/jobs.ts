@@ -73,7 +73,7 @@ export interface Job {
 	ingredients: ItemWithQuantity[];
 }
 
-type BattleMonster = Monster & {
+export type BattleMonster = Monster & {
 	lastAttacked: string;
 };
 export interface BattleJob {
@@ -121,8 +121,11 @@ export class JobsClient {
 		return data;
 	}
 
-	async getBattleJob(jobId: number): Promise<Job & BattleJob> {
+	async getBattleJob(jobId: number): Promise<Job & BattleJob | undefined> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/battles/${jobId}`);
+		if (!response.ok) {
+			return undefined;
+		}
 		const data = (await response.json()) as Job & BattleJob;
 		return data;
 	}

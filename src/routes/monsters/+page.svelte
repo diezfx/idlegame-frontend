@@ -78,7 +78,6 @@
 		<Dialog.Header>
 			<Dialog.Title>Chose Item to Equip</Dialog.Title>
 		</Dialog.Header>
-		<div>Inventory</div>
 		<div class="grid grid-cols-1">
 			{#each data.inventory.items as item}
 				<button
@@ -94,14 +93,15 @@
 				</button>
 			{/each}
 		</div>
-		<div>Amount? {itemAmount}</div>
+		<label for="itemAmount">Amount {itemAmount}</label>
 		<input
+			id="itemAmount"
 			disabled={selectedItem == undefined}
 			type="range"
 			min="1"
 			max={selectedItem?.quantity}
 			bind:value={itemAmount}
 		/>
-		<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Order</button>
+		<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Equip</button>
 	</Dialog.Content>
 </Dialog.Root>

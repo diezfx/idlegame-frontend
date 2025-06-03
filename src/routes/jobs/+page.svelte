@@ -16,6 +16,6 @@
 <h1>Jobs</h1>
 <div class="grid grid-cols-3 gap-4">
 	{#each data.jobs as job}
-		<JobView {job} onclick={() => stopJob(job.id)} />
+		<JobView {job} onStop={() => stopJob(job.id)} />
 	{/each}
 </div>

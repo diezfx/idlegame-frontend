@@ -2,47 +2,90 @@
 	import { page } from '$app/stores';
 
 	function activeClass(url: string): string {
-		const activeColor = 'bg-blue-400';
 		const isActive = url === $page.url.pathname;
 		if (isActive) {
-			return activeColor;
+			return 'active';
 		}
 		return '';
 	}
+
+	const navIcons = {
+		jobs: '💼',
+		monsters: '👾',
+		inventory: '🎒',
+		woodcutting: '🌲',
+		mining: '⛏️',
+		smelting: '🔥',
+		woodworking: '🪓',
+		battles: '⚔️',
+	};
 </script>
 
-<nav class="float-left w-40 h-screen p-4 mx-4 bg-blue-50">
-	<p class="text-2xl">Character</p>
-	<ul>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs')}">
-			<a href="/jobs">Jobs</a>
+<nav class="float-left w-48 h-screen p-4 mx-4 bg-blue-50 rounded-xl">
+	<p class="text-2xl font-bold text-blue-700 flex items-center gap-2 mb-2">Character</p>
+	<ul class="mb-6">
+		<li class="nav-item {activeClass('/jobs')}">
+			<a class="nav-content" href="/jobs"> Jobs</a>
 		</li>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/monsters')}">
-			<a href="/monsters">Monsters</a>
+		<li class="nav-item {activeClass('/monsters')}">
+			<a class="nav-content" href="/monsters">{navIcons.monsters} Monsters</a>
 		</li>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/inventory')}">
-			<a href="/inventory">Inventory</a>
+		<li class="nav-item {activeClass('/inventory')}">
+			<a class="nav-content" href="/inventory">{navIcons.inventory} Inventory</a>
 		</li>
 	</ul>
-	<p class="mt-4 text-2xl">Jobs</p>
-	<ul>
-		<p class="text-xl">Gathering</p>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/gathering/woodcutting')}">
-			<a href="/jobs/gathering/woodcutting">Woodcutting</a>
+	<p class="mt-2 text-2xl font-bold text-blue-700 flex items-center gap-2">
+		<span>{navIcons.jobs}</span> Jobs
+	</p>
+	<ul class="mt-2">
+		<p class="nav-header">Gathering</p>
+		<li class="nav-item {activeClass('/jobs/gathering/woodcutting')}">
+			<a class="nav-content" href="/jobs/gathering/woodcutting">{navIcons.woodcutting} Woodcutting</a>
 		</li>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/mining')}">
-			<a href="/jobs/gathering/mining">Mining</a>
+		<li class="nav-item {activeClass('/jobs/gathering/mining')}">
+			<a class="nav-content" href="/jobs/gathering/mining">{navIcons.mining} Mining</a>
 		</li>
-		<p class="text-xl">Processing</p>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/processing/smelting')}">
-			<a href="/jobs/processing/smelting">Smelting</a>
+		<p class="nav-header">Processing</p>
+		<li class="nav-item {activeClass('/jobs/processing/smelting')}">
+			<a class="nav-content" href="/jobs/processing/smelting">{navIcons.smelting} Smelting</a>
 		</li>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/processing/woodworking')}">
-			<a href="/jobs/processing/woodworking">Woodworking</a>
+		<li class="nav-item {activeClass('/jobs/processing/woodworking')}">
+			<a class="nav-content" href="/jobs/processing/woodworking">{navIcons.woodworking} Woodworking</a>
 		</li>
-		<p class="text-xl">Battles</p>
-		<li class="outline p-4 mt-2 outline-gray-200 {activeClass('/jobs/battles')}">
-			<a href="/jobs/battles">Battles</a>
+		<p class="nav-header">Battles</p>
+		<li class="nav-item {activeClass('/jobs/battles')}">
+			<a class="nav-content" href="/jobs/battles">{navIcons.battles} Battles</a>
 		</li>
 	</ul>
 </nav>
+
+<style>
+	/*
+	text-lg font-semibold text-blue-600 mt-2 mb-1
+	*/
+	.active {
+		background-color: #bfdbfe; /* Tailwind blue-200 */
+		color: #2563eb; /* Tailwind blue-600 */
+	}
+
+	.nav-header {
+		font-size: 1.125rem; /* Tailwind text-lg */
+		font-weight: 600; /* Tailwind font-semibold */
+		color: #2563eb; /* Tailwind blue-600 */
+		margin-top: 0.5rem; /* Tailwind mt-2 */
+		margin-bottom: 0.25rem; /* Tailwind mb-1 */
+	}
+	.nav-item {
+		border-radius: 0.5rem;
+		transition: background 0.15s;
+	}
+	.nav-item:hover {
+		background-color: #bfdbfe; /* Tailwind blue-200 */
+	}
+	.nav-content {
+		padding: 0.5rem; /* Tailwind p-2 */
+		display: flex;
+		align-items: center;
+		gap: 0.5rem; /* Tailwind gap-2 */
+	}
+</style>

@@ -13,6 +13,3 @@
 
 <div>Battle State</div>
 <BattlewView job={battleJob} />
-
-<div>Health: {battleJob.playerMonsters[0].health}</div>
-<div>Health: {battleJob.enemyMonsters[0].health}</div>

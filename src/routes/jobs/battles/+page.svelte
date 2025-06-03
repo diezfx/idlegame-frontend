@@ -71,7 +71,7 @@
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each data.jobs as job}
-		<JobView {job} />
+		<JobView {job} onStop={() => jobClient.stopJob(job.id)} />
 	{/each}
 </div>
 
