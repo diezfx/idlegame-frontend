@@ -19,6 +19,6 @@ export const load: PageLoad = async ({ fetch, params }) => {
 		gatheringType: params.gathering_type,
 		masterdata: activeGatheringJobs,
 		jobs: activeJobs,
-		monsters: monsterClient.getMonsters(),
+		monsters: await monsterClient.getMonsters(),
 	};
 };
