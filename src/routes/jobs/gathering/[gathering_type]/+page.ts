@@ -13,13 +13,12 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	let activeGatheringJobs = await masterdata;
 	activeGatheringJobs = activeGatheringJobs.filter((job) => job.jobType === params.gathering_type);
 	let activeJobs = await jobsClient.getJobs();
-	log.debug('activeJobs', activeJobs);
 	activeJobs = activeJobs.filter((job) => job.jobType === params.gathering_type);
 
 	return {
 		gatheringType: params.gathering_type,
 		masterdata: activeGatheringJobs,
 		jobs: activeJobs,
-		monsters: await monsterClient.getMonsters(),
+		monsters: monsterClient.getMonsters(),
 	};
 };

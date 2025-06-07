@@ -15,8 +15,12 @@
 		inventory: '🎒',
 		woodcutting: '🌲',
 		mining: '⛏️',
+		harvesting: '🌾',
+		fishing: '🎣',
 		smelting: '🔥',
 		woodworking: '🪓',
+		foodProcessing: '🍲',
+		fishery: '🐟',
 		battles: '⚔️',
 	};
 </script>
@@ -45,12 +49,24 @@
 		<li class="nav-item {activeClass('/jobs/gathering/mining')}">
 			<a class="nav-content" href="/jobs/gathering/mining">{navIcons.mining} Mining</a>
 		</li>
+		<li class="nav-item {activeClass('/jobs/gathering/harvesting')}">
+			<a class="nav-content" href="/jobs/gathering/harvesting">{navIcons.harvesting} Harvesting</a>
+		</li>
+		<li class="nav-item {activeClass('/jobs/gathering/fishing')}">
+			<a class="nav-content" href="/jobs/gathering/fishing">{navIcons.fishing} Fishing</a>
+		</li>
 		<p class="nav-header">Processing</p>
 		<li class="nav-item {activeClass('/jobs/processing/smelting')}">
 			<a class="nav-content" href="/jobs/processing/smelting">{navIcons.smelting} Smelting</a>
 		</li>
 		<li class="nav-item {activeClass('/jobs/processing/woodworking')}">
 			<a class="nav-content" href="/jobs/processing/woodworking">{navIcons.woodworking} Woodworking</a>
+		</li>
+		<li class="nav-item {activeClass('/jobs/processing/foodProcessing')}">
+			<a class="nav-content" href="/jobs/processing/foodProcessing">{navIcons.foodProcessing} Processing</a>
+		</li>
+		<li class="nav-item {activeClass('/jobs/processing/fishery')}">
+			<a class="nav-content" href="/jobs/processing/fishery">{navIcons.fishery} Fishery</a>
 		</li>
 		<p class="nav-header">Battles</p>
 		<li class="nav-item {activeClass('/jobs/battles')}">

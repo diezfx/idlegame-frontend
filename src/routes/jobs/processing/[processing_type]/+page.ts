@@ -13,7 +13,6 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	let activeGatheringJobs = await masterdata;
 	activeGatheringJobs = activeGatheringJobs.filter((job) => job.jobType === params.processing_type);
 	let activeJobs = await jobsClient.getJobs();
-	log.debug('activeJobs', activeJobs);
 	activeJobs = activeJobs.filter((job) => job.jobType === params.processing_type);
 
 	return {

@@ -42,6 +42,7 @@ export interface ItemWithQuantity {
 
 export interface JobMasterdata {
 	id: string;
+	name: string;
 	jobType: string;
 	levelRequirement: number;
 	duration: string;

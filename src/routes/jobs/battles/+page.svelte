@@ -92,7 +92,7 @@
 	{#each data.masterdata as job}
 		<Card.Root class={isSelectedJob(job.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
 			<Card.Header>
-				<Card.Title>{job.id}</Card.Title>
+				<Card.Title>{job.name}</Card.Title>
 			</Card.Header>
 
 			<Card.Content class="grid grid-cols-2">
