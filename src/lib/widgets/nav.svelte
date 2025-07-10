@@ -68,6 +68,16 @@
 		<li class="nav-item {activeClass('/jobs/processing/fishery')}">
 			<a class="nav-content" href="/jobs/processing/fishery">{navIcons.fishery} Fishery</a>
 		</li>
+		<p class="nav-header">Products</p>
+		<li class="nav-item {activeClass('/jobs/processing/weaponCrafting')}">
+			<a class="nav-content" href="/jobs/processing/weaponCrafting">{navIcons.smelting} Weapons</a>
+		</li>
+		<li class="nav-item {activeClass('/jobs/processing/armorCrafting')}">
+			<a class="nav-content" href="/jobs/processing/armorCrafting">{navIcons.woodworking} Armour</a>
+		</li>
+		<li class="nav-item {activeClass('/jobs/processing/cooking')}">
+			<a class="nav-content" href="/jobs/processing/cooking">{navIcons.foodProcessing} Cooking</a>
+		</li>
 		<p class="nav-header">Battles</p>
 		<li class="nav-item {activeClass('/jobs/battles')}">
 			<a class="nav-content" href="/jobs/battles">{navIcons.battles} Battles</a>

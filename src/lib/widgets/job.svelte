@@ -2,8 +2,17 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import type { Job } from '$lib/service/jobs';
-	let { job, onclick, onStop, ...props }: { job: Job; onclick?: () => void; onStop?: () => void; [key: string]: any } =
-		$props();
+	let {
+		job,
+		onclick,
+		onStop,
+		...props
+	}: {
+		job: Job;
+		onclick?: () => void;
+		onStop?: () => void;
+		[key: string]: any;
+	} = $props();
 
 	import { DateTime } from 'luxon';
 
@@ -33,16 +42,20 @@
 	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
 		<p class="truncate">{job.monsterIds?.join?.(', ') ?? job.monsterIds}</p>
+		{#if job.jobState && job.jobState.status}
+			<p class="font-semibold text-gray-500">Status</p>
+			<p class="capitalize">{job.jobState.status}</p>
+		{/if}
 		<p class="font-semibold text-gray-500">Updated</p>
-		<p>{timeAgo(DateTime.fromISO(job.updatedAt))}</p>
+		<p>{timeAgo(DateTime.fromISO(job.jobState.updatedAt))}</p>
 		<p class="font-semibold text-gray-500">Started</p>
-		<p>{timeAgo(DateTime.fromISO(job.startedAt))}</p>
+		<p>{timeAgo(DateTime.fromISO(job.createdAt))}</p>
 
 		<p class="col-span-2 font-semibold text-gray-500 mt-2">Rewards</p>
 		<div class="col-span-2 flex flex-wrap gap-2">
 			{#each job.rewards as reward}
 				<span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-medium">
-					{reward.quantity} × {reward.itemDefId}
+					{reward.quantity} × {reward.id}
 				</span>
 			{/each}
 		</div>

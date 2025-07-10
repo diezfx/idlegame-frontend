@@ -42,6 +42,12 @@ export interface Monster {
     stamina: number;
     maxStamina: number;
     equippedItems: EquippedItem[];
+    position: Position;
+}
+
+export interface Position {
+    x: number;
+    y: number;
 }
 
 export interface EquipItem {

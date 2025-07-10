@@ -57,8 +57,13 @@ export interface JobMasterdata {
 	ingredients: ItemWithQuantity[];
 }
 
+export interface JobState {
+	status: string
+	updatedAt: string;
+}
+
 export interface Reward {
-	itemDefId: string;
+	id: string;
 	quantity: number;
 }
 
@@ -66,12 +71,13 @@ export interface Job {
 	id: number;
 	jobDefId: string;
 	userId: number;
-	startedAt: string;
-	updatedAt: string;
+	createdAt: string;
 	monsterIds: number[];
 	jobType: string;
 	rewards: Reward[];
 	ingredients: ItemWithQuantity[];
+	jobState: JobState;
+
 }
 
 export type BattleMonster = Monster & {
@@ -149,6 +155,15 @@ export class JobsClient {
 		return data;
 	}
 
+	async startProductJob(request: StartProcessingJob): Promise<number> {
+		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/jobs/products/`, {
+			method: 'POST',
+			body: JSON.stringify(request),
+		});
+		const data = await response.json();
+		return data;
+	}
+
 	async startBattleJob(request: StartBattleJob): Promise<number> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/battles`, {
 			method: 'POST',
@@ -171,6 +186,10 @@ export class JobsClient {
 
 	async getProcessingJobMasterdata(): Promise<JobMasterdata[]> {
 		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/processing`);
+		return await response.json();
+	}
+	async getProductJobMasterdata(): Promise<JobMasterdata[]> {
+		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/product`);
 		return await response.json();
 	}
 

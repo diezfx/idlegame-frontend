@@ -77,11 +77,11 @@
 		<p>Updated</p>
 		<p>{timeAgo(DateTime.fromISO(job.updatedAt))}</p>
 		<p>Started</p>
-		<p>{timeAgo(DateTime.fromISO(job.startedAt))}</p>
+		<p>{timeAgo(DateTime.fromISO(job.createdAt))}</p>
 
 		<p class="col-span-2">Rewards</p>
 		{#each job.rewards as reward}
-			<p>{reward.itemDefId}</p>
+			<p>{reward.id}</p>
 			<p>{reward.quantity}</p>
 		{/each}
 	</Card.Content>

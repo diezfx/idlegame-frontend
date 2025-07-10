@@ -32,6 +32,9 @@
 			<p>{monster.experience}</p>
 			<div>Stamina</div>
 			<p>{monster.stamina}</p>
+			<div>Position</div>
+			<p>X:{Math.round(monster.position.x)};Y:{Math.round(monster.position.y)}</p>
+
 			{#if monster.jobId}
 				<div>Current Job</div>
 				<p>{monster.jobId}</p>
