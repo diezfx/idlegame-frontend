@@ -22,6 +22,7 @@
 		foodProcessing: '🍲',
 		fishery: '🐟',
 		battles: '⚔️',
+		map: '🗺️',
 	};
 </script>
 
@@ -36,6 +37,9 @@
 		</li>
 		<li class="nav-item {activeClass('/inventory')}">
 			<a class="nav-content" href="/inventory">{navIcons.inventory} Inventory</a>
+		</li>
+		<li class="nav-item {activeClass('/map')}">
+			<a class="nav-content" href="/map">{navIcons.map} Map</a>
 		</li>
 	</ul>
 	<p class="mt-2 text-2xl font-bold text-blue-700 flex items-center gap-2">
