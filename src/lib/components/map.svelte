@@ -44,10 +44,7 @@
 <div id="map-container" class="relative w-[1000px] h-[1000px]">
 	<div class="absolute top-0 left-0">
 		{#each monsters as monster}
-			<div
-				class="absolute"
-				style="left: {monster.position.x * TILE_SIZE}px; top: {monster.position.y * TILE_SIZE}px;"
-			>
+			<div class="absolute" style="left: {monster.position.x * TILE_SIZE}px; top: {monster.position.y * TILE_SIZE}px;">
 				<Button variant="outline" size="icon" class="relative rounded-full">
 					<Sword class="h-4 w-4" />
 					<span

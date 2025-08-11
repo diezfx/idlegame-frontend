@@ -58,7 +58,7 @@ export interface JobMasterdata {
 }
 
 export interface JobState {
-	status: string
+	status: string;
 	updatedAt: string;
 }
 
@@ -77,15 +77,14 @@ export interface Job {
 	rewards: Reward[];
 	ingredients: ItemWithQuantity[];
 	jobState: JobState;
-
 }
 
 export type BattleMonster = Monster & {
 	lastAttacked: string;
 };
 export interface BattleJob {
-	playerMonsters: BattleMonster[]
-	enemyMonsters: BattleMonster[]
+	playerMonsters: BattleMonster[];
+	enemyMonsters: BattleMonster[];
 }
 
 export interface StartGatheringJob {
@@ -105,7 +104,6 @@ export interface StartBattleJob {
 	monster: number;
 	jobDefId: string;
 }
-
 
 export interface JobsClientCfg {
 	apiBaseUrl: string;
@@ -128,7 +126,7 @@ export class JobsClient {
 		return data;
 	}
 
-	async getBattleJob(jobId: number): Promise<Job & BattleJob | undefined> {
+	async getBattleJob(jobId: number): Promise<(Job & BattleJob) | undefined> {
 		const response = await this.fetch(`${this.apiBaseUrl}/v1.0/battles/${jobId}`);
 		if (!response.ok) {
 			return undefined;

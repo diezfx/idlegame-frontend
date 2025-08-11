@@ -12,11 +12,10 @@ export interface InventoryClientCfg {
 }
 
 export interface Params {
-	tags?: Tags[]
+	tags?: Tags[];
 }
 
-
-type Tags = "consumable";
+type Tags = 'consumable';
 
 export class InventoryClient {
 	baseUrl: string;

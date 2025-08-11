@@ -1,17 +1,25 @@
 import { getContext, setContext } from 'svelte';
+import { writable } from 'svelte/store';
 
-interface Userstore {
+export interface Userstore {
 	userId: number;
 	username: string;
 	isLoggedIn: boolean;
 }
 
-function setUserContext(user: Userstore) {
-	setContext('user', user);
+const defaultUser: Userstore = {
+	userId: 0,
+	username: '',
+	isLoggedIn: false,
+};
+
+export const user = writable<Userstore>(defaultUser);
+
+export function setUserContext(userData: Userstore) {
+	user.set(userData);
+	setContext('user', userData);
 }
 
-function getUserFromContext(): Userstore | undefined {
+export function getUserFromContext(): Userstore | undefined {
 	return getContext<Userstore>('user');
 }
-
-export { setUserContext, getUserFromContext };

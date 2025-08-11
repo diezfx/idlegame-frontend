@@ -28,7 +28,7 @@ export function loadConfig(): Config {
 		itemClientCfg: {
 			apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
 			masterdataBaseUrl: import.meta.env.VITE_MASTERDATA_BASE_URL,
-		}
+		},
 	};
 }
 

@@ -21,7 +21,6 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 };
 
 export const handle: Handle = async function ({ event, resolve }) {
-
 	event.locals.user = {
 		userId: 1,
 		username: 'test',

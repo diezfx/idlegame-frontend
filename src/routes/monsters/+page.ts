@@ -16,6 +16,6 @@ export const load: PageLoad = async ({ fetch, parent, params }) => {
 		inventory: await inventoryClient.getInventory(user.userId, {
 			tags: ['consumable'],
 		}),
-		itemMasterdata: (await itemCliemt.getItemsMasterdata()),
+		itemMasterdata: await itemCliemt.getItemsMasterdata(),
 	};
 };

@@ -11,6 +11,6 @@ export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const cfg = loadConfig();
 	const inventoryClient = new InventoryClient(fetch, cfg.inventoryClientCfg);
 	return {
-		inventory: await inventoryClient.getInventory(user.userId,),
+		inventory: await inventoryClient.getInventory(user.userId),
 	};
 };
