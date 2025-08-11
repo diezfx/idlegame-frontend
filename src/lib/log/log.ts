@@ -8,17 +8,11 @@ interface Logger {
 class SimpleLogger implements Logger {
 	private log(level: string, msg: string, attributes?: object | undefined): void {
 		if (level === 'error') {
-			console.error(
-				JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }),
-			);
+			console.error(JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }));
 		} else if (level === 'warn') {
-			console.warn(
-				JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }),
-			);
+			console.warn(JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }));
 		} else {
-			console.info(
-				JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }),
-			);
+			console.info(JSON.stringify({ level: level, timestamp: new Date(), msg: msg, attributes: attributes }));
 		}
 	}
 
