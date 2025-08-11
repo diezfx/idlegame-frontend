@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	function activeClass(url: string): string {
-		const isActive = url === $page.url.pathname;
+		const isActive = url === page.url.pathname;
 		if (isActive) {
 			return 'active';
 		}
