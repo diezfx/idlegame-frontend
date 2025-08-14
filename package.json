@@ -9,9 +9,12 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"proto" : "buf generate"
 	},
 	"devDependencies": {
+		"@bufbuild/buf": "^1.56.0",
+		"@bufbuild/protoc-gen-es": "^2.6.3",
 		"@eslint/js": "^9.33.0",
 		"@sveltejs/adapter-auto": "^6.0.1",
 		"@sveltejs/kit": "^2.21.1",
@@ -39,6 +42,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@bufbuild/protobuf": "^2.6.3",
+		"@connectrpc/connect": "^2.0.4",
+		"@connectrpc/connect-web": "^2.0.4",
 		"bits-ui": "2.4.0",
 		"clsx": "^2.1.1",
 		"lucide-svelte": "^0.453.0",
