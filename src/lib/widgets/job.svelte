@@ -15,6 +15,7 @@
 
 	import { DateTime } from 'luxon';
 	import type { Job } from '../../gen/v1/domain_pb';
+	import { protoToMilliseconds } from '$lib/utils/prototime';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -47,13 +48,13 @@
 			<p class="capitalize">{job.jobState.status}</p>
 		{/if}
 		<p class="font-semibold text-gray-500">Updated</p>
-		<p>{timeAgo(DateTime.from(job.jobState?.updatedAt))}</p>
+		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState?.updatedAt!)))}</p>
 		<p class="font-semibold text-gray-500">Started</p>
-		<p>{timeAgo(DateTime.from(job.entity.createdAt))}</p>
+		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity?.createdAt!)))}</p>
 
 		<p class="col-span-2 font-semibold text-gray-500 mt-2">Rewards</p>
 		<div class="col-span-2 flex flex-wrap gap-2">
-			{#each job.rewards as reward}
+			{#each job.rewards?.inventory?.items! as reward}
 				<span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-medium">
 					{reward.quantity} × {reward.id}
 				</span>
