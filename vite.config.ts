@@ -4,4 +4,9 @@ import devtoolsJson from 'vite-plugin-devtools-json';
 
 export default defineConfig({
 	plugins: [sveltekit(), devtoolsJson()],
+	build: {
+		rollupOptions: {
+			external: ['@internationalized/date'],
+		},
+	},
 });

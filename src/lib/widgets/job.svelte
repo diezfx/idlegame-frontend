@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import type { Job } from '$lib/service/jobs';
 	let {
 		job,
 		onclick,
@@ -15,6 +14,7 @@
 	} = $props();
 
 	import { DateTime } from 'luxon';
+	import type { Job } from '../../gen/v1/domain_pb';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -34,22 +34,22 @@
 	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200"
 >
 	<Card.Header class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
-		<Card.Title class="text-lg font-bold">{job.jobDefId}</Card.Title>
+		<Card.Title class="text-lg font-bold">{job.def?.jobDefId}</Card.Title>
 		<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
-			{job.jobType}
+			{job.def?.jobType}
 		</span>
 	</Card.Header>
 	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
-		<p class="truncate">{job.monsterIds?.join?.(', ') ?? job.monsterIds}</p>
+		<p class="truncate">{job.monsters?.join?.(', ') ?? job.monsters}</p>
 		{#if job.jobState && job.jobState.status}
 			<p class="font-semibold text-gray-500">Status</p>
 			<p class="capitalize">{job.jobState.status}</p>
 		{/if}
 		<p class="font-semibold text-gray-500">Updated</p>
-		<p>{timeAgo(DateTime.fromISO(job.jobState.updatedAt))}</p>
+		<p>{timeAgo(DateTime.from(job.jobState?.updatedAt))}</p>
 		<p class="font-semibold text-gray-500">Started</p>
-		<p>{timeAgo(DateTime.fromISO(job.createdAt))}</p>
+		<p>{timeAgo(DateTime.from(job.entity.createdAt))}</p>
 
 		<p class="col-span-2 font-semibold text-gray-500 mt-2">Rewards</p>
 		<div class="col-span-2 flex flex-wrap gap-2">

@@ -1,19 +1,17 @@
 <script lang="ts">
 	import { Card } from '$lib/components/ui/card';
-	import { MonsterClient, type Monster } from '$lib/service/monsters';
+	import { MonsterClient } from '$lib/service/monsters';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import log from '$lib/log/log';
-	import type { Item } from '$lib/service/inventory';
 	import { getUserFromContext } from '$lib/stores/user';
-	import { getConfigContext } from '$lib/config/config';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
+	import type { Item, Monster } from '../../gen/v1/domain_pb.js';
 
 	let { data } = $props();
 
-	const cfg = getConfigContext();
 	const user = getUserFromContext()!;
-	const monsterClient = new MonsterClient(fetch, cfg.monsterClientCfg);
+	const monsterClient = new MonsterClient();
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -35,19 +33,19 @@
 			return;
 		}
 		monsterClient.equipItem({
-			userId: user.userId,
-			monster: selectedMonster.id!!,
+			userId: BigInt(user.userId),
+			monsterId: BigInt(selectedMonster.entity!.id),
 			itemId: item.id,
-			quantity: itemAmount,
+			quantity: BigInt(itemAmount),
 		});
 		reset();
 		invalidateAll();
 	}
 
-	async function itemDeleteAction(monsterId: number, itemId: string): Promise<void> {
+	async function itemDeleteAction(monsterId: bigint, itemId: string): Promise<void> {
 		await monsterClient.unEquipItem({
-			userId: user.userId,
-			monster: monsterId,
+			userId: BigInt(user.userId),
+			monsterId: BigInt(monsterId),
 			itemId: itemId,
 		});
 		invalidateAll();
@@ -59,7 +57,7 @@
 <div class="grid grid-cols-3 gap-4">
 	{#each data.monsters as monster}
 		<div>
-			<MonsterView {monster} itemDeleteAction={(itemID) => itemDeleteAction(monster.id, itemID)}></MonsterView>
+			<MonsterView {monster} itemDeleteAction={(itemID) => itemDeleteAction(monster.entity!.id, itemID)}></MonsterView>
 			<Card
 				onclick={() => {
 					selectedMonster = monster;
@@ -98,8 +96,8 @@
 			id="itemAmount"
 			disabled={selectedItem == undefined}
 			type="range"
-			min="1"
-			max={selectedItem?.quantity}
+			min={1}
+			max={Number(selectedItem?.quantity)}
 			bind:value={itemAmount}
 		/>
 		<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Equip</button>

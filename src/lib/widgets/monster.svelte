@@ -1,8 +1,8 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import type { Monster } from '$lib/service/monsters';
 	import { cn } from '$lib/utils';
+	import type { Monster } from '../../gen/v1/domain_pb';
 	let {
 		monster,
 		class: classname,
@@ -18,26 +18,26 @@
 
 <Card.Root {...props} class={cn(classname, 'w-[350px]')}>
 	<Card.Header>
-		<Card.Title>{monster.name}</Card.Title>
+		<Card.Title>{monster.identity?.name}</Card.Title>
 		<!--<Card.Description>Card Description</Card.Description> -->
 	</Card.Header>
 	<Card.Content>
 		<div class="grid grid-cols-2">
 			<div>ID</div>
-			<p>#{monster.id}</p>
+			<p>#{monster.entity?.id}</p>
 			<div>Level</div>
-			<p>{monster.level}</p>
+			<p>{monster.stat?.level}</p>
 
 			<div>Experience</div>
-			<p>{monster.experience}</p>
+			<p>{monster.stat?.experience}</p>
 			<div>Stamina</div>
-			<p>{monster.stamina}</p>
+			<p>{monster.stat?.stamina}</p>
 			<div>Position</div>
-			<p>X:{Math.round(monster.position.x)};Y:{Math.round(monster.position.y)}</p>
+			<p>X:{Math.round(monster.position!.x)};Y:{Math.round(monster.position!.y)}</p>
 
-			{#if monster.jobId}
+			{#if monster.participant}
 				<div>Current Job</div>
-				<p>{monster.jobId}</p>
+				<p>{monster.participant.jobEntityId}</p>
 			{:else}
 				<div>Current Job</div>
 				<p>Idle</p>
@@ -47,10 +47,10 @@
 		<div class="col-span-2 font-bold">Equipment</div>
 		<div class="grid grid-cols-3">
 			{#each monster.equippedItems as item}
-				<p>{item.itemId}</p>
+				<p>{item.id}</p>
 				<p>{item.quantity}</p>
 				{#if itemDeleteAction}
-					<button class="button text-red-500 text-2xl" onclick={() => itemDeleteAction(item.itemId)}>-</button>
+					<button class="button text-red-500 text-2xl" onclick={() => itemDeleteAction(item.id)}>-</button>
 				{/if}
 			{/each}
 		</div>

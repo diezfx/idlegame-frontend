@@ -1,4 +1,3 @@
-import log from '$lib/log/log';
 import { getContext, setContext } from 'svelte';
 
 export interface ItemMasterDataContainer {
@@ -17,18 +16,12 @@ export interface ItemEffect {
 	value: number;
 }
 
-export interface ItemsClientCfg {
-	apiBaseUrl: string;
-	masterdataBaseUrl: string;
-}
-
 export class ItemsClient {
-	apiBaseUrl: string;
 	masterDataBaseUrl: string;
 	fetch: any;
-	constructor(fetch: any, cfg: ItemsClientCfg) {
-		this.apiBaseUrl = cfg.apiBaseUrl;
-		this.masterDataBaseUrl = cfg.masterdataBaseUrl;
+
+	constructor(fetch: any, masterdataBaseUrl: string) {
+		this.masterDataBaseUrl = masterdataBaseUrl;
 		this.fetch = fetch;
 	}
 
@@ -43,10 +36,10 @@ export class ItemsClient {
 	}
 }
 
-export function setJobsClientContext(itemsClient: ItemsClient): void {
+export function setItemsClientContext(itemsClient: ItemsClient): void {
 	setContext('itemsClient', itemsClient);
 }
 
-export function getJobsClientContext(): ItemsClient {
+export function getItemsClientContext(): ItemsClient {
 	return getContext<ItemsClient>('itemsClient');
 }

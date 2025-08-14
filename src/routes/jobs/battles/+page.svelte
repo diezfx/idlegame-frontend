@@ -1,24 +1,23 @@
 <script lang="ts">
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { JobsClient, type Job, type JobMasterdata } from '$lib/service/jobs';
+	import { JobsClient, type JobMasterdata } from '$lib/service/jobs';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
-	import type { Monster } from '$lib/service/monsters';
-	import { getConfigContext } from '$lib/config/config';
 	import log from '$lib/log/log.js';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
+	import { config } from '$lib/config/config.js';
+	import type { Monster } from '../../../gen/v1/domain_pb.js';
 
 	let { data } = $props();
 
 	const selectedColor = 'bg-green-200';
 
-	const cfg = getConfigContext();
 	const user = getUserFromContext()!;
-	const jobClient = new JobsClient(fetch, cfg.jobsClientCfg);
+	const jobClient = new JobsClient(fetch, config.masterdataBaseUrl);
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -43,9 +42,9 @@
 			return;
 		}
 		await jobClient.startBattleJob({
-			jobDefId: selectedJob?.id,
-			userId: user.userId,
-			monster: selectedMonster.id,
+			jobDefinitionId: selectedJob?.id,
+			userId: BigInt(user.userId),
+			monsterId: BigInt(selectedMonster.entity!.id),
 		});
 		reset();
 		invalidateAll();
@@ -71,7 +70,7 @@
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each data.jobs as job}
-		<JobView {job} onStop={() => jobClient.stopJob(job.id)} />
+		<JobView {job} onStop={() => jobClient.stopJob(job.entity!.id)} />
 	{/each}
 </div>
 

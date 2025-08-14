@@ -1,96 +1,22 @@
-/*
-[
-    {
-        "id": 1,
-        "name": "schiggo",
-        "type": "Water",
-        "level": 1,
-        "experience": 0
-    },
-    {
-        "id": 2,
-        "name": "schiggo",
-        "type": "Water",
-        "level": 1,
-        "experience": 0
-    },
-    {
-        "id": 3,
-        "name": "schiggo",
-        "type": "Water",
-        "level": 1,
-        "experience": 0
-    }
-]
-*/
-
-export interface EquippedItem {
-	itemId: string;
-	quantity: number;
-}
-
-export interface Monster {
-	id: number;
-	jobId: number | undefined;
-	name: string;
-	type: string;
-	level: number;
-	experience: number;
-	health: number;
-	maxHealth: number;
-	attack_power: number;
-	stamina: number;
-	maxStamina: number;
-	equippedItems: EquippedItem[];
-	position: Position;
-}
-
-export interface Position {
-	x: number;
-	y: number;
-}
-
-export interface EquipItem {
-	userId: number;
-	monster: number;
-	itemId: string;
-	quantity: number;
-}
-export interface UnEquipItem {
-	userId: number;
-	monster: number;
-	itemId: string;
-}
-
-export interface MonsterClientCfg {
-	baseUrl: string;
-}
+import { monsterClient, inventoryClient } from './connect';
+import type { Monster, Item } from '../../gen/v1/domain_pb';
 
 export class MonsterClient {
-	baseUrl: string;
-	fetch: any;
-	constructor(fetch: any, cfg: MonsterClientCfg) {
-		this.baseUrl = cfg.baseUrl;
-		this.fetch = fetch;
-	}
-
 	async getMonsters(): Promise<Monster[]> {
-		const response = await this.fetch(`${this.baseUrl}/v1.0/monsters`);
-		const data = (await response.json()) as Monster[];
-		return data;
+		const response = await monsterClient.listMonsters({});
+		return response.monsters;
 	}
 
-	async equipItem(equipItemCommand: EquipItem): Promise<void> {
-		const _ = await this.fetch(`${this.baseUrl}/v1.0/equipment`, {
-			method: 'POST',
-			body: JSON.stringify(equipItemCommand),
-		});
+	async equipItem(request: { userId: bigint; monsterId: bigint; itemId: string; quantity: bigint }): Promise<void> {
+		await inventoryClient.equipItem(request);
 	}
 
-	async unEquipItem(equipItemCommand: UnEquipItem): Promise<void> {
-		const _ = await this.fetch(`${this.baseUrl}/v1.0/equipment`, {
-			method: 'DELETE',
-			body: JSON.stringify(equipItemCommand),
-		});
+	async unEquipItem(request: { userId: bigint; monsterId: bigint; itemId: string }): Promise<void> {
+		await inventoryClient.unEquipItem(request);
+	}
+
+	async getEquipment(monsterId: bigint): Promise<Item[]> {
+		const response = await inventoryClient.getEquipment({ monsterId });
+		return response.items;
 	}
 }

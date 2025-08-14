@@ -1,12 +1,9 @@
 <script lang="ts">
 	import BattlewView from '$lib/widgets/battle.svelte';
-	import { getConfigContext } from '$lib/config/config';
-	import type { Job, BattleJob } from '$lib/service/jobs.js';
+	import type { Job } from '../../../../gen/v1/domain_pb.js';
 
 	let { data } = $props();
-	let battleJob: Job & BattleJob = $derived(data.battleJob);
-
-	const cfg = getConfigContext();
+	let battleJob: Job = $derived(data.battleJob);
 </script>
 
 <h1>Woodcutting</h1>
