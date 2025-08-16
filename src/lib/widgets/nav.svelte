@@ -26,9 +26,9 @@
 	};
 </script>
 
-<nav class="float-left w-48 h-screen p-4 mx-4 bg-blue-50 rounded-xl">
-	<p class="text-2xl font-bold text-blue-700 flex items-center gap-2 mb-2">Character</p>
-	<ul class="mb-6">
+<nav class="nav">
+	<p class="nav-title">Character</p>
+	<ul class="nav-list">
 		<li class="nav-item {activeClass('/jobs')}">
 			<a class="nav-content" href="/jobs"> Jobs</a>
 		</li>
@@ -42,10 +42,10 @@
 			<a class="nav-content" href="/map">{navIcons.map} Map</a>
 		</li>
 	</ul>
-	<p class="mt-2 text-2xl font-bold text-blue-700 flex items-center gap-2">
+	<p class="nav-title">
 		<span>{navIcons.jobs}</span> Jobs
 	</p>
-	<ul class="mt-2">
+	<ul class="nav-list">
 		<p class="nav-header">Gathering</p>
 		<li class="nav-item {activeClass('/jobs/gathering/woodcutting')}">
 			<a class="nav-content" href="/jobs/gathering/woodcutting">{navIcons.woodcutting} Woodcutting</a>
@@ -90,32 +90,55 @@
 </nav>
 
 <style>
-	/*
-	text-lg font-semibold text-blue-600 mt-2 mb-1
-	*/
+	.nav {
+		float: left;
+		width: 12rem; /* w-48 */
+		height: 100vh; /* h-screen */
+		padding: 1rem; /* p-4 */
+		margin-left: 1rem; /* mx-4 */
+		margin-right: 1rem; /* mx-4 */
+		background-color: #eff6ff; /* bg-blue-50 */
+		border-radius: 0.75rem; /* rounded-xl */
+	}
+	.nav-title {
+		font-size: 1.5rem; /* text-2xl */
+		line-height: 2rem;
+		font-weight: 700; /* font-bold */
+		color: #1d4ed8; /* text-blue-700 */
+		display: flex;
+		align-items: center;
+		gap: 0.5rem; /* gap-2 */
+		margin-bottom: 0.5rem; /* mb-2 */
+	}
+	.nav-list {
+		margin-bottom: 1.5rem; /* mb-6 */
+	}
 	.active {
-		background-color: #bfdbfe; /* Tailwind blue-200 */
-		color: #2563eb; /* Tailwind blue-600 */
+		background-color: #bfdbfe; /* bg-blue-200 */
+		color: #2563eb; /* text-blue-600 */
 	}
 
 	.nav-header {
-		font-size: 1.125rem; /* Tailwind text-lg */
-		font-weight: 600; /* Tailwind font-semibold */
-		color: #2563eb; /* Tailwind blue-600 */
-		margin-top: 0.5rem; /* Tailwind mt-2 */
-		margin-bottom: 0.25rem; /* Tailwind mb-1 */
+		font-size: 1.125rem; /* text-lg */
+		line-height: 1.75rem;
+		font-weight: 600; /* font-semibold */
+		color: #2563eb; /* text-blue-600 */
+		margin-top: 0.5rem; /* mt-2 */
+		margin-bottom: 0.25rem; /* mb-1 */
 	}
 	.nav-item {
-		border-radius: 0.5rem;
-		transition: background 0.15s;
+		border-radius: 0.5rem; /* rounded-lg */
+		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
 	}
 	.nav-item:hover {
-		background-color: #bfdbfe; /* Tailwind blue-200 */
+		background-color: #bfdbfe; /* bg-blue-200 */
 	}
 	.nav-content {
-		padding: 0.5rem; /* Tailwind p-2 */
+		padding: 0.5rem; /* p-2 */
 		display: flex;
 		align-items: center;
-		gap: 0.5rem; /* Tailwind gap-2 */
+		gap: 0.5rem; /* gap-2 */
 	}
 </style>

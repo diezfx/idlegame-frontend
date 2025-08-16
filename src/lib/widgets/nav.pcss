@@ -1,0 +1,23 @@
+.nav-link {
+    display: flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    color: hsl(var(--muted-foreground));
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.nav-link:hover {
+    color: hsl(var(--foreground));
+}
+
+@media (min-width: 768px) {
+    .nav-link {
+        height: 2rem;
+        width: 2rem;
+    }
+}

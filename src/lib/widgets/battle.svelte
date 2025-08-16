@@ -52,26 +52,26 @@
 </script>
 
 {#snippet monster(mon: BattleMonster)}
-	<Card.Root {...props} class="w-[350px]">
+	<Card.Root {...props} class="card-root">
 		<Card.Header>
 			<Card.Title>{mon.name}</Card.Title>
 		</Card.Header>
-		<Card.Content class="grid grid-cols-3">
-			<Cross class=" text-red-500" />
-			<Progress value={mon.health} max={mon.maxHealth} class="col-span-2" />
+		<Card.Content class="grid-3-cols">
+			<Cross class="icon" />
+			<Progress value={mon.health} max={mon.maxHealth} class="progress" />
 			<Swords />
 			<p class="col-span-2">10</p>
 			<p>NextAttack</p>
-			<Progress class="col-span-2" value={playerMonsterCurrent} max={attackCooldown} />
+			<Progress class="progress" value={playerMonsterCurrent} max={attackCooldown} />
 		</Card.Content>
 	</Card.Root>
 {/snippet}
 
-<Card.Root {...props} class="w-[350px]">
+<Card.Root {...props} class="card-root">
 	<Card.Header>
 		<Card.Title>{job.jobDefId}</Card.Title>
 	</Card.Header>
-	<Card.Content class="grid grid-cols-2">
+	<Card.Content class="grid-2-cols">
 		<p>Monster</p>
 		<p>{job.monsterIds}</p>
 		<p>Updated</p>
@@ -86,10 +86,10 @@
 		{/each}
 	</Card.Content>
 
-	<Card.Footer class="justify-center"><Button class="bg-red-500">STOP</Button></Card.Footer>
+	<Card.Footer class="footer"><Button class="stop-button">STOP</Button></Card.Footer>
 </Card.Root>
 
-<div class="grid grid-cols-2 gap-2">
+<div class="grid-2-cols-gap">
 	<div>
 		<p>My Monsters</p>
 		{#each job.playerMonsters as mon}
@@ -103,3 +103,36 @@
 		{/each}
 	</div>
 </div>
+<style>
+	.card-root {
+		width: 350px;
+	}
+	.grid-2-cols {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.grid-3-cols {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.grid-2-cols-gap {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.5rem;
+	}
+	.icon {
+		color: #ef4444;
+	}
+	.progress {
+		grid-column: span 2;
+	}
+	.col-span-2 {
+		grid-column: span 2;
+	}
+	.footer {
+		justify-content: center;
+	}
+	.stop-button {
+		background-color: #ef4444;
+	}
+</style>

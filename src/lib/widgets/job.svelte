@@ -32,37 +32,129 @@
 
 <Card.Root
 	{...props}
-	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200"
+	class="card-root"
 >
-	<Card.Header class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
-		<Card.Title class="text-lg font-bold">{job.def?.jobDefId}</Card.Title>
-		<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
+	<Card.Header class="card-header">
+		<Card.Title class="card-title">{job.def?.jobDefId}</Card.Title>
+		<span class="job-type">
 			{job.def?.jobType}
 		</span>
 	</Card.Header>
-	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">
-		<p class="font-semibold text-gray-500">Monster</p>
+	<Card.Content class="card-content">
+		<p class="label">Monster</p>
 		<p class="truncate">{job.monsters?.join?.(', ') ?? job.monsters}</p>
 		{#if job.jobState && job.jobState.status}
-			<p class="font-semibold text-gray-500">Status</p>
+			<p class="label">Status</p>
 			<p class="capitalize">{job.jobState.status}</p>
 		{/if}
-		<p class="font-semibold text-gray-500">Updated</p>
+		<p class="label">Updated</p>
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState?.updatedAt!)))}</p>
-		<p class="font-semibold text-gray-500">Started</p>
+		<p class="label">Started</p>
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity?.createdAt!)))}</p>
 
-		<p class="col-span-2 font-semibold text-gray-500 mt-2">Rewards</p>
-		<div class="col-span-2 flex flex-wrap gap-2">
+		<p class="rewards-label">Rewards</p>
+		<div class="rewards-container">
 			{#each job.rewards?.inventory?.items! as reward}
-				<span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-medium">
+				<span class="reward-item">
 					{reward.quantity} × {reward.id}
 				</span>
 			{/each}
 		</div>
 	</Card.Content>
 
-	<Card.Footer class="justify-center p-4 bg-gray-50 rounded-b-xl">
-		<Button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" onclick={onStop}>STOP</Button>
+	<Card.Footer class="card-footer">
+		<Button class="stop-button" onclick={onStop}>STOP</Button>
 	</Card.Footer>
 </Card.Root>
+
+<style>
+	.card-root {
+		width: 350px;
+		box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+		border-radius: 0.75rem;
+		border: 1px solid #e5e7eb;
+		background-color: white;
+		transition: box-shadow 0.2s;
+	}
+	.card-root:hover {
+		box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+	}
+	.card-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background-color: #f9fafb;
+		border-top-left-radius: 0.75rem;
+		border-top-right-radius: 0.75rem;
+		padding: 1rem;
+	}
+	.card-title {
+		font-size: 1.125rem;
+		font-weight: 700;
+	}
+	.job-type {
+		margin-left: auto;
+		font-size: 0.75rem;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		background-color: #dbeafe;
+		color: #1e40af;
+		text-transform: capitalize;
+	}
+	.card-content {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.25rem;
+		padding: 0.5rem 1rem;
+	}
+	.label {
+		font-weight: 600;
+		color: #6b7280;
+	}
+	.truncate {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.capitalize {
+		text-transform: capitalize;
+	}
+	.rewards-label {
+		grid-column: span 2;
+		font-weight: 600;
+		color: #6b7280;
+		margin-top: 0.5rem;
+	}
+	.rewards-container {
+		grid-column: span 2;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.reward-item {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		background-color: #dcfce7;
+		color: #166534;
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+	.card-footer {
+		justify-content: center;
+		padding: 1rem;
+		background-color: #f9fafb;
+		border-bottom-left-radius: 0.75rem;
+		border-bottom-right-radius: 0.75rem;
+	}
+	.stop-button {
+		background-color: #ef4444;
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+	}
+	.stop-button:hover {
+		background-color: #dc2626;
+	}
+</style>

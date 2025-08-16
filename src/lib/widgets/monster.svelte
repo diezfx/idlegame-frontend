@@ -16,13 +16,12 @@
 	} = $props();
 </script>
 
-<Card.Root {...props} class={cn(classname, 'w-[350px]')}>
+<Card.Root {...props} class={cn(classname, 'card-root')}>
 	<Card.Header>
 		<Card.Title>{monster.identity?.name}</Card.Title>
-		<!--<Card.Description>Card Description</Card.Description> -->
 	</Card.Header>
 	<Card.Content>
-		<div class="grid grid-cols-2">
+		<div class="grid-2-cols">
 			<div>ID</div>
 			<p>#{monster.entity?.id}</p>
 			<div>Level</div>
@@ -43,16 +42,42 @@
 				<p>Idle</p>
 			{/if}
 		</div>
-		<Separator class="col-span-full m-1"></Separator>
-		<div class="col-span-2 font-bold">Equipment</div>
-		<div class="grid grid-cols-3">
+		<Separator class="separator"></Separator>
+		<div class="equipment-header">Equipment</div>
+		<div class="grid-3-cols">
 			{#each monster.equippedItems as item}
 				<p>{item.id}</p>
 				<p>{item.quantity}</p>
 				{#if itemDeleteAction}
-					<button class="button text-red-500 text-2xl" onclick={() => itemDeleteAction(item.id)}>-</button>
+					<button class="delete-button" onclick={() => itemDeleteAction(item.id)}>-</button>
 				{/if}
 			{/each}
 		</div>
 	</Card.Content>
 </Card.Root>
+
+<style>
+	.card-root {
+		width: 350px;
+	}
+	.grid-2-cols {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.grid-3-cols {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.separator {
+		grid-column: span 2;
+		margin: 0.25rem;
+	}
+	.equipment-header {
+		grid-column: span 2;
+		font-weight: 700;
+	}
+	.delete-button {
+		color: #ef4444;
+		font-size: 1.5rem;
+	}
+</style>

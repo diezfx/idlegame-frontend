@@ -1,6 +1,19 @@
 import { jobClient } from './connect';
 import type { Job } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
+export type { Job } from '../../gen/v1/domain_pb';
+
+export interface BattleMonster {
+	name: string;
+	health: number;
+	maxHealth: number;
+	lastAttacked: string;
+}
+
+export interface BattleJob extends Job {
+	playerMonsters: BattleMonster[];
+	enemyMonsters: BattleMonster[];
+}
 
 export interface Item {
 	quantity: number;

@@ -4,13 +4,22 @@
 	let { item, class: classname }: { item: Item; class: string } = $props();
 </script>
 
-<Card.Root class="${classname} w-[350px]">
+<Card.Root class="{classname} card-root">
 	<Card.Header>
 		<Card.Title>{item.id}</Card.Title>
-		<!--<Card.Description>Card Description</Card.Description> -->
 	</Card.Header>
-	<Card.Content class="grid grid-cols-2">
+	<Card.Content class="card-content">
 		<div>Quantity</div>
 		<p>{item.quantity}</p>
 	</Card.Content>
 </Card.Root>
+
+<style>
+	.card-root {
+		width: 350px;
+	}
+	.card-content {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+</style>

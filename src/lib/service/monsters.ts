@@ -1,5 +1,6 @@
 import { monsterClient, inventoryClient } from './connect';
 import type { Monster, Item } from '../../gen/v1/domain_pb';
+export type { Monster } from '../../gen/v1/domain_pb';
 
 export class MonsterClient {
 	async getMonsters(): Promise<Monster[]> {
