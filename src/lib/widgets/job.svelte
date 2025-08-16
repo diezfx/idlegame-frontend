@@ -14,10 +14,25 @@
 	} = $props();
 
 	import { DateTime } from 'luxon';
-	import type { Job } from '../../gen/v1/domain_pb';
+	import { JobStatus, type Job } from '../../gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
+
+	const jobStatusText = (status: JobStatus) => {
+		switch (status) {
+			case JobStatus.UNSPECIFIED:
+				return 'Unspecified';
+			case JobStatus.ARRIVING:
+				return 'Arriving';
+			case JobStatus.WORKING:
+				return 'Working';
+			case JobStatus.RETURNING:
+				return 'Returning';
+			case JobStatus.FINISHED:
+				return 'Finished';
+		}
+	};
 
 	export const timeAgo = (dateTime: DateTime) => {
 		const diff = dateTime.diffNow().shiftTo(...units);
@@ -42,10 +57,10 @@
 	</Card.Header>
 	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
-		<p class="truncate">{job.monsters?.join?.(', ') ?? job.monsters}</p>
+		<p class="truncate">{job.monsters.map((m) => m.entity?.id).join?.(', ')}</p>
 		{#if job.jobState && job.jobState.status}
 			<p class="font-semibold text-gray-500">Status</p>
-			<p class="capitalize">{job.jobState.status}</p>
+			<p class="capitalize">{jobStatusText(job.jobState.status)}</p>
 		{/if}
 		<p class="font-semibold text-gray-500">Updated</p>
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState?.updatedAt!)))}</p>

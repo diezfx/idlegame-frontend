@@ -6,6 +6,8 @@ import type { GenEnum, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv2'
 import { enumDesc, fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv2';
 import type { Timestamp } from '@bufbuild/protobuf/wkt';
 import { file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
+import type { MonsterElement, Vector2 } from './masterdata_pb';
+import { file_v1_masterdata } from './masterdata_pb';
 import type { Message } from '@bufbuild/protobuf';
 
 /**
@@ -14,8 +16,8 @@ import type { Message } from '@bufbuild/protobuf';
 export const file_v1_domain: GenFile =
 	/*@__PURE__*/
 	fileDesc(
-		'Cg92MS9kb21haW4ucHJvdG8SAnYxIlkKBkVudGl0eRIKCgJpZBgBIAEoAxITCgtlbnRpdHlfdHlwZRgCIAEoCRIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIvCghJZGVudGl0eRIMCgRuYW1lGAEgASgJEhUKDWRlZmluaXRpb25faWQYAiABKAkiJAoESXRlbRIKCgJpZBgBIAEoCRIQCghxdWFudGl0eRgCIAEoAyIkCglJbnZlbnRvcnkSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIt4BCgRTdGF0EiMKB2VsZW1lbnQYASABKA4yEi52MS5Nb25zdGVyRWxlbWVudBISCgpleHBlcmllbmNlGAIgASgDEg4KBmhlYWx0aBgDIAEoAxISCgptYXhfaGVhbHRoGAQgASgDEg8KB3N0YW1pbmEYBSABKAMSEwoLbWF4X3N0YW1pbmEYBiABKAMSFAoMYXR0YWNrX3Bvd2VyGAcgASgDEi4KCnVwZGF0ZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEg0KBWxldmVsGAkgASgDIssBCgdNb25zdGVyEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5EisKC3BhcnRpY2lwYW50GAQgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EhYKBHN0YXQYBSABKAsyCC52MS5TdGF0EiAKDmVxdWlwcGVkX2l0ZW1zGAYgAygLMggudjEuSXRlbRIdCghwb3NpdGlvbhgHIAEoCzILLnYxLlZlY3RvcjIiHwoHVmVjdG9yMhIJCgF4GAEgASgBEgkKAXkYAiABKAEiQwoSTW9uc3RlclBhcnRpY2lwYW50EhUKDWpvYl9lbnRpdHlfaWQYASABKAMSFgoEcm9sZRgCIAEoDjIILnYxLlJvbGUiOQoRSm9iRGVmaW5pdGlvbkxpbmsSEgoKam9iX2RlZl9pZBgBIAEoCRIQCghqb2JfdHlwZRgCIAEoCSInCg1Kb2JBc3NpZ25tZW50EhYKDnVzZXJfZW50aXR5X2lkGAEgASgDIoUBCghKb2JTdGF0ZRIdCgZzdGF0dXMYASABKA4yDS52MS5Kb2JTdGF0dXMSEgoKaXRlcmF0aW9ucxgCIAEoAxIWCg5tYXhfaXRlcmF0aW9ucxgDIAEoAxIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCLTAQoKSm9iTW9uc3RlchIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSFgoEc3RhdBgCIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYAyADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAQgASgLMgsudjEuVmVjdG9yMhIjCgtsYXN0X2FjdGlvbhgFIAEoCzIOLnYxLkxhc3RBY3Rpb24SKwoLcGFydGljaXBhbnQYBiABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQieAoKTGFzdEFjdGlvbhI0ChBsYXN0X2F0dGFja2VkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBI0ChBsYXN0X2NvbnN1bWVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKLAgoDSm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIlCgphc3NpZ25tZW50GAMgASgLMhEudjEuSm9iQXNzaWdubWVudBIdCghwb3NpdGlvbhgEIAEoCzILLnYxLlZlY3RvcjISHwoJam9iX3N0YXRlGAUgASgLMgwudjEuSm9iU3RhdGUSHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSIAoIbW9uc3RlcnMYByADKAsyDi52MS5Kb2JNb25zdGVyEh0KC2luZ3JlZGllbnRzGAggAygLMggudjEuSXRlbSI/CgdSZXdhcmRzEiAKCWludmVudG9yeRgBIAEoCzINLnYxLkludmVudG9yeRISCgpleHBlcmllbmNlGAIgASgDIksKC0JhdHRsZVN0YXRlEhQKA2pvYhgBIAEoCzIHLnYxLkpvYhImCg1iYXR0bGVfZXZlbnRzGAIgAygLMg8udjEuQmF0dGxlRXZlbnQiOQoLQmF0dGxlRXZlbnQSIQoGYXR0YWNrGAEgASgLMg8udjEuQXR0YWNrRXZlbnRIAEIHCgVldmVudCJwCgtBdHRhY2tFdmVudBIbCgRiYXNlGAEgASgLMg0udjEuQmFzZUV2ZW50EhAKCGF0dGFja2VyGAIgASgDEg4KBnRhcmdldBgDIAEoAxIOCgZkYW1hZ2UYBCABKAMSEgoKbmV3X2hlYWx0aBgFIAEoAyJICglCYXNlRXZlbnQSDAoEdHlwZRgBIAEoCRItCgl0aW1lc3RhbXAYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wKpoBCg5Nb25zdGVyRWxlbWVudBIfChtNT05TVEVSX0VMRU1FTlRfVU5TUEVDSUZJRUQQABIYChRNT05TVEVSX0VMRU1FTlRfRklSRRABEhkKFU1PTlNURVJfRUxFTUVOVF9XQVRFUhACEhkKFU1PTlNURVJfRUxFTUVOVF9FQVJUSBADEhcKE01PTlNURVJfRUxFTUVOVF9BSVIQBCo9CgRSb2xlEhQKEFJPTEVfVU5TUEVDSUZJRUQQABIOCgpST0xFX0VORU1ZEAESDwoLUk9MRV9QTEFZRVIQAippCgdKb2JUeXBlEhgKFEpPQl9UWVBFX1VOU1BFQ0lGSUVEEAASFgoSSk9CX1RZUEVfR0FUSEVSSU5HEAESFwoTSk9CX1RZUEVfUFJPQ0VTU0lORxACEhMKD0pPQl9UWVBFX0JBVFRMRRADKosBCglKb2JTdGF0dXMSGgoWSk9CX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0pPQl9TVEFUVVNfQVJSSVZJTkcQARIWChJKT0JfU1RBVFVTX1dPUktJTkcQAhIYChRKT0JfU1RBVFVTX1JFVFVSTklORxADEhcKE0pPQl9TVEFUVVNfRklOSVNIRUQQBEIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac',
-		[file_google_protobuf_timestamp],
+		'Cg92MS9kb21haW4ucHJvdG8SAnYxIlkKBkVudGl0eRIKCgJpZBgBIAEoAxITCgtlbnRpdHlfdHlwZRgCIAEoCRIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIvCghJZGVudGl0eRIMCgRuYW1lGAEgASgJEhUKDWRlZmluaXRpb25faWQYAiABKAkiJAoESXRlbRIKCgJpZBgBIAEoCRIQCghxdWFudGl0eRgCIAEoAyIkCglJbnZlbnRvcnkSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIt4BCgRTdGF0EiMKB2VsZW1lbnQYASABKA4yEi52MS5Nb25zdGVyRWxlbWVudBISCgpleHBlcmllbmNlGAIgASgDEg4KBmhlYWx0aBgDIAEoAxISCgptYXhfaGVhbHRoGAQgASgDEg8KB3N0YW1pbmEYBSABKAMSEwoLbWF4X3N0YW1pbmEYBiABKAMSFAoMYXR0YWNrX3Bvd2VyGAcgASgDEi4KCnVwZGF0ZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEg0KBWxldmVsGAkgASgDIssBCgdNb25zdGVyEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5EisKC3BhcnRpY2lwYW50GAQgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EhYKBHN0YXQYBSABKAsyCC52MS5TdGF0EiAKDmVxdWlwcGVkX2l0ZW1zGAYgAygLMggudjEuSXRlbRIdCghwb3NpdGlvbhgHIAEoCzILLnYxLlZlY3RvcjIiQwoSTW9uc3RlclBhcnRpY2lwYW50EhUKDWpvYl9lbnRpdHlfaWQYASABKAMSFgoEcm9sZRgCIAEoDjIILnYxLlJvbGUiQgoRSm9iRGVmaW5pdGlvbkxpbmsSEgoKam9iX2RlZl9pZBgBIAEoCRIZCghzdWJfdHlwZRgCIAEoCVIHc3VidHlwZSInCg1Kb2JBc3NpZ25tZW50EhYKDnVzZXJfZW50aXR5X2lkGAEgASgDIoUBCghKb2JTdGF0ZRIdCgZzdGF0dXMYASABKA4yDS52MS5Kb2JTdGF0dXMSEgoKaXRlcmF0aW9ucxgCIAEoAxIWCg5tYXhfaXRlcmF0aW9ucxgDIAEoAxIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCLTAQoKSm9iTW9uc3RlchIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSFgoEc3RhdBgCIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYAyADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAQgASgLMgsudjEuVmVjdG9yMhIjCgtsYXN0X2FjdGlvbhgFIAEoCzIOLnYxLkxhc3RBY3Rpb24SKwoLcGFydGljaXBhbnQYBiABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQieAoKTGFzdEFjdGlvbhI0ChBsYXN0X2F0dGFja2VkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBI0ChBsYXN0X2NvbnN1bWVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKLAgoDSm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIlCgphc3NpZ25tZW50GAMgASgLMhEudjEuSm9iQXNzaWdubWVudBIdCghwb3NpdGlvbhgEIAEoCzILLnYxLlZlY3RvcjISHwoJam9iX3N0YXRlGAUgASgLMgwudjEuSm9iU3RhdGUSHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSIAoIbW9uc3RlcnMYByADKAsyDi52MS5Kb2JNb25zdGVyEh0KC2luZ3JlZGllbnRzGAggAygLMggudjEuSXRlbSI/CgdSZXdhcmRzEiAKCWludmVudG9yeRgBIAEoCzINLnYxLkludmVudG9yeRISCgpleHBlcmllbmNlGAIgASgDIksKC0JhdHRsZVN0YXRlEhQKA2pvYhgBIAEoCzIHLnYxLkpvYhImCg1iYXR0bGVfZXZlbnRzGAIgAygLMg8udjEuQmF0dGxlRXZlbnQiOQoLQmF0dGxlRXZlbnQSIQoGYXR0YWNrGAEgASgLMg8udjEuQXR0YWNrRXZlbnRIAEIHCgVldmVudCJwCgtBdHRhY2tFdmVudBIbCgRiYXNlGAEgASgLMg0udjEuQmFzZUV2ZW50EhAKCGF0dGFja2VyGAIgASgDEg4KBnRhcmdldBgDIAEoAxIOCgZkYW1hZ2UYBCABKAMSEgoKbmV3X2hlYWx0aBgFIAEoAyJICglCYXNlRXZlbnQSDAoEdHlwZRgBIAEoCRItCgl0aW1lc3RhbXAYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wKj0KBFJvbGUSFAoQUk9MRV9VTlNQRUNJRklFRBAAEg4KClJPTEVfRU5FTVkQARIPCgtST0xFX1BMQVlFUhACKosBCglKb2JTdGF0dXMSGgoWSk9CX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0pPQl9TVEFUVVNfQVJSSVZJTkcQARIWChJKT0JfU1RBVFVTX1dPUktJTkcQAhIYChRKT0JfU1RBVFVTX1JFVFVSTklORxADEhcKE0pPQl9TVEFUVVNfRklOSVNIRUQQBEIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac',
+		[file_google_protobuf_timestamp, file_v1_masterdata],
 	);
 
 /**
@@ -200,27 +202,6 @@ export type Monster = Message<'v1.Monster'> & {
 export const MonsterSchema: GenMessage<Monster> = /*@__PURE__*/ messageDesc(file_v1_domain, 5);
 
 /**
- * @generated from message v1.Vector2
- */
-export type Vector2 = Message<'v1.Vector2'> & {
-	/**
-	 * @generated from field: double x = 1;
-	 */
-	x: number;
-
-	/**
-	 * @generated from field: double y = 2;
-	 */
-	y: number;
-};
-
-/**
- * Describes the message v1.Vector2.
- * Use `create(Vector2Schema)` to create a new message.
- */
-export const Vector2Schema: GenMessage<Vector2> = /*@__PURE__*/ messageDesc(file_v1_domain, 6);
-
-/**
  * @generated from message v1.MonsterParticipant
  */
 export type MonsterParticipant = Message<'v1.MonsterParticipant'> & {
@@ -239,7 +220,7 @@ export type MonsterParticipant = Message<'v1.MonsterParticipant'> & {
  * Describes the message v1.MonsterParticipant.
  * Use `create(MonsterParticipantSchema)` to create a new message.
  */
-export const MonsterParticipantSchema: GenMessage<MonsterParticipant> = /*@__PURE__*/ messageDesc(file_v1_domain, 7);
+export const MonsterParticipantSchema: GenMessage<MonsterParticipant> = /*@__PURE__*/ messageDesc(file_v1_domain, 6);
 
 /**
  * @generated from message v1.JobDefinitionLink
@@ -251,16 +232,16 @@ export type JobDefinitionLink = Message<'v1.JobDefinitionLink'> & {
 	jobDefId: string;
 
 	/**
-	 * @generated from field: string job_type = 2;
+	 * @generated from field: string sub_type = 2 [json_name = "subtype"];
 	 */
-	jobType: string;
+	subType: string;
 };
 
 /**
  * Describes the message v1.JobDefinitionLink.
  * Use `create(JobDefinitionLinkSchema)` to create a new message.
  */
-export const JobDefinitionLinkSchema: GenMessage<JobDefinitionLink> = /*@__PURE__*/ messageDesc(file_v1_domain, 8);
+export const JobDefinitionLinkSchema: GenMessage<JobDefinitionLink> = /*@__PURE__*/ messageDesc(file_v1_domain, 7);
 
 /**
  * @generated from message v1.JobAssignment
@@ -276,7 +257,7 @@ export type JobAssignment = Message<'v1.JobAssignment'> & {
  * Describes the message v1.JobAssignment.
  * Use `create(JobAssignmentSchema)` to create a new message.
  */
-export const JobAssignmentSchema: GenMessage<JobAssignment> = /*@__PURE__*/ messageDesc(file_v1_domain, 9);
+export const JobAssignmentSchema: GenMessage<JobAssignment> = /*@__PURE__*/ messageDesc(file_v1_domain, 8);
 
 /**
  * @generated from message v1.JobState
@@ -307,7 +288,7 @@ export type JobState = Message<'v1.JobState'> & {
  * Describes the message v1.JobState.
  * Use `create(JobStateSchema)` to create a new message.
  */
-export const JobStateSchema: GenMessage<JobState> = /*@__PURE__*/ messageDesc(file_v1_domain, 10);
+export const JobStateSchema: GenMessage<JobState> = /*@__PURE__*/ messageDesc(file_v1_domain, 9);
 
 /**
  * @generated from message v1.JobMonster
@@ -348,7 +329,7 @@ export type JobMonster = Message<'v1.JobMonster'> & {
  * Describes the message v1.JobMonster.
  * Use `create(JobMonsterSchema)` to create a new message.
  */
-export const JobMonsterSchema: GenMessage<JobMonster> = /*@__PURE__*/ messageDesc(file_v1_domain, 11);
+export const JobMonsterSchema: GenMessage<JobMonster> = /*@__PURE__*/ messageDesc(file_v1_domain, 10);
 
 /**
  * @generated from message v1.LastAction
@@ -369,7 +350,7 @@ export type LastAction = Message<'v1.LastAction'> & {
  * Describes the message v1.LastAction.
  * Use `create(LastActionSchema)` to create a new message.
  */
-export const LastActionSchema: GenMessage<LastAction> = /*@__PURE__*/ messageDesc(file_v1_domain, 12);
+export const LastActionSchema: GenMessage<LastAction> = /*@__PURE__*/ messageDesc(file_v1_domain, 11);
 
 /**
  * @generated from message v1.Job
@@ -420,7 +401,7 @@ export type Job = Message<'v1.Job'> & {
  * Describes the message v1.Job.
  * Use `create(JobSchema)` to create a new message.
  */
-export const JobSchema: GenMessage<Job> = /*@__PURE__*/ messageDesc(file_v1_domain, 13);
+export const JobSchema: GenMessage<Job> = /*@__PURE__*/ messageDesc(file_v1_domain, 12);
 
 /**
  * @generated from message v1.Rewards
@@ -441,7 +422,7 @@ export type Rewards = Message<'v1.Rewards'> & {
  * Describes the message v1.Rewards.
  * Use `create(RewardsSchema)` to create a new message.
  */
-export const RewardsSchema: GenMessage<Rewards> = /*@__PURE__*/ messageDesc(file_v1_domain, 14);
+export const RewardsSchema: GenMessage<Rewards> = /*@__PURE__*/ messageDesc(file_v1_domain, 13);
 
 /**
  * @generated from message v1.BattleState
@@ -462,7 +443,7 @@ export type BattleState = Message<'v1.BattleState'> & {
  * Describes the message v1.BattleState.
  * Use `create(BattleStateSchema)` to create a new message.
  */
-export const BattleStateSchema: GenMessage<BattleState> = /*@__PURE__*/ messageDesc(file_v1_domain, 15);
+export const BattleStateSchema: GenMessage<BattleState> = /*@__PURE__*/ messageDesc(file_v1_domain, 14);
 
 /**
  * @generated from message v1.BattleEvent
@@ -486,7 +467,7 @@ export type BattleEvent = Message<'v1.BattleEvent'> & {
  * Describes the message v1.BattleEvent.
  * Use `create(BattleEventSchema)` to create a new message.
  */
-export const BattleEventSchema: GenMessage<BattleEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 16);
+export const BattleEventSchema: GenMessage<BattleEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 15);
 
 /**
  * @generated from message v1.AttackEvent
@@ -522,7 +503,7 @@ export type AttackEvent = Message<'v1.AttackEvent'> & {
  * Describes the message v1.AttackEvent.
  * Use `create(AttackEventSchema)` to create a new message.
  */
-export const AttackEventSchema: GenMessage<AttackEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 17);
+export const AttackEventSchema: GenMessage<AttackEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 16);
 
 /**
  * @generated from message v1.BaseEvent
@@ -543,42 +524,7 @@ export type BaseEvent = Message<'v1.BaseEvent'> & {
  * Describes the message v1.BaseEvent.
  * Use `create(BaseEventSchema)` to create a new message.
  */
-export const BaseEventSchema: GenMessage<BaseEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 18);
-
-/**
- * @generated from enum v1.MonsterElement
- */
-export enum MonsterElement {
-	/**
-	 * @generated from enum value: MONSTER_ELEMENT_UNSPECIFIED = 0;
-	 */
-	UNSPECIFIED = 0,
-
-	/**
-	 * @generated from enum value: MONSTER_ELEMENT_FIRE = 1;
-	 */
-	FIRE = 1,
-
-	/**
-	 * @generated from enum value: MONSTER_ELEMENT_WATER = 2;
-	 */
-	WATER = 2,
-
-	/**
-	 * @generated from enum value: MONSTER_ELEMENT_EARTH = 3;
-	 */
-	EARTH = 3,
-
-	/**
-	 * @generated from enum value: MONSTER_ELEMENT_AIR = 4;
-	 */
-	AIR = 4,
-}
-
-/**
- * Describes the enum v1.MonsterElement.
- */
-export const MonsterElementSchema: GenEnum<MonsterElement> = /*@__PURE__*/ enumDesc(file_v1_domain, 0);
+export const BaseEventSchema: GenMessage<BaseEvent> = /*@__PURE__*/ messageDesc(file_v1_domain, 17);
 
 /**
  * @generated from enum v1.Role
@@ -603,37 +549,7 @@ export enum Role {
 /**
  * Describes the enum v1.Role.
  */
-export const RoleSchema: GenEnum<Role> = /*@__PURE__*/ enumDesc(file_v1_domain, 1);
-
-/**
- * @generated from enum v1.JobType
- */
-export enum JobType {
-	/**
-	 * @generated from enum value: JOB_TYPE_UNSPECIFIED = 0;
-	 */
-	UNSPECIFIED = 0,
-
-	/**
-	 * @generated from enum value: JOB_TYPE_GATHERING = 1;
-	 */
-	GATHERING = 1,
-
-	/**
-	 * @generated from enum value: JOB_TYPE_PROCESSING = 2;
-	 */
-	PROCESSING = 2,
-
-	/**
-	 * @generated from enum value: JOB_TYPE_BATTLE = 3;
-	 */
-	BATTLE = 3,
-}
-
-/**
- * Describes the enum v1.JobType.
- */
-export const JobTypeSchema: GenEnum<JobType> = /*@__PURE__*/ enumDesc(file_v1_domain, 2);
+export const RoleSchema: GenEnum<Role> = /*@__PURE__*/ enumDesc(file_v1_domain, 0);
 
 /**
  * @generated from enum v1.JobStatus
@@ -668,4 +584,4 @@ export enum JobStatus {
 /**
  * Describes the enum v1.JobStatus.
  */
-export const JobStatusSchema: GenEnum<JobStatus> = /*@__PURE__*/ enumDesc(file_v1_domain, 3);
+export const JobStatusSchema: GenEnum<JobStatus> = /*@__PURE__*/ enumDesc(file_v1_domain, 1);
