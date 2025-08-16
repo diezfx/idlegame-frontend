@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { JobsClient, type JobMasterdata } from '$lib/service/jobs';
+	import { JobsClient } from '$lib/service/jobs';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import MonsterView from '$lib/widgets/monster.svelte';
@@ -11,6 +11,9 @@
 	import { invalidateAll } from '$app/navigation';
 	import { config } from '$lib/config/config.js';
 	import type { Monster } from '../../../../gen/v1/domain_pb.js';
+	import type { ProductionJobDefinition } from '../../../../gen/v1/masterdata_pb.js';
+	import { protoToMilliseconds } from '$lib/utils/prototime.js';
+	import { Duration } from 'luxon';
 
 	let { data } = $props();
 
@@ -21,11 +24,15 @@
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
-	let selectedJob: JobMasterdata | undefined = $state(undefined);
+	let selectedJob: ProductionJobDefinition | undefined = $state(undefined);
 
 	function dialogClicked(m: Monster): void {
 		openDialog = false;
 		selectedMonster = m;
+	}
+	function reset(): void {
+		selectedMonster = undefined;
+		selectedJob = undefined;
 	}
 
 	function isSelectedJob(jobID: string): boolean {
@@ -37,11 +44,12 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await jobClient.startProcessingJob({
+		await jobClient.startJob({
 			jobDefinitionId: selectedJob?.id,
 			userId: BigInt(user.userId),
 			monsterId: BigInt(selectedMonster.entity!.id),
 		});
+		reset();
 		invalidateAll();
 	}
 </script>
@@ -56,10 +64,10 @@
 	<Card.Root
 		onclick={() => {
 			openDialog = true;
+			selectedMonster;
 		}}
-		class="button text-center text-green-500 text-2xl hover:{selectedColor}"
-		>+
-	</Card.Root>
+		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card.Root
+	>
 </div>
 
 <div>Currently active Jobs</div>
@@ -93,18 +101,14 @@
 				<p>Required Level</p>
 				<p>{job.levelRequirement}</p>
 				<div>Duration</div>
-				<p>{job.duration}</p>
+				<p>
+					{Duration.fromMillis(protoToMilliseconds(job.duration)).shiftTo('seconds').toHuman({ unitDisplay: 'narrow' })}
+				</p>
 				<div>Stamina Cost</div>
 				<p>{job.staminaCost}</p>
 
 				<div>Experience</div>
-				<p>{job.rewards.experience}</p>
-				<div class="text-xl col-span-2">Ingredients</div>
-
-				{#each job.ingredients as ingredient}
-					<p>{ingredient.id}</p>
-					<p>{ingredient.quantity}</p>
-				{/each}
+				<p>{job.rewards?.experience}</p>
 			</Card.Content>
 		</Card.Root>
 	{/each}

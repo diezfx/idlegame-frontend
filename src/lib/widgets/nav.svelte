@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/state';
+	import { page } from '$app/stores';
+	import { JobSubType } from '../../gen/v1/masterdata_pb';
 
 	function activeClass(url: string): string {
-		const isActive = url === page.url.pathname;
+		const isActive = url === $page.url.pathname;
 		if (isActive) {
 			return 'active';
 		}
@@ -26,8 +27,8 @@
 	};
 </script>
 
-<nav class="float-left w-48 h-screen p-4 mx-4 bg-blue-50 rounded-xl">
-	<p class="text-2xl font-bold text-blue-700 flex items-center gap-2 mb-2">Character</p>
+<nav class="float-left h-screen w-48 rounded-xl bg-blue-50 p-4 mx-4">
+	<p class="mb-2 flex items-center gap-2 text-2xl font-bold text-blue-700">Character</p>
 	<ul class="mb-6">
 		<li class="nav-item {activeClass('/jobs')}">
 			<a class="nav-content" href="/jobs"> Jobs</a>
@@ -42,45 +43,47 @@
 			<a class="nav-content" href="/map">{navIcons.map} Map</a>
 		</li>
 	</ul>
-	<p class="mt-2 text-2xl font-bold text-blue-700 flex items-center gap-2">
+	<p class="mt-2 flex items-center gap-2 text-2xl font-bold text-blue-700">
 		<span>{navIcons.jobs}</span> Jobs
 	</p>
 	<ul class="mt-2">
 		<p class="nav-header">Gathering</p>
-		<li class="nav-item {activeClass('/jobs/gathering/woodcutting')}">
-			<a class="nav-content" href="/jobs/gathering/woodcutting">{navIcons.woodcutting} Woodcutting</a>
+		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.WOODCUTTING}`)}">
+			<a class="nav-content" href="/jobs/gathering/{JobSubType.WOODCUTTING}">{navIcons.woodcutting} Woodcutting</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/gathering/mining')}">
-			<a class="nav-content" href="/jobs/gathering/mining">{navIcons.mining} Mining</a>
+		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.MINING}`)}">
+			<a class="nav-content" href="/jobs/gathering/{JobSubType.MINING}">{navIcons.mining} Mining</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/gathering/harvesting')}">
-			<a class="nav-content" href="/jobs/gathering/harvesting">{navIcons.harvesting} Harvesting</a>
+		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.HARVESTING}`)}">
+			<a class="nav-content" href="/jobs/gathering/{JobSubType.HARVESTING}">{navIcons.harvesting} Harvesting</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/gathering/fishing')}">
-			<a class="nav-content" href="/jobs/gathering/fishing">{navIcons.fishing} Fishing</a>
+		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.FISHING}`)}">
+			<a class="nav-content" href="/jobs/gathering/{JobSubType.FISHING}">{navIcons.fishing} Fishing</a>
 		</li>
 		<p class="nav-header">Processing</p>
-		<li class="nav-item {activeClass('/jobs/processing/smelting')}">
-			<a class="nav-content" href="/jobs/processing/smelting">{navIcons.smelting} Smelting</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.SMELTING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.SMELTING}">{navIcons.smelting} Smelting</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/processing/woodworking')}">
-			<a class="nav-content" href="/jobs/processing/woodworking">{navIcons.woodworking} Woodworking</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.WOODWORKING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.WOODWORKING}">{navIcons.woodworking} Woodworking</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/processing/foodProcessing')}">
-			<a class="nav-content" href="/jobs/processing/foodProcessing">{navIcons.foodProcessing} Processing</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.FOOD_PROCESSING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.FOOD_PROCESSING}"
+				>{navIcons.foodProcessing} Processing</a
+			>
 		</li>
-		<li class="nav-item {activeClass('/jobs/processing/fishery')}">
-			<a class="nav-content" href="/jobs/processing/fishery">{navIcons.fishery} Fishery</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.FISHERY}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.FISHERY}">{navIcons.fishery} Fishery</a>
 		</li>
 		<p class="nav-header">Products</p>
-		<li class="nav-item {activeClass('/jobs/processing/weaponCrafting')}">
-			<a class="nav-content" href="/jobs/processing/weaponCrafting">{navIcons.smelting} Weapons</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.WEAPON_CRAFTING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.WEAPON_CRAFTING}">{navIcons.smelting} Weapons</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/processing/armorCrafting')}">
-			<a class="nav-content" href="/jobs/processing/armorCrafting">{navIcons.woodworking} Armour</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.ARMOR_CRAFTING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.ARMOR_CRAFTING}">{navIcons.woodworking} Armour</a>
 		</li>
-		<li class="nav-item {activeClass('/jobs/processing/cooking')}">
-			<a class="nav-content" href="/jobs/processing/cooking">{navIcons.foodProcessing} Cooking</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.COOKING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.COOKING}">{navIcons.foodProcessing} Cooking</a>
 		</li>
 		<p class="nav-header">Battles</p>
 		<li class="nav-item {activeClass('/jobs/battles')}">

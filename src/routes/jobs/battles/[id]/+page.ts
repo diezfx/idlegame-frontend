@@ -8,7 +8,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	const monsterClient = new MonsterClient();
 	const masterdata = jobsClient.getBattleJobMasterdata();
 
-	let battleJob = await jobsClient.getBattleJob(BigInt(params.id));
+	const battleJob = await jobsClient.getBattleJob(BigInt(params.id));
 	if (!battleJob) {
 		redirect(302, '/jobs/battles');
 	}

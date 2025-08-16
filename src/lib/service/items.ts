@@ -1,20 +1,5 @@
 import { getContext, setContext } from 'svelte';
-
-export interface ItemMasterDataContainer {
-	items: Item[];
-}
-
-export interface Item {
-	id: string;
-	name: string;
-	tags: string[];
-	effects: ItemEffect[];
-}
-
-export interface ItemEffect {
-	type: string;
-	value: number;
-}
+import { ContainerSchema, type ItemDefinition } from '../../gen/v1/masterdata_pb';
 
 export class ItemsClient {
 	masterDataBaseUrl: string;
@@ -25,11 +10,11 @@ export class ItemsClient {
 		this.fetch = fetch;
 	}
 
-	async getItemsMasterdata(): Promise<{ [key: string]: Item }> {
+	async getItemsMasterdata(): Promise<{ [key: string]: ItemDefinition }> {
 		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/items`);
-		const data = (await response.json()) as ItemMasterDataContainer;
-		let items: { [key: string]: Item } = {};
-		for (const item of data.items) {
+		const data = await response.json();
+		const items: { [key: string]: ItemDefinition } = {};
+		for (const item of data) {
 			items[item.id] = item;
 		}
 		return items;

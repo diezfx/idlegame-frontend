@@ -1,6 +1,13 @@
-import { jobClient } from './connect';
+import { jobClient, masterdataClient } from './connect';
 import type { Job } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
+import {
+	BattleJobDefinitionSchema,
+	ContainerSchema,
+	ProductionJobDefinitionSchema,
+	type BattleJobDefinition,
+	type ProductionJobDefinition,
+} from '../../gen/v1/masterdata_pb';
 
 export interface Item {
 	quantity: number;
@@ -10,23 +17,6 @@ export interface Item {
 export interface ItemWithQuantity {
 	id: string;
 	quantity: number;
-}
-
-export interface JobMasterdata {
-	id: string;
-	name: string;
-	jobType: string;
-	levelRequirement: number;
-	duration: string;
-	staminaCost: number;
-	rewards: {
-		items: Item[];
-		experience: number;
-	};
-	affinity: {
-		elements: Record<string, number>;
-	};
-	ingredients: ItemWithQuantity[];
 }
 
 export class JobsClient {
@@ -67,23 +57,23 @@ export class JobsClient {
 		await jobClient.deleteJob({ id: jobId });
 	}
 
-	async getJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/gathering`);
-		return await response.json();
+	async getJobMasterdata(): Promise<ProductionJobDefinition[]> {
+		const jobs = await masterdataClient.getProductionJobs({});
+		return jobs.jobs;
 	}
 
-	async getProcessingJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/processing`);
-		return await response.json();
+	async getProcessingJobMasterdata(): Promise<ProductionJobDefinition[]> {
+		const jobs = await masterdataClient.getProductionJobs({});
+		return jobs.jobs;
 	}
-	async getProductJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/product`);
-		return await response.json();
+	async getProductJobMasterdata(): Promise<ProductionJobDefinition[]> {
+		const jobs = await masterdataClient.getProductionJobs({});
+		return jobs.jobs;
 	}
 
-	async getBattleJobMasterdata(): Promise<JobMasterdata[]> {
-		const response = await this.fetch(`${this.masterDataBaseUrl}/v1.0/jobs/battle`);
-		return await response.json();
+	async getBattleJobMasterdata(): Promise<BattleJobDefinition[]> {
+		const jobs = await masterdataClient.getBattleJobs({});
+		return jobs.jobs;
 	}
 }
 
