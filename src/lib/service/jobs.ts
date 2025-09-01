@@ -1,14 +1,7 @@
 import { createClients } from './connect';
 import type { Job } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
-import {
-	BattleJobDefinitionSchema,
-	ContainerSchema,
-	ProductionJobDefinitionSchema,
-	type BattleJobDefinition,
-	type ProductionJobDefinition
-} from '../../gen/v1/masterdata_pb';
-
+import { type BattleJobDefinition, type ProductionJobDefinition } from '../../gen/v1/masterdata_pb';
 
 export interface Item {
 	quantity: number;
