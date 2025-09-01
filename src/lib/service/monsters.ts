@@ -1,22 +1,17 @@
-import { monsterClient, inventoryClient } from './connect';
-import type { Monster, Item } from '../../gen/v1/domain_pb';
+import { createClients } from './connect';
+import type { Monster } from '../../gen/v1/domain_pb';
+
 
 export class MonsterClient {
+	private readonly monsterClient;
+
+	constructor(customFetch?: typeof globalThis.fetch) {
+		const { monsterClient } = createClients(customFetch);
+		this.monsterClient = monsterClient;
+	}
+
 	async getMonsters(): Promise<Monster[]> {
-		const response = await monsterClient.listMonsters({});
+		const response = await this.monsterClient.listMonsters({});
 		return response.monsters;
-	}
-
-	async equipItem(request: { userId: bigint; monsterId: bigint; itemId: string; quantity: bigint }): Promise<void> {
-		await inventoryClient.equipItem(request);
-	}
-
-	async unEquipItem(request: { userId: bigint; monsterId: bigint; itemId: string }): Promise<void> {
-		await inventoryClient.unEquipItem(request);
-	}
-
-	async getEquipment(monsterId: bigint): Promise<Item[]> {
-		const response = await inventoryClient.getEquipment({ monsterId });
-		return response.items;
 	}
 }

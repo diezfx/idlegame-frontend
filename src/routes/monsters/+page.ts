@@ -1,18 +1,18 @@
-import { config } from '$lib/config/config';
 import { InventoryClient } from '$lib/service/inventory';
-import { ItemsClient } from '$lib/service/items';
+import { MasterdataClient } from '$lib/service/masterdata';
 import { MonsterClient } from '$lib/service/monsters';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const p = await parent();
 	const user = p.user;
-	const monsterClient = new MonsterClient();
-	const inventoryClient = new InventoryClient();
-	const itemCliemt = new ItemsClient(fetch, config.masterdataBaseUrl);
+	const monsterClient = new MonsterClient(fetch);
+	const inventoryClient = new InventoryClient(fetch);
+	const masterdataClient = new MasterdataClient(fetch);
+
 	return {
 		monsters: await monsterClient.getMonsters(),
 		inventory: await inventoryClient.getInventory(BigInt(user.userId)),
-		itemMasterdata: await itemCliemt.getItemsMasterdata(),
+		itemMasterdata: await masterdataClient.getItems(),
 	};
 };

@@ -7,7 +7,7 @@
 	let { data, children } = $props();
 
 	setUserContext(data.user);
-	setJobsClientContext(new JobsClient(fetch, data.config.masterdataBaseUrl));
+	setJobsClientContext(new JobsClient(fetch));
 </script>
 
 <Nav />

@@ -5,8 +5,8 @@ import { JobSubType } from '../../../gen/v1/masterdata_pb';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, params }) => {
-	const jobsClient = new JobsClient(fetch, config.masterdataBaseUrl);
-	const monsterClient = new MonsterClient();
+	const jobsClient = new JobsClient(fetch);
+	const monsterClient = new MonsterClient(fetch);
 	const masterdata = jobsClient.getBattleJobMasterdata();
 
 	let activeGatheringJobs = await masterdata;

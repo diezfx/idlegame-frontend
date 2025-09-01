@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { JobsClient } from '$lib/service/jobs';
+	import { getJobsClientContext, JobsClient } from '$lib/service/jobs';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import MonsterView from '$lib/widgets/monster.svelte';
@@ -9,7 +9,6 @@
 	import log from '$lib/log/log.js';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
-	import { config } from '$lib/config/config.js';
 	import type { Monster } from '../../../../gen/v1/domain_pb.js';
 	import type { ProductionJobDefinition } from '../../../../gen/v1/masterdata_pb.js';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
@@ -20,7 +19,7 @@
 	const selectedColor = 'bg-green-200';
 
 	const user = getUserFromContext()!;
-	const jobClient = new JobsClient(fetch, config.masterdataBaseUrl);
+	const jobClient = getJobsClientContext();
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);

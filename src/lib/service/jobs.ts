@@ -1,4 +1,4 @@
-import { jobClient, masterdataClient } from './connect';
+import { createClients } from './connect';
 import type { Job } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
 import {
@@ -6,8 +6,9 @@ import {
 	ContainerSchema,
 	ProductionJobDefinitionSchema,
 	type BattleJobDefinition,
-	type ProductionJobDefinition,
+	type ProductionJobDefinition
 } from '../../gen/v1/masterdata_pb';
+
 
 export interface Item {
 	quantity: number;
@@ -20,59 +21,64 @@ export interface ItemWithQuantity {
 }
 
 export class JobsClient {
-	constructor(
-		private fetch: any,
-		private masterDataBaseUrl: string,
-	) {}
+	private readonly jobClient;
+	private readonly masterdataClient;
+
+	constructor(svFetch?: typeof globalThis.fetch) {
+		const { jobClient, masterdataClient } = createClients(svFetch);
+		this.jobClient = jobClient;
+		this.masterdataClient = masterdataClient;
+	}
+
 	async getJobs(): Promise<Job[]> {
-		const response = await jobClient.listJobs({});
+		const response = await this.jobClient.listJobs({});
 		return response.jobs;
 	}
 
 	async getBattleJob(jobId: bigint): Promise<Job | undefined> {
-		return await jobClient.getJob({ id: jobId });
+		return await this.jobClient.getJob({ id: jobId });
 	}
 
 	async startJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
-		const response = await jobClient.startProductionJob(request);
+		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
 	async startProcessingJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
-		const response = await jobClient.startProductionJob(request);
+		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
 	async startProductJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
-		const response = await jobClient.startProductionJob(request);
+		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
 	async startBattleJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
-		const response = await jobClient.startBattle(request);
+		const response = await this.jobClient.startBattle(request);
 		return response.jobId;
 	}
 
 	async stopJob(jobId: bigint): Promise<void> {
-		await jobClient.deleteJob({ id: jobId });
+		await this.jobClient.deleteJob({ id: jobId });
 	}
 
 	async getJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await masterdataClient.getProductionJobs({});
+		const jobs = await this.masterdataClient.getProductionJobs({});
 		return jobs.jobs;
 	}
 
 	async getProcessingJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await masterdataClient.getProductionJobs({});
+		const jobs = await this.masterdataClient.getProductionJobs({});
 		return jobs.jobs;
 	}
 	async getProductJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await masterdataClient.getProductionJobs({});
+		const jobs = await this.masterdataClient.getProductionJobs({});
 		return jobs.jobs;
 	}
 
 	async getBattleJobMasterdata(): Promise<BattleJobDefinition[]> {
-		const jobs = await masterdataClient.getBattleJobs({});
+		const jobs = await this.masterdataClient.getBattleJobs({});
 		return jobs.jobs;
 	}
 }

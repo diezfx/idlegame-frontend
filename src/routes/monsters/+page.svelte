@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { Card } from '$lib/components/ui/card';
-	import { MonsterClient } from '$lib/service/monsters';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import log from '$lib/log/log';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
 	import type { Item, Monster } from '../../gen/v1/domain_pb.js';
+	import { InventoryClient } from '$lib/service/inventory.js';
 
 	let { data } = $props();
 
 	const user = getUserFromContext()!;
-	const monsterClient = new MonsterClient();
+	const inventoryClient = new InventoryClient(fetch);
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -32,7 +32,7 @@
 			log.error('No monster selected');
 			return;
 		}
-		monsterClient.equipItem({
+		inventoryClient.equipItem({
 			userId: BigInt(user.userId),
 			monsterId: BigInt(selectedMonster.entity!.id),
 			itemId: item.id,
@@ -43,7 +43,7 @@
 	}
 
 	async function itemDeleteAction(monsterId: bigint, itemId: string): Promise<void> {
-		await monsterClient.unEquipItem({
+		await inventoryClient.unEquipItem({
 			userId: BigInt(user.userId),
 			monsterId: BigInt(monsterId),
 			itemId: itemId,

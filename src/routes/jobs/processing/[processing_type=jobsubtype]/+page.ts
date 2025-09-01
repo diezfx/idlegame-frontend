@@ -4,9 +4,8 @@ import { MonsterClient } from '$lib/service/monsters';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, params }) => {
-	const cfg = config;
-	const jobsClient = new JobsClient(fetch, cfg.masterdataBaseUrl);
-	const monsterClient = new MonsterClient();
+	const jobsClient = new JobsClient(fetch);
+	const monsterClient = new MonsterClient(fetch);
 	const masterdata = jobsClient.getJobMasterdata();
 
 	const processingType = parseInt(params.processing_type, 10);

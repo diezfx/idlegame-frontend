@@ -1,13 +1,11 @@
-import { config } from '$lib/config/config';
 import { JobsClient } from '$lib/service/jobs';
 import { MonsterClient } from '$lib/service/monsters';
 import { JobSubType } from '../../../../gen/v1/masterdata_pb';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ params }) => {
-	const cfg = config;
-	const jobsClient = new JobsClient(fetch, cfg.masterdataBaseUrl);
-	const monsterClient = new MonsterClient();
+export const load: PageLoad = async ({ fetch, params }) => {
+	const jobsClient = new JobsClient(fetch);
+	const monsterClient = new MonsterClient(fetch);
 	const masterdata = jobsClient.getJobMasterdata();
 
 	const gatheringType = parseInt(params.gathering_type, 10);

@@ -16,6 +16,7 @@
 	import { DateTime } from 'luxon';
 	import { JobStatus, type Job } from '../../gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
+	import { JobSubType } from '../../gen/v1/masterdata_pb';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -43,6 +44,7 @@
 		});
 		return relativeFormatter.format(Math.trunc(diff.as(unit)), unit);
 	};
+	console.log(job.def?.subType);
 </script>
 
 <Card.Root
@@ -52,7 +54,7 @@
 	<Card.Header class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
 		<Card.Title class="text-lg font-bold">{job.def?.jobDefId}</Card.Title>
 		<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
-			{job.def?.subType}
+			{JobSubType[job.def?.subType!]}
 		</span>
 	</Card.Header>
 	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">

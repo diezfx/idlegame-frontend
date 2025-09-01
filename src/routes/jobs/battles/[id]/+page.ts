@@ -4,8 +4,8 @@ import type { PageLoad } from '../$types';
 import { redirect } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({ fetch, params }) => {
-	const jobsClient = new JobsClient();
-	const monsterClient = new MonsterClient();
+	const jobsClient = new JobsClient(fetch);
+	const monsterClient = new MonsterClient(fetch);
 	const masterdata = jobsClient.getBattleJobMasterdata();
 
 	const battleJob = await jobsClient.getBattleJob(BigInt(params.id));

@@ -26,5 +26,7 @@ export const handle: Handle = async function ({ event, resolve }) {
 		username: 'test',
 		isLoggedIn: true,
 	};
-	return await resolve(event);
+	return await resolve(event, {
+		filterSerializedResponseHeaders: () => true, // basically get all headers
+	});
 };
