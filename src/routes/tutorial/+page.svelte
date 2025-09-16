@@ -4,6 +4,7 @@
 	import MasterdataMonster from '$lib/widgets/masterdata_monster.svelte';
 	import type { PageProps } from './$types';
 	import { getUserFromContext } from '$lib/stores/user';
+	import { goto } from '$app/navigation';
 	let { data }: PageProps = $props();
 
 	const selectedColor = 'bg-green-200';
@@ -20,7 +21,7 @@
 			id: BigInt(user.userId),
 			monDefinitionId: BigInt(selectedMonster!),
 		});
-		console.log('chooseStarter', result);
+		goto('/monsters');
 	}
 </script>
 

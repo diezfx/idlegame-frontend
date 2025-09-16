@@ -6,4 +6,4 @@
 
 <h1>Map</h1>
 
-<Map monsters={data.monsters} />
+<Map cities={data.cities} monsters={data.monsters} />
