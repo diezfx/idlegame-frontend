@@ -10,7 +10,9 @@
 	setJobsClientContext(new JobsClient(fetch));
 </script>
 
-<Nav />
-<div class="container">
-	{@render children()}
+<div class="flex">
+	<Nav />
+	<main class="flex-1 p-2">
+		{@render children()}
+	</main>
 </div>

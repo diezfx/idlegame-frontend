@@ -80,7 +80,7 @@
 			{#each data.inventory.items as item}
 				<button
 					onclick={() => (selectedItem = item)}
-					class="grid grid-cols-4 m-1 flex-grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"
+					class="grid grid-cols-4 m-1 grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"
 				>
 					<p>{item.id}</p>
 					<p>{item.quantity}</p>
