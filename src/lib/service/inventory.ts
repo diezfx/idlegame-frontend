@@ -1,6 +1,8 @@
 import { createClients } from './connect';
 import type { Item } from '../../gen/v1/domain_pb';
 
+export type { Item } from '../../gen/v1/domain_pb';
+
 export class InventoryClient {
 	private readonly inventoryClient;
 

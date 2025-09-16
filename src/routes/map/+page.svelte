@@ -5,5 +5,4 @@
 </script>
 
 <h1>Map</h1>
-
 <Map cities={data.cities} monsters={data.monsters} />

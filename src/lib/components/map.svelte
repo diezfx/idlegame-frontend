@@ -60,7 +60,7 @@
 	<div class="absolute top-0 left-0">
 		{#each cities as city}
 			<div class="absolute" style="left: {city.position!.x * TILE_SIZE}px; top: {city.position!.y * TILE_SIZE}px;">
-				<Button variant="outline" size="icon" class="relative rounded-full">
+				<Button variant="outline" size="icon" class="bg-amber-300 relative rounded-full">
 					<House class="h-4 w-4" />
 					<span
 						class="absolute left-1/2 -translate-x-1/2 -top-8 w-max px-2 py-1 bg-gray-900 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity"

@@ -103,7 +103,7 @@
 				<p>{job.staminaCost}</p>
 
 				<div>Experience</div>
-				<p>{job.rewards.experience}</p>
+				<p>{job.rewards?.experience}</p>
 			</Card.Content>
 		</Card.Root>
 	{/each}
