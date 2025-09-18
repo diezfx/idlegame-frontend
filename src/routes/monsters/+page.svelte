@@ -77,7 +77,7 @@
 			<Dialog.Title>Chose Item to Equip</Dialog.Title>
 		</Dialog.Header>
 		<div class="grid grid-cols-1">
-			{#each data.inventory.items as item}
+			{#each data.inventory as item}
 				<button
 					onclick={() => (selectedItem = item)}
 					class="grid grid-cols-4 m-1 grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"

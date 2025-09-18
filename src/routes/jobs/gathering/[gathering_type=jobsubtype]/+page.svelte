@@ -13,6 +13,7 @@
 	import type { ProductionJobDefinition } from '../../../../gen/v1/masterdata_pb.js';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
 	import { Duration } from 'luxon';
+	import type { ProductionJobInfo } from '../../../../gen/v1/service_pb.js';
 
 	let { data } = $props();
 
@@ -23,7 +24,7 @@
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
-	let selectedJob: ProductionJobDefinition | undefined = $state(undefined);
+	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
 	function dialogClicked(m: Monster): void {
 		openDialog = false;
@@ -35,7 +36,7 @@
 	}
 
 	function isSelectedJob(jobID: string): boolean {
-		return selectedJob?.id == jobID;
+		return selectedJob?.definition!.id == jobID;
 	}
 
 	async function startJob(): Promise<void> {
@@ -44,7 +45,7 @@
 			return;
 		}
 		await jobClient.startJob({
-			jobDefinitionId: selectedJob?.id,
+			jobDefinitionId: selectedJob?.definition!.id,
 			userId: BigInt(user.userId),
 			monsterId: BigInt(selectedMonster.entity!.id),
 		});
@@ -91,23 +92,33 @@
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
-		<Card.Root class={isSelectedJob(job.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
+		<Card.Root class={isSelectedJob(job.definition!.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
 			<Card.Header>
-				<Card.Title>{job.name}</Card.Title>
+				<Card.Title>{job.definition!.name}</Card.Title>
 			</Card.Header>
 
 			<Card.Content class="grid grid-cols-2">
 				<p>Required Level</p>
-				<p>{job.levelRequirement}</p>
+				<p>{job.definition!.levelRequirement}</p>
 				<div>Duration</div>
 				<p>
-					{Duration.fromMillis(protoToMilliseconds(job.duration)).shiftTo('seconds').toHuman({ unitDisplay: 'narrow' })}
+					{Duration.fromMillis(protoToMilliseconds(job.definition!.duration))
+						.shiftTo('seconds')
+						.toHuman({ unitDisplay: 'narrow' })}
 				</p>
 				<div>Stamina Cost</div>
-				<p>{job.staminaCost}</p>
+				<p>{job.definition!.staminaCost}</p>
 
 				<div>Experience</div>
-				<p>{job.rewards?.experience}</p>
+				<p>{job.definition!.rewards?.experience}</p>
+				<div>Distance</div>
+				<p>{Math.round(job.routeInfo?.distance! * 100) / 100}m</p>
+				<div>Estimated Traveltime</div>
+				<p>
+					{Duration.fromMillis(protoToMilliseconds(job.routeInfo?.estimatedDuration!))
+						.shiftTo('seconds')
+						.toHuman({ unitDisplay: 'narrow' })}
+				</p>
 			</Card.Content>
 		</Card.Root>
 	{/each}

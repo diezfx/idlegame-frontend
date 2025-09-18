@@ -16,7 +16,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/service.proto.
  */
 export const file_v1_service: GenFile = /*@__PURE__*/
-  fileDesc("ChB2MS9zZXJ2aWNlLnByb3RvEgJ2MSJYChRHZXRJbnZlbnRvcnlSZXNwb25zZRIhCgZjaXRpZXMYASADKAsyES52MS5DaXR5SW52ZW50b3J5Eh0KC3RvdGFsX2l0ZW1zGAIgAygLMggudjEuSXRlbSI9Cg1DaXR5SW52ZW50b3J5EgoKAmlkGAEgASgJEiAKCWludmVudG9yeRgCIAEoCzINLnYxLkludmVudG9yeSIfChFHZXRNb25zdGVyUmVxdWVzdBIKCgJpZBgBIAEoAyIkChZHZXRVc2VyUHJvZ3Jlc3NSZXF1ZXN0EgoKAmlkGAEgASgDIlEKF0dldFVzZXJQcm9ncmVzc1Jlc3BvbnNlEjYKEnR1dG9yaWFsX2NvbXBsZXRlZBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiPQoUQ2hvb3NlU3RhcnRlclJlcXVlc3QSCgoCaWQYASABKAMSGQoRbW9uX2RlZmluaXRpb25faWQYAiABKAMiIwoVQ2hvb3NlU3RhcnRlclJlc3BvbnNlEgoKAmlkGAEgASgDIi4KGkdldFN0YXJ0ZXJNb25zdGVyc1Jlc3BvbnNlEhAKCG1vbnN0ZXJzGAEgAygFIjUKFExpc3RNb25zdGVyc1Jlc3BvbnNlEh0KCG1vbnN0ZXJzGAEgAygLMgsudjEuTW9uc3RlciIbCg1HZXRKb2JSZXF1ZXN0EgoKAmlkGAEgASgDIikKEExpc3RKb2JzUmVzcG9uc2USFQoEam9icxgBIAMoCzIHLnYxLkpvYiIeChBEZWxldGVKb2JSZXF1ZXN0EgoKAmlkGAEgASgDImgKElN0YXJ0QmF0dGxlUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSGQoRam9iX2RlZmluaXRpb25faWQYAyABKAkSEgoKaXRlcmF0aW9ucxgEIAEoAyIiChBFbnRpdHlJZFJlc3BvbnNlEg4KBmpvYl9pZBgBIAEoAyJvChlTdGFydFByb2R1Y3Rpb25Kb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIZChFqb2JfZGVmaW5pdGlvbl9pZBgDIAEoCRISCgppdGVyYXRpb25zGAQgASgDIiYKE0dldEludmVudG9yeVJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAyIkCglFcXVpcG1lbnQSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIikKE0dldEVxdWlwbWVudFJlcXVlc3QSEgoKbW9uc3Rlcl9pZBgBIAEoAyJaChBFcXVpcEl0ZW1SZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIPCgdpdGVtX2lkGAMgASgJEhAKCHF1YW50aXR5GAQgASgDIkoKElVuRXF1aXBJdGVtUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSDwoHaXRlbV9pZBgDIAEoCSJrChlDcmVhdGVUcmFuc3BvcnRKb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QiKAoWR2V0VHJhbnNwb3J0Sm9iUmVxdWVzdBIOCgZqb2JfaWQYASABKAMiQgoYTGlzdFRyYW5zcG9ydEpvYnNSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSFQoNc3RhdHVzX2ZpbHRlchgCIAEoCSJFChlMaXN0VHJhbnNwb3J0Sm9ic1Jlc3BvbnNlEigKDnRyYW5zcG9ydF9qb2JzGAEgAygLMhAudjEuVHJhbnNwb3J0Sm9iIisKGUNhbmNlbFRyYW5zcG9ydEpvYlJlcXVlc3QSDgoGam9iX2lkGAEgASgDIlwKGUdldEF2YWlsYWJsZVJvdXRlc1JlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAxIaChJzb3VyY2VfbG9jYXRpb25faWQYAiABKAkSEgoKbW9uc3Rlcl9pZBgDIAEoAyJFChpHZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZRInChBhdmFpbGFibGVfcm91dGVzGAEgAygLMg0udjEuUm91dGVJbmZvIlQKCVJvdXRlSW5mbxIQCghkaXN0YW5jZRgCIAEoAhI1ChJlc3RpbWF0ZWRfZHVyYXRpb24YAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iNQoQR2V0SXRlbXNSZXNwb25zZRIhCgVpdGVtcxgBIAMoCzISLnYxLkl0ZW1EZWZpbml0aW9uIj4KE0dldE1vbnN0ZXJzUmVzcG9uc2USJwoIbW9uc3RlcnMYASADKAsyFS52MS5Nb25zdGVyRGVmaW5pdGlvbiJGChlHZXRQcm9kdWN0aW9uSm9ic1Jlc3BvbnNlEikKBGpvYnMYASADKAsyGy52MS5Qcm9kdWN0aW9uSm9iRGVmaW5pdGlvbiI+ChVHZXRCYXR0bGVKb2JzUmVzcG9uc2USJQoEam9icxgBIAMoCzIXLnYxLkJhdHRsZUpvYkRlZmluaXRpb24iNwoRR2V0Q2l0aWVzUmVzcG9uc2USIgoGY2l0aWVzGAEgAygLMhIudjEuQ2l0eURlZmluaXRpb24yhAEKDk1vbnN0ZXJTZXJ2aWNlEjAKCkdldE1vbnN0ZXISFS52MS5HZXRNb25zdGVyUmVxdWVzdBoLLnYxLk1vbnN0ZXISQAoMTGlzdE1vbnN0ZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhgudjEuTGlzdE1vbnN0ZXJzUmVzcG9uc2UyrwIKCkpvYlNlcnZpY2USJAoGR2V0Sm9iEhEudjEuR2V0Sm9iUmVxdWVzdBoHLnYxLkpvYhI4CghMaXN0Sm9icxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkxpc3RKb2JzUmVzcG9uc2USOQoJRGVsZXRlSm9iEhQudjEuRGVsZXRlSm9iUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI7CgtTdGFydEJhdHRsZRIWLnYxLlN0YXJ0QmF0dGxlUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2USSQoSU3RhcnRQcm9kdWN0aW9uSm9iEh0udjEuU3RhcnRQcm9kdWN0aW9uSm9iUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2UykQMKEFRyYW5zcG9ydFNlcnZpY2USSAoRU3RhcnRUcmFuc3BvcnRKb2ISHS52MS5DcmVhdGVUcmFuc3BvcnRKb2JSZXF1ZXN0GhQudjEuRW50aXR5SWRSZXNwb25zZRI/Cg9HZXRUcmFuc3BvcnRKb2ISGi52MS5HZXRUcmFuc3BvcnRKb2JSZXF1ZXN0GhAudjEuVHJhbnNwb3J0Sm9iElAKEUxpc3RUcmFuc3BvcnRKb2JzEhwudjEuTGlzdFRyYW5zcG9ydEpvYnNSZXF1ZXN0Gh0udjEuTGlzdFRyYW5zcG9ydEpvYnNSZXNwb25zZRJLChJDYW5jZWxUcmFuc3BvcnRKb2ISHS52MS5DYW5jZWxUcmFuc3BvcnRKb2JSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5ElMKEkdldEF2YWlsYWJsZVJvdXRlcxIdLnYxLkdldEF2YWlsYWJsZVJvdXRlc1JlcXVlc3QaHi52MS5HZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZTKHAgoQSW52ZW50b3J5U2VydmljZRJBCgxHZXRJbnZlbnRvcnkSFy52MS5HZXRJbnZlbnRvcnlSZXF1ZXN0GhgudjEuR2V0SW52ZW50b3J5UmVzcG9uc2USNgoMR2V0RXF1aXBtZW50EhcudjEuR2V0RXF1aXBtZW50UmVxdWVzdBoNLnYxLkVxdWlwbWVudBI5CglFcXVpcEl0ZW0SFC52MS5FcXVpcEl0ZW1SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ej0KC1VuRXF1aXBJdGVtEhYudjEuVW5FcXVpcEl0ZW1SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5MlkKC1VzZXJTZXJ2aWNlEkoKD0dldFVzZXJQcm9ncmVzcxIaLnYxLkdldFVzZXJQcm9ncmVzc1JlcXVlc3QaGy52MS5HZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZTJXCg9UdXRvcmlhbFNlcnZpY2USRAoNQ2hvb3NlU3RhcnRlchIYLnYxLkNob29zZVN0YXJ0ZXJSZXF1ZXN0GhkudjEuQ2hvb3NlU3RhcnRlclJlc3BvbnNlMqcDChFNYXN0ZXJkYXRhU2VydmljZRI4CghHZXRJdGVtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkdldEl0ZW1zUmVzcG9uc2USPgoLR2V0TW9uc3RlcnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFy52MS5HZXRNb25zdGVyc1Jlc3BvbnNlEkoKEUdldFByb2R1Y3Rpb25Kb2JzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh0udjEuR2V0UHJvZHVjdGlvbkpvYnNSZXNwb25zZRJCCg1HZXRCYXR0bGVKb2JzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhkudjEuR2V0QmF0dGxlSm9ic1Jlc3BvbnNlEkwKEkdldFN0YXJ0ZXJNb25zdGVycxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoeLnYxLkdldFN0YXJ0ZXJNb25zdGVyc1Jlc3BvbnNlEjoKCUdldENpdGllcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoVLnYxLkdldENpdGllc1Jlc3BvbnNlQitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw", [file_google_protobuf_duration, file_google_protobuf_empty, file_google_protobuf_timestamp, file_v1_domain, file_v1_masterdata]);
+  fileDesc("ChB2MS9zZXJ2aWNlLnByb3RvEgJ2MSJYChRHZXRJbnZlbnRvcnlSZXNwb25zZRIhCgZjaXRpZXMYASADKAsyES52MS5DaXR5SW52ZW50b3J5Eh0KC3RvdGFsX2l0ZW1zGAIgAygLMggudjEuSXRlbSI9Cg1DaXR5SW52ZW50b3J5EgoKAmlkGAEgASgJEiAKCWludmVudG9yeRgCIAEoCzINLnYxLkludmVudG9yeSIfChFHZXRNb25zdGVyUmVxdWVzdBIKCgJpZBgBIAEoAyIkChZHZXRVc2VyUHJvZ3Jlc3NSZXF1ZXN0EgoKAmlkGAEgASgDIlEKF0dldFVzZXJQcm9ncmVzc1Jlc3BvbnNlEjYKEnR1dG9yaWFsX2NvbXBsZXRlZBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiPQoUQ2hvb3NlU3RhcnRlclJlcXVlc3QSCgoCaWQYASABKAMSGQoRbW9uX2RlZmluaXRpb25faWQYAiABKAMiIwoVQ2hvb3NlU3RhcnRlclJlc3BvbnNlEgoKAmlkGAEgASgDIi4KGkdldFN0YXJ0ZXJNb25zdGVyc1Jlc3BvbnNlEhAKCG1vbnN0ZXJzGAEgAygFIjUKFExpc3RNb25zdGVyc1Jlc3BvbnNlEh0KCG1vbnN0ZXJzGAEgAygLMgsudjEuTW9uc3RlciIbCg1HZXRKb2JSZXF1ZXN0EgoKAmlkGAEgASgDIikKEExpc3RKb2JzUmVzcG9uc2USFQoEam9icxgBIAMoCzIHLnYxLkpvYiIeChBEZWxldGVKb2JSZXF1ZXN0EgoKAmlkGAEgASgDImgKElN0YXJ0QmF0dGxlUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSGQoRam9iX2RlZmluaXRpb25faWQYAyABKAkSEgoKaXRlcmF0aW9ucxgEIAEoAyIiChBFbnRpdHlJZFJlc3BvbnNlEg4KBmpvYl9pZBgBIAEoAyJvChlTdGFydFByb2R1Y3Rpb25Kb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIZChFqb2JfZGVmaW5pdGlvbl9pZBgDIAEoCRISCgppdGVyYXRpb25zGAQgASgDIiYKE0dldEludmVudG9yeVJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAyIkCglFcXVpcG1lbnQSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIikKE0dldEVxdWlwbWVudFJlcXVlc3QSEgoKbW9uc3Rlcl9pZBgBIAEoAyJaChBFcXVpcEl0ZW1SZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIPCgdpdGVtX2lkGAMgASgJEhAKCHF1YW50aXR5GAQgASgDIkoKElVuRXF1aXBJdGVtUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSDwoHaXRlbV9pZBgDIAEoCSJrChlDcmVhdGVUcmFuc3BvcnRKb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QiKAoWR2V0VHJhbnNwb3J0Sm9iUmVxdWVzdBIOCgZqb2JfaWQYASABKAMiQgoYTGlzdFRyYW5zcG9ydEpvYnNSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSFQoNc3RhdHVzX2ZpbHRlchgCIAEoCSJFChlMaXN0VHJhbnNwb3J0Sm9ic1Jlc3BvbnNlEigKDnRyYW5zcG9ydF9qb2JzGAEgAygLMhAudjEuVHJhbnNwb3J0Sm9iIisKGUNhbmNlbFRyYW5zcG9ydEpvYlJlcXVlc3QSDgoGam9iX2lkGAEgASgDIlwKGUdldEF2YWlsYWJsZVJvdXRlc1JlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAxIaChJzb3VyY2VfbG9jYXRpb25faWQYAiABKAkSEgoKbW9uc3Rlcl9pZBgDIAEoAyJFChpHZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZRInChBhdmFpbGFibGVfcm91dGVzGAEgAygLMg0udjEuUm91dGVJbmZvIlQKCVJvdXRlSW5mbxIQCghkaXN0YW5jZRgCIAEoARI1ChJlc3RpbWF0ZWRfZHVyYXRpb24YAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iKwoYR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Eg8KB2NpdHlfaWQYASABKAkiJwoUR2V0QmF0dGxlSm9ic1JlcXVlc3QSDwoHY2l0eV9pZBgBIAEoCSI1ChBHZXRJdGVtc1Jlc3BvbnNlEiEKBWl0ZW1zGAEgAygLMhIudjEuSXRlbURlZmluaXRpb24iPgoTR2V0TW9uc3RlcnNSZXNwb25zZRInCghtb25zdGVycxgBIAMoCzIVLnYxLk1vbnN0ZXJEZWZpbml0aW9uIkAKGUdldFByb2R1Y3Rpb25Kb2JzUmVzcG9uc2USIwoEam9icxgBIAMoCzIVLnYxLlByb2R1Y3Rpb25Kb2JJbmZvImcKEVByb2R1Y3Rpb25Kb2JJbmZvEi8KCmRlZmluaXRpb24YASABKAsyGy52MS5Qcm9kdWN0aW9uSm9iRGVmaW5pdGlvbhIhCgpyb3V0ZV9pbmZvGAIgASgLMg0udjEuUm91dGVJbmZvIjgKFUdldEJhdHRsZUpvYnNSZXNwb25zZRIfCgRqb2JzGAEgAygLMhEudjEuQmF0dGxlSm9iSW5mbyJfCg1CYXR0bGVKb2JJbmZvEisKCmRlZmluaXRpb24YASABKAsyFy52MS5CYXR0bGVKb2JEZWZpbml0aW9uEiEKCnJvdXRlX2luZm8YAiABKAsyDS52MS5Sb3V0ZUluZm8iNwoRR2V0Q2l0aWVzUmVzcG9uc2USIgoGY2l0aWVzGAEgAygLMhIudjEuQ2l0eURlZmluaXRpb24yhAEKDk1vbnN0ZXJTZXJ2aWNlEjAKCkdldE1vbnN0ZXISFS52MS5HZXRNb25zdGVyUmVxdWVzdBoLLnYxLk1vbnN0ZXISQAoMTGlzdE1vbnN0ZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhgudjEuTGlzdE1vbnN0ZXJzUmVzcG9uc2UyrwIKCkpvYlNlcnZpY2USJAoGR2V0Sm9iEhEudjEuR2V0Sm9iUmVxdWVzdBoHLnYxLkpvYhI4CghMaXN0Sm9icxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkxpc3RKb2JzUmVzcG9uc2USOQoJRGVsZXRlSm9iEhQudjEuRGVsZXRlSm9iUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI7CgtTdGFydEJhdHRsZRIWLnYxLlN0YXJ0QmF0dGxlUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2USSQoSU3RhcnRQcm9kdWN0aW9uSm9iEh0udjEuU3RhcnRQcm9kdWN0aW9uSm9iUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2UykQMKEFRyYW5zcG9ydFNlcnZpY2USSAoRU3RhcnRUcmFuc3BvcnRKb2ISHS52MS5DcmVhdGVUcmFuc3BvcnRKb2JSZXF1ZXN0GhQudjEuRW50aXR5SWRSZXNwb25zZRI/Cg9HZXRUcmFuc3BvcnRKb2ISGi52MS5HZXRUcmFuc3BvcnRKb2JSZXF1ZXN0GhAudjEuVHJhbnNwb3J0Sm9iElAKEUxpc3RUcmFuc3BvcnRKb2JzEhwudjEuTGlzdFRyYW5zcG9ydEpvYnNSZXF1ZXN0Gh0udjEuTGlzdFRyYW5zcG9ydEpvYnNSZXNwb25zZRJLChJDYW5jZWxUcmFuc3BvcnRKb2ISHS52MS5DYW5jZWxUcmFuc3BvcnRKb2JSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5ElMKEkdldEF2YWlsYWJsZVJvdXRlcxIdLnYxLkdldEF2YWlsYWJsZVJvdXRlc1JlcXVlc3QaHi52MS5HZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZTKHAgoQSW52ZW50b3J5U2VydmljZRJBCgxHZXRJbnZlbnRvcnkSFy52MS5HZXRJbnZlbnRvcnlSZXF1ZXN0GhgudjEuR2V0SW52ZW50b3J5UmVzcG9uc2USNgoMR2V0RXF1aXBtZW50EhcudjEuR2V0RXF1aXBtZW50UmVxdWVzdBoNLnYxLkVxdWlwbWVudBI5CglFcXVpcEl0ZW0SFC52MS5FcXVpcEl0ZW1SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ej0KC1VuRXF1aXBJdGVtEhYudjEuVW5FcXVpcEl0ZW1SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5MlkKC1VzZXJTZXJ2aWNlEkoKD0dldFVzZXJQcm9ncmVzcxIaLnYxLkdldFVzZXJQcm9ncmVzc1JlcXVlc3QaGy52MS5HZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZTJXCg9UdXRvcmlhbFNlcnZpY2USRAoNQ2hvb3NlU3RhcnRlchIYLnYxLkNob29zZVN0YXJ0ZXJSZXF1ZXN0GhkudjEuQ2hvb3NlU3RhcnRlclJlc3BvbnNlMq8DChFNYXN0ZXJkYXRhU2VydmljZRI4CghHZXRJdGVtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkdldEl0ZW1zUmVzcG9uc2USPgoLR2V0TW9uc3RlcnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFy52MS5HZXRNb25zdGVyc1Jlc3BvbnNlElAKEUdldFByb2R1Y3Rpb25Kb2JzEhwudjEuR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Gh0udjEuR2V0UHJvZHVjdGlvbkpvYnNSZXNwb25zZRJECg1HZXRCYXR0bGVKb2JzEhgudjEuR2V0QmF0dGxlSm9ic1JlcXVlc3QaGS52MS5HZXRCYXR0bGVKb2JzUmVzcG9uc2USTAoSR2V0U3RhcnRlck1vbnN0ZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh4udjEuR2V0U3RhcnRlck1vbnN0ZXJzUmVzcG9uc2USOgoJR2V0Q2l0aWVzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhUudjEuR2V0Q2l0aWVzUmVzcG9uc2VCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_google_protobuf_duration, file_google_protobuf_empty, file_google_protobuf_timestamp, file_v1_domain, file_v1_masterdata]);
 
 /**
  * @generated from message v1.GetInventoryResponse
@@ -581,7 +581,7 @@ export const GetAvailableRoutesResponseSchema: GenMessage<GetAvailableRoutesResp
  */
 export type RouteInfo = Message<"v1.RouteInfo"> & {
   /**
-   * @generated from field: float distance = 2;
+   * @generated from field: double distance = 2;
    */
   distance: number;
 
@@ -599,6 +599,44 @@ export const RouteInfoSchema: GenMessage<RouteInfo> = /*@__PURE__*/
   messageDesc(file_v1_service, 27);
 
 /**
+ * @generated from message v1.GetProductionJobsRequest
+ */
+export type GetProductionJobsRequest = Message<"v1.GetProductionJobsRequest"> & {
+  /**
+   * only show jobs for this city
+   *
+   * @generated from field: string city_id = 1;
+   */
+  cityId: string;
+};
+
+/**
+ * Describes the message v1.GetProductionJobsRequest.
+ * Use `create(GetProductionJobsRequestSchema)` to create a new message.
+ */
+export const GetProductionJobsRequestSchema: GenMessage<GetProductionJobsRequest> = /*@__PURE__*/
+  messageDesc(file_v1_service, 28);
+
+/**
+ * @generated from message v1.GetBattleJobsRequest
+ */
+export type GetBattleJobsRequest = Message<"v1.GetBattleJobsRequest"> & {
+  /**
+   * only show jobs for this city
+   *
+   * @generated from field: string city_id = 1;
+   */
+  cityId: string;
+};
+
+/**
+ * Describes the message v1.GetBattleJobsRequest.
+ * Use `create(GetBattleJobsRequestSchema)` to create a new message.
+ */
+export const GetBattleJobsRequestSchema: GenMessage<GetBattleJobsRequest> = /*@__PURE__*/
+  messageDesc(file_v1_service, 29);
+
+/**
  * @generated from message v1.GetItemsResponse
  */
 export type GetItemsResponse = Message<"v1.GetItemsResponse"> & {
@@ -613,7 +651,7 @@ export type GetItemsResponse = Message<"v1.GetItemsResponse"> & {
  * Use `create(GetItemsResponseSchema)` to create a new message.
  */
 export const GetItemsResponseSchema: GenMessage<GetItemsResponse> = /*@__PURE__*/
-  messageDesc(file_v1_service, 28);
+  messageDesc(file_v1_service, 30);
 
 /**
  * @generated from message v1.GetMonstersResponse
@@ -630,16 +668,16 @@ export type GetMonstersResponse = Message<"v1.GetMonstersResponse"> & {
  * Use `create(GetMonstersResponseSchema)` to create a new message.
  */
 export const GetMonstersResponseSchema: GenMessage<GetMonstersResponse> = /*@__PURE__*/
-  messageDesc(file_v1_service, 29);
+  messageDesc(file_v1_service, 31);
 
 /**
  * @generated from message v1.GetProductionJobsResponse
  */
 export type GetProductionJobsResponse = Message<"v1.GetProductionJobsResponse"> & {
   /**
-   * @generated from field: repeated v1.ProductionJobDefinition jobs = 1;
+   * @generated from field: repeated v1.ProductionJobInfo jobs = 1;
    */
-  jobs: ProductionJobDefinition[];
+  jobs: ProductionJobInfo[];
 };
 
 /**
@@ -647,16 +685,38 @@ export type GetProductionJobsResponse = Message<"v1.GetProductionJobsResponse"> 
  * Use `create(GetProductionJobsResponseSchema)` to create a new message.
  */
 export const GetProductionJobsResponseSchema: GenMessage<GetProductionJobsResponse> = /*@__PURE__*/
-  messageDesc(file_v1_service, 30);
+  messageDesc(file_v1_service, 32);
+
+/**
+ * @generated from message v1.ProductionJobInfo
+ */
+export type ProductionJobInfo = Message<"v1.ProductionJobInfo"> & {
+  /**
+   * @generated from field: v1.ProductionJobDefinition definition = 1;
+   */
+  definition?: ProductionJobDefinition;
+
+  /**
+   * @generated from field: v1.RouteInfo route_info = 2;
+   */
+  routeInfo?: RouteInfo;
+};
+
+/**
+ * Describes the message v1.ProductionJobInfo.
+ * Use `create(ProductionJobInfoSchema)` to create a new message.
+ */
+export const ProductionJobInfoSchema: GenMessage<ProductionJobInfo> = /*@__PURE__*/
+  messageDesc(file_v1_service, 33);
 
 /**
  * @generated from message v1.GetBattleJobsResponse
  */
 export type GetBattleJobsResponse = Message<"v1.GetBattleJobsResponse"> & {
   /**
-   * @generated from field: repeated v1.BattleJobDefinition jobs = 1;
+   * @generated from field: repeated v1.BattleJobInfo jobs = 1;
    */
-  jobs: BattleJobDefinition[];
+  jobs: BattleJobInfo[];
 };
 
 /**
@@ -664,7 +724,29 @@ export type GetBattleJobsResponse = Message<"v1.GetBattleJobsResponse"> & {
  * Use `create(GetBattleJobsResponseSchema)` to create a new message.
  */
 export const GetBattleJobsResponseSchema: GenMessage<GetBattleJobsResponse> = /*@__PURE__*/
-  messageDesc(file_v1_service, 31);
+  messageDesc(file_v1_service, 34);
+
+/**
+ * @generated from message v1.BattleJobInfo
+ */
+export type BattleJobInfo = Message<"v1.BattleJobInfo"> & {
+  /**
+   * @generated from field: v1.BattleJobDefinition definition = 1;
+   */
+  definition?: BattleJobDefinition;
+
+  /**
+   * @generated from field: v1.RouteInfo route_info = 2;
+   */
+  routeInfo?: RouteInfo;
+};
+
+/**
+ * Describes the message v1.BattleJobInfo.
+ * Use `create(BattleJobInfoSchema)` to create a new message.
+ */
+export const BattleJobInfoSchema: GenMessage<BattleJobInfo> = /*@__PURE__*/
+  messageDesc(file_v1_service, 35);
 
 /**
  * @generated from message v1.GetCitiesResponse
@@ -681,7 +763,7 @@ export type GetCitiesResponse = Message<"v1.GetCitiesResponse"> & {
  * Use `create(GetCitiesResponseSchema)` to create a new message.
  */
 export const GetCitiesResponseSchema: GenMessage<GetCitiesResponse> = /*@__PURE__*/
-  messageDesc(file_v1_service, 32);
+  messageDesc(file_v1_service, 36);
 
 /**
  * @generated from service v1.MonsterService
@@ -896,7 +978,7 @@ export const MasterdataService: GenService<{
    */
   getProductionJobs: {
     methodKind: "unary";
-    input: typeof EmptySchema;
+    input: typeof GetProductionJobsRequestSchema;
     output: typeof GetProductionJobsResponseSchema;
   },
   /**
@@ -904,7 +986,7 @@ export const MasterdataService: GenService<{
    */
   getBattleJobs: {
     methodKind: "unary";
-    input: typeof EmptySchema;
+    input: typeof GetBattleJobsRequestSchema;
     output: typeof GetBattleJobsResponseSchema;
   },
   /**

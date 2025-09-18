@@ -10,10 +10,6 @@ export class InventoryClient {
 		this.inventoryClient = createClients(customFetch).inventoryClient;
 	}
 
-	async getInventory(userId: bigint): Promise<Item[]> {
-		const inv = await this.inventoryClient.getInventory({ userId });
-		return inv.totalItems;
-	}
 	async equipItem(request: { userId: bigint; monsterId: bigint; itemId: string; quantity: bigint }): Promise<void> {
 		await this.inventoryClient.equipItem(request);
 	}

@@ -1,3 +1,4 @@
+import { createClients } from '$lib/service/connect';
 import { JobsClient } from '$lib/service/jobs';
 import { MonsterClient } from '$lib/service/monsters';
 import { JobSubType } from '../../../../gen/v1/masterdata_pb';
@@ -6,13 +7,13 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = async ({ fetch, params }) => {
 	const jobsClient = new JobsClient(fetch);
 	const monsterClient = new MonsterClient(fetch);
-	const masterdata = jobsClient.getJobMasterdata();
+	const masterdata = createClients(fetch).masterdataClient;
 
 	const gatheringType = parseInt(params.gathering_type, 10);
 
-	let activeGatheringJobs = await masterdata;
+	let activeGatheringJobs = (await masterdata.getProductionJobs({ cityId: "city_1" })).jobs;
 	console.log(JobSubType[gatheringType]);
-	activeGatheringJobs = activeGatheringJobs.filter((job) => job.subType === gatheringType);
+	activeGatheringJobs = activeGatheringJobs.filter((job) => job.definition!.subType === gatheringType);
 	let activeJobs = await jobsClient.getJobs();
 	activeJobs = activeJobs.filter((job) => job.def?.subType === gatheringType);
 
