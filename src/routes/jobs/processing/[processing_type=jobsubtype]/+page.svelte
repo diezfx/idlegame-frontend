@@ -78,14 +78,16 @@
 
 <Dialog.Root open={openDialog} onOpenChange={() => (openDialog = false)}>
 	<Dialog.Trigger>Open</Dialog.Trigger>
-	<Dialog.Content>
+	<Dialog.Content class="bg-blue-300 max-w-full">
 		<Dialog.Header>
-			<Dialog.Title>Chose Monster</Dialog.Title>
+			<Dialog.Title>Choose Monster</Dialog.Title>
 		</Dialog.Header>
 
-		{#each data.monsters as monster}
-			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
-		{/each}
+		<div class="grid grid-cols-3 gap-2">
+			{#each data.monsters as monster}
+				<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+			{/each}
+		</div>
 	</Dialog.Content>
 </Dialog.Root>
 

@@ -78,7 +78,7 @@
 	<Dialog.Trigger>Open</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>
-			<Dialog.Title>Chose Monster</Dialog.Title>
+			<Dialog.Title>Choose Monster</Dialog.Title>
 		</Dialog.Header>
 
 		{#each data.monsters as monster}
