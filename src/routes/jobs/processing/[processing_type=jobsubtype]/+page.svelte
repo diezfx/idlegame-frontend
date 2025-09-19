@@ -9,11 +9,9 @@
 	import log from '$lib/log/log.js';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
-	import { config } from '$lib/config/config.js';
 	import type { Monster } from '../../../../gen/v1/domain_pb.js';
-	import type { ProductionJobDefinition } from '../../../../gen/v1/masterdata_pb.js';
-	import { Duration } from 'luxon';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
+	import { Duration } from 'luxon';
 	import type { ProductionJobInfo } from '../../../../gen/v1/service_pb.js';
 
 	let { data } = $props();
@@ -31,9 +29,13 @@
 		openDialog = false;
 		selectedMonster = m;
 	}
+	function reset(): void {
+		selectedMonster = undefined;
+		selectedJob = undefined;
+	}
 
 	function isSelectedJob(jobID: string): boolean {
-		return selectedJob?.definition?.id == jobID;
+		return selectedJob?.definition!.id == jobID;
 	}
 
 	async function startJob(): Promise<void> {
@@ -41,11 +43,12 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await jobClient.startProcessingJob({
+		await jobClient.startJob({
 			jobDefinitionId: selectedJob?.definition!.id,
 			userId: BigInt(user.userId),
 			monsterId: BigInt(selectedMonster.entity!.id),
 		});
+		reset();
 		invalidateAll();
 	}
 </script>
@@ -60,10 +63,10 @@
 	<Card.Root
 		onclick={() => {
 			openDialog = true;
+			selectedMonster;
 		}}
-		class="button text-center text-green-500 text-2xl hover:{selectedColor}"
-		>+
-	</Card.Root>
+		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card.Root
+	>
 </div>
 
 <div>Currently active Jobs</div>
@@ -107,12 +110,21 @@
 
 				<div>Experience</div>
 				<p>{job.definition!.rewards?.experience}</p>
-				<div class="text-xl col-span-2">Ingredients</div>
-
-				{#each job.definition!.ingredients as ingredient}
-					<p>{ingredient.id}</p>
-					<p>{ingredient.quantity}</p>
-				{/each}
+				<div>Distance</div>
+				<p>{Math.round(job.routeInfo?.distance! * 100) / 100}m</p>
+				<div>Estimated Traveltime</div>
+				<p>
+					{Duration.fromMillis(protoToMilliseconds(job.routeInfo?.estimatedDuration!))
+						.shiftTo('seconds')
+						.toHuman({ unitDisplay: 'narrow' })}
+				</p>
+				{#if job.definition!.ingredients.length != 0}
+					<div class="text-xl col-span-2">Ingredients</div>
+					{#each job.definition!.ingredients as ingredient}
+						<p>{ingredient.id}</p>
+						<p>{ingredient.quantity}</p>
+					{/each}
+				{/if}
 			</Card.Content>
 		</Card.Root>
 	{/each}

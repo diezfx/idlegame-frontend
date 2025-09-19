@@ -21,12 +21,10 @@ export interface ItemWithQuantity {
 
 export class JobsClient {
 	private readonly jobClient;
-	private readonly masterdataClient;
 
 	constructor(svFetch?: typeof globalThis.fetch) {
 		const { jobClient, masterdataClient } = createClients(svFetch);
 		this.jobClient = jobClient;
-		this.masterdataClient = masterdataClient;
 	}
 
 	async getJobs(): Promise<Job[]> {
@@ -60,25 +58,6 @@ export class JobsClient {
 
 	async stopJob(jobId: bigint): Promise<void> {
 		await this.jobClient.deleteJob({ id: jobId });
-	}
-
-	async getJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await this.masterdataClient.getProductionJobs({});
-		return jobs.jobs;
-	}
-
-	async getProcessingJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await this.masterdataClient.getProductionJobs({});
-		return jobs.jobs;
-	}
-	async getProductJobMasterdata(): Promise<ProductionJobDefinition[]> {
-		const jobs = await this.masterdataClient.getProductionJobs({});
-		return jobs.jobs;
-	}
-
-	async getBattleJobMasterdata(): Promise<BattleJobDefinition[]> {
-		const jobs = await this.masterdataClient.getBattleJobs({});
-		return jobs.jobs;
 	}
 }
 

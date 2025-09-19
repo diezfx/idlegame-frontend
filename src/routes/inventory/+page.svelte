@@ -1,23 +1,19 @@
 <script lang="ts">
-	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
+	import Collapsible from '$lib/components/ui/collapsible/collapsible.svelte';
 	import ItemView from '$lib/widgets/item.svelte';
-	import type { Item } from '../../gen/v1/domain_pb';
 
 	let { data } = $props();
 </script>
 
 <h1>Inventory</h1>
-<div class="grid grid-cols-3 gap-4">
+<div class="gap-3">
 	{#each data.inventory.cities as city}
-		<Collapsible.Root class="col-span-3">
-			<Collapsible.Trigger>
-				<h2 class="text-2xl">{city.id}</h2>
-			</Collapsible.Trigger>
-			<Collapsible.Content>
+		<Collapsible open={true} class="m-3" title={city.id}>
+			<div class="grid grid-cols-4 m-2 gap-3">
 				{#each city.inventory?.items! as item}
-					<ItemView {item} class="" />
+					<ItemView {item} class="bg-secondary text-secondary-foreground w-full" />
 				{/each}
-			</Collapsible.Content>
-		</Collapsible.Root>
+			</div>
+		</Collapsible>
 	{/each}
 </div>

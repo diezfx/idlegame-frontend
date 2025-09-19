@@ -16,7 +16,7 @@
 	} = $props();
 </script>
 
-<Card.Root {...props} class={cn(classname, 'w-[350px]')}>
+<Card.Root {...props} class={cn(classname)}>
 	<Card.Header>
 		<Card.Title>{monster.identity?.name}</Card.Title>
 		<!--<Card.Description>Card Description</Card.Description> -->

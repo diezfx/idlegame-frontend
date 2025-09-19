@@ -48,17 +48,17 @@
 	</p>
 	<ul class="mt-2">
 		<p class="nav-header">Gathering</p>
-		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.WOODCUTTING}`)}">
-			<a class="nav-content" href="/jobs/gathering/{JobSubType.WOODCUTTING}">{navIcons.woodcutting} Woodcutting</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.WOODCUTTING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.WOODCUTTING}">{navIcons.woodcutting} Woodcutting</a>
 		</li>
-		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.MINING}`)}">
-			<a class="nav-content" href="/jobs/gathering/{JobSubType.MINING}">{navIcons.mining} Mining</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.MINING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.MINING}">{navIcons.mining} Mining</a>
 		</li>
-		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.HARVESTING}`)}">
-			<a class="nav-content" href="/jobs/gathering/{JobSubType.HARVESTING}">{navIcons.harvesting} Harvesting</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.HARVESTING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.HARVESTING}">{navIcons.harvesting} Harvesting</a>
 		</li>
-		<li class="nav-item {activeClass(`/jobs/gathering/${JobSubType.FISHING}`)}">
-			<a class="nav-content" href="/jobs/gathering/{JobSubType.FISHING}">{navIcons.fishing} Fishing</a>
+		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.FISHING}`)}">
+			<a class="nav-content" href="/jobs/processing/{JobSubType.FISHING}">{navIcons.fishing} Fishing</a>
 		</li>
 		<p class="nav-header">Processing</p>
 		<li class="nav-item {activeClass(`/jobs/processing/${JobSubType.SMELTING}`)}">
