@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Card } from '$lib/components/ui/card';
 	import MonsterView from '$lib/widgets/monster.svelte';
-	import * as Dialog from '$lib/components/ui/dialog';
 	import log from '$lib/log/log';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
 	import type { Item, Monster } from '../../gen/v1/domain_pb.js';
 	import { InventoryClient } from '$lib/service/inventory.js';
+	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 
 	let { data } = $props();
 
@@ -70,36 +70,31 @@
 	{/each}
 </div>
 
-<Dialog.Root open={openDialog} onOpenChange={() => (openDialog = false)}>
-	<Dialog.Trigger>Open</Dialog.Trigger>
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>Chose Item to Equip</Dialog.Title>
-		</Dialog.Header>
-		<div class="grid grid-cols-1">
-			{#each data.inventory as item}
-				<button
-					onclick={() => (selectedItem = item)}
-					class="grid grid-cols-4 m-1 grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"
-				>
-					<p>{item.id}</p>
-					<p>{item.quantity}</p>
-					{#each data.itemMasterdata[item.id]?.effects as effect}
-						<p>{effect.type}</p>
-						<p>{effect.value}</p>
-					{/each}
-				</button>
-			{/each}
-		</div>
-		<label for="itemAmount">Amount {itemAmount}</label>
-		<input
-			id="itemAmount"
-			disabled={selectedItem == undefined}
-			type="range"
-			min={1}
-			max={Number(selectedItem?.quantity)}
-			bind:value={itemAmount}
-		/>
-		<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Equip</button>
-	</Dialog.Content>
-</Dialog.Root>
+<Dialog open={openDialog} onClose={() => (openDialog = false)}>
+	<h2>Choose Item to Equip</h2>
+	<div class="grid grid-cols-1">
+		{#each data.inventory as item}
+			<button
+				onclick={() => (selectedItem = item)}
+				class="grid grid-cols-4 m-1 grow hover:bg-green-100 {selectedItem?.id == item.id ? 'bg-green-200' : ''}"
+			>
+				<p>{item.id}</p>
+				<p>{item.quantity}</p>
+				{#each data.itemMasterdata[item.id]?.effects as effect}
+					<p>{effect.type}</p>
+					<p>{effect.value}</p>
+				{/each}
+			</button>
+		{/each}
+	</div>
+	<label for="itemAmount">Amount {itemAmount}</label>
+	<input
+		id="itemAmount"
+		disabled={selectedItem == undefined}
+		type="range"
+		min={1}
+		max={Number(selectedItem?.quantity)}
+		bind:value={itemAmount}
+	/>
+	<button disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>Equip</button>
+</Dialog>

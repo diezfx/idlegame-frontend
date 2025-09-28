@@ -2,7 +2,6 @@
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { getJobsClientContext, JobsClient } from '$lib/service/jobs';
-	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
@@ -13,6 +12,7 @@
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
 	import { Duration } from 'luxon';
 	import type { ProductionJobInfo } from '../../../../gen/v1/service_pb.js';
+	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 
 	let { data } = $props();
 
@@ -62,6 +62,7 @@
 	{/if}
 	<Card.Root
 		onclick={() => {
+			console.log('button clicked');
 			openDialog = true;
 			selectedMonster;
 		}}
@@ -76,20 +77,14 @@
 	{/each}
 </div>
 
-<Dialog.Root open={openDialog} onOpenChange={() => (openDialog = false)}>
-	<Dialog.Trigger>Open</Dialog.Trigger>
-	<Dialog.Content class="bg-blue-300 max-w-full">
-		<Dialog.Header>
-			<Dialog.Title>Choose Monster</Dialog.Title>
-		</Dialog.Header>
-
-		<div class="grid grid-cols-3 gap-2">
-			{#each data.monsters as monster}
-				<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
-			{/each}
-		</div>
-	</Dialog.Content>
-</Dialog.Root>
+<Dialog open={openDialog} class="bg-blue-300 max-w-full" onClose={() => (openDialog = false)}>
+	Choose Monster
+	<div class="grid grid-cols-3 gap-2">
+		{#each data.monsters as monster}
+			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+		{/each}
+	</div>
+</Dialog>
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}

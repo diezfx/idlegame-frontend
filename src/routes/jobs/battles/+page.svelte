@@ -2,7 +2,6 @@
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { JobsClient, type JobMasterdata } from '$lib/service/jobs';
-	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
@@ -11,17 +10,22 @@
 	import { invalidateAll } from '$app/navigation';
 	import { config } from '$lib/config/config.js';
 	import type { Monster } from '../../../gen/v1/domain_pb.js';
+	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
+	import { protoToMilliseconds } from '$lib/utils/prototime.js';
+	import { Duration } from 'luxon';
+	import type { BattleJobInfo } from '../../../gen/v1/service_pb.js';
+	import { cn } from '$lib/utils.js';
 
 	let { data } = $props();
 
 	const selectedColor = 'bg-green-200';
 
 	const user = getUserFromContext()!;
-	const jobClient = new JobsClient(fetch, config.masterdataBaseUrl);
+	const jobClient = new JobsClient(fetch);
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
-	let selectedJob: JobMasterdata | undefined = $state(undefined);
+	let selectedJob: BattleJobInfo | undefined = $state(undefined);
 
 	function dialogClicked(m: Monster): void {
 		openDialog = false;
@@ -33,7 +37,7 @@
 	}
 
 	function isSelectedJob(jobID: string): boolean {
-		return selectedJob?.id == jobID;
+		return selectedJob?.definition!.id == jobID;
 	}
 
 	async function startJob(): Promise<void> {
@@ -42,7 +46,7 @@
 			return;
 		}
 		await jobClient.startBattleJob({
-			jobDefinitionId: selectedJob?.id,
+			jobDefinitionId: selectedJob?.definition!.id,
 			userId: BigInt(user.userId),
 			monsterId: BigInt(selectedMonster.entity!.id),
 		});
@@ -74,36 +78,41 @@
 	{/each}
 </div>
 
-<Dialog.Root open={openDialog} onOpenChange={() => (openDialog = false)}>
-	<Dialog.Trigger>Open</Dialog.Trigger>
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>Choose Monster</Dialog.Title>
-		</Dialog.Header>
-
+<Dialog open={openDialog} onClose={() => (openDialog = false)}>
+	<h2>Choose Monster</h2>
+	<div class="grid grid-cols-3 gap-2">
 		{#each data.monsters as monster}
 			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
 		{/each}
-	</Dialog.Content>
-</Dialog.Root>
+	</div>
+</Dialog>
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
-		<Card.Root class={isSelectedJob(job.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
+		<Card.Root
+			class={cn(isSelectedJob(job.definition!.id) ? selectedColor : 'hover:bg-accent', 'cursor-pointer')}
+			onclick={() => (selectedJob = job)}
+		>
 			<Card.Header>
-				<Card.Title>{job.name}</Card.Title>
+				<Card.Title>{job.definition!.name}</Card.Title>
 			</Card.Header>
 
 			<Card.Content class="grid grid-cols-2">
 				<p>Required Level</p>
-				<p>{job.levelRequirement}</p>
-				<div>Duration</div>
-				<p>{job.duration}</p>
+				<p>{job.definition!.levelRequirement}</p>
 				<div>Stamina Cost</div>
-				<p>{job.staminaCost}</p>
+				<p>{job.definition!.staminaCost}</p>
 
 				<div>Experience</div>
-				<p>{job.rewards?.experience}</p>
+				<p>{job.definition!.rewards?.experience}</p>
+				<div>Distance</div>
+				<p>{Math.round(job.routeInfo?.distance! * 100) / 100}m</p>
+				<div>Estimated Traveltime</div>
+				<p>
+					{Duration.fromMillis(protoToMilliseconds(job.routeInfo?.estimatedDuration!))
+						.shiftTo('seconds')
+						.toHuman({ unitDisplay: 'narrow' })}
+				</p>
 			</Card.Content>
 		</Card.Root>
 	{/each}

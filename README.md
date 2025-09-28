@@ -37,6 +37,4 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-- add more components
-  - arrive/go back component
-  - show distance to jobs
+- replace all shadcn stuff
