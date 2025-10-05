@@ -4,19 +4,22 @@ import { MonsterClient } from '$lib/service/monsters';
 import type { PageLoad } from '../$types';
 import { redirect } from '@sveltejs/kit';
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const jobsClient = new JobsClient(fetch);
 	const monsterClient = new MonsterClient(fetch);
 	const masterdata = createClients(fetch).masterdataClient.getBattleJobs({ cityId: "city_1" });
+	const p = await parent();
+	const user = p.user;
 
 	const battleJob = await jobsClient.getBattleJob(BigInt(params.id));
 	if (!battleJob) {
 		redirect(302, '/jobs/battles');
 	}
 
+
 	return {
 		masterdata: masterdata,
 		battleJob: battleJob,
-		monsters: await monsterClient.getMonsters(),
+		monsters: await monsterClient.getMonsters(user.userId),
 	};
 };

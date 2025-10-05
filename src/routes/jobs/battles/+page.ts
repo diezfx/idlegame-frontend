@@ -5,11 +5,13 @@ import { MonsterClient } from '$lib/service/monsters';
 import { JobSubType } from '../../../gen/v1/masterdata_pb';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const jobsClient = new JobsClient(fetch);
 	const monsterClient = new MonsterClient(fetch);
 	const masterdata = createClients(fetch).masterdataClient.getBattleJobs({ cityId: "city_1" });
 
+	const p = await parent();
+	const user = p.user;
 	const allJobs = await masterdata;
 	const relevantJobs = allJobs.jobs.filter((job) => job.definition!.subType === JobSubType.BATTLE);
 	let activeJobs = await jobsClient.getJobs();
@@ -18,6 +20,6 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	return {
 		masterdata: relevantJobs,
 		jobs: activeJobs,
-		monsters: await monsterClient.getMonsters(),
+		monsters: await monsterClient.getMonsters(user.userId),
 	};
 };

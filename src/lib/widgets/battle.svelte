@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { Progress } from '$lib/components/ui/progress';
+	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import type { BattleMonster, Job } from '$lib/service/jobs';
 	import Swords from 'lucide-svelte/icons/swords';
 	import Cross from 'lucide-svelte/icons/cross';
@@ -15,24 +15,31 @@
 
 	import { invalidateAll } from '$app/navigation';
 	import { wrapDebounce } from '$lib/debounce/debounce';
+	import { protoToMilliseconds } from '$lib/utils/prototime';
 
 	const attackCooldown = 5000;
 	let animationFrameId: number | undefined;
 	let interval: number | undefined;
 
-	let getNextAttackInMs = (lastAttacked: string): number => {
-		const lastAttack = DateTime.fromISO(lastAttacked);
+	let getNextAttackInMs = (lastAttacked: number): number => {
+		const lastAttack = DateTime.fromMillis(lastAttacked);
 		const nextAttack = lastAttack.plus({ seconds: attackCooldown / 1000 + 0.1 });
 		return Math.max(0, nextAttack.diffNow().as('milliseconds'));
 	};
 
-	let playerMonsterCurrent = $state(attackCooldown - getNextAttackInMs(playerMonsters[0].lastAction.lastAttackedAt));
-	let enemyMonsterCurrent = $state(attackCooldown - getNextAttackInMs(enemyMonsters[0].lastAction.lastAttackedAt));
+	let playerMonsterCurrent = $derived(
+		attackCooldown - getNextAttackInMs(protoToMilliseconds(playerMonsters[0].lastAction!.lastAttackedAt)),
+	);
+	let enemyMonsterCurrent = $derived(
+		attackCooldown - getNextAttackInMs(protoToMilliseconds(enemyMonsters[0].lastAction!.lastAttackedAt)),
+	);
 
 	let debouncedInvalidateAll = wrapDebounce(invalidateAll, 100);
 	let animate = (currentTime: number) => {
-		playerMonsterCurrent = attackCooldown - getNextAttackInMs(playerMonsters[0].lastAction.lastAttackedAt);
-		enemyMonsterCurrent = attackCooldown - getNextAttackInMs(enemyMonsters[0].lastAction.lastAttackedAt);
+		playerMonsterCurrent =
+			attackCooldown - getNextAttackInMs(protoToMilliseconds(playerMonsters[0].lastAction!.lastAttackedAt));
+		enemyMonsterCurrent =
+			attackCooldown - getNextAttackInMs(protoToMilliseconds(enemyMonsters[0].lastAction!.lastAttackedAt));
 		if (playerMonsterCurrent == attackCooldown || enemyMonsterCurrent == attackCooldown) {
 			debouncedInvalidateAll();
 		}
@@ -58,11 +65,11 @@
 {#snippet monster(mon: BattleMonster)}
 	<Card.Root {...props} class="w-[350px]">
 		<Card.Header>
-			<Card.Title>{mon.identity.name}</Card.Title>
+			<Card.Title>{mon.identity?.name}</Card.Title>
 		</Card.Header>
 		<Card.Content class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
-			<Progress value={mon.stat.health} max={mon.stat.maxHealth} class="col-span-2" />
+			<Progress value={mon.stat?.health} max={mon.stat?.maxHealth} class="col-span-2" />
 			<Swords />
 			<p class="col-span-2">10</p>
 			<p>NextAttack</p>
@@ -73,18 +80,18 @@
 
 <Card.Root {...props} class="w-[350px]">
 	<Card.Header>
-		<Card.Title>{job.def.jobDefId}</Card.Title>
+		<Card.Title>{job.def!.jobDefId}</Card.Title>
 	</Card.Header>
 	<Card.Content class="grid grid-cols-2">
 		<p>Monster</p>
-		<p>{job.monsters.map(m => m.identity.name)}</p>
+		<p>{job.monsters.map((m) => m.identity!.name)}</p>
 		<p>Updated</p>
-		<p>{timeAgo(DateTime.fromISO(job.jobState.updatedAt))}</p>
+		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState!.updatedAt)))}</p>
 		<p>Started</p>
-		<p>{timeAgo(DateTime.fromISO(job.entity.createdAt))}</p>
+		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity!.createdAt)))}</p>
 
 		<p class="col-span-2">Rewards</p>
-		{#each job.rewards.inventory.items as reward}
+		{#each job.rewards!.inventory!.items as reward}
 			<p>{reward.id}</p>
 			<p>{reward.quantity}</p>
 		{/each}

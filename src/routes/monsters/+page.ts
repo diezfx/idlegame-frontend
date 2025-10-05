@@ -15,7 +15,7 @@ export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const inventory = inventoryClient.getInventory({ userId: BigInt(user.userId) })
 
 	return {
-		monsters: await monsterClient.getMonsters(),
+		monsters: await monsterClient.getMonsters(user.userId),
 		inventory: (await inventory).totalItems,
 		itemMasterdata: await masterdataClient.getItems(),
 	};

@@ -2,7 +2,7 @@
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { JobsClient, type JobMasterdata } from '$lib/service/jobs';
-	import { Button } from '$lib/components/ui/button';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';

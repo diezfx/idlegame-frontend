@@ -10,8 +10,8 @@ export class MonsterClient {
 		this.monsterClient = monsterClient;
 	}
 
-	async getMonsters(): Promise<Monster[]> {
-		const response = await this.monsterClient.listMonsters({});
+	async getMonsters(userId: number): Promise<Monster[]> {
+		const response = await this.monsterClient.listMonsters({ ownerId: BigInt(userId) });
 		return response.monsters;
 	}
 }

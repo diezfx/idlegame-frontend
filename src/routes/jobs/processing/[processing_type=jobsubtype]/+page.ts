@@ -5,7 +5,7 @@ import { MonsterClient } from '$lib/service/monsters';
 import { JobSubType } from '../../../../gen/v1/masterdata_pb';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const jobsClient = new JobsClient(fetch);
 	const monsterClient = new MonsterClient(fetch);
 	const masterdata = createClients(fetch).masterdataClient;
@@ -17,11 +17,14 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	activeProcessingJobs = activeProcessingJobs.filter((job) => job.definition!.subType === processingType);
 	let activeJobs = await jobsClient.getJobs();
 	activeJobs = activeJobs.filter((job) => job.def?.subType === processingType);
+	const p = await parent();
+	const user = p.user;
+
 
 	return {
 		processingType: params.processing_type,
 		masterdata: activeProcessingJobs,
 		jobs: activeJobs,
-		monsters: await monsterClient.getMonsters(),
+		monsters: await monsterClient.getMonsters(user.userId),
 	};
 };

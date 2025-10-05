@@ -1,8 +1,7 @@
 <script lang="ts">
-	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { getJobsClientContext, JobsClient } from '$lib/service/jobs';
-	import { Button } from '$lib/components/ui/button';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
@@ -25,6 +24,7 @@
 	let selectedMonster: Monster | undefined = $state(undefined);
 	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
+	let jobStartable = $derived(selectedJob && selectedMonster);
 	function dialogClicked(m: Monster): void {
 		openDialog = false;
 		selectedMonster = m;
@@ -127,4 +127,4 @@
 	{/each}
 </div>
 
-<Button onclick={startJob}>Start Gathering</Button>
+<Button onclick={startJob} disabled={!jobStartable}>Start Gathering</Button>
