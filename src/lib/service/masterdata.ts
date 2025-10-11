@@ -1,10 +1,6 @@
 import { createClients } from './connect';
-import {
-	type BattleJobDefinition,
-	type ItemDefinition,
-	type MonsterDefinition,
-	type ProductionJobDefinition,
-} from '../../gen/v1/masterdata_pb';
+import type { ItemDefinition, MonsterDefinition } from '../../gen/v1/masterdata_pb';
+import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 
 export class MasterdataClient {
 	private readonly masterdataClient;
@@ -30,11 +26,11 @@ export class MasterdataClient {
 		const response = await this.masterdataClient.getStarterMonsters({});
 		return response.monsters;
 	}
-	async getBattleJobs(): Promise<BattleJobDefinition[]> {
+	async getBattleJobs(): Promise<BattleJobInfo[]> {
 		const response = await this.masterdataClient.getBattleJobs({});
 		return response.jobs;
 	}
-	async getProductionJobs(): Promise<ProductionJobDefinition[]> {
+	async getProductionJobs(): Promise<ProductionJobInfo[]> {
 		const response = await this.masterdataClient.getProductionJobs({});
 		return response.jobs;
 	}

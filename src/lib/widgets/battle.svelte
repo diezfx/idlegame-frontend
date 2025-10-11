@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import * as Card from '$lib/components/ui/card';
+	import Card from '$lib/components/ui/card/card.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import type { BattleMonster, Job } from '$lib/service/jobs';
 	import Swords from 'lucide-svelte/icons/swords';
@@ -63,26 +63,20 @@
 </script>
 
 {#snippet monster(mon: BattleMonster)}
-	<Card.Root {...props} class="w-[350px]">
-		<Card.Header>
-			<Card.Title>{mon.identity?.name}</Card.Title>
-		</Card.Header>
-		<Card.Content class="grid grid-cols-3">
+	<Card {...props} class="w-[350px]" title={mon.identity?.name}>
+		<div class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
 			<Progress value={mon.stat?.health} max={mon.stat?.maxHealth} class="col-span-2" />
 			<Swords />
 			<p class="col-span-2">10</p>
 			<p>NextAttack</p>
 			<Progress class="col-span-2" value={playerMonsterCurrent} max={attackCooldown} />
-		</Card.Content>
-	</Card.Root>
+		</div>
+	</Card>
 {/snippet}
 
-<Card.Root {...props} class="w-[350px]">
-	<Card.Header>
-		<Card.Title>{job.def!.jobDefId}</Card.Title>
-	</Card.Header>
-	<Card.Content class="grid grid-cols-2">
+<Card {...props} class="w-[350px]" title={job.def!.jobDefId}>
+	<div class="grid grid-cols-2">
 		<p>Monster</p>
 		<p>{job.monsters.map((m) => m.identity!.name)}</p>
 		<p>Updated</p>
@@ -95,10 +89,10 @@
 			<p>{reward.id}</p>
 			<p>{reward.quantity}</p>
 		{/each}
-	</Card.Content>
+	</div>
 
-	<Card.Footer class="justify-center"><Button class="bg-red-500">STOP</Button></Card.Footer>
-</Card.Root>
+	<div class="justify-center"><Button class="bg-red-500">STOP</Button></div>
+</Card>
 
 <div class="grid grid-cols-2 gap-2">
 	<div>

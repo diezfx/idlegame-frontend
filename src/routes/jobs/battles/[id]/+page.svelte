@@ -6,7 +6,5 @@
 	let battleJob: Job = $derived(data.battleJob);
 </script>
 
-<h1>Woodcutting</h1>
-
 <div>Battle State</div>
 <BattlewView job={battleJob} />

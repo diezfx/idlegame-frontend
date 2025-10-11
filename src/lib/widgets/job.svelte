@@ -74,7 +74,7 @@
 
 		<p class="col-span-2 font-semibold text-gray-500 mt-2">Rewards</p>
 		<div class="col-span-2 flex flex-wrap gap-2">
-			{#each job.rewards?.inventory?.items! as reward}
+			{#each job.rewards!.inventory!.items! as reward}
 				<span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-medium">
 					{reward.quantity} × {reward.id}
 				</span>

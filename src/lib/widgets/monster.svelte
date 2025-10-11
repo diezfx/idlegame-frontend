@@ -45,7 +45,7 @@
 	<Separator class="col-span-full m-1"></Separator>
 	<div class="col-span-2 font-bold">Equipment</div>
 	<div class="grid grid-cols-3">
-		{#each monster.equippedItems as item}
+		{#each monster.equippedItems as item (item.id)}
 			<p>{item.id}</p>
 			<p>{item.quantity}</p>
 			{#if itemDeleteAction}

@@ -4,10 +4,10 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	type Props = {
-		title?: Snippet | string | undefined;
+		title?: Snippet<[]> | string | undefined;
 		class?: string;
 		children?: Snippet;
-	} & HTMLAttributes<HTMLDivElement>;
+	} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>;
 
 	let { title, class: className, children, ...restProps }: Props = $props();
 </script>
@@ -20,12 +20,13 @@
 	{...restProps}
 >
 	{#if title}
-		{#if typeof title === 'string'}
-			<div class="font-semibold leading-none">{title}</div>
-		{:else}
+		{#if typeof title !== 'string'}
 			{@render title()}
+		{:else}
+			<div class="font-semibold leading-none">{title}</div>
 		{/if}
 	{/if}
+
 	<div>
 		{@render children?.()}
 	</div>
