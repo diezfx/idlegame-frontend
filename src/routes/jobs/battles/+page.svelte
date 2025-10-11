@@ -1,14 +1,12 @@
 <script lang="ts">
-	import CardTitle from '$lib/components/ui/card/card-title.svelte';
-	import * as Card from '$lib/components/ui/card';
-	import { JobsClient, type JobMasterdata } from '$lib/service/jobs';
+	import Card from '$lib/components/ui/card/card.svelte';
+	import { JobsClient } from '$lib/service/jobs';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
 	import { getUserFromContext } from '$lib/stores/user';
 	import { invalidateAll } from '$app/navigation';
-	import { config } from '$lib/config/config.js';
 	import type { Monster } from '../../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
@@ -55,20 +53,19 @@
 	}
 </script>
 
-<h1>Woodcutting</h1>
-
 <div>Start new Job</div>
 <div class="grid grid-cols-3 gap-2">
 	{#if selectedMonster != undefined}
 		<MonsterView class={selectedColor} monster={selectedMonster} />
 	{/if}
-	<Card.Root
+	<Card
 		onclick={() => {
 			openDialog = true;
 			selectedMonster;
 		}}
-		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card.Root
-	>
+		class="button text-center text-green-500 text-2xl hover:{selectedColor}"
+		>+
+	</Card>
 </div>
 
 <div>Currently active Jobs</div>
@@ -89,15 +86,12 @@
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
-		<Card.Root
+		<Card
+			title={job.definition!.id}
 			class={cn(isSelectedJob(job.definition!.id) ? selectedColor : 'hover:bg-accent', 'cursor-pointer')}
 			onclick={() => (selectedJob = job)}
 		>
-			<Card.Header>
-				<Card.Title>{job.definition!.name}</Card.Title>
-			</Card.Header>
-
-			<Card.Content class="grid grid-cols-2">
+			<div class="grid grid-cols-2">
 				<p>Required Level</p>
 				<p>{job.definition!.levelRequirement}</p>
 				<div>Stamina Cost</div>
@@ -113,8 +107,8 @@
 						.shiftTo('seconds')
 						.toHuman({ unitDisplay: 'narrow' })}
 				</p>
-			</Card.Content>
-		</Card.Root>
+			</div>
+		</Card>
 	{/each}
 </div>
 

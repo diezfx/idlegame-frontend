@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card } from '$lib/components/ui/card';
+	import Card from '$lib/components/ui/card/card.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import log from '$lib/log/log';
 	import { getUserFromContext } from '$lib/stores/user';

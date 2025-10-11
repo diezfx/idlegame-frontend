@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
+	import Card from '$lib/components/ui/card/card.svelte';
 	import { getJobsClientContext, JobsClient } from '$lib/service/jobs';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
@@ -53,20 +53,18 @@
 	}
 </script>
 
-<h1>Woodcutting</h1>
-
 <div>Start new Job</div>
 <div class="grid grid-cols-3 gap-2">
 	{#if selectedMonster != undefined}
 		<MonsterView class={selectedColor} monster={selectedMonster} />
 	{/if}
-	<Card.Root
+	<Card
 		onclick={() => {
 			console.log('button clicked');
 			openDialog = true;
 			selectedMonster;
 		}}
-		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card.Root
+		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card
 	>
 </div>
 
@@ -88,12 +86,12 @@
 
 <div class="grid grid-cols-4 gap-2">
 	{#each data.masterdata as job}
-		<Card.Root class={isSelectedJob(job.definition!.id) ? selectedColor : ''} onclick={() => (selectedJob = job)}>
-			<Card.Header>
-				<Card.Title>{job.definition!.name}</Card.Title>
-			</Card.Header>
-
-			<Card.Content class="grid grid-cols-2">
+		<Card
+			class={isSelectedJob(job.definition!.id) ? selectedColor : ''}
+			title={job.definition!.id}
+			onclick={() => (selectedJob = job)}
+		>
+			<div class="grid grid-cols-2">
 				<p>Required Level</p>
 				<p>{job.definition!.levelRequirement}</p>
 				<div>Duration</div>
@@ -122,8 +120,8 @@
 						<p>{ingredient.quantity}</p>
 					{/each}
 				{/if}
-			</Card.Content>
-		</Card.Root>
+			</div>
+		</Card>
 	{/each}
 </div>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import * as Card from '$lib/components/ui/card';
+	import Card from '$lib/components/ui/card/card.svelte';
 	let {
 		job,
 		onclick,
@@ -47,17 +47,20 @@
 	console.log(job.def?.subType);
 </script>
 
-<Card.Root
+<Card
 	{...props}
 	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200"
 >
-	<Card.Header class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
-		<Card.Title class="text-lg font-bold">{job.def?.jobDefId}</Card.Title>
-		<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
-			{JobSubType[job.def?.subType!]}
-		</span>
-	</Card.Header>
-	<Card.Content class="grid grid-cols-2 gap-y-1 px-4 py-2">
+	{#snippet title()}
+		<div class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
+			<div class="text-lg font-bold">{job.def?.jobDefId}</div>
+			<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
+				{JobSubType[job.def?.subType!]}
+			</span>
+		</div>
+	{/snippet}
+
+	<div class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
 		<p class="truncate">{job.monsters.map((m) => m.entity?.id).join?.(', ')}</p>
 		{#if job.jobState && job.jobState.status}
@@ -77,9 +80,9 @@
 				</span>
 			{/each}
 		</div>
-	</Card.Content>
+	</div>
 
-	<Card.Footer class="justify-center p-4 bg-gray-50 rounded-b-xl">
+	<div class="justify-center p-4 bg-gray-50 rounded-b-xl">
 		<Button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" onclick={onStop}>STOP</Button>
-	</Card.Footer>
-</Card.Root>
+	</div>
+</Card>
