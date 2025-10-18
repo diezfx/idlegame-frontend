@@ -1,16 +1,13 @@
-import { createClients } from '$lib/service/connect';
+import { clients } from '$lib/service/connect';
 import { JobsClient } from '$lib/service/jobs';
-import { MonsterClient } from '$lib/service/monsters';
+import { gameStateStore } from '$lib/stores/gamestate.svelte';
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
-export const load: PageLoad = async ({ fetch, parent, params }) => {
+export const load: PageLoad = async ({ fetch, params }) => {
 	const jobsClient = new JobsClient(fetch);
-	const monsterClient = new MonsterClient(fetch);
-	const masterdata = await createClients(fetch).masterdataClient.getBattleJobs({ cityId: 'city_1' });
+	const masterdata = await clients.masterdataClient.getBattleJobs({ cityId: 'city_1' });
 
-	const parentData: any = await parent();
-	const user = parentData?.user;
 
 	if (!params.id) {
 		throw redirect(302, '/jobs/battles');
@@ -22,7 +19,7 @@ export const load: PageLoad = async ({ fetch, parent, params }) => {
 		throw redirect(302, '/jobs/battles');
 	}
 
-	const monsters = await monsterClient.getMonsters(user?.userId);
+	const monsters = await gameStateStore.getMonsters();
 
 	return {
 		masterdata,

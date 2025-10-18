@@ -1,14 +1,13 @@
 import { config } from '$lib/config/config';
-import { createClients } from '$lib/service/connect';
+import { clients } from '$lib/service/connect';
 import { JobsClient } from '$lib/service/jobs';
-import { MonsterClient } from '$lib/service/monsters';
+import { gameStateStore } from '$lib/stores/gamestate.svelte';
 import { JobSubType } from '../../../gen/v1/masterdata_pb';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const jobsClient = new JobsClient(fetch);
-	const monsterClient = new MonsterClient(fetch);
-	const masterdata = createClients(fetch).masterdataClient.getBattleJobs({ cityId: "city_1" });
+	const masterdata = clients.masterdataClient.getBattleJobs({ cityId: "city_1" });
 
 	const p = await parent();
 	const user = p.user;
@@ -20,6 +19,6 @@ export const load: PageLoad = async ({ fetch, parent, params }) => {
 	return {
 		masterdata: relevantJobs,
 		jobs: activeJobs,
-		monsters: await monsterClient.getMonsters(user.userId),
+		monsters: await gameStateStore.getMonsters(),
 	};
 };

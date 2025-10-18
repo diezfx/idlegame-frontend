@@ -1,10 +1,11 @@
 import { config } from '$lib/config/config';
 import log from '$lib/log/log';
-import { createClients } from '$lib/service/connect';
+import { clients } from '$lib/service/connect';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ fetch, parent, params, url, locals }) => {
-	const { userClient } = createClients(fetch);
+	console.log('Layout.server load lalala');
+	const { userClient } = clients;
 
 	const user = locals.user
 	const tutorialProgress = await userClient.getUserProgress({ id: BigInt(user.userId) });

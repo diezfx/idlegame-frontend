@@ -1,4 +1,4 @@
-import { createClients } from './connect';
+import { clients } from './connect';
 import type { ItemDefinition, MonsterDefinition } from '../../gen/v1/masterdata_pb';
 import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 
@@ -6,7 +6,7 @@ export class MasterdataClient {
 	private readonly masterdataClient;
 
 	constructor(customFetch?: typeof globalThis.fetch) {
-		this.masterdataClient = createClients(customFetch).masterdataClient;
+		this.masterdataClient = clients.masterdataClient;
 	}
 
 	async getItems(): Promise<{ [key: string]: ItemDefinition }> {

@@ -16,11 +16,7 @@
 	} = $props();
 </script>
 
-{#snippet title()}
-	<h1>hello world</h1>
-{/snippet}
-
-<Card {...props} class={cn(classname)} {title}>
+<Card {...props} class={cn(classname)} title={monster.identity?.name}>
 	<div class="grid grid-cols-2">
 		<div>ID</div>
 		<p>#{monster.entity?.id}</p>

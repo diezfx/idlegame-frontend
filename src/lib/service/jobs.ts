@@ -1,4 +1,4 @@
-import { createClients } from './connect';
+import { clients } from './connect';
 import type { Job, JobMonster } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
 import { type BattleJobDefinition, type ProductionJobDefinition } from '../../gen/v1/masterdata_pb';
@@ -23,7 +23,7 @@ export class JobsClient {
 	private readonly jobClient;
 
 	constructor(svFetch?: typeof globalThis.fetch) {
-		const { jobClient, masterdataClient } = createClients(svFetch);
+		const { jobClient, masterdataClient } = clients;
 		this.jobClient = jobClient;
 	}
 

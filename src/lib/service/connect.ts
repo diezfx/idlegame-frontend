@@ -9,11 +9,11 @@ import {
 	UserService,
 } from '../../gen/v1/service_pb';
 
-export function createClients(customFetch?: typeof globalThis.fetch) {
+
+function createClients() {
 	const transport = createConnectTransport({
 		baseUrl: 'http://localhost:8080',
 		useBinaryFormat: false,
-		fetch: customFetch,
 	});
 
 	return {
@@ -24,4 +24,7 @@ export function createClients(customFetch?: typeof globalThis.fetch) {
 		tutorialClient: createClient(TutorialService, transport),
 		userClient: createClient(UserService, transport),
 	};
+
 }
+
+export const clients = createClients();

@@ -1,4 +1,4 @@
-import { createClients } from './connect';
+import { clients } from './connect';
 import type { Item } from '../../gen/v1/domain_pb';
 
 export type { Item } from '../../gen/v1/domain_pb';
@@ -7,7 +7,7 @@ export class InventoryClient {
 	private readonly inventoryClient;
 
 	constructor(customFetch?: typeof globalThis.fetch) {
-		this.inventoryClient = createClients(customFetch).inventoryClient;
+		this.inventoryClient = clients.inventoryClient;
 	}
 
 	async equipItem(request: { userId: bigint; monsterId: bigint; itemId: string; quantity: bigint }): Promise<void> {

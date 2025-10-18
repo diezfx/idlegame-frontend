@@ -5,7 +5,7 @@
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
-	import { getUserFromContext } from '$lib/stores/user';
+	import { userStore } from '$lib/stores/user.svelte.js';
 	import { invalidateAll } from '$app/navigation';
 	import type { Monster } from '../../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
@@ -18,7 +18,7 @@
 
 	const selectedColor = 'bg-green-200';
 
-	const user = getUserFromContext()!;
+	const user = userStore.getUser();
 	const jobClient = new JobsClient(fetch);
 
 	let openDialog = $state(false);
@@ -78,7 +78,7 @@
 <Dialog open={openDialog} onClose={() => (openDialog = false)}>
 	<h2>Choose Monster</h2>
 	<div class="grid grid-cols-3 gap-2">
-		{#each data.monsters as monster}
+		{#each data.monsters as [_, monster]}
 			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
 		{/each}
 	</div>

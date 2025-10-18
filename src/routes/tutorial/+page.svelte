@@ -1,20 +1,20 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { createClients } from '$lib/service/connect';
+	import { clients } from '$lib/service/connect';
 	import MasterdataMonster from '$lib/widgets/masterdata_monster.svelte';
 	import type { PageProps } from './$types';
-	import { getUserFromContext } from '$lib/stores/user';
+	import { userStore } from '$lib/stores/user.svelte';
 	import { goto } from '$app/navigation';
 	let { data }: PageProps = $props();
 
 	const selectedColor = 'bg-green-200';
 
-	const user = getUserFromContext()!;
+	const user = userStore.getUser()!;
 
 	let selectedMonster: number | undefined = $state(undefined);
 
 	const starterMons = data.monsters.filter((m) => data.starterMonsters.includes(m.id));
-	const tutorialClient = createClients().tutorialClient;
+	const tutorialClient = clients.tutorialClient;
 
 	async function chooseStarter(): Promise<void> {
 		const result = await tutorialClient.chooseStarter({

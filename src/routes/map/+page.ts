@@ -1,18 +1,15 @@
+import { clients } from '$lib/service/connect';
+import { gameStateStore } from '$lib/stores/gamestate.svelte';
 import type { PageLoad } from './$types';
-import { MonsterClient } from '$lib/service/monsters';
-import { createClients } from '$lib/service/connect';
 
 export const ssr = false;
 
 export const load: PageLoad = async ({ fetch, params, parent }) => {
-	const masterdataClient = createClients(fetch).masterdataClient;
-	const monsterClient = new MonsterClient(fetch);
-	const p = await parent();
-	const user = p.user;
+	const masterdataClient = clients.masterdataClient;
 
 
 	return {
 		cities: (await masterdataClient.getCities({})).cities,
-		monsters: await monsterClient.getMonsters(user.userId),
+		monsters: gameStateStore.getMonsters(),
 	};
 };
