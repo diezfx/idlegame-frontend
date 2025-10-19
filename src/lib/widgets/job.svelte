@@ -62,7 +62,7 @@
 
 	<div class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
-		<p class="truncate">{job.monsters.map((m) => m.entity?.id).join?.(', ')}</p>
+		<p class="truncate">{job.monsters.map((m) => m.identity?.name).join?.(', ')}</p>
 		{#if job.jobState && job.jobState.status}
 			<p class="font-semibold text-gray-500">Status</p>
 			<p class="capitalize">{jobStatusText(job.jobState.status)}</p>

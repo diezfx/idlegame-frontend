@@ -4,7 +4,6 @@
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
-	import { userStore } from '$lib/stores/user.svelte.js';
 	import type { Monster } from '../../../../gen/v1/domain_pb.js';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
 	import { Duration } from 'luxon';
@@ -12,15 +11,17 @@
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import { page } from '$app/state';
-
-	let { data } = $props();
+	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 
 	const selectedColor = 'bg-green-200';
 
-	const processingType = parseInt(page.params.processing_type!, 10);
+	const processingType = $derived(parseInt(page.params.processing_type!, 10));
 	const activeJobsMap = await gameStateStore.getJobs();
 	let activeJobs = $derived(Array.from(activeJobsMap.values()).filter((job) => job.def?.subType === processingType));
 	const monsters = await gameStateStore.getMonsters();
+	const jobDefs = $derived(
+		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === processingType),
+	);
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -72,7 +73,7 @@
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each activeJobs as job}
-		<JobView {job} />
+		<JobView onStop={() => gameStateStore.stopJob(job.entity?.id!)} {job} />
 	{/each}
 </div>
 
@@ -86,7 +87,7 @@
 </Dialog>
 
 <div class="grid grid-cols-4 gap-2">
-	{#each data.masterdata as job}
+	{#each jobDefs as job}
 		<Card
 			class={isSelectedJob(job.definition!.id) ? selectedColor : ''}
 			title={job.definition!.id}

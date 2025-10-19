@@ -3,25 +3,22 @@ import type { Inventory, Job, Monster } from "../../gen/v1/domain_pb";
 import { clients } from "$lib/service/connect";
 import { userStore } from "./user.svelte";
 
-export interface GameState {
+
+
+
+
+class GameStateStore {
     Monsters: SvelteMap<number, Monster>;
     Jobs: SvelteMap<number, Job>;
-    Inventories: SvelteMap<number, Inventory[]>;
-}
-
-
-
-
-class GameStateStore implements GameState {
-    Monsters: SvelteMap<number, Monster>;
-    Jobs: SvelteMap<number, Job>;
-    Inventories: SvelteMap<number, Inventory[]>;
+    Inventories: SvelteMap<number, Inventory>;
     constructor() {
+        setInterval(() => {
+            Promise.all([this.getMonsters(), this.getJobs(), this.getInventories()]);
+        }, 5000);
         this.Monsters = new SvelteMap<number, Monster>();
         this.Jobs = new SvelteMap<number, Job>();
-        this.Inventories = new SvelteMap<number, Inventory[]>();
+        this.Inventories = new SvelteMap<number, Inventory>();
     }
-
 
     async getMonsters(): Promise<SvelteMap<number, Monster>> {
 
@@ -52,6 +49,38 @@ class GameStateStore implements GameState {
         });
         await Promise.all([this.getJobs(), this.getMonsters()]);
         return response.jobId;
+    }
+
+    async stopJob(id: bigint): Promise<void> {
+        await clients.jobClient.deleteJob({ id: id });
+        await Promise.all([this.getJobs()]);
+    }
+
+    async getInventories(): Promise<SvelteMap<number, Inventory>> {
+        //for now always refresh until we have events
+        const inventories = await clients.inventoryClient.getInventory({ userId: BigInt(userStore.getUser().userId!) })
+        this.Inventories.clear();
+        for (const inventory of inventories.cities) {
+            this.Inventories.set(Number(inventory.id), inventory.inventory!);
+        }
+        return this.Inventories;
+    }
+    async equipItem({ monsterId, itemId, quantity }: { monsterId: bigint, itemId: string, quantity: number }): Promise<void> {
+        await clients.inventoryClient.equipItem({
+            userId: BigInt(userStore.getUser().userId!),
+            monsterId: monsterId,
+            itemId: itemId,
+            quantity: BigInt(quantity),
+        });
+        await this.getMonsters();
+    }
+    async unEquipItem({ monsterId, itemId }: { monsterId: bigint, itemId: string, }): Promise<void> {
+        await clients.inventoryClient.unEquipItem({
+            userId: BigInt(userStore.getUser().userId!),
+            monsterId: monsterId,
+            itemId: itemId,
+        });
+        await this.getMonsters();
     }
 }
 

@@ -5,11 +5,7 @@
 	import type { CityDefinition } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 
-	let {
-		monsters = [],
-		cities = [],
-		...props
-	}: { monsters: Monster[]; cities: CityDefinition[]; [key: string]: any } = $props();
+	let { monsters, cities }: { monsters: Monster[]; cities: CityDefinition[]; [key: string]: any } = $props();
 	const TILE_SIZE = 10;
 
 	onMount(async () => {
@@ -45,15 +41,17 @@
 		}
 	});
 
-	const filteredMonsters = monsters.filter((m) => {
-		for (const city of cities) {
-			if (m.position!.x === city.position!.x && m.position!.y === city.position!.y) {
-				return false;
+	const filteredMonsters = $derived(
+		monsters.filter((m) => {
+			for (const city of cities) {
+				if (m.position!.x === city.position!.x && m.position!.y === city.position!.y) {
+					return false;
+				}
+				console.log(m.position, city.position);
 			}
-			console.log(m.position, city.position);
-		}
-		return true;
-	});
+			return true;
+		}),
+	);
 </script>
 
 <div id="map-container" class="relative w-[1000px] h-[1000px]">

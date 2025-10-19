@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import Map from '../../lib/components/map.svelte';
 
-	let { data } = $props();
+	const monsters = $derived(Array.from((await gameStateStore.getMonsters()).values()));
+	const cities = await masterdataStore.getCities();
 </script>
 
 <h1>Map</h1>
-<Map cities={data.cities} monsters={Array.from((await gameStateStore.getMonsters()).values())} />
+<Map {cities} {monsters} />
