@@ -13,13 +13,10 @@
 
 	import { DateTime } from 'luxon';
 
-	import { invalidateAll } from '$app/navigation';
-	import { wrapDebounce } from '$lib/debounce/debounce';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 
 	const attackCooldown = 5000;
 	let animationFrameId: number | undefined;
-	let interval: number | undefined;
 
 	let getNextAttackInMs = (lastAttacked: number): number => {
 		const lastAttack = DateTime.fromMillis(lastAttacked);
@@ -34,19 +31,18 @@
 		attackCooldown - getNextAttackInMs(protoToMilliseconds(enemyMonsters[0].lastAction!.lastAttackedAt)),
 	);
 
-	let debouncedInvalidateAll = wrapDebounce(invalidateAll, 100);
 	let animate = (currentTime: number) => {
 		playerMonsterCurrent =
 			attackCooldown - getNextAttackInMs(protoToMilliseconds(playerMonsters[0].lastAction!.lastAttackedAt));
 		enemyMonsterCurrent =
 			attackCooldown - getNextAttackInMs(protoToMilliseconds(enemyMonsters[0].lastAction!.lastAttackedAt));
 		if (playerMonsterCurrent == attackCooldown || enemyMonsterCurrent == attackCooldown) {
-			debouncedInvalidateAll();
 		}
 		requestAnimationFrame(animate);
 	};
 	$effect(() => {
 		animationFrameId = requestAnimationFrame(animate);
+		console.log(playerMonsterCurrent);
 	});
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];

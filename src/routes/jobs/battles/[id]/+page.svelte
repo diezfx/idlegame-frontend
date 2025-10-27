@@ -1,10 +1,17 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import BattlewView from '$lib/widgets/battle.svelte';
-	import type { Job } from '../../../../gen/v1/domain_pb.js';
 
-	let { data } = $props();
-	let battleJob: Job = $derived(data.battleJob);
+	const jobId = BigInt(page.params.id!);
+
+	const battleJobPromise = $derived(gameStateStore.getJob(jobId));
+	const battleJob = $derived(await battleJobPromise);
 </script>
 
 <div>Battle State</div>
-<BattlewView job={battleJob} />
+{#if battleJob == undefined}
+	Loading Battle...
+{:else}
+	<BattlewView job={battleJob!} />
+{/if}

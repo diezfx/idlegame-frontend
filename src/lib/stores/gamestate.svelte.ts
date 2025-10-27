@@ -32,10 +32,16 @@ class GameStateStore {
         return this.Monsters;
     }
 
+    async getJob(id: bigint): Promise<Job | undefined> {
+        if (!this.Jobs.has(Number(id))) {
+            await this.getJobs();
+        }
+        return this.Jobs.get(Number(id));
+    }
+
     async getJobs(): Promise<SvelteMap<number, Job>> {
         //for now always refresh until we have events
         const jobs = await clients.jobClient.listJobs({})
-        this.Jobs.clear();
         for (const job of jobs.jobs) {
             this.Jobs.set(Number(job.entity?.id), job);
         }
