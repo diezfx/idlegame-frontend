@@ -9,7 +9,6 @@ import {
 	UserService,
 } from '../../gen/v1/service_pb';
 
-
 function createClients() {
 	const transport = createConnectTransport({
 		baseUrl: 'http://localhost:8080',
@@ -24,7 +23,6 @@ function createClients() {
 		tutorialClient: createClient(TutorialService, transport),
 		userClient: createClient(UserService, transport),
 	};
-
 }
 
 export const clients = createClients();

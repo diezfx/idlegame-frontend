@@ -13,8 +13,8 @@
     "proto": "buf generate"
   },
   "devDependencies": {
-    "@bufbuild/buf": "^1.56.0",
-    "@bufbuild/protoc-gen-es": "^2.6.3",
+    "@bufbuild/buf": "^1.61.0",
+    "@bufbuild/protoc-gen-es": "^2.10.1",
     "@eslint/js": "^9.37.0",
     "@internationalized/date": "^3.10.0",
     "@lucide/svelte": "^0.545.0",

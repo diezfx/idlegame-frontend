@@ -7,7 +7,7 @@ export const load: ServerLoad = async ({ fetch, parent, params, url, locals }) =
 	console.log('Layout.server load lalala');
 	const { userClient } = clients;
 
-	const user = locals.user
+	const user = locals.user;
 	const tutorialProgress = await userClient.getUserProgress({ id: BigInt(user.userId) });
 
 	if (!tutorialProgress.tutorialCompleted && url.pathname !== '/tutorial') {

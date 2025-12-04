@@ -1,5 +1,3 @@
-
-
 import { clients } from '$lib/service/connect';
 import type { PageLoad } from './$types';
 
@@ -9,7 +7,7 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 	const inventoryClient = clients.inventoryClient;
 	return {
 		inventory: await inventoryClient.getInventory({
-			userId: BigInt(user.userId)
+			userId: BigInt(user.userId),
 		}),
 	};
 };

@@ -7,7 +7,7 @@ import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, parent, params }) => {
 	const jobsClient = new JobsClient(fetch);
-	const masterdata = clients.masterdataClient.getBattleJobs({ cityId: "city_1" });
+	const masterdata = clients.masterdataClient.getBattleJobs({ cityId: 'city_1' });
 
 	const p = await parent();
 	const user = p.user;
