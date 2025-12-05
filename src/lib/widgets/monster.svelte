@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
+	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import { cn } from '$lib/utils';
 	import type { Monster } from '../../gen/v1/domain_pb';
@@ -22,11 +23,23 @@
 		<p>#{monster.entity?.id}</p>
 		<div>Level</div>
 		<p>{monster.stat?.level}</p>
+		<div>HP</div>
+		<Progress
+			foreground="bg-green-500"
+			background="bg-primary/20"
+			value={monster.stat?.health!}
+			max={monster.stat?.maxHealth!}
+		/>
 
 		<div>Experience</div>
 		<p>{monster.stat?.experience}</p>
 		<div>Stamina</div>
-		<p>{monster.stat?.stamina}</p>
+		<Progress
+			foreground="bg-yellow-200"
+			background="bg-primary/20"
+			value={monster.stat?.stamina ?? 0}
+			max={monster.stat?.maxStamina ?? 100}
+		/>
 		<div>Position</div>
 		<p>X:{Math.round(monster.position!.x)};Y:{Math.round(monster.position!.y)}</p>
 
