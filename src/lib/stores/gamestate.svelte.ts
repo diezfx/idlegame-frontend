@@ -2,6 +2,7 @@ import { SvelteMap } from 'svelte/reactivity';
 import type { Inventory, Job, Monster } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
+import { Code, ConnectError } from '@connectrpc/connect';
 
 class GameStateStore {
 	Monsters: SvelteMap<number, Monster>;
@@ -26,11 +27,21 @@ class GameStateStore {
 		return this.Monsters;
 	}
 
-	async getJob(id: bigint): Promise<Job | undefined> {
+	async getJob(id: bigint): Promise<Job | null> {
 		if (!this.Jobs.has(Number(id))) {
-			await this.getJobs();
+			try {
+				const job = await clients.jobClient.getJob({ id: id });
+				this.Jobs.set(Number(job.entity?.id), job);
+				return job;
+			}
+			catch (e) {
+				if (e instanceof ConnectError && e.code == Code.NotFound) {
+					return null;
+				}
+				throw e;
+			}
 		}
-		return this.Jobs.get(Number(id));
+		return this.Jobs.get(Number(id))!;
 	}
 
 	async getJobs(): Promise<SvelteMap<number, Job>> {

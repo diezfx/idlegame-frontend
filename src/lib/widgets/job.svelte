@@ -17,23 +17,9 @@
 	import { JobStatus, type Job } from '../../gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { JobSubType } from '../../gen/v1/masterdata_pb';
+	import { jobStatusText } from '$lib/utils/enumtext';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
-
-	const jobStatusText = (status: JobStatus) => {
-		switch (status) {
-			case JobStatus.UNSPECIFIED:
-				return 'Unspecified';
-			case JobStatus.ARRIVING:
-				return 'Arriving';
-			case JobStatus.WORKING:
-				return 'Working';
-			case JobStatus.RETURNING:
-				return 'Returning';
-			case JobStatus.FINISHED:
-				return 'Finished';
-		}
-	};
 
 	export const timeAgo = (dateTime: DateTime) => {
 		const diff = dateTime.diffNow().shiftTo(...units);
@@ -44,7 +30,6 @@
 		});
 		return relativeFormatter.format(Math.trunc(diff.as(unit)), unit);
 	};
-	console.log(job.def?.subType);
 </script>
 
 <Card

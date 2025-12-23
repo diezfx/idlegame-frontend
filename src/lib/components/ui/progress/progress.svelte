@@ -2,6 +2,13 @@
 	import { cn } from '$lib/utils.js';
 
 	let { foreground = 'bg-primary', background = 'bg-primary/20', max = 100, value, ...restProps } = $props();
+
+	if (value > max) {
+		value = max;
+	}
+	if (value < 0) {
+		value = 0;
+	}
 </script>
 
 <div

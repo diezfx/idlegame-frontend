@@ -6,6 +6,7 @@
 	import Swords from 'lucide-svelte/icons/swords';
 	import Cross from 'lucide-svelte/icons/cross';
 	import { Role } from '../../gen/v1/domain_pb';
+
 	let { job, ...props }: { job: Job; [key: string]: any } = $props();
 
 	const playerMonsters = $derived(job.monsters.filter((m) => m.participant?.role === Role.PLAYER));
@@ -14,6 +15,7 @@
 	import { DateTime } from 'luxon';
 
 	import { protoToMilliseconds } from '$lib/utils/prototime';
+	import { jobStatusText } from '$lib/utils/enumtext';
 
 	const attackCooldown = 5000;
 	let animationFrameId: number | undefined;
@@ -42,7 +44,6 @@
 	};
 	$effect(() => {
 		animationFrameId = requestAnimationFrame(animate);
-		console.log(playerMonsterCurrent);
 	});
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
@@ -62,11 +63,15 @@
 	<Card {...props} class="w-[350px]" title={mon.identity?.name}>
 		<div class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
-			<Progress value={mon.stat?.health} max={mon.stat?.maxHealth} class="col-span-2" />
+			<div class="col-span-2">
+				<Progress foreground="bg-red-500" background="bg-gray-200" value={mon.stat?.health} max={mon.stat?.maxHealth} />
+			</div>
 			<Swords />
 			<p class="col-span-2">10</p>
 			<p>NextAttack</p>
-			<Progress class="col-span-2" value={playerMonsterCurrent} max={attackCooldown} />
+			<div class="col-span-2">
+				<Progress foreground="bg-blue-200" background="bg-gray-200" value={playerMonsterCurrent} max={attackCooldown} />
+			</div>
 		</div>
 	</Card>
 {/snippet}
@@ -79,6 +84,8 @@
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState!.updatedAt)))}</p>
 		<p>Started</p>
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity!.createdAt)))}</p>
+		<p>State</p>
+		<p>{jobStatusText(job.jobState?.status!)}</p>
 
 		<p class="col-span-2">Rewards</p>
 		{#each job.rewards!.inventory!.items as reward}

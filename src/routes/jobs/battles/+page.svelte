@@ -71,7 +71,7 @@
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each data.jobs as job}
-		<JobView {job} onStop={() => jobClient.stopJob(job.entity!.id)} />
+		<a href={`/jobs/battles/${job.entity?.id}`}> <JobView {job} onStop={() => jobClient.stopJob(job.entity!.id)} /></a>
 	{/each}
 </div>
 
