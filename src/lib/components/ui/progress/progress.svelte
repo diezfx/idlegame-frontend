@@ -20,7 +20,7 @@
 </script>
 
 <div
-	class={cn('relative w-full overflow-hidden rounded-full', showLabel ? 'h-4' : 'h-2', background, className)}
+	class={cn('relative w-full overflow-hidden rounded-full', showLabel ? 'h-5' : 'h-2', background, className)}
 	role="progressbar"
 	aria-valuenow={value ?? 0}
 	aria-valuemin="0"
