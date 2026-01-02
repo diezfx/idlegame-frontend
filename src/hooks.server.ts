@@ -7,17 +7,31 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 		return fetch(request);
 	}
 
-	const result = await fetch(request);
-
-	log.info('request finished', {
-		url: request.url,
-		status: result.status,
-		method: request.method,
-		duration: Date.now() - startTime,
-		responseBody: await result.clone().json(),
-	});
-
-	return result;
+	try {
+		const result = await fetch(request);
+		let bodyText: string | undefined = undefined;
+		try {
+			bodyText = await result.clone().text();
+		} catch {
+			// ignore body parsing errors
+		}
+		log.info('request finished', {
+			url: request.url,
+			status: result.status,
+			method: request.method,
+			duration: Date.now() - startTime,
+			responseBody: bodyText,
+		});
+		return result;
+	} catch (err) {
+		log.error('backend request failed', {
+			url: request.url,
+			method: request.method,
+			duration: Date.now() - startTime,
+			error: String(err),
+		});
+		return new Response('backend unavailable', { status: 503 });
+	}
 };
 
 export const handle: Handle = async function ({ event, resolve }) {
