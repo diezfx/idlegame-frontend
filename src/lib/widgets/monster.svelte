@@ -21,80 +21,95 @@
 </script>
 
 <Card {...props} class={cn(classname)} title={monster.identity?.name}>
-	<div class="grid grid-cols-2 items-center gap-y-2">
+	<div class="grid grid-cols-2 text-xs gap-1">
 		<div>ID</div>
 		<p>#{monster.entity?.id}</p>
 		<div>Level</div>
 		<p>{monster.stat?.level}</p>
 		<div>HP</div>
 		<Progress
+			class="w-full"
 			showLabel={true}
 			foreground="bg-green-500"
 			background="bg-primary/20"
 			value={monster.stat?.health!}
 			max={monster.stat?.maxHealth!}
 		/>
-
-		<div>Experience</div>
-		<p>{monster.stat?.experience}</p>
-		<div>Stamina</div>
+		<div class="font-medium">Stamina</div>
 		<Progress
+			class="w-full"
 			showLabel={true}
 			foreground="bg-yellow-200"
 			background="bg-primary/20"
 			value={monster.stat?.stamina ?? 0}
 			max={monster.stat?.maxStamina ?? 100}
 		/>
-		<div>Position</div>
-		<p>X:{Math.round(monster.position!.x)};Y:{Math.round(monster.position!.y)}</p>
 
-		{#if monster.participant}
-			<div>Current Job</div>
-			<p>{monster.participant.jobEntityId}</p>
-		{:else}
-			<div>Current Job</div>
-			<p>Idle</p>
-		{/if}
-	</div>
-	<Separator class="col-span-full m-1"></Separator>
-	<div class="col-span-2 font-bold">Equipment</div>
-	<div class="col-span-2 grid grid-cols-3 gap-2">
-		{#each monster.equippedItems as item (item.id)}
-			<div
-				class="relative flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 p-2 text-center shadow-sm"
-			>
-				<span class="w-full truncate text-xs font-medium" title={item.id}>{item.id}</span>
-				{#if item.quantity > 1}
-					<span class="text-xs text-gray-500">x{item.quantity}</span>
-				{/if}
-				{#if itemDeleteAction}
-					<button
-						class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white hover:bg-red-600 shadow-sm"
-						onclick={() => itemDeleteAction(item.id)}
-						title="Unequip"
-					>
-						✕
-					</button>
-				{/if}
-				{#if openEquipDialog}
-					<button
-						class="absolute bottom-1 left-1/2 -translate-x-1/2 hover:text-gray-800"
-						onclick={() => openEquipDialog?.()}
-						title="Swap"
-					>
-						<ArrowLeftRight class="h-5 w-5 text-gray-600" />
-					</button>
-				{/if}
-			</div>
-		{/each}
-		{#each Array.from({ length: Math.max(0, 3 - monster.equippedItems.length) }) as _}
-			<button
-				class="flex aspect-square flex-col items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-gray-50/50 p-2 text-center hover:border-green-400 hover:bg-green-50"
-				onclick={() => openEquipDialog?.()}
-				title="Equip"
-			>
-				<Plus class="h-8 w-8 text-green-500" />
-			</button>
-		{/each}
-	</div>
-</Card>
+		<div class="font-medium">Exp</div>
+		<div>{monster.stat?.experience}</div>
+
+		<div class="font-medium">Job</div>
+		<div class="truncate max-w-[80px]">
+			{#if monster.participant}
+				{monster.participant.jobEntityId}
+			{:else}
+				Idle
+			{/if}
+		</div>
+
+		<div class="font-medium">Pos</div>
+		<div>X:{Math.round(monster.position!.x)};Y:{Math.round(monster.position!.y)}</div>
+
+		<Separator class="my-0.5" />
+
+		<div class="col-span-2 grid grid-cols-3 gap-2">
+			<div class="col-span-3 text-xs font-bold uppercase tracking-wider">Equipment</div>
+			{#each monster.equippedItems as item (item.id)}
+				<div
+					class="relative flex h-12 w-12 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 p-0.5 text-center shadow-sm group"
+				>
+					<span class="w-full truncate text-[9px] font-medium leading-tight" title={item.id}>{item.id}</span>
+					{#if item.quantity > 1}
+						<span class="text-[9px] text-gray-500 leading-tight">x{item.quantity}</span>
+					{/if}
+					{#if itemDeleteAction}
+						<button
+							class="absolute -right-1.5 -top-1.5 hidden group-hover:flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white hover:bg-red-600 shadow-sm z-10"
+							onclick={(e) => {
+								e.stopPropagation();
+								itemDeleteAction(item.id);
+							}}
+							title="Unequip"
+						>
+							✕
+						</button>
+					{/if}
+					{#if openEquipDialog}
+						<button
+							class="absolute bottom-0 left-1/2 -translate-x-1/2 hidden group-hover:block hover:text-gray-800 bg-white/80 rounded-full p-0.5"
+							onclick={(e) => {
+								e.stopPropagation();
+								openEquipDialog?.();
+							}}
+							title="Swap"
+						>
+							<ArrowLeftRight class="h-3 w-3 text-gray-600" />
+						</button>
+					{/if}
+				</div>
+			{/each}
+			{#each Array.from({ length: Math.max(0, 3 - monster.equippedItems.length) }) as _}
+				<button
+					class="flex h-12 w-12 flex-col items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-gray-50/50 p-1 text-center hover:border-green-400 hover:bg-green-50 transition-colors"
+					onclick={(e) => {
+						e.stopPropagation();
+						openEquipDialog?.();
+					}}
+					title="Equip"
+				>
+					<Plus class="h-5 w-5 text-green-500" />
+				</button>
+			{/each}
+		</div>
+	</div></Card
+>

@@ -50,7 +50,7 @@
 <h1>Monsters</h1>
 <div class="grid grid-cols-3 gap-4">
 	{#each monsters as [_, monster]}
-		<div class="flex flex-col gap-2">
+		<div class="gap-2">
 			<MonsterView
 				{monster}
 				itemDeleteAction={(itemID) => itemDeleteAction(monster.entity!.id, itemID)}
@@ -63,7 +63,7 @@
 	{/each}
 </div>
 
-<Dialog open={openDialog} onClose={() => (openDialog = false)}>
+<Dialog open={openDialog} class="max-w-3xl" onClose={() => (openDialog = false)}>
 	<div class="flex flex-col gap-4 w-[720px] max-w-full">
 		<div class="flex items-center justify-between">
 			<h2 class="text-lg font-semibold">Equip Item</h2>

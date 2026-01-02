@@ -6,19 +6,22 @@
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
 	import { userStore } from '$lib/stores/user.svelte.js';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import type { Monster } from '../../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { protoToMilliseconds } from '$lib/utils/prototime.js';
 	import { Duration } from 'luxon';
 	import type { BattleJobInfo } from '../../../gen/v1/service_pb.js';
 	import { cn } from '$lib/utils.js';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 
 	let { data } = $props();
 
 	const selectedColor = 'bg-green-200';
 
 	const user = userStore.getUser();
+	const activeJobs = $derived(await gameStateStore.getJobs());
+	const monsters = await gameStateStore.getMonsters();
 	const jobClient = new JobsClient(fetch);
 
 	let openDialog = $state(false);
@@ -69,16 +72,20 @@
 </div>
 
 <div>Currently active Jobs</div>
-<div class="grid grid-cols-3 gap-2">
-	{#each data.jobs as job}
-		<a href={`/jobs/battles/${job.entity?.id}`}> <JobView {job} onStop={() => jobClient.stopJob(job.entity!.id)} /></a>
+<div class="grid grid-cols-3 gap-2 items-start">
+	{#each activeJobs as [_, job]}
+		<JobView
+			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
+			{job}
+			onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
+		/>
 	{/each}
 </div>
 
-<Dialog open={openDialog} onClose={() => (openDialog = false)}>
-	<h2>Choose Monster</h2>
-	<div class="grid grid-cols-3 gap-2">
-		{#each data.monsters as [_, monster]}
+<Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
+	Choose Monster
+	<div class="grid grid-cols-3 gap-2 items-start">
+		{#each monsters as [_, monster]}
 			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
 		{/each}
 	</div>

@@ -77,19 +77,21 @@
 	{/each}
 </div>
 
-<Dialog open={openDialog} class="bg-blue-300 max-w-full" onClose={() => (openDialog = false)}>
+<Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
 	Choose Monster
-	<div class="grid grid-cols-3 gap-2">
+	<div class="grid grid-cols-3 gap-2 items-start">
 		{#each monsters as [_, monster]}
 			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
 		{/each}
 	</div>
 </Dialog>
 
-<div class="grid grid-cols-4 gap-2">
+<div class="grid grid-cols-4 gap-2 items-start">
 	{#each jobDefs as job}
 		<Card
-			class={isSelectedJob(job.definition!.id) ? selectedColor : ''}
+			class="{isSelectedJob(job.definition!.id)
+				? selectedColor
+				: ''} max-w-[350px] w-full hover:bg-gray-100 cursor-pointer transition-colors"
 			title={job.definition!.id}
 			onclick={() => (selectedJob = job)}
 		>

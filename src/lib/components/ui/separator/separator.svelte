@@ -4,4 +4,4 @@
 	let { class: className = '' } = $props();
 </script>
 
-<hr class={cn(className, 'h-px my-8 bg-gray-200 border-0 dark:bg-gray-700')} />
+<hr class={cn('h-px my-8 bg-gray-200 border-0 dark:bg-gray-700', className)} />

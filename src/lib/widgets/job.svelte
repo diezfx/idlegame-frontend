@@ -33,6 +33,7 @@
 </script>
 
 <Card
+	{onclick}
 	{...props}
 	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200"
 >
