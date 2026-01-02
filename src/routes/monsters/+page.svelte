@@ -5,6 +5,7 @@
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
+	import { EffectType } from '$gen/v1/masterdata_pb.js';
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -15,6 +16,12 @@
 	let itemMasterdata = await masterdataStore.getItems();
 
 	let inventory = (await gameStateStore.getInventories()).values().next().value!;
+
+	let equippableItems = $derived(
+		inventory.items.filter((i) => {
+			return itemMasterdata.get(i.id)?.effects.length ?? 0 > 0;
+		}),
+	);
 
 	function reset(): void {
 		selectedMonster = undefined;
@@ -71,7 +78,7 @@
 		</div>
 
 		<div class="grid gap-2 sm:grid-cols-2 max-h-[360px] overflow-y-auto">
-			{#each inventory.items as item}
+			{#each equippableItems as item}
 				<button
 					onclick={() => (selectedItem = item)}
 					class="flex flex-col gap-1 rounded-lg border p-3 text-left hover:bg-gray-50 {selectedItem?.id == item.id
@@ -83,7 +90,7 @@
 					<div class="mt-1 flex flex-wrap gap-1">
 						{#each itemMasterdata.get(item.id)?.effects as effect}
 							<span class="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700">
-								{effect.type}: {effect.value}
+								{EffectType[effect.type]}: {effect.value}
 							</span>
 						{/each}
 					</div>

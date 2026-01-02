@@ -81,7 +81,9 @@
 	Choose Monster
 	<div class="grid grid-cols-3 gap-2 items-start">
 		{#each monsters as [_, monster]}
-			<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+			{#if monster.participant == undefined}
+				<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+			{/if}
 		{/each}
 	</div>
 </Dialog>

@@ -100,7 +100,10 @@
 			{/each}
 			{#each Array.from({ length: Math.max(0, 3 - monster.equippedItems.length) }) as _}
 				<button
-					class="flex h-12 w-12 flex-col items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-gray-50/50 p-1 text-center hover:border-green-400 hover:bg-green-50 transition-colors"
+					disabled={openEquipDialog == undefined}
+					class="flex h-12 w-12 flex-col items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-gray-50/50 p-1 text-center transition-colors {openEquipDialog
+						? 'hover:border-green-400 hover:bg-green-50'
+						: ''}"
 					onclick={(e) => {
 						e.stopPropagation();
 						openEquipDialog?.();
