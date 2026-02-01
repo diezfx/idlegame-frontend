@@ -4,11 +4,12 @@ import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { Code, ConnectError } from '@connectrpc/connect';
 
-class GameStateStore {
+export class GameStateStore {
 	Monsters: SvelteMap<number, Monster>;
 	Jobs: SvelteMap<number, Job>;
 	Inventories: SvelteMap<number, Inventory>;
 	constructor() {
+		eventStream()
 		setInterval(() => {
 			Promise.all([this.getMonsters(), this.getJobs(), this.getInventories()]);
 		}, 5000);
@@ -27,7 +28,7 @@ class GameStateStore {
 		return this.Monsters;
 	}
 
-	async getJob(id: bigint): Promise<Job | null> {
+	async getJob(id: bigint): Promise<Job> {
 		if (!this.Jobs.has(Number(id))) {
 			try {
 				const job = await clients.jobClient.getJob({ id: id });
@@ -36,12 +37,29 @@ class GameStateStore {
 			}
 			catch (e) {
 				if (e instanceof ConnectError && e.code == Code.NotFound) {
-					return null;
+					throw "job not found"
 				}
 				throw e;
 			}
 		}
 		return this.Jobs.get(Number(id))!;
+	}
+
+	async getMonster(id: bigint): Promise<Monster> {
+		try {
+			if (!this.Monsters.has(Number(id))) {
+				const mon = await clients.monsterClient.getMonster({ id: id })
+				this.Monsters.set(Number(mon.entity?.id), mon)
+				return mon
+			}
+		}
+		catch (e) {
+			if (e instanceof ConnectError && e.code == Code.NotFound) {
+				throw "monster not found"
+			}
+			throw e;
+		}
+		return this.Monsters.get(Number(id))!;
 	}
 
 	async getJobs(): Promise<SvelteMap<number, Job>> {
@@ -72,7 +90,7 @@ class GameStateStore {
 		const inventories = await clients.inventoryClient.getInventory({ userId: BigInt(userStore.getUser().userId!) });
 		this.Inventories.clear();
 		for (const inventory of inventories.cities) {
-			this.Inventories.set(Number(inventory.id), inventory.inventory!);
+			this.Inventories.set(Number(inventory.entity?.id), inventory.inventory!);
 		}
 		return this.Inventories;
 	}
@@ -101,6 +119,15 @@ class GameStateStore {
 		});
 		await this.getMonsters();
 	}
+}
+
+
+async function eventStream() {
+	const eventStream = clients.streamClient.getEvents({ userId: "1" })
+	for await (const e of eventStream) {
+		console.log(e.events[0].eventType)
+	}
+
 }
 
 export const gameStateStore = new GameStateStore();

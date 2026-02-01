@@ -14,26 +14,27 @@
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 
 	const selectedColor = 'bg-green-200';
+	let openDialog = $state(false);
+	let selectedId: number | undefined = $state(undefined);
+	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
 	const processingType = $derived(parseInt(page.params.processing_type!, 10));
-	const activeJobsMap = await gameStateStore.getJobs();
+	const activeJobsMap = $derived(await gameStateStore.getJobs());
 	let activeJobs = $derived(Array.from(activeJobsMap.values()).filter((job) => job.def?.subType === processingType));
-	const monsters = await gameStateStore.getMonsters();
+	const monsters = $derived(await gameStateStore.getMonsters());
 	const jobDefs = $derived(
 		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === processingType),
 	);
 
-	let openDialog = $state(false);
-	let selectedMonster: Monster | undefined = $state(undefined);
-	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
+	let selectedMonster: Monster | undefined = $derived(selectedId ? monsters.get(selectedId) : undefined);
 
-	let jobStartable = $derived(selectedJob && selectedMonster);
-	function dialogClicked(m: Monster): void {
+	let jobStartable = $derived(selectedJob && selectedId);
+	function dialogClicked(m: number): void {
 		openDialog = false;
-		selectedMonster = m;
+		selectedId = m;
 	}
 	function reset(): void {
-		selectedMonster = undefined;
+		selectedId = undefined;
 		selectedJob = undefined;
 	}
 
@@ -73,7 +74,12 @@
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each activeJobs as job}
-		<JobView onStop={() => gameStateStore.stopJob(job.entity?.id!)} {job} />
+		<JobView
+			gs={gameStateStore}
+			jobID={BigInt(job.entity!.id)}
+			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
+			{job}
+		/>
 	{/each}
 </div>
 
@@ -82,7 +88,7 @@
 	<div class="grid grid-cols-3 gap-2 items-start">
 		{#each monsters as [_, monster]}
 			{#if monster.participant == undefined}
-				<MonsterView onclick={() => dialogClicked(monster)} {monster} class="hover:bg-gray-200" />
+				<MonsterView onclick={() => dialogClicked(Number(monster.entity?.id))} {monster} class="hover:bg-gray-200" />
 			{/if}
 		{/each}
 	</div>

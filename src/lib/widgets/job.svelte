@@ -1,23 +1,26 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
+
 	let {
-		job,
+		gs,
+		jobID,
 		onclick,
 		onStop,
 		...props
 	}: {
-		job: Job;
+		gs: GameStateStore;
+		jobID: bigint;
 		onclick?: () => void;
 		onStop?: () => void;
 		[key: string]: any;
 	} = $props();
 
 	import { DateTime } from 'luxon';
-	import { JobStatus, type Job } from '../../gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { JobSubType } from '../../gen/v1/masterdata_pb';
 	import { jobStatusText } from '$lib/utils/enumtext';
+	import type { GameStateStore } from '$lib/stores/gamestate.svelte';
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -30,6 +33,9 @@
 		});
 		return relativeFormatter.format(Math.trunc(diff.as(unit)), unit);
 	};
+
+	const job = $derived(await gs.getJob(jobID));
+	const monsters = $derived(await Promise.all(job!.monsters.map((id) => gs.getMonster(BigInt(id)))));
 </script>
 
 <Card
@@ -39,16 +45,16 @@
 >
 	{#snippet title()}
 		<div class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
-			<div class="text-lg font-bold">{job.def?.jobDefId}</div>
+			<div class="text-lg font-bold">{job!.def?.jobDefId}</div>
 			<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
-				{JobSubType[job.def?.subType!]}
+				{JobSubType[job!.def?.subType!]}
 			</span>
 		</div>
 	{/snippet}
 
 	<div class="grid grid-cols-2 gap-y-1 px-4 py-2">
 		<p class="font-semibold text-gray-500">Monster</p>
-		<p class="truncate">{job.monsters.map((m) => m.identity?.name).join?.(', ')}</p>
+		<p class="truncate">{monsters.map((m) => m!.identity?.name).join?.(', ')}</p>
 		{#if job.jobState && job.jobState.status}
 			<p class="font-semibold text-gray-500">Status</p>
 			<p class="capitalize">{jobStatusText(job.jobState.status)}</p>
