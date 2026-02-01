@@ -75,6 +75,7 @@
 <div class="grid grid-cols-3 gap-2 items-start">
 	{#each activeJobs as [_, job]}
 		<JobView
+			gs={gameStateStore}
 			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
 			jobID={job.entity!.id}
 			onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
