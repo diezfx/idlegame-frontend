@@ -783,7 +783,7 @@ export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
   /**
    * @generated from field: int32 source_id = 1;
    */
-  sourceId: number;
+  sourceId: string;
 
   /**
    * @generated from field: string user_id = 3;
@@ -810,9 +810,9 @@ export const CargoLoadedEventSchema: GenMessage<CargoLoadedEvent> = /*@__PURE__*
  */
 export type CargoUnloadedEvent = Message<"v1.CargoUnloadedEvent"> & {
   /**
-   * @generated from field: int32 target_id = 1;
+   * @generated from field: string target_id = 1;
    */
-  targetId: number;
+  targetId: string;
 
   /**
    * @generated from field: string user_id = 2;
