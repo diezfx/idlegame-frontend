@@ -38,14 +38,14 @@
 			return;
 		}
 		gameStateStore.equipItem({
-			monsterId: BigInt(selectedMonster.entity!.id),
+			monsterId: selectedMonster.entity!.id,
 			itemId: item.id,
 			quantity: itemAmount,
 		});
 		reset();
 	}
 
-	async function itemDeleteAction(monsterId: bigint, itemId: string): Promise<void> {
+	async function itemDeleteAction(monsterId: string, itemId: string): Promise<void> {
 		await gameStateStore.unEquipItem({
 			monsterId: monsterId,
 			itemId: itemId,

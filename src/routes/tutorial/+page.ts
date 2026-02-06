@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ fetch, parent }) => {
 	const masterdataClient = new MasterdataClient(fetch);
 
 	return {
-		progress: await userClient.getUserProgress({ id: BigInt(user.userId) }),
+		progress: await userClient.getUserProgress({ id: user.userId }),
 		monsters: await masterdataClient.getMonsters(),
 		starterMonsters: await masterdataClient.getStarterMonsters(),
 	};

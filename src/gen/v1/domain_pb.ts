@@ -8,22 +8,23 @@ import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { JobSubType, MonsterElement, Vector2 } from "./masterdata_pb";
 import { file_v1_masterdata } from "./masterdata_pb";
+import { file_buf_validate_validate } from "../buf/validate/validate_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file v1/domain.proto.
  */
 export const file_v1_domain: GenFile = /*@__PURE__*/
-  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxImkKBkVudGl0eRIKCgJpZBgBIAEoAxIjCgtlbnRpdHlfdHlwZRgCIAEoDjIOLnYxLkVudGl0eVR5cGUSLgoKY3JlYXRlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiLwoISWRlbnRpdHkSDAoEbmFtZRgBIAEoCRIVCg1kZWZpbml0aW9uX2lkGAIgASgJIjIKBEl0ZW0SCgoCaWQYASABKAkSEAoIcXVhbnRpdHkYAiABKAMSDAoEdGFncxgDIAMoCSIkCglJbnZlbnRvcnkSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIt4BCgRTdGF0EiMKB2VsZW1lbnQYASABKA4yEi52MS5Nb25zdGVyRWxlbWVudBISCgpleHBlcmllbmNlGAIgASgFEg4KBmhlYWx0aBgDIAEoBRISCgptYXhfaGVhbHRoGAQgASgFEg8KB3N0YW1pbmEYBSABKAUSEwoLbWF4X3N0YW1pbmEYBiABKAUSFAoMYXR0YWNrX3Bvd2VyGAcgASgFEi4KCnVwZGF0ZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEg0KBWxldmVsGAkgASgFIssBCgdNb25zdGVyEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5EisKC3BhcnRpY2lwYW50GAQgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EhYKBHN0YXQYBSABKAsyCC52MS5TdGF0EiAKDmVxdWlwcGVkX2l0ZW1zGAYgAygLMggudjEuSXRlbRIdCghwb3NpdGlvbhgHIAEoCzILLnYxLlZlY3RvcjIiQwoSTW9uc3RlclBhcnRpY2lwYW50EhUKDWpvYl9lbnRpdHlfaWQYASABKAMSFgoEcm9sZRgCIAEoDjIILnYxLlJvbGUiUgoRSm9iRGVmaW5pdGlvbkxpbmsSEgoKam9iX2RlZl9pZBgBIAEoCRIpCghzdWJfdHlwZRgCIAEoDjIOLnYxLkpvYlN1YlR5cGVSB3N1YnR5cGUiJwoNSm9iQXNzaWdubWVudBIWCg51c2VyX2VudGl0eV9pZBgBIAEoAyKFAQoISm9iU3RhdGUSHQoGc3RhdHVzGAEgASgOMg0udjEuSm9iU3RhdHVzEhIKCml0ZXJhdGlvbnMYAiABKAMSFgoObWF4X2l0ZXJhdGlvbnMYAyABKAMSLgoKdXBkYXRlZF9hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAi8wEKCkpvYk1vbnN0ZXISGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSFgoEc3RhdBgDIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYBCADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAUgASgLMgsudjEuVmVjdG9yMhIjCgtsYXN0X2FjdGlvbhgGIAEoCzIOLnYxLkxhc3RBY3Rpb24SKwoLcGFydGljaXBhbnQYByABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQieAoKTGFzdEFjdGlvbhI0ChBsYXN0X2F0dGFja2VkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBI0ChBsYXN0X2NvbnN1bWVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCK4AgoDSm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIlCgphc3NpZ25tZW50GAMgASgLMhEudjEuSm9iQXNzaWdubWVudBIdCghwb3NpdGlvbhgEIAEoCzILLnYxLlZlY3RvcjISHwoJam9iX3N0YXRlGAUgASgLMgwudjEuSm9iU3RhdGUSHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSEAoIbW9uc3RlcnMYByADKAUSHQoLaW5ncmVkaWVudHMYCCADKAsyCC52MS5JdGVtEhkKBmV2ZW50cxgJIAMoCzIJLnYxLkV2ZW50EiAKCWludmVudG9yeRgKIAEoCzINLnYxLkludmVudG9yeSL2AQoMVHJhbnNwb3J0Sm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QSGAoFcm91dGUYBCABKAsyCS52MS5Sb3V0ZRIgCghtb25zdGVycxgFIAMoCzIOLnYxLkpvYk1vbnN0ZXISIAoJaW52ZW50b3J5GAYgASgLMg0udjEuSW52ZW50b3J5Eh0KCHBvc2l0aW9uGAcgASgLMgsudjEuVmVjdG9yMiI/CgdSZXdhcmRzEiAKCWludmVudG9yeRgBIAEoCzINLnYxLkludmVudG9yeRISCgpleHBlcmllbmNlGAIgASgFIlsKDVJvdXRlTWFuaWZlc3QSDgoGc291cmNlGAEgASgFEg4KBnRhcmdldBgCIAEoBRIqCgtjYXJnb19pdGVtcxgDIAMoCzIILnYxLkl0ZW1SC2NhcmdvX2l0ZW1zIicKBVJvdXRlEg4KBnNvdXJjZRgBIAEoBRIOCgZ0YXJnZXQYAiABKAUiUwoLQXR0YWNrRXZlbnQSEAoIYXR0YWNrZXIYASABKAUSDgoGdGFyZ2V0GAIgASgFEg4KBmRhbWFnZRgDIAEoBRISCgpuZXdfaGVhbHRoGAQgASgFIiwKC0Fycml2ZUV2ZW50Eh0KCHBvc2l0aW9uGAEgASgLMgsudjEuVmVjdG9yMiIsCgtSZXR1cm5FdmVudBIdCghwb3NpdGlvbhgBIAEoCzILLnYxLlZlY3RvcjIiYQoJV29ya0V2ZW50EhwKB3Jld2FyZHMYASABKAsyCy52MS5SZXdhcmRzEiAKDmNvbnN1bWVkX2l0ZW1zGAIgAygLMggudjEuSXRlbRIUCgxzdGFtaW5hX2Nvc3QYAyABKAUiEgoQU3RvcFdvcmtpbmdFdmVudCJNChBDb25zdW1lSXRlbUV2ZW50EhIKCm1vbnN0ZXJfaWQYASABKAUSEwoLaXRlbV9kZWZfaWQYAiABKAkSEAoIcXVhbnRpdHkYAyABKAUiXQoURGVmZWF0ZWRFbmVtaWVzRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSEQoJZW5lbXlfaWRzGAIgAygFEhQKDHN0YW1pbmFfY29zdBgDIAEoBSI6ChVOZXh0Um91bmRFbmVtaWVzRXZlbnQSIQoHZW5lbWllcxgBIAMoCzIQLnYxLkVuZW15TW9uc3RlciJLCgxFbmVteU1vbnN0ZXISGwoHZW50aXRpeRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5Ik8KEENhcmdvTG9hZGVkRXZlbnQSEQoJc291cmNlX2lkGAEgASgFEg8KB3VzZXJfaWQYAyABKAUSFwoFaXRlbXMYBCADKAsyCC52MS5JdGVtIlEKEkNhcmdvVW5sb2FkZWRFdmVudBIRCgl0YXJnZXRfaWQYASABKAUSDwoHdXNlcl9pZBgCIAEoBRIXCgVpdGVtcxgDIAMoCzIILnYxLkl0ZW0iKgoUU3RhcnRSZWNvdmVyaW5nRXZlbnQSEgoKbW9uc3Rlcl9pZBgBIAEoBSIwCgxFdmVudENvbnRleHQSEAoIdXNlcl9pZHMYASADKAUSDgoGam9iX2lkGAIgASgFIpEBCg9Kb2JTdGFydGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EiYKB2pvYl9kZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxITCgttb25zdGVyX2lkcxgDIAMoBRIlCgphc3NpZ25tZW50GAQgASgLMhEudjEuSm9iQXNzaWdubWVudCIiChBKb2JGaW5pc2hlZEV2ZW50Eg4KBmpvYl9pZBgBIAEoBSKeBgoFRXZlbnQSCgoCaWQYASABKAkSLQoJdGltZXN0YW1wGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgpldmVudF90eXBlGAMgASgJEicKDWV2ZW50X2NvbnRleHQYBCABKAsyEC52MS5FdmVudENvbnRleHQSJwoMYXJyaXZlX2V2ZW50GAUgASgLMg8udjEuQXJyaXZlRXZlbnRIABInCgxyZXR1cm5fZXZlbnQYBiABKAsyDy52MS5SZXR1cm5FdmVudEgAEiMKCndvcmtfZXZlbnQYByABKAsyDS52MS5Xb3JrRXZlbnRIABIyChJzdG9wX3dvcmtpbmdfZXZlbnQYCCABKAsyFC52MS5TdG9wV29ya2luZ0V2ZW50SAASMgoSY29uc3VtZV9pdGVtX2V2ZW50GAogASgLMhQudjEuQ29uc3VtZUl0ZW1FdmVudEgAEjIKEmNhcmdvX2xvYWRlZF9ldmVudBgLIAEoCzIULnYxLkNhcmdvTG9hZGVkRXZlbnRIABI2ChRjYXJnb191bmxvYWRlZF9ldmVudBgMIAEoCzIWLnYxLkNhcmdvVW5sb2FkZWRFdmVudEgAEicKDGF0dGFja19ldmVudBgNIAEoCzIPLnYxLkF0dGFja0V2ZW50SAASOgoWc3RhcnRfcmVjb3ZlcmluZ19ldmVudBgOIAEoCzIYLnYxLlN0YXJ0UmVjb3ZlcmluZ0V2ZW50SAASOgoWZGVmZWF0ZWRfZW5lbWllc19ldmVudBgPIAEoCzIYLnYxLkRlZmVhdGVkRW5lbWllc0V2ZW50SAASPQoYbmV4dF9yb3VuZF9lbmVtaWVzX2V2ZW50GBAgASgLMhkudjEuTmV4dFJvdW5kRW5lbWllc0V2ZW50SAASMAoRam9iX3N0YXJ0ZWRfZXZlbnQYESABKAsyEy52MS5Kb2JTdGFydGVkRXZlbnRIABIyChJqb2JfZmluaXNoZWRfZXZlbnQYEiABKAsyFC52MS5Kb2JGaW5pc2hlZEV2ZW50SABCDAoKZXZlbnRfZGF0YSIrCg5SZXBlYXRlZEV2ZW50cxIZCgZldmVudHMYASADKAsyCS52MS5FdmVudCqRAQoKRW50aXR5VHlwZRIbChdFTlRJVFlfVFlQRV9VTlNQRUNJRklFRBAAEhQKEEVOVElUWV9UWVBFX1VTRVIQARIXChNFTlRJVFlfVFlQRV9NT05TVEVSEAISEwoPRU5USVRZX1RZUEVfSk9CEAMSIgoeRU5USVRZX1RZUEVfTE9DQVRJT05fSU5WRU5UT1JZEAQqPQoEUm9sZRIUChBST0xFX1VOU1BFQ0lGSUVEEAASDgoKUk9MRV9FTkVNWRABEg8KC1JPTEVfUExBWUVSEAIqiwEKCUpvYlN0YXR1cxIaChZKT0JfU1RBVFVTX1VOU1BFQ0lGSUVEEAASFwoTSk9CX1NUQVRVU19BUlJJVklORxABEhYKEkpPQl9TVEFUVVNfV09SS0lORxACEhgKFEpPQl9TVEFUVVNfUkVUVVJOSU5HEAMSFwoTSk9CX1NUQVRVU19GSU5JU0hFRBAEQitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw", [file_google_protobuf_timestamp, file_v1_masterdata]);
+  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxInMKBkVudGl0eRIUCgJpZBgBIAEoCUIIukgFcgOYAgESIwoLZW50aXR5X3R5cGUYAiABKA4yDi52MS5FbnRpdHlUeXBlEi4KCmNyZWF0ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIi8KCElkZW50aXR5EgwKBG5hbWUYASABKAkSFQoNZGVmaW5pdGlvbl9pZBgCIAEoCSIyCgRJdGVtEgoKAmlkGAEgASgJEhAKCHF1YW50aXR5GAIgASgDEgwKBHRhZ3MYAyADKAkiJAoJSW52ZW50b3J5EhcKBWl0ZW1zGAEgAygLMggudjEuSXRlbSLeAQoEU3RhdBIjCgdlbGVtZW50GAEgASgOMhIudjEuTW9uc3RlckVsZW1lbnQSEgoKZXhwZXJpZW5jZRgCIAEoBRIOCgZoZWFsdGgYAyABKAUSEgoKbWF4X2hlYWx0aBgEIAEoBRIPCgdzdGFtaW5hGAUgASgFEhMKC21heF9zdGFtaW5hGAYgASgFEhQKDGF0dGFja19wb3dlchgHIAEoBRIuCgp1cGRhdGVkX2F0GAggASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBINCgVsZXZlbBgJIAEoBSLLAQoHTW9uc3RlchIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIrCgtwYXJ0aWNpcGFudBgEIAEoCzIWLnYxLk1vbnN0ZXJQYXJ0aWNpcGFudBIWCgRzdGF0GAUgASgLMggudjEuU3RhdBIgCg5lcXVpcHBlZF9pdGVtcxgGIAMoCzIILnYxLkl0ZW0SHQoIcG9zaXRpb24YByABKAsyCy52MS5WZWN0b3IyIk0KEk1vbnN0ZXJQYXJ0aWNpcGFudBIfCg1qb2JfZW50aXR5X2lkGAEgASgJQgi6SAVyA5gCARIWCgRyb2xlGAIgASgOMggudjEuUm9sZSJSChFKb2JEZWZpbml0aW9uTGluaxISCgpqb2JfZGVmX2lkGAEgASgJEikKCHN1Yl90eXBlGAIgASgOMg4udjEuSm9iU3ViVHlwZVIHc3VidHlwZSIxCg1Kb2JBc3NpZ25tZW50EiAKDnVzZXJfZW50aXR5X2lkGAEgASgJQgi6SAVyA5gCASKFAQoISm9iU3RhdGUSHQoGc3RhdHVzGAEgASgOMg0udjEuSm9iU3RhdHVzEhIKCml0ZXJhdGlvbnMYAiABKAMSFgoObWF4X2l0ZXJhdGlvbnMYAyABKAMSLgoKdXBkYXRlZF9hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAi8wEKCkpvYk1vbnN0ZXISGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSFgoEc3RhdBgDIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYBCADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAUgASgLMgsudjEuVmVjdG9yMhIjCgtsYXN0X2FjdGlvbhgGIAEoCzIOLnYxLkxhc3RBY3Rpb24SKwoLcGFydGljaXBhbnQYByABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQieAoKTGFzdEFjdGlvbhI0ChBsYXN0X2F0dGFja2VkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBI0ChBsYXN0X2NvbnN1bWVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCLHAgoDSm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIlCgphc3NpZ25tZW50GAMgASgLMhEudjEuSm9iQXNzaWdubWVudBIdCghwb3NpdGlvbhgEIAEoCzILLnYxLlZlY3RvcjISHwoJam9iX3N0YXRlGAUgASgLMgwudjEuSm9iU3RhdGUSHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSHwoIbW9uc3RlcnMYByADKAlCDbpICpIBByIFcgOYAgESHQoLaW5ncmVkaWVudHMYCCADKAsyCC52MS5JdGVtEhkKBmV2ZW50cxgJIAMoCzIJLnYxLkV2ZW50EiAKCWludmVudG9yeRgKIAEoCzINLnYxLkludmVudG9yeSL2AQoMVHJhbnNwb3J0Sm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QSGAoFcm91dGUYBCABKAsyCS52MS5Sb3V0ZRIgCghtb25zdGVycxgFIAMoCzIOLnYxLkpvYk1vbnN0ZXISIAoJaW52ZW50b3J5GAYgASgLMg0udjEuSW52ZW50b3J5Eh0KCHBvc2l0aW9uGAcgASgLMgsudjEuVmVjdG9yMiI/CgdSZXdhcmRzEiAKCWludmVudG9yeRgBIAEoCzINLnYxLkludmVudG9yeRISCgpleHBlcmllbmNlGAIgASgFIlsKDVJvdXRlTWFuaWZlc3QSDgoGc291cmNlGAEgASgFEg4KBnRhcmdldBgCIAEoBRIqCgtjYXJnb19pdGVtcxgDIAMoCzIILnYxLkl0ZW1SC2NhcmdvX2l0ZW1zIicKBVJvdXRlEg4KBnNvdXJjZRgBIAEoBRIOCgZ0YXJnZXQYAiABKAUiZwoLQXR0YWNrRXZlbnQSGgoIYXR0YWNrZXIYASABKAlCCLpIBXIDmAIBEhgKBnRhcmdldBgCIAEoCUIIukgFcgOYAgESDgoGZGFtYWdlGAMgASgFEhIKCm5ld19oZWFsdGgYBCABKAUiLAoLQXJyaXZlRXZlbnQSHQoIcG9zaXRpb24YASABKAsyCy52MS5WZWN0b3IyIiwKC1JldHVybkV2ZW50Eh0KCHBvc2l0aW9uGAEgASgLMgsudjEuVmVjdG9yMiJhCglXb3JrRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoOY29uc3VtZWRfaXRlbXMYAiADKAsyCC52MS5JdGVtEhQKDHN0YW1pbmFfY29zdBgDIAEoBSISChBTdG9wV29ya2luZ0V2ZW50IlcKEENvbnN1bWVJdGVtRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOYAgESEwoLaXRlbV9kZWZfaWQYAiABKAkSEAoIcXVhbnRpdHkYAyABKAUibAoURGVmZWF0ZWRFbmVtaWVzRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoJZW5lbXlfaWRzGAIgAygJQg26SAqSAQciBXIDmAIBEhQKDHN0YW1pbmFfY29zdBgDIAEoBSI6ChVOZXh0Um91bmRFbmVtaWVzRXZlbnQSIQoHZW5lbWllcxgBIAMoCzIQLnYxLkVuZW15TW9uc3RlciJLCgxFbmVteU1vbnN0ZXISGwoHZW50aXRpeRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5ImMKEENhcmdvTG9hZGVkRXZlbnQSGwoJc291cmNlX2lkGAEgASgJQgi6SAVyA5gCARIZCgd1c2VyX2lkGAMgASgJQgi6SAVyA5gCARIXCgVpdGVtcxgEIAMoCzIILnYxLkl0ZW0iZQoSQ2FyZ29VbmxvYWRlZEV2ZW50EhsKCXRhcmdldF9pZBgBIAEoCUIIukgFcgOYAgESGQoHdXNlcl9pZBgCIAEoCUIIukgFcgOYAgESFwoFaXRlbXMYAyADKAsyCC52MS5JdGVtIjQKFFN0YXJ0UmVjb3ZlcmluZ0V2ZW50EhwKCm1vbnN0ZXJfaWQYASABKAlCCLpIBXIDmAIBIkkKDEV2ZW50Q29udGV4dBIfCgh1c2VyX2lkcxgBIAMoCUINukgKkgEHIgVyA5gCARIYCgZqb2JfaWQYAiABKAlCCLpIBXIDmAIBIqABCg9Kb2JTdGFydGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EiYKB2pvYl9kZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIiCgttb25zdGVyX2lkcxgDIAMoCUINukgKkgEHIgVyA5gCARIlCgphc3NpZ25tZW50GAQgASgLMhEudjEuSm9iQXNzaWdubWVudCIsChBKb2JGaW5pc2hlZEV2ZW50EhgKBmpvYl9pZBgBIAEoCUIIukgFcgOYAgEingYKBUV2ZW50EgoKAmlkGAEgASgJEi0KCXRpbWVzdGFtcBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKZXZlbnRfdHlwZRgDIAEoCRInCg1ldmVudF9jb250ZXh0GAQgASgLMhAudjEuRXZlbnRDb250ZXh0EicKDGFycml2ZV9ldmVudBgFIAEoCzIPLnYxLkFycml2ZUV2ZW50SAASJwoMcmV0dXJuX2V2ZW50GAYgASgLMg8udjEuUmV0dXJuRXZlbnRIABIjCgp3b3JrX2V2ZW50GAcgASgLMg0udjEuV29ya0V2ZW50SAASMgoSc3RvcF93b3JraW5nX2V2ZW50GAggASgLMhQudjEuU3RvcFdvcmtpbmdFdmVudEgAEjIKEmNvbnN1bWVfaXRlbV9ldmVudBgKIAEoCzIULnYxLkNvbnN1bWVJdGVtRXZlbnRIABIyChJjYXJnb19sb2FkZWRfZXZlbnQYCyABKAsyFC52MS5DYXJnb0xvYWRlZEV2ZW50SAASNgoUY2FyZ29fdW5sb2FkZWRfZXZlbnQYDCABKAsyFi52MS5DYXJnb1VubG9hZGVkRXZlbnRIABInCgxhdHRhY2tfZXZlbnQYDSABKAsyDy52MS5BdHRhY2tFdmVudEgAEjoKFnN0YXJ0X3JlY292ZXJpbmdfZXZlbnQYDiABKAsyGC52MS5TdGFydFJlY292ZXJpbmdFdmVudEgAEjoKFmRlZmVhdGVkX2VuZW1pZXNfZXZlbnQYDyABKAsyGC52MS5EZWZlYXRlZEVuZW1pZXNFdmVudEgAEj0KGG5leHRfcm91bmRfZW5lbWllc19ldmVudBgQIAEoCzIZLnYxLk5leHRSb3VuZEVuZW1pZXNFdmVudEgAEjAKEWpvYl9zdGFydGVkX2V2ZW50GBEgASgLMhMudjEuSm9iU3RhcnRlZEV2ZW50SAASMgoSam9iX2ZpbmlzaGVkX2V2ZW50GBIgASgLMhQudjEuSm9iRmluaXNoZWRFdmVudEgAQgwKCmV2ZW50X2RhdGEiKwoOUmVwZWF0ZWRFdmVudHMSGQoGZXZlbnRzGAEgAygLMgkudjEuRXZlbnQqkQEKCkVudGl0eVR5cGUSGwoXRU5USVRZX1RZUEVfVU5TUEVDSUZJRUQQABIUChBFTlRJVFlfVFlQRV9VU0VSEAESFwoTRU5USVRZX1RZUEVfTU9OU1RFUhACEhMKD0VOVElUWV9UWVBFX0pPQhADEiIKHkVOVElUWV9UWVBFX0xPQ0FUSU9OX0lOVkVOVE9SWRAEKj0KBFJvbGUSFAoQUk9MRV9VTlNQRUNJRklFRBAAEg4KClJPTEVfRU5FTVkQARIPCgtST0xFX1BMQVlFUhACKosBCglKb2JTdGF0dXMSGgoWSk9CX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0pPQl9TVEFUVVNfQVJSSVZJTkcQARIWChJKT0JfU1RBVFVTX1dPUktJTkcQAhIYChRKT0JfU1RBVFVTX1JFVFVSTklORxADEhcKE0pPQl9TVEFUVVNfRklOSVNIRUQQBEIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_google_protobuf_timestamp, file_v1_masterdata, file_buf_validate_validate]);
 
 /**
  * @generated from message v1.Entity
  */
 export type Entity = Message<"v1.Entity"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 
   /**
    * @generated from field: v1.EntityType entity_type = 2;
@@ -213,9 +214,9 @@ export const MonsterSchema: GenMessage<Monster> = /*@__PURE__*/
  */
 export type MonsterParticipant = Message<"v1.MonsterParticipant"> & {
   /**
-   * @generated from field: int64 job_entity_id = 1;
+   * @generated from field: string job_entity_id = 1;
    */
-  jobEntityId: bigint;
+  jobEntityId: string;
 
   /**
    * @generated from field: v1.Role role = 2;
@@ -257,9 +258,9 @@ export const JobDefinitionLinkSchema: GenMessage<JobDefinitionLink> = /*@__PURE_
  */
 export type JobAssignment = Message<"v1.JobAssignment"> & {
   /**
-   * @generated from field: int64 user_entity_id = 1;
+   * @generated from field: string user_entity_id = 1;
    */
-  userEntityId: bigint;
+  userEntityId: string;
 };
 
 /**
@@ -405,9 +406,9 @@ export type Job = Message<"v1.Job"> & {
   rewards?: Rewards;
 
   /**
-   * @generated from field: repeated int32 monsters = 7;
+   * @generated from field: repeated string monsters = 7;
    */
-  monsters: number[];
+  monsters: string[];
 
   /**
    * @generated from field: repeated v1.Item ingredients = 8;
@@ -555,14 +556,14 @@ export const RouteSchema: GenMessage<Route> = /*@__PURE__*/
  */
 export type AttackEvent = Message<"v1.AttackEvent"> & {
   /**
-   * @generated from field: int32 attacker = 1;
+   * @generated from field: string attacker = 1;
    */
-  attacker: number;
+  attacker: string;
 
   /**
-   * @generated from field: int32 target = 2;
+   * @generated from field: string target = 2;
    */
-  target: number;
+  target: string;
 
   /**
    * @generated from field: int32 damage = 3;
@@ -663,9 +664,9 @@ export const StopWorkingEventSchema: GenMessage<StopWorkingEvent> = /*@__PURE__*
  */
 export type ConsumeItemEvent = Message<"v1.ConsumeItemEvent"> & {
   /**
-   * @generated from field: int32 monster_id = 1;
+   * @generated from field: string monster_id = 1;
    */
-  monsterId: number;
+  monsterId: string;
 
   /**
    * masterdata.ItemID is a string, so this is fine
@@ -697,9 +698,9 @@ export type DefeatedEnemiesEvent = Message<"v1.DefeatedEnemiesEvent"> & {
   rewards?: Rewards;
 
   /**
-   * @generated from field: repeated int32 enemy_ids = 2;
+   * @generated from field: repeated string enemy_ids = 2;
    */
-  enemyIds: number[];
+  enemyIds: string[];
 
   /**
    * @generated from field: int32 stamina_cost = 3;
@@ -758,14 +759,14 @@ export const EnemyMonsterSchema: GenMessage<EnemyMonster> = /*@__PURE__*/
  */
 export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
   /**
-   * @generated from field: int32 source_id = 1;
+   * @generated from field: string source_id = 1;
    */
-  sourceId: number;
+  sourceId: string;
 
   /**
-   * @generated from field: int32 user_id = 3;
+   * @generated from field: string user_id = 3;
    */
-  userId: number;
+  userId: string;
 
   /**
    * Use Item
@@ -787,14 +788,14 @@ export const CargoLoadedEventSchema: GenMessage<CargoLoadedEvent> = /*@__PURE__*
  */
 export type CargoUnloadedEvent = Message<"v1.CargoUnloadedEvent"> & {
   /**
-   * @generated from field: int32 target_id = 1;
+   * @generated from field: string target_id = 1;
    */
-  targetId: number;
+  targetId: string;
 
   /**
-   * @generated from field: int32 user_id = 2;
+   * @generated from field: string user_id = 2;
    */
-  userId: number;
+  userId: string;
 
   /**
    * Use Item
@@ -816,9 +817,9 @@ export const CargoUnloadedEventSchema: GenMessage<CargoUnloadedEvent> = /*@__PUR
  */
 export type StartRecoveringEvent = Message<"v1.StartRecoveringEvent"> & {
   /**
-   * @generated from field: int32 monster_id = 1;
+   * @generated from field: string monster_id = 1;
    */
-  monsterId: number;
+  monsterId: string;
 };
 
 /**
@@ -833,14 +834,14 @@ export const StartRecoveringEventSchema: GenMessage<StartRecoveringEvent> = /*@_
  */
 export type EventContext = Message<"v1.EventContext"> & {
   /**
-   * @generated from field: repeated int32 user_ids = 1;
+   * @generated from field: repeated string user_ids = 1;
    */
-  userIds: number[];
+  userIds: string[];
 
   /**
-   * @generated from field: int32 job_id = 2;
+   * @generated from field: string job_id = 2;
    */
-  jobId: number;
+  jobId: string;
 };
 
 /**
@@ -865,9 +866,9 @@ export type JobStartedEvent = Message<"v1.JobStartedEvent"> & {
   jobDef?: JobDefinitionLink;
 
   /**
-   * @generated from field: repeated int32 monster_ids = 3;
+   * @generated from field: repeated string monster_ids = 3;
    */
-  monsterIds: number[];
+  monsterIds: string[];
 
   /**
    * @generated from field: v1.JobAssignment assignment = 4;
@@ -887,9 +888,9 @@ export const JobStartedEventSchema: GenMessage<JobStartedEvent> = /*@__PURE__*/
  */
 export type JobFinishedEvent = Message<"v1.JobFinishedEvent"> & {
   /**
-   * @generated from field: int32 job_id = 1;
+   * @generated from field: string job_id = 1;
    */
-  jobId: number;
+  jobId: string;
 };
 
 /**

@@ -15,7 +15,7 @@
 
 	const selectedColor = 'bg-green-200';
 	let openDialog = $state(false);
-	let selectedId: number | undefined = $state(undefined);
+	let selectedId: string | undefined = $state(undefined);
 	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
 	const processingType = $derived(parseInt(page.params.processing_type!, 10));
@@ -29,7 +29,7 @@
 	let selectedMonster: Monster | undefined = $derived(selectedId ? monsters.get(selectedId) : undefined);
 
 	let jobStartable = $derived(selectedJob && selectedId);
-	function dialogClicked(m: number): void {
+	function dialogClicked(m: string): void {
 		openDialog = false;
 		selectedId = m;
 	}
@@ -76,7 +76,7 @@
 	{#each activeJobs as job}
 		<JobView
 			gs={gameStateStore}
-			jobID={BigInt(job.entity!.id)}
+			jobID={job.entity!.id}
 			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
 			{job}
 		/>
@@ -88,7 +88,7 @@
 	<div class="grid grid-cols-3 gap-2 items-start">
 		{#each monsters as [_, monster]}
 			{#if monster.participant == undefined}
-				<MonsterView onclick={() => dialogClicked(Number(monster.entity?.id))} {monster} class="hover:bg-gray-200" />
+				<MonsterView onclick={() => dialogClicked(monster.entity?.id!)} {monster} class="hover:bg-gray-200" />
 			{/if}
 		{/each}
 	</div>

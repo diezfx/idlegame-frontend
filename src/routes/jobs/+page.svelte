@@ -5,7 +5,7 @@
 
 	const jobs = await gameStateStore.getJobs();
 
-	async function stopJob(id: bigint) {
+	async function stopJob(id: string) {
 		await gameStateStore.stopJob(id);
 		invalidateAll();
 	}

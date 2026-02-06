@@ -48,8 +48,8 @@
 		}
 		await jobClient.startBattleJob({
 			jobDefinitionId: selectedJob?.definition!.id,
-			userId: BigInt(user.userId),
-			monsterId: BigInt(selectedMonster.entity!.id),
+			userId: user.userId,
+			monsterId: selectedMonster.entity!.id,
 		});
 		reset();
 		invalidateAll();
@@ -77,7 +77,7 @@
 		<JobView
 			gs={gameStateStore}
 			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
-			jobID={BigInt(job.entity!.id)}
+			jobID={job.entity!.id}
 			onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
 		/>
 	{/each}

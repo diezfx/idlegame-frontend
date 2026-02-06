@@ -10,7 +10,7 @@
 		...props
 	}: {
 		gs: GameStateStore;
-		jobID: bigint;
+		jobID: string;
 		onclick?: () => void;
 		onStop?: () => void;
 		[key: string]: any;
@@ -35,7 +35,7 @@
 	};
 
 	const job = $derived(await gs.getJob(jobID));
-	const monsters = $derived(await Promise.all(job!.monsters.map((id) => gs.getMonster(BigInt(id)))));
+	const monsters = $derived(await Promise.all(job!.monsters.map((id) => gs.getMonster(id))));
 </script>
 
 <Card

@@ -10,13 +10,14 @@ import type { Entity, Event, Identity, Inventory, Item, Job, JobSchema, Monster,
 import { file_v1_domain } from "./domain_pb";
 import type { BattleJobDefinition, CityDefinition, ItemDefinition, MonsterDefinition, ProductionJobDefinition } from "./masterdata_pb";
 import { file_v1_masterdata } from "./masterdata_pb";
+import { file_buf_validate_validate } from "../buf/validate/validate_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file v1/service.proto.
  */
 export const file_v1_service: GenFile = /*@__PURE__*/
-  fileDesc("ChB2MS9zZXJ2aWNlLnByb3RvEgJ2MSIjChBHZXRFdmVudHNSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiLgoRR2V0RXZlbnRzUmVzcG9uc2USGQoGZXZlbnRzGAEgAygLMgkudjEuRXZlbnQiWAoUR2V0SW52ZW50b3J5UmVzcG9uc2USIQoGY2l0aWVzGAEgAygLMhEudjEuQ2l0eUludmVudG9yeRIdCgt0b3RhbF9pdGVtcxgCIAMoCzIILnYxLkl0ZW0ibQoNQ2l0eUludmVudG9yeRIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIgCglpbnZlbnRvcnkYAyABKAsyDS52MS5JbnZlbnRvcnkiHwoRR2V0TW9uc3RlclJlcXVlc3QSCgoCaWQYASABKAMiJAoWR2V0VXNlclByb2dyZXNzUmVxdWVzdBIKCgJpZBgBIAEoAyJRChdHZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZRI2ChJ0dXRvcmlhbF9jb21wbGV0ZWQYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIj0KFENob29zZVN0YXJ0ZXJSZXF1ZXN0EgoKAmlkGAEgASgDEhkKEW1vbl9kZWZpbml0aW9uX2lkGAIgASgDIiMKFUNob29zZVN0YXJ0ZXJSZXNwb25zZRIKCgJpZBgBIAEoAyIuChpHZXRTdGFydGVyTW9uc3RlcnNSZXNwb25zZRIQCghtb25zdGVycxgBIAMoBSInChNMaXN0TW9uc3RlcnNSZXF1ZXN0EhAKCG93bmVyX2lkGAEgASgDIjUKFExpc3RNb25zdGVyc1Jlc3BvbnNlEh0KCG1vbnN0ZXJzGAEgAygLMgsudjEuTW9uc3RlciIbCg1HZXRKb2JSZXF1ZXN0EgoKAmlkGAEgASgDIikKEExpc3RKb2JzUmVzcG9uc2USFQoEam9icxgBIAMoCzIHLnYxLkpvYiIeChBEZWxldGVKb2JSZXF1ZXN0EgoKAmlkGAEgASgDImgKElN0YXJ0QmF0dGxlUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSGQoRam9iX2RlZmluaXRpb25faWQYAyABKAkSEgoKaXRlcmF0aW9ucxgEIAEoAyIiChBFbnRpdHlJZFJlc3BvbnNlEg4KBmpvYl9pZBgBIAEoAyJvChlTdGFydFByb2R1Y3Rpb25Kb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIZChFqb2JfZGVmaW5pdGlvbl9pZBgDIAEoCRISCgppdGVyYXRpb25zGAQgASgDIiYKE0dldEludmVudG9yeVJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAyIkCglFcXVpcG1lbnQSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIikKE0dldEVxdWlwbWVudFJlcXVlc3QSEgoKbW9uc3Rlcl9pZBgBIAEoAyJaChBFcXVpcEl0ZW1SZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIPCgdpdGVtX2lkGAMgASgJEhAKCHF1YW50aXR5GAQgASgDIkoKElVuRXF1aXBJdGVtUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgDEhIKCm1vbnN0ZXJfaWQYAiABKAMSDwoHaXRlbV9pZBgDIAEoCSJrChlDcmVhdGVUcmFuc3BvcnRKb2JSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSEgoKbW9uc3Rlcl9pZBgCIAEoAxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QiKAoWR2V0VHJhbnNwb3J0Sm9iUmVxdWVzdBIOCgZqb2JfaWQYASABKAMiQgoYTGlzdFRyYW5zcG9ydEpvYnNSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAMSFQoNc3RhdHVzX2ZpbHRlchgCIAEoCSJFChlMaXN0VHJhbnNwb3J0Sm9ic1Jlc3BvbnNlEigKDnRyYW5zcG9ydF9qb2JzGAEgAygLMhAudjEuVHJhbnNwb3J0Sm9iIisKGUNhbmNlbFRyYW5zcG9ydEpvYlJlcXVlc3QSDgoGam9iX2lkGAEgASgDIlwKGUdldEF2YWlsYWJsZVJvdXRlc1JlcXVlc3QSDwoHdXNlcl9pZBgBIAEoAxIaChJzb3VyY2VfbG9jYXRpb25faWQYAiABKAkSEgoKbW9uc3Rlcl9pZBgDIAEoAyJFChpHZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZRInChBhdmFpbGFibGVfcm91dGVzGAEgAygLMg0udjEuUm91dGVJbmZvIlQKCVJvdXRlSW5mbxIQCghkaXN0YW5jZRgCIAEoARI1ChJlc3RpbWF0ZWRfZHVyYXRpb24YAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iKwoYR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Eg8KB2NpdHlfaWQYASABKAkiJwoUR2V0QmF0dGxlSm9ic1JlcXVlc3QSDwoHY2l0eV9pZBgBIAEoCSI1ChBHZXRJdGVtc1Jlc3BvbnNlEiEKBWl0ZW1zGAEgAygLMhIudjEuSXRlbURlZmluaXRpb24iPgoTR2V0TW9uc3RlcnNSZXNwb25zZRInCghtb25zdGVycxgBIAMoCzIVLnYxLk1vbnN0ZXJEZWZpbml0aW9uIkAKGUdldFByb2R1Y3Rpb25Kb2JzUmVzcG9uc2USIwoEam9icxgBIAMoCzIVLnYxLlByb2R1Y3Rpb25Kb2JJbmZvImcKEVByb2R1Y3Rpb25Kb2JJbmZvEi8KCmRlZmluaXRpb24YASABKAsyGy52MS5Qcm9kdWN0aW9uSm9iRGVmaW5pdGlvbhIhCgpyb3V0ZV9pbmZvGAIgASgLMg0udjEuUm91dGVJbmZvIjgKFUdldEJhdHRsZUpvYnNSZXNwb25zZRIfCgRqb2JzGAEgAygLMhEudjEuQmF0dGxlSm9iSW5mbyJfCg1CYXR0bGVKb2JJbmZvEisKCmRlZmluaXRpb24YASABKAsyFy52MS5CYXR0bGVKb2JEZWZpbml0aW9uEiEKCnJvdXRlX2luZm8YAiABKAsyDS52MS5Sb3V0ZUluZm8iNwoRR2V0Q2l0aWVzUmVzcG9uc2USIgoGY2l0aWVzGAEgAygLMhIudjEuQ2l0eURlZmluaXRpb24yhQEKDk1vbnN0ZXJTZXJ2aWNlEjAKCkdldE1vbnN0ZXISFS52MS5HZXRNb25zdGVyUmVxdWVzdBoLLnYxLk1vbnN0ZXISQQoMTGlzdE1vbnN0ZXJzEhcudjEuTGlzdE1vbnN0ZXJzUmVxdWVzdBoYLnYxLkxpc3RNb25zdGVyc1Jlc3BvbnNlMq8CCgpKb2JTZXJ2aWNlEiQKBkdldEpvYhIRLnYxLkdldEpvYlJlcXVlc3QaBy52MS5Kb2ISOAoITGlzdEpvYnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFC52MS5MaXN0Sm9ic1Jlc3BvbnNlEjkKCURlbGV0ZUpvYhIULnYxLkRlbGV0ZUpvYlJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSOwoLU3RhcnRCYXR0bGUSFi52MS5TdGFydEJhdHRsZVJlcXVlc3QaFC52MS5FbnRpdHlJZFJlc3BvbnNlEkkKElN0YXJ0UHJvZHVjdGlvbkpvYhIdLnYxLlN0YXJ0UHJvZHVjdGlvbkpvYlJlcXVlc3QaFC52MS5FbnRpdHlJZFJlc3BvbnNlMpEDChBUcmFuc3BvcnRTZXJ2aWNlEkgKEVN0YXJ0VHJhbnNwb3J0Sm9iEh0udjEuQ3JlYXRlVHJhbnNwb3J0Sm9iUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2USPwoPR2V0VHJhbnNwb3J0Sm9iEhoudjEuR2V0VHJhbnNwb3J0Sm9iUmVxdWVzdBoQLnYxLlRyYW5zcG9ydEpvYhJQChFMaXN0VHJhbnNwb3J0Sm9icxIcLnYxLkxpc3RUcmFuc3BvcnRKb2JzUmVxdWVzdBodLnYxLkxpc3RUcmFuc3BvcnRKb2JzUmVzcG9uc2USSwoSQ2FuY2VsVHJhbnNwb3J0Sm9iEh0udjEuQ2FuY2VsVHJhbnNwb3J0Sm9iUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJTChJHZXRBdmFpbGFibGVSb3V0ZXMSHS52MS5HZXRBdmFpbGFibGVSb3V0ZXNSZXF1ZXN0Gh4udjEuR2V0QXZhaWxhYmxlUm91dGVzUmVzcG9uc2UyhwIKEEludmVudG9yeVNlcnZpY2USQQoMR2V0SW52ZW50b3J5EhcudjEuR2V0SW52ZW50b3J5UmVxdWVzdBoYLnYxLkdldEludmVudG9yeVJlc3BvbnNlEjYKDEdldEVxdWlwbWVudBIXLnYxLkdldEVxdWlwbWVudFJlcXVlc3QaDS52MS5FcXVpcG1lbnQSOQoJRXF1aXBJdGVtEhQudjEuRXF1aXBJdGVtUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI9CgtVbkVxdWlwSXRlbRIWLnYxLlVuRXF1aXBJdGVtUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eTJLCg1TdHJlYW1TZXJ2aWNlEjoKCUdldEV2ZW50cxIULnYxLkdldEV2ZW50c1JlcXVlc3QaFS52MS5HZXRFdmVudHNSZXNwb25zZTABMlkKC1VzZXJTZXJ2aWNlEkoKD0dldFVzZXJQcm9ncmVzcxIaLnYxLkdldFVzZXJQcm9ncmVzc1JlcXVlc3QaGy52MS5HZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZTJXCg9UdXRvcmlhbFNlcnZpY2USRAoNQ2hvb3NlU3RhcnRlchIYLnYxLkNob29zZVN0YXJ0ZXJSZXF1ZXN0GhkudjEuQ2hvb3NlU3RhcnRlclJlc3BvbnNlMq8DChFNYXN0ZXJkYXRhU2VydmljZRI4CghHZXRJdGVtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkdldEl0ZW1zUmVzcG9uc2USPgoLR2V0TW9uc3RlcnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFy52MS5HZXRNb25zdGVyc1Jlc3BvbnNlElAKEUdldFByb2R1Y3Rpb25Kb2JzEhwudjEuR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Gh0udjEuR2V0UHJvZHVjdGlvbkpvYnNSZXNwb25zZRJECg1HZXRCYXR0bGVKb2JzEhgudjEuR2V0QmF0dGxlSm9ic1JlcXVlc3QaGS52MS5HZXRCYXR0bGVKb2JzUmVzcG9uc2USTAoSR2V0U3RhcnRlck1vbnN0ZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh4udjEuR2V0U3RhcnRlck1vbnN0ZXJzUmVzcG9uc2USOgoJR2V0Q2l0aWVzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhUudjEuR2V0Q2l0aWVzUmVzcG9uc2VCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_google_protobuf_duration, file_google_protobuf_empty, file_google_protobuf_timestamp, file_v1_domain, file_v1_masterdata]);
+  fileDesc("ChB2MS9zZXJ2aWNlLnByb3RvEgJ2MSItChBHZXRFdmVudHNSZXF1ZXN0EhkKB3VzZXJfaWQYASABKAlCCLpIBXIDmAIBIi4KEUdldEV2ZW50c1Jlc3BvbnNlEhkKBmV2ZW50cxgBIAMoCzIJLnYxLkV2ZW50IlgKFEdldEludmVudG9yeVJlc3BvbnNlEiEKBmNpdGllcxgBIAMoCzIRLnYxLkNpdHlJbnZlbnRvcnkSHQoLdG90YWxfaXRlbXMYAiADKAsyCC52MS5JdGVtIm0KDUNpdHlJbnZlbnRvcnkSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5IikKEUdldE1vbnN0ZXJSZXF1ZXN0EhQKAmlkGAEgASgJQgi6SAVyA5gCASIuChZHZXRVc2VyUHJvZ3Jlc3NSZXF1ZXN0EhQKAmlkGAEgASgJQgi6SAVyA5gCASJRChdHZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZRI2ChJ0dXRvcmlhbF9jb21wbGV0ZWQYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIkcKFENob29zZVN0YXJ0ZXJSZXF1ZXN0EhQKAmlkGAEgASgJQgi6SAVyA5gCARIZChFtb25fZGVmaW5pdGlvbl9pZBgCIAEoAyItChVDaG9vc2VTdGFydGVyUmVzcG9uc2USFAoCaWQYASABKAlCCLpIBXIDmAIBIi4KGkdldFN0YXJ0ZXJNb25zdGVyc1Jlc3BvbnNlEhAKCG1vbnN0ZXJzGAEgAygFIjEKE0xpc3RNb25zdGVyc1JlcXVlc3QSGgoIb3duZXJfaWQYASABKAlCCLpIBXIDmAIBIjUKFExpc3RNb25zdGVyc1Jlc3BvbnNlEh0KCG1vbnN0ZXJzGAEgAygLMgsudjEuTW9uc3RlciIlCg1HZXRKb2JSZXF1ZXN0EhQKAmlkGAEgASgJQgi6SAVyA5gCASIpChBMaXN0Sm9ic1Jlc3BvbnNlEhUKBGpvYnMYASADKAsyBy52MS5Kb2IiKAoQRGVsZXRlSm9iUmVxdWVzdBIUCgJpZBgBIAEoCUIIukgFcgOYAgEifAoSU3RhcnRCYXR0bGVSZXF1ZXN0EhkKB3VzZXJfaWQYASABKAlCCLpIBXIDmAIBEhwKCm1vbnN0ZXJfaWQYAiABKAlCCLpIBXIDmAIBEhkKEWpvYl9kZWZpbml0aW9uX2lkGAMgASgJEhIKCml0ZXJhdGlvbnMYBCABKAMiLAoQRW50aXR5SWRSZXNwb25zZRIYCgZqb2JfaWQYASABKAlCCLpIBXIDmAIBIoMBChlTdGFydFByb2R1Y3Rpb25Kb2JSZXF1ZXN0EhkKB3VzZXJfaWQYASABKAlCCLpIBXIDmAIBEhwKCm1vbnN0ZXJfaWQYAiABKAlCCLpIBXIDmAIBEhkKEWpvYl9kZWZpbml0aW9uX2lkGAMgASgJEhIKCml0ZXJhdGlvbnMYBCABKAMiMAoTR2V0SW52ZW50b3J5UmVxdWVzdBIZCgd1c2VyX2lkGAEgASgJQgi6SAVyA5gCASIkCglFcXVpcG1lbnQSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtIjMKE0dldEVxdWlwbWVudFJlcXVlc3QSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOYAgEibgoQRXF1aXBJdGVtUmVxdWVzdBIZCgd1c2VyX2lkGAEgASgJQgi6SAVyA5gCARIcCgptb25zdGVyX2lkGAIgASgJQgi6SAVyA5gCARIPCgdpdGVtX2lkGAMgASgJEhAKCHF1YW50aXR5GAQgASgDIl4KElVuRXF1aXBJdGVtUmVxdWVzdBIZCgd1c2VyX2lkGAEgASgJQgi6SAVyA5gCARIcCgptb25zdGVyX2lkGAIgASgJQgi6SAVyA5gCARIPCgdpdGVtX2lkGAMgASgJIn8KGUNyZWF0ZVRyYW5zcG9ydEpvYlJlcXVlc3QSGQoHdXNlcl9pZBgBIAEoCUIIukgFcgOYAgESHAoKbW9uc3Rlcl9pZBgCIAEoCUIIukgFcgOYAgESKQoOcm91dGVfbWFuaWZlc3QYAyABKAsyES52MS5Sb3V0ZU1hbmlmZXN0IjIKFkdldFRyYW5zcG9ydEpvYlJlcXVlc3QSGAoGam9iX2lkGAEgASgJQgi6SAVyA5gCASJMChhMaXN0VHJhbnNwb3J0Sm9ic1JlcXVlc3QSGQoHdXNlcl9pZBgBIAEoCUIIukgFcgOYAgESFQoNc3RhdHVzX2ZpbHRlchgCIAEoCSJFChlMaXN0VHJhbnNwb3J0Sm9ic1Jlc3BvbnNlEigKDnRyYW5zcG9ydF9qb2JzGAEgAygLMhAudjEuVHJhbnNwb3J0Sm9iIjUKGUNhbmNlbFRyYW5zcG9ydEpvYlJlcXVlc3QSGAoGam9iX2lkGAEgASgJQgi6SAVyA5gCASJwChlHZXRBdmFpbGFibGVSb3V0ZXNSZXF1ZXN0EhkKB3VzZXJfaWQYASABKAlCCLpIBXIDmAIBEhoKEnNvdXJjZV9sb2NhdGlvbl9pZBgCIAEoCRIcCgptb25zdGVyX2lkGAMgASgJQgi6SAVyA5gCASJFChpHZXRBdmFpbGFibGVSb3V0ZXNSZXNwb25zZRInChBhdmFpbGFibGVfcm91dGVzGAEgAygLMg0udjEuUm91dGVJbmZvIlQKCVJvdXRlSW5mbxIQCghkaXN0YW5jZRgCIAEoARI1ChJlc3RpbWF0ZWRfZHVyYXRpb24YAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iKwoYR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Eg8KB2NpdHlfaWQYASABKAkiJwoUR2V0QmF0dGxlSm9ic1JlcXVlc3QSDwoHY2l0eV9pZBgBIAEoCSI1ChBHZXRJdGVtc1Jlc3BvbnNlEiEKBWl0ZW1zGAEgAygLMhIudjEuSXRlbURlZmluaXRpb24iPgoTR2V0TW9uc3RlcnNSZXNwb25zZRInCghtb25zdGVycxgBIAMoCzIVLnYxLk1vbnN0ZXJEZWZpbml0aW9uIkAKGUdldFByb2R1Y3Rpb25Kb2JzUmVzcG9uc2USIwoEam9icxgBIAMoCzIVLnYxLlByb2R1Y3Rpb25Kb2JJbmZvImcKEVByb2R1Y3Rpb25Kb2JJbmZvEi8KCmRlZmluaXRpb24YASABKAsyGy52MS5Qcm9kdWN0aW9uSm9iRGVmaW5pdGlvbhIhCgpyb3V0ZV9pbmZvGAIgASgLMg0udjEuUm91dGVJbmZvIjgKFUdldEJhdHRsZUpvYnNSZXNwb25zZRIfCgRqb2JzGAEgAygLMhEudjEuQmF0dGxlSm9iSW5mbyJfCg1CYXR0bGVKb2JJbmZvEisKCmRlZmluaXRpb24YASABKAsyFy52MS5CYXR0bGVKb2JEZWZpbml0aW9uEiEKCnJvdXRlX2luZm8YAiABKAsyDS52MS5Sb3V0ZUluZm8iNwoRR2V0Q2l0aWVzUmVzcG9uc2USIgoGY2l0aWVzGAEgAygLMhIudjEuQ2l0eURlZmluaXRpb24yhQEKDk1vbnN0ZXJTZXJ2aWNlEjAKCkdldE1vbnN0ZXISFS52MS5HZXRNb25zdGVyUmVxdWVzdBoLLnYxLk1vbnN0ZXISQQoMTGlzdE1vbnN0ZXJzEhcudjEuTGlzdE1vbnN0ZXJzUmVxdWVzdBoYLnYxLkxpc3RNb25zdGVyc1Jlc3BvbnNlMq8CCgpKb2JTZXJ2aWNlEiQKBkdldEpvYhIRLnYxLkdldEpvYlJlcXVlc3QaBy52MS5Kb2ISOAoITGlzdEpvYnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFC52MS5MaXN0Sm9ic1Jlc3BvbnNlEjkKCURlbGV0ZUpvYhIULnYxLkRlbGV0ZUpvYlJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSOwoLU3RhcnRCYXR0bGUSFi52MS5TdGFydEJhdHRsZVJlcXVlc3QaFC52MS5FbnRpdHlJZFJlc3BvbnNlEkkKElN0YXJ0UHJvZHVjdGlvbkpvYhIdLnYxLlN0YXJ0UHJvZHVjdGlvbkpvYlJlcXVlc3QaFC52MS5FbnRpdHlJZFJlc3BvbnNlMpEDChBUcmFuc3BvcnRTZXJ2aWNlEkgKEVN0YXJ0VHJhbnNwb3J0Sm9iEh0udjEuQ3JlYXRlVHJhbnNwb3J0Sm9iUmVxdWVzdBoULnYxLkVudGl0eUlkUmVzcG9uc2USPwoPR2V0VHJhbnNwb3J0Sm9iEhoudjEuR2V0VHJhbnNwb3J0Sm9iUmVxdWVzdBoQLnYxLlRyYW5zcG9ydEpvYhJQChFMaXN0VHJhbnNwb3J0Sm9icxIcLnYxLkxpc3RUcmFuc3BvcnRKb2JzUmVxdWVzdBodLnYxLkxpc3RUcmFuc3BvcnRKb2JzUmVzcG9uc2USSwoSQ2FuY2VsVHJhbnNwb3J0Sm9iEh0udjEuQ2FuY2VsVHJhbnNwb3J0Sm9iUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJTChJHZXRBdmFpbGFibGVSb3V0ZXMSHS52MS5HZXRBdmFpbGFibGVSb3V0ZXNSZXF1ZXN0Gh4udjEuR2V0QXZhaWxhYmxlUm91dGVzUmVzcG9uc2UyhwIKEEludmVudG9yeVNlcnZpY2USQQoMR2V0SW52ZW50b3J5EhcudjEuR2V0SW52ZW50b3J5UmVxdWVzdBoYLnYxLkdldEludmVudG9yeVJlc3BvbnNlEjYKDEdldEVxdWlwbWVudBIXLnYxLkdldEVxdWlwbWVudFJlcXVlc3QaDS52MS5FcXVpcG1lbnQSOQoJRXF1aXBJdGVtEhQudjEuRXF1aXBJdGVtUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI9CgtVbkVxdWlwSXRlbRIWLnYxLlVuRXF1aXBJdGVtUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eTJLCg1TdHJlYW1TZXJ2aWNlEjoKCUdldEV2ZW50cxIULnYxLkdldEV2ZW50c1JlcXVlc3QaFS52MS5HZXRFdmVudHNSZXNwb25zZTABMlkKC1VzZXJTZXJ2aWNlEkoKD0dldFVzZXJQcm9ncmVzcxIaLnYxLkdldFVzZXJQcm9ncmVzc1JlcXVlc3QaGy52MS5HZXRVc2VyUHJvZ3Jlc3NSZXNwb25zZTJXCg9UdXRvcmlhbFNlcnZpY2USRAoNQ2hvb3NlU3RhcnRlchIYLnYxLkNob29zZVN0YXJ0ZXJSZXF1ZXN0GhkudjEuQ2hvb3NlU3RhcnRlclJlc3BvbnNlMq8DChFNYXN0ZXJkYXRhU2VydmljZRI4CghHZXRJdGVtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoULnYxLkdldEl0ZW1zUmVzcG9uc2USPgoLR2V0TW9uc3RlcnMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFy52MS5HZXRNb25zdGVyc1Jlc3BvbnNlElAKEUdldFByb2R1Y3Rpb25Kb2JzEhwudjEuR2V0UHJvZHVjdGlvbkpvYnNSZXF1ZXN0Gh0udjEuR2V0UHJvZHVjdGlvbkpvYnNSZXNwb25zZRJECg1HZXRCYXR0bGVKb2JzEhgudjEuR2V0QmF0dGxlSm9ic1JlcXVlc3QaGS52MS5HZXRCYXR0bGVKb2JzUmVzcG9uc2USTAoSR2V0U3RhcnRlck1vbnN0ZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh4udjEuR2V0U3RhcnRlck1vbnN0ZXJzUmVzcG9uc2USOgoJR2V0Q2l0aWVzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhUudjEuR2V0Q2l0aWVzUmVzcG9uc2VCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_google_protobuf_duration, file_google_protobuf_empty, file_google_protobuf_timestamp, file_v1_domain, file_v1_masterdata, file_buf_validate_validate]);
 
 /**
  * @generated from message v1.GetEventsRequest
@@ -106,9 +107,9 @@ export const CityInventorySchema: GenMessage<CityInventory> = /*@__PURE__*/
  */
 export type GetMonsterRequest = Message<"v1.GetMonsterRequest"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 };
 
 /**
@@ -123,9 +124,9 @@ export const GetMonsterRequestSchema: GenMessage<GetMonsterRequest> = /*@__PURE_
  */
 export type GetUserProgressRequest = Message<"v1.GetUserProgressRequest"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 };
 
 /**
@@ -157,9 +158,9 @@ export const GetUserProgressResponseSchema: GenMessage<GetUserProgressResponse> 
  */
 export type ChooseStarterRequest = Message<"v1.ChooseStarterRequest"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 
   /**
    * @generated from field: int64 mon_definition_id = 2;
@@ -179,9 +180,9 @@ export const ChooseStarterRequestSchema: GenMessage<ChooseStarterRequest> = /*@_
  */
 export type ChooseStarterResponse = Message<"v1.ChooseStarterResponse"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 };
 
 /**
@@ -213,9 +214,9 @@ export const GetStarterMonstersResponseSchema: GenMessage<GetStarterMonstersResp
  */
 export type ListMonstersRequest = Message<"v1.ListMonstersRequest"> & {
   /**
-   * @generated from field: int64 owner_id = 1;
+   * @generated from field: string owner_id = 1;
    */
-  ownerId: bigint;
+  ownerId: string;
 };
 
 /**
@@ -247,9 +248,9 @@ export const ListMonstersResponseSchema: GenMessage<ListMonstersResponse> = /*@_
  */
 export type GetJobRequest = Message<"v1.GetJobRequest"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 };
 
 /**
@@ -281,9 +282,9 @@ export const ListJobsResponseSchema: GenMessage<ListJobsResponse> = /*@__PURE__*
  */
 export type DeleteJobRequest = Message<"v1.DeleteJobRequest"> & {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: string id = 1;
    */
-  id: bigint;
+  id: string;
 };
 
 /**
@@ -298,14 +299,14 @@ export const DeleteJobRequestSchema: GenMessage<DeleteJobRequest> = /*@__PURE__*
  */
 export type StartBattleRequest = Message<"v1.StartBattleRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
-   * @generated from field: int64 monster_id = 2;
+   * @generated from field: string monster_id = 2;
    */
-  monsterId: bigint;
+  monsterId: string;
 
   /**
    * @generated from field: string job_definition_id = 3;
@@ -330,9 +331,9 @@ export const StartBattleRequestSchema: GenMessage<StartBattleRequest> = /*@__PUR
  */
 export type EntityIdResponse = Message<"v1.EntityIdResponse"> & {
   /**
-   * @generated from field: int64 job_id = 1;
+   * @generated from field: string job_id = 1;
    */
-  jobId: bigint;
+  jobId: string;
 };
 
 /**
@@ -347,14 +348,14 @@ export const EntityIdResponseSchema: GenMessage<EntityIdResponse> = /*@__PURE__*
  */
 export type StartProductionJobRequest = Message<"v1.StartProductionJobRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
-   * @generated from field: int64 monster_id = 2;
+   * @generated from field: string monster_id = 2;
    */
-  monsterId: bigint;
+  monsterId: string;
 
   /**
    * @generated from field: string job_definition_id = 3;
@@ -379,9 +380,9 @@ export const StartProductionJobRequestSchema: GenMessage<StartProductionJobReque
  */
 export type GetInventoryRequest = Message<"v1.GetInventoryRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 };
 
 /**
@@ -413,9 +414,9 @@ export const EquipmentSchema: GenMessage<Equipment> = /*@__PURE__*/
  */
 export type GetEquipmentRequest = Message<"v1.GetEquipmentRequest"> & {
   /**
-   * @generated from field: int64 monster_id = 1;
+   * @generated from field: string monster_id = 1;
    */
-  monsterId: bigint;
+  monsterId: string;
 };
 
 /**
@@ -430,14 +431,14 @@ export const GetEquipmentRequestSchema: GenMessage<GetEquipmentRequest> = /*@__P
  */
 export type EquipItemRequest = Message<"v1.EquipItemRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
-   * @generated from field: int64 monster_id = 2;
+   * @generated from field: string monster_id = 2;
    */
-  monsterId: bigint;
+  monsterId: string;
 
   /**
    * @generated from field: string item_id = 3;
@@ -462,14 +463,14 @@ export const EquipItemRequestSchema: GenMessage<EquipItemRequest> = /*@__PURE__*
  */
 export type UnEquipItemRequest = Message<"v1.UnEquipItemRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
-   * @generated from field: int64 monster_id = 2;
+   * @generated from field: string monster_id = 2;
    */
-  monsterId: bigint;
+  monsterId: string;
 
   /**
    * @generated from field: string item_id = 3;
@@ -491,14 +492,14 @@ export const UnEquipItemRequestSchema: GenMessage<UnEquipItemRequest> = /*@__PUR
  */
 export type CreateTransportJobRequest = Message<"v1.CreateTransportJobRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
-   * @generated from field: int64 monster_id = 2;
+   * @generated from field: string monster_id = 2;
    */
-  monsterId: bigint;
+  monsterId: string;
 
   /**
    * @generated from field: v1.RouteManifest route_manifest = 3;
@@ -518,9 +519,9 @@ export const CreateTransportJobRequestSchema: GenMessage<CreateTransportJobReque
  */
 export type GetTransportJobRequest = Message<"v1.GetTransportJobRequest"> & {
   /**
-   * @generated from field: int64 job_id = 1;
+   * @generated from field: string job_id = 1;
    */
-  jobId: bigint;
+  jobId: string;
 };
 
 /**
@@ -535,9 +536,9 @@ export const GetTransportJobRequestSchema: GenMessage<GetTransportJobRequest> = 
  */
 export type ListTransportJobsRequest = Message<"v1.ListTransportJobsRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
    * Optional: filter by transport status
@@ -576,9 +577,9 @@ export const ListTransportJobsResponseSchema: GenMessage<ListTransportJobsRespon
  */
 export type CancelTransportJobRequest = Message<"v1.CancelTransportJobRequest"> & {
   /**
-   * @generated from field: int64 job_id = 1;
+   * @generated from field: string job_id = 1;
    */
-  jobId: bigint;
+  jobId: string;
 };
 
 /**
@@ -593,9 +594,9 @@ export const CancelTransportJobRequestSchema: GenMessage<CancelTransportJobReque
  */
 export type GetAvailableRoutesRequest = Message<"v1.GetAvailableRoutesRequest"> & {
   /**
-   * @generated from field: int64 user_id = 1;
+   * @generated from field: string user_id = 1;
    */
-  userId: bigint;
+  userId: string;
 
   /**
    * @generated from field: string source_location_id = 2;
@@ -603,9 +604,9 @@ export type GetAvailableRoutesRequest = Message<"v1.GetAvailableRoutesRequest"> 
   sourceLocationId: string;
 
   /**
-   * @generated from field: int64 monster_id = 3;
+   * @generated from field: string monster_id = 3;
    */
-  monsterId: bigint;
+  monsterId: string;
 };
 
 /**
