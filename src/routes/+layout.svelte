@@ -8,7 +8,7 @@
 	setJobsClientContext(new JobsClient(fetch));
 </script>
 
-<div class="flex">
+<div class="flex min-h-screen bg-background">
 	<Nav />
 	<main class="flex-1 p-2">
 		{@render children()}

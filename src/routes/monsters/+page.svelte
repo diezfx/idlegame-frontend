@@ -59,7 +59,8 @@
 	{#each monsters as [_, monster]}
 		<div class="gap-2">
 			<MonsterView
-				{monster}
+				gs={gameStateStore}
+				monId={monster.entity?.id!}
 				itemDeleteAction={(itemID) => itemDeleteAction(monster.entity!.id, itemID)}
 				openEquipDialog={() => {
 					selectedMonster = monster;

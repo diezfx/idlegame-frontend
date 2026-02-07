@@ -4,26 +4,32 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import { cn } from '$lib/utils';
 	import { Plus, ArrowLeftRight } from 'lucide-svelte';
-	import type { Monster } from '../../gen/v1/domain_pb';
+	import type { GameStateStore } from '$lib/stores/gamestate.svelte';
+	import { JobSubType } from '$gen/v1/masterdata_pb';
 	let {
-		monster,
+		gs,
+		monId,
 		class: classname,
 		itemDeleteAction,
 		openEquipDialog,
 		...props
 	}: {
-		monster: Monster;
+		gs: GameStateStore;
+		monId: string;
 		class?: string;
 		itemDeleteAction?: (itemID: string) => void;
 		openEquipDialog?: () => void;
 		[key: string]: any;
 	} = $props();
+
+	const monster = $derived(await gs.getMonster(monId));
+	const monJob = $derived(
+		monster.participant?.jobEntityId ? await gs.getJob(monster.participant?.jobEntityId) : undefined,
+	);
 </script>
 
 <Card {...props} class={cn(classname)} title={monster.identity?.name}>
 	<div class="grid grid-cols-2 text-xs gap-1">
-		<div>ID</div>
-		<p>#{monster.entity?.id}</p>
 		<div>Level</div>
 		<p>{monster.stat?.level}</p>
 		<div>HP</div>
@@ -49,9 +55,9 @@
 		<div>{monster.stat?.experience}</div>
 
 		<div class="font-medium">Job</div>
-		<div class="truncate max-w-[80px]">
-			{#if monster.participant}
-				{monster.participant.jobEntityId}
+		<div class="max-w-[80px]">
+			{#if monJob}
+				{JobSubType[monJob.def?.subType!]}
 			{:else}
 				Idle
 			{/if}
