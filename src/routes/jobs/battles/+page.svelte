@@ -59,7 +59,7 @@
 <div>Start new Job</div>
 <div class="grid grid-cols-3 gap-2">
 	{#if selectedMonster != undefined}
-		<MonsterView class={selectedColor} gs={gameStateStore} monId={selectedMonster.entity?.id!} />
+		<MonsterView class={selectedColor} monId={selectedMonster.entity?.id!} />
 	{/if}
 	<Card
 		onclick={() => {
@@ -75,7 +75,6 @@
 <div class="grid grid-cols-3 gap-2 items-start">
 	{#each activeJobs as [_, job]}
 		<JobView
-			gs={gameStateStore}
 			onStop={() => gameStateStore.stopJob(job.entity?.id!)}
 			jobID={job.entity!.id}
 			onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
@@ -87,12 +86,7 @@
 	Choose Monster
 	<div class="grid grid-cols-3 gap-2 items-start">
 		{#each monsters as [_, monster]}
-			<MonsterView
-				onclick={() => dialogClicked(monster)}
-				gs={gameStateStore}
-				monId={monster.entity?.id!}
-				class="hover:bg-gray-200"
-			/>
+			<MonsterView onclick={() => dialogClicked(monster)} monId={monster.entity?.id!} class="hover:bg-gray-200" />
 		{/each}
 	</div>
 </Dialog>

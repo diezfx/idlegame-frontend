@@ -4,17 +4,15 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import { cn } from '$lib/utils';
 	import { Plus, ArrowLeftRight } from 'lucide-svelte';
-	import type { GameStateStore } from '$lib/stores/gamestate.svelte';
+	import { gameStateStore, type GameStateStore } from '$lib/stores/gamestate.svelte';
 	import { JobSubType } from '$gen/v1/masterdata_pb';
 	let {
-		gs,
 		monId,
 		class: classname,
 		itemDeleteAction,
 		openEquipDialog,
 		...props
 	}: {
-		gs: GameStateStore;
 		monId: string;
 		class?: string;
 		itemDeleteAction?: (itemID: string) => void;
@@ -22,6 +20,7 @@
 		[key: string]: any;
 	} = $props();
 
+	const gs = gameStateStore;
 	const monster = $derived(await gs.getMonster(monId));
 	const monJob = $derived(
 		monster.participant?.jobEntityId ? await gs.getJob(monster.participant?.jobEntityId) : undefined,
