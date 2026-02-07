@@ -14,6 +14,6 @@
 <h1>Jobs</h1>
 <div class="grid grid-cols-3 gap-4">
 	{#each jobs as [_, job]}
-		<JobView gs={gameStateStore} jobID={job.entity!.id} onStop={() => stopJob(job.entity?.id!)} />
+		<JobView jobID={job.entity!.id} onStop={() => stopJob(job.entity?.id!)} />
 	{/each}
 </div>
