@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { JobSubType } from '$gen/v1/masterdata_pb';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
