@@ -18,7 +18,7 @@
 
 	async function chooseStarter(): Promise<void> {
 		const result = await tutorialClient.chooseStarter({
-			id: BigInt(user.userId),
+			id: user.userId,
 			monDefinitionId: BigInt(selectedMonster!),
 		});
 		goto('/monsters');

@@ -14,6 +14,9 @@ const config = {
 		adapter: adapter({
 			fallback: '200.html', // may differ from host to host
 		}),
+		alias: {
+			$gen: 'src/gen',
+		},
 	},
 	compilerOptions: {
 		experimental: {

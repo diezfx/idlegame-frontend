@@ -40,7 +40,7 @@ class MasterdataStore {
 		if (this.BattleJobs.length > 0) {
 			return this.BattleJobs;
 		}
-		const jobs = await clients.masterdataClient.getBattleJobs({});
+		const jobs = await clients.masterdataClient.getBattleJobs({ cityId: 'city_1' });
 		this.BattleJobs = jobs.jobs;
 		return this.BattleJobs;
 	}

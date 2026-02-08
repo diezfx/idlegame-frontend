@@ -64,7 +64,13 @@
 		<div class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
 			<div class="col-span-2">
-				<Progress foreground="bg-red-500" background="bg-gray-200" value={mon.stat?.health} max={mon.stat?.maxHealth} />
+				<Progress
+					showLabel={true}
+					foreground="bg-red-500"
+					background="bg-gray-200"
+					value={mon.stat?.health}
+					max={mon.stat?.maxHealth}
+				/>
 			</div>
 			<Swords />
 			<p class="col-span-2">10</p>

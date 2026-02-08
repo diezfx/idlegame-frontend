@@ -32,31 +32,31 @@ export class JobsClient {
 		return response.jobs;
 	}
 
-	async getBattleJob(jobId: bigint): Promise<Job | undefined> {
+	async getBattleJob(jobId: string): Promise<Job | undefined> {
 		return await this.jobClient.getJob({ id: jobId });
 	}
 
-	async startJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
+	async startJob(request: { userId: string; monsterId: string; jobDefinitionId: string }): Promise<string> {
 		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
-	async startProcessingJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
+	async startProcessingJob(request: { userId: string; monsterId: string; jobDefinitionId: string }): Promise<string> {
 		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
-	async startProductJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
+	async startProductJob(request: { userId: string; monsterId: string; jobDefinitionId: string }): Promise<string> {
 		const response = await this.jobClient.startProductionJob(request);
 		return response.jobId;
 	}
 
-	async startBattleJob(request: { userId: bigint; monsterId: bigint; jobDefinitionId: string }): Promise<bigint> {
+	async startBattleJob(request: { userId: string; monsterId: string; jobDefinitionId: string }): Promise<string> {
 		const response = await this.jobClient.startBattle(request);
 		return response.jobId;
 	}
 
-	async stopJob(jobId: bigint): Promise<void> {
+	async stopJob(jobId: string): Promise<void> {
 		await this.jobClient.deleteJob({ id: jobId });
 	}
 }

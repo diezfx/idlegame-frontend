@@ -27,7 +27,7 @@
 	};
 </script>
 
-<nav class="float-left h-screen w-48 rounded-xl bg-blue-50 p-4 mx-4">
+<nav class="sticky top-0 h-screen w-48 flex-none rounded-xl bg-blue-50 p-4 mx-4 overflow-y-auto">
 	<p class="mb-2 flex items-center gap-2 text-2xl font-bold text-blue-700">Character</p>
 	<ul class="mb-6">
 		<li class="nav-item {activeClass('/jobs')}">

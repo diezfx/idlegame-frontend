@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cn } from '$lib/utils';
 	let { open = false, onClose = undefined, class: classname = '', children } = $props();
 	let isOpen = $derived(open);
 
@@ -23,7 +24,12 @@
 	<div class="fixed inset-0 bg-black opacity-60 z-40 pointer-events-none"></div>
 
 	<!-- Dialog content -->
-	<div class="relative z-50 m-4 p-4 rounded-lg bg-background shadow-sm pointer-events-auto mx-auto mt-24">
+	<div
+		class={cn(
+			'relative z-50 m-4 p-4 rounded-lg bg-background shadow-sm pointer-events-auto mx-auto mt-24 max-w-lg max-h-[80vh] overflow-y-auto',
+			classname,
+		)}
+	>
 		{@render children?.()}
 	</div>
 </dialog>

@@ -5,8 +5,8 @@
 
 	const jobs = await gameStateStore.getJobs();
 
-	function stopJob(id: bigint) {
-		gameStateStore.startJob;
+	async function stopJob(id: string) {
+		await gameStateStore.stopJob(id);
 		invalidateAll();
 	}
 </script>
@@ -14,6 +14,6 @@
 <h1>Jobs</h1>
 <div class="grid grid-cols-3 gap-4">
 	{#each jobs as [_, job]}
-		<JobView {job} onStop={() => stopJob(job.entity?.id!)} />
+		<JobView jobID={job.entity!.id} onStop={() => stopJob(job.entity?.id!)} />
 	{/each}
 </div>

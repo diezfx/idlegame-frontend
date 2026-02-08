@@ -1,11 +1,11 @@
 export interface User {
-	userId: number;
+	userId: string;
 	username: string;
 	isLoggedIn: boolean;
 }
 
 const defaultUser: User = {
-	userId: 1,
+	userId: '00000000-0000-0000-0000-000000000001',
 	username: 'test',
 	isLoggedIn: true,
 };

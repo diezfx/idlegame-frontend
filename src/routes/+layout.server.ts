@@ -8,7 +8,7 @@ export const load: ServerLoad = async ({ fetch, parent, params, url, locals }) =
 	const { userClient } = clients;
 
 	const user = locals.user;
-	const tutorialProgress = await userClient.getUserProgress({ id: BigInt(user.userId) });
+	const tutorialProgress = await userClient.getUserProgress({ id: user.userId });
 
 	if (!tutorialProgress.tutorialCompleted && url.pathname !== '/tutorial') {
 		log.info(`User ${user.userId} has not completed the tutorial, redirecting to /tutorial`);

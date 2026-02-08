@@ -4,7 +4,7 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import BattlewView from '$lib/widgets/battle.svelte';
 
-	const jobId = BigInt(page.params.id!);
+	const jobId = page.params.id!;
 
 	const battleJobPromise = $derived(gameStateStore.getJob(jobId));
 	const battleJob = $derived(await battleJobPromise);

@@ -5,6 +5,7 @@ import {
 	JobService,
 	MasterdataService,
 	MonsterService,
+	StreamService,
 	TutorialService,
 	UserService,
 } from '../../gen/v1/service_pb';
@@ -22,6 +23,7 @@ function createClients() {
 		masterdataClient: createClient(MasterdataService, transport),
 		tutorialClient: createClient(TutorialService, transport),
 		userClient: createClient(UserService, transport),
+		streamClient: createClient(StreamService, transport)
 	};
 }
 

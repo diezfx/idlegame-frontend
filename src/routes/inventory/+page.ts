@@ -7,7 +7,7 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 	const inventoryClient = clients.inventoryClient;
 	return {
 		inventory: await inventoryClient.getInventory({
-			userId: BigInt(user.userId),
+			userId: user.userId,
 		}),
 	};
 };
