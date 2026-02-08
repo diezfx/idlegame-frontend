@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { JobSubType } from '$gen/v1/masterdata_pb';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import { gameStateStore } from '$lib/stores/gamestate.svelte';
-	import { protoToMilliseconds } from '$lib/utils/prototime';
-	import { CircleAlert, CirclePlay, Gift } from 'lucide-svelte';
+	import { CalendarClock, Skull, Gift, CirclePlay, CircleAlert } from 'lucide-svelte';
+
 	import { DateTime } from 'luxon';
-	let{
+	import { protoToMilliseconds } from '$lib/utils/prototime';
+	import { JobSubType } from '../../gen/v1/masterdata_pb';
+	import { jobStatusText } from '$lib/utils/enumtext';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
+	let {
 		jobID,
+		onclick,
 		onStop,
-		...props	
+		...props
 	}: {
 		jobID: string;
 		onclick?: () => void;
 		onStop?: () => void;
 		[key: string]: any;
 	} = $props();
-
-	const gs = gameStateStore;
-	const job = $derived(await gs.getJob(jobID));
-
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -34,28 +33,69 @@
 		return relativeFormatter.format(Math.trunc(diff.as(unit)), unit);
 	};
 
+	const job = $derived(await gameStateStore.getJob(jobID));
+	const monsters = $derived(await Promise.all(job!.monsters.map((id) => gameStateStore.getMonster(id))));
+
+	const statusColor = $derived(
+		job?.jobState?.status === 1
+			? 'text-yellow-600 bg-yellow-100' // In Progress (assuming 1)
+			: job?.jobState?.status === 2
+				? 'text-green-600 bg-green-100' // Completed (assuming 2)
+				: 'text-gray-600 bg-gray-100',
+	);
 </script>
 
 <Card
-
+	{onclick}
+	{...props}
+	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200 {props.class ||
+		''}"
 >
 	<!-- Header -->
 	<div class="p-4 border-b border-gray-100 grid grid-cols-[1fr_auto] items-center bg-gray-50/50 rounded-t-xl">
 		<div class="flex flex-col">
 			<h3 class="font-bold text-gray-800 leading-tight">{job!.def?.jobDefId}</h3>
+			<span class="text-xs text-gray-500 capitalize">{JobSubType[job!.def?.subType!]}</span>
+		</div>
+		{#if job?.jobState?.status}
+			<span class="text-xs font-semibold px-2.5 py-1 rounded-full {statusColor} capitalize">
+				{jobStatusText(job.jobState.status)}
+			</span>
+		{/if}
+	</div>
 
 	<div class="p-4 space-y-4">
 		<!-- Monster Info -->
 		<div class="grid grid-cols-[auto_1fr] gap-3 items-start">
 			<div class="mt-0.5 text-gray-400">
-	class="w-[350px] shadow-lg rounded-xl border border-gray-200 bg-white hover:shadow-2xl transition-shadow duration-200"
+				<Skull size={16} />
+			</div>
 			<div class="flex flex-col flex-1 min-w-0">
-	{#snippet title()}
-		<div class="flex items-center gap-2 bg-gray-50 rounded-t-xl p-4">
-			<div class="text-lg font-bold">{job!.def?.jobDefId}</div>
-			<span class="ml-auto text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 capitalize">
-				{JobSubType[job!.def?.subType!]}
+				<span class="text-xs text-gray-500 uppercase font-semibold tracking-wider">Assigned Monster</span>
+				<span class="font-medium text-gray-900 truncate">{monsters.map((m) => m!.identity?.name).join?.(', ')}</span>
+			</div>
+		</div>
+
+		<!-- Timestamps Grid -->
+		<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-cols-[auto_1fr] gap-2 items-start">
+				<div class="mt-0.5 text-gray-400">
 					<CirclePlay size={16} />
+				</div>
+				<div class="flex flex-col">
+					<span class="text-xs text-gray-500 uppercase font-semibold tracking-wider">Started</span>
+					<span class="text-sm text-gray-900"
+						>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity?.createdAt!)))}</span
+					>
+				</div>
+			</div>
+
+			<div class="grid grid-cols-[auto_1fr] gap-2 items-start">
+				<div class="mt-0.5 text-gray-400">
+					<CalendarClock size={16} />
+				</div>
+				<div class="flex flex-col">
+					<span class="text-xs text-gray-500 uppercase font-semibold tracking-wider">Updated</span>
 					<span class="text-sm text-gray-900"
 						>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState?.updatedAt!)))}</span
 					>

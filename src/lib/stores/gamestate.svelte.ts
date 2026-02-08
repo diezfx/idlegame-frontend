@@ -1,7 +1,7 @@
 import { SvelteMap } from 'svelte/reactivity';
 
 import type { Inventory, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
-import { MonsterSchema } from '../../gen/v1/domain_pb';
+import { EventSchema, MonsterSchema } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { Code, ConnectError } from '@connectrpc/connect';
@@ -10,8 +10,8 @@ import { toJsonString } from '@bufbuild/protobuf';
 // Declare WASM functions on the window object
 declare global {
 	interface Window {
-		loadMonster?: (monsterJson: string) => void;
-		applyEvents?: (eventsJson: string) => void;
+		loadMonster: (monsterJson: string) => void;
+		applyEvent: (eventsJson: string) => void;
 		Go?: any;
 	}
 }
@@ -35,7 +35,6 @@ export class GameStateStore {
 				// Send monster data to WASM in protobuf JSON format if the function exists
 				if (typeof window.loadMonster === 'function') {
 					const monsterJson = toJsonString(MonsterSchema, monster);
-					console.log("load monster", monsterJson)
 					window.loadMonster(monsterJson);
 				}
 			}
@@ -96,7 +95,6 @@ export class GameStateStore {
 			monsterId: monsterId,
 			jobDefinitionId: jobDefinitionId,
 		});
-		await Promise.all([this.getJobs(), this.getMonsters()]);
 		return response.jobId;
 	}
 
@@ -145,57 +143,18 @@ export class GameStateStore {
 	async eventStream() {
 		const eventStream = clients.streamClient.getEvents({ userId: userStore.getUser().userId! });
 		for await (const e of eventStream) {
+			const eventJson = toJsonString(EventSchema, e.events[0]);
+			window.applyEvent(eventJson);
 			console.log(e.events[0].eventType);
 		}
 	}
 }
 
-let wasmReadyResolve!: () => void;
-let wasmReady: Promise<void> | null = null;
-let wasmInstance: WebAssembly.Instance | null = null;
-let go: any;
+
 
 // Initialize WASM if Go is available (loaded from wasm_exec.js)
-export function initializeWasm(): Promise<void> {
-	if (wasmReady) return wasmReady;
 
-	wasmReady = (async () => {
-		if (typeof window.Go === "undefined") {
-			throw new Error("Go WASM runtime not loaded");
-		}
-
-		go = new window.Go();
-
-		const result = await WebAssembly.instantiateStreaming(
-			fetch("/domain.wasm"),
-			go.importObject
-		);
-
-		wasmInstance = result.instance;
-
-		// JS hook that Go will call when ready
-		(window as any).__wasmReady = () => {
-			wasmReadyResolve();
-		};
-
-		// Start Go (this never returns)
-		console.log("Starting Go WASM");
-		go.run(wasmInstance);
-		console.log("Ending?");
-	})();
-
-	// Create the promise Go will resolve
-	wasmReady = new Promise<void>((resolve) => {
-		wasmReadyResolve = resolve;
-	});
-
-	return wasmReady;
-}
 
 export const gameStateStore = new GameStateStore();
 
-// Initialize WASM when module loads
-initializeWasm().then(() => {
-	// Start event stream after WASM is ready
-	gameStateStore.eventStream();
-});
+gameStateStore.eventStream();
