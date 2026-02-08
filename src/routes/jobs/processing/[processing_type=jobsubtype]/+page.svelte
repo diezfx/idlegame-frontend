@@ -29,6 +29,12 @@
 	let selectedMonster: Monster | undefined = $derived(selectedId ? monsters.get(selectedId) : undefined);
 
 	let jobStartable = $derived(selectedJob && selectedId);
+	function dialogClicked(m: string): void {
+		openDialog = false;
+		selectedId = m;
+	}
+	function reset(): void {
+		selectedId = undefined;
 		selectedJob = undefined;
 	}
 
@@ -50,12 +56,6 @@
 	}
 </script>
 
-<div class="space-y-8 pb-12">
-	<!-- Active Jobs Section -->
-	{#if activeJobs.length > 0}
-		<section>
-			<div class="flex items-center gap-2 mb-4 text-gray-800">
-				<Activity class="text-green-600" />
 <div>Start new Job</div>
 <div class="grid grid-cols-3 gap-2">
 	{#if selectedMonster != undefined}
@@ -70,17 +70,29 @@
 		class="button text-center text-green-500 text-2xl hover:{selectedColor}">+</Card
 	>
 </div>
-	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+
 <div>Currently active Jobs</div>
 <div class="grid grid-cols-3 gap-2">
 	{#each activeJobs as job}
 		<JobView gs={gameStateStore} jobID={job.entity!.id} onStop={() => gameStateStore.stopJob(job.entity?.id!)} {job} />
 	{/each}
-				</div>
-			{/if}
-		{/each}
+</div>
+
+<Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
 	Choose Monster
 	<div class="grid grid-cols-3 gap-2 items-start">
+		{#each monsters as [_, monster]}
+			{#if monster.participant == undefined}
+				<MonsterView
+					gs={gameStateStore}
+					onclick={() => dialogClicked(monster.entity?.id!)}
+					monId={monster.entity?.id!}
+					class="hover:bg-gray-200"
+				/>
+			{/if}
+		{/each}
+	</div>
+</Dialog>
 
 <div class="grid grid-cols-4 gap-2 items-start">
 	{#each jobDefs as job}
