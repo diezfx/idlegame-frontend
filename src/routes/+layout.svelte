@@ -4,9 +4,10 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { initializeWasm } from '$lib/stores/wasm';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 
 	onMount(() => {
-		initializeWasm();
+		initializeWasm().then(() => gameStateStore.initialize());
 	});
 
 	console.log('Layout loaded');

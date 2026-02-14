@@ -1,17 +1,22 @@
+import { fromJsonString, toJsonString } from '@bufbuild/protobuf';
 import { SvelteMap } from 'svelte/reactivity';
 
 import type { Inventory, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
-import { EventSchema, MonsterSchema } from '../../gen/v1/domain_pb';
+import { EventSchema, GameStateSchema, InventorySchema, JobSchema, MonsterSchema } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
-import { Code, ConnectError } from '@connectrpc/connect';
-import { toJsonString } from '@bufbuild/protobuf';
+import { initializeWasm } from './wasm';
 
-// Declare WASM functions on the window object
 declare global {
 	interface Window {
-		loadMonster: (monsterJson: string) => void;
-		applyEvent: (eventsJson: string) => void;
+		loadGameState: (gameStateJson: string) => void;
+		listMonsterIDs: () => string;
+		listJobIDs: () => string;
+		listInventoryIDs: () => string;
+		getMonster: (id: string) => string;
+		getJob: (id: string) => string;
+		getInventory: (id: string) => string;
+		applyEvent: (eventJson: string) => void;
 		Go?: any;
 	}
 }
@@ -20,78 +25,144 @@ export class GameStateStore {
 	Monsters: SvelteMap<string, MonsterType>;
 	Jobs: SvelteMap<string, Job>;
 	Inventories: SvelteMap<string, Inventory>;
+	private initPromise: Promise<void> | null = null;
+	private streamStarted = false;
+
 	constructor() {
 		this.Monsters = new SvelteMap<string, MonsterType>();
 		this.Jobs = new SvelteMap<string, Job>();
 		this.Inventories = new SvelteMap<string, Inventory>();
 	}
 
-	async getMonsters(): Promise<SvelteMap<string, MonsterType>> {
-		//for now always refresh until we have events
-		const monsters = await clients.monsterClient.listMonsters({ ownerId: userStore.getUser().userId! });
-		for (const monster of monsters.monsters) {
-			if (monster.entity?.id) {
-				this.Monsters.set(monster.entity.id, monster);
-				// Send monster data to WASM in protobuf JSON format if the function exists
-				if (typeof window.loadMonster === 'function') {
-					const monsterJson = toJsonString(MonsterSchema, monster);
-					window.loadMonster(monsterJson);
-				}
-			}
+	async initialize(): Promise<void> {
+		if (this.initPromise) return this.initPromise;
+
+		this.initPromise = (async () => {
+			await initializeWasm();
+			await this.bootstrapFromGamestateByUser();
+			this.startEventStream();
+		})();
+
+		return this.initPromise;
+	}
+
+	private async ensureInitialized(): Promise<void> {
+		if (!this.initPromise) {
+			await this.initialize();
+			return;
+		}
+		await this.initPromise;
+	}
+
+	private async bootstrapFromGamestateByUser(): Promise<void> {
+		const response = await clients.gamestateClient.getGamestateByUser({ userId: userStore.getUser().userId });
+		if (!response.gamestate) {
+			throw new Error('GetGamestateByUser returned empty gamestate');
+		}
+		if (typeof window.loadGameState !== 'function') {
+			throw new Error('WASM function `loadGameState` is unavailable');
+		}
+		window.loadGameState(toJsonString(GameStateSchema, response.gamestate));
+		this.refreshFromWasm();
+	}
+
+	private refreshFromWasm(): void {
+		if (
+			typeof window.listMonsterIDs !== 'function' ||
+			typeof window.listJobIDs !== 'function' ||
+			typeof window.listInventoryIDs !== 'function' ||
+			typeof window.getMonster !== 'function' ||
+			typeof window.getJob !== 'function' ||
+			typeof window.getInventory !== 'function'
+		) {
+			throw new Error('Required WASM read functions are unavailable');
 		}
 
+		const nextMonsters = new SvelteMap<string, MonsterType>();
+		const nextJobs = new SvelteMap<string, Job>();
+		const nextInventories = new SvelteMap<string, Inventory>();
+		const monsterIDs = JSON.parse(window.listMonsterIDs()) as string[];
+		const jobIDs = JSON.parse(window.listJobIDs()) as string[];
+		const inventoryIDs = JSON.parse(window.listInventoryIDs()) as string[];
+
+		for (const id of monsterIDs) {
+			const raw = window.getMonster(id);
+			if (!raw) continue;
+			nextMonsters.set(id, fromJsonString(MonsterSchema, raw, { ignoreUnknownFields: true }));
+		}
+
+		for (const id of jobIDs) {
+			const raw = window.getJob(id);
+			if (!raw) continue;
+			nextJobs.set(id, fromJsonString(JobSchema, raw, { ignoreUnknownFields: true }));
+		}
+
+		for (const id of inventoryIDs) {
+			const raw = window.getInventory(id);
+			if (!raw) continue;
+			nextInventories.set(id, fromJsonString(InventorySchema, raw, { ignoreUnknownFields: true }));
+		}
+
+		this.Monsters.clear();
+		this.Jobs.clear();
+		this.Inventories.clear();
+
+		for (const [id, mon] of nextMonsters) this.Monsters.set(id, mon);
+		for (const [id, job] of nextJobs) this.Jobs.set(id, job);
+		for (const [id, inv] of nextInventories) this.Inventories.set(id, inv);
+	}
+
+	private startEventStream(): void {
+		if (this.streamStarted) return;
+		this.streamStarted = true;
+
+		(async () => {
+			const eventStream = clients.streamClient.getEvents({ userId: userStore.getUser().userId });
+			for await (const payload of eventStream) {
+				for (const event of payload.events) {
+					window.applyEvent(toJsonString(EventSchema, event));
+				}
+				this.refreshFromWasm();
+			}
+		})().catch((error) => {
+			console.error('event stream failed', error);
+			this.streamStarted = false;
+		});
+	}
+
+	async getMonsters(): Promise<SvelteMap<string, MonsterType>> {
+		await this.ensureInitialized();
 		return this.Monsters;
 	}
 
-	async getJob(id: string): Promise<Job> {
-		if (!this.Jobs.has(id)) {
-			try {
-				const job = await clients.jobClient.getJob({ id: id });
-				if (job.entity?.id) {
-					this.Jobs.set(job.entity.id, job);
-				}
-				return job;
-			} catch (e) {
-				if (e instanceof ConnectError && e.code == Code.NotFound) {
-					throw 'job not found';
-				}
-				throw e;
-			}
-		}
-		return this.Jobs.get(id)!;
-	}
-
 	async getMonster(id: string): Promise<MonsterType> {
-		try {
-			if (!this.Monsters.has(id)) {
-				const mon = await clients.monsterClient.getMonster({ id: id });
-				if (mon.entity?.id) {
-					this.Monsters.set(mon.entity.id, mon);
-				}
-				return mon;
-			}
-		} catch (e) {
-			if (e instanceof ConnectError && e.code == Code.NotFound) {
-				throw 'monster not found';
-			}
-			throw e;
-		}
-		return this.Monsters.get(id)!;
+		await this.ensureInitialized();
+		const mon = this.Monsters.get(id);
+		if (!mon) throw 'monster not found';
+		return mon;
 	}
 
 	async getJobs(): Promise<SvelteMap<string, Job>> {
-		//for now always refresh until we have events
-		const jobs = await clients.jobClient.listJobs({});
-		for (const job of jobs.jobs) {
-			if (job.entity?.id) {
-				this.Jobs.set(job.entity.id, job);
-			}
-		}
+		await this.ensureInitialized();
 		return this.Jobs;
 	}
+
+	async getJob(id: string): Promise<Job> {
+		await this.ensureInitialized();
+		const job = this.Jobs.get(id);
+		if (!job) throw 'job not found';
+		return job;
+	}
+
+	async getInventories(): Promise<SvelteMap<string, Inventory>> {
+		await this.ensureInitialized();
+		return this.Inventories;
+	}
+
 	async startJob({ monsterId, jobDefinitionId }: { monsterId: string; jobDefinitionId: string }): Promise<string> {
+		await this.ensureInitialized();
 		const response = await clients.jobClient.startProductionJob({
-			userId: userStore.getUser().userId!,
+			userId: userStore.getUser().userId,
 			monsterId: monsterId,
 			jobDefinitionId: jobDefinitionId,
 		});
@@ -99,21 +170,10 @@ export class GameStateStore {
 	}
 
 	async stopJob(id: string): Promise<void> {
+		await this.ensureInitialized();
 		await clients.jobClient.deleteJob({ id: id });
-		await Promise.all([this.getJobs()]);
 	}
 
-	async getInventories(): Promise<SvelteMap<string, Inventory>> {
-		//for now always refresh until we have events
-		const inventories = await clients.inventoryClient.getInventory({ userId: userStore.getUser().userId! });
-		this.Inventories.clear();
-		for (const inventory of inventories.cities) {
-			if (inventory.entity?.id) {
-				this.Inventories.set(inventory.entity.id, inventory.inventory!);
-			}
-		}
-		return this.Inventories;
-	}
 	async equipItem({
 		monsterId,
 		itemId,
@@ -123,38 +183,23 @@ export class GameStateStore {
 		itemId: string;
 		quantity: number;
 	}): Promise<void> {
+		await this.ensureInitialized();
 		await clients.inventoryClient.equipItem({
-			userId: userStore.getUser().userId!,
+			userId: userStore.getUser().userId,
 			monsterId: monsterId,
 			itemId: itemId,
 			quantity: BigInt(quantity),
 		});
-		await this.getMonsters();
 	}
+
 	async unEquipItem({ monsterId, itemId }: { monsterId: string; itemId: string }): Promise<void> {
+		await this.ensureInitialized();
 		await clients.inventoryClient.unEquipItem({
-			userId: userStore.getUser().userId!,
+			userId: userStore.getUser().userId,
 			monsterId: monsterId,
 			itemId: itemId,
 		});
-		await this.getMonsters();
-	}
-
-	async eventStream() {
-		const eventStream = clients.streamClient.getEvents({ userId: userStore.getUser().userId! });
-		for await (const e of eventStream) {
-			const eventJson = toJsonString(EventSchema, e.events[0]);
-			window.applyEvent(eventJson);
-			console.log(e.events[0].eventType);
-		}
 	}
 }
 
-
-
-// Initialize WASM if Go is available (loaded from wasm_exec.js)
-
-
 export const gameStateStore = new GameStateStore();
-
-gameStateStore.eventStream();

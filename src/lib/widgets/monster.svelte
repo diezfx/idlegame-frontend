@@ -21,12 +21,11 @@
 	} = $props();
 
 	const gs = gameStateStore;
-	const monster = $derived(await gs.getMonster(monId));
-	const monJob = $derived(
-		monster.participant?.jobEntityId ? await gs.getJob(monster.participant?.jobEntityId) : undefined,
-	);
+	const monster = $derived(gs.Monsters.get(monId));
+	const monJob = $derived(monster?.participant?.jobEntityId ? gs.Jobs.get(monster.participant.jobEntityId) : undefined);
 </script>
 
+{#if monster}
 <Card {...props} class={cn(classname)} title={monster.identity?.name}>
 	<div class="grid grid-cols-2 text-xs gap-1">
 		<div>Level</div>
@@ -119,5 +118,5 @@
 				</button>
 			{/each}
 		</div>
-	</div></Card
->
+	</div></Card>
+{/if}

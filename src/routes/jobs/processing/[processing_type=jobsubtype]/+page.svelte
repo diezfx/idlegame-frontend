@@ -19,9 +19,9 @@
 	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
 	const processingType = $derived(parseInt(page.params.processing_type!, 10));
-	const activeJobsMap = $derived(await gameStateStore.getJobs());
+	const activeJobsMap = $derived(gameStateStore.Jobs);
 	let activeJobs = $derived(Array.from(activeJobsMap.values()).filter((job) => job.def?.subType === processingType));
-	const monsters = $derived(await gameStateStore.getMonsters());
+	const monsters = $derived(gameStateStore.Monsters);
 	const jobDefs = $derived(
 		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === processingType),
 	);

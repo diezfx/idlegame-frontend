@@ -20,8 +20,8 @@
 	const selectedColor = 'bg-green-200';
 
 	const user = userStore.getUser();
-	const activeJobs = $derived(await gameStateStore.getJobs());
-	const monsters = await gameStateStore.getMonsters();
+	const activeJobs = $derived(gameStateStore.Jobs);
+	const monsters = $derived(gameStateStore.Monsters);
 	const jobClient = new JobsClient(fetch);
 
 	let openDialog = $state(false);

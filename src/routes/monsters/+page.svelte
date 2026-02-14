@@ -11,14 +11,14 @@
 	let selectedMonster: Monster | undefined = $state(undefined);
 	let selectedItem: Item | undefined = $state(undefined);
 	let itemAmount = $state(1);
-	let monsters = await gameStateStore.getMonsters();
+	let monsters = $derived(gameStateStore.Monsters);
 
 	let itemMasterdata = await masterdataStore.getItems();
 
-	let inventory = (await gameStateStore.getInventories()).values().next().value!;
+	let inventory = $derived(Array.from(gameStateStore.Inventories.values())[0]);
 
 	let equippableItems = $derived(
-		inventory.items.filter((i) => {
+		(inventory?.items ?? []).filter((i) => {
 			return itemMasterdata.get(i.id)?.effects.length ?? 0 > 0;
 		}),
 	);

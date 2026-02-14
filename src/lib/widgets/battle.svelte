@@ -2,15 +2,19 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import type { BattleMonster, Job } from '$lib/service/jobs';
+	import type { Job } from '$lib/service/jobs';
 	import Swords from 'lucide-svelte/icons/swords';
 	import Cross from 'lucide-svelte/icons/cross';
-	import { Role } from '../../gen/v1/domain_pb';
+	import { Role, type Monster } from '../../gen/v1/domain_pb';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 
 	let { job, ...props }: { job: Job; [key: string]: any } = $props();
 
-	const playerMonsters = $derived(job.monsters.filter((m) => m.participant?.role === Role.PLAYER));
-	const enemyMonsters = $derived(job.monsters.filter((m) => m.participant?.role === Role.ENEMY));
+	const monsters = $derived(
+		job.monsters.map((id) => gameStateStore.Monsters.get(id)).filter((m): m is Monster => m != null),
+	);
+	const playerMonsters = $derived(monsters.filter((m) => m.participant?.role === Role.PLAYER));
+	const enemyMonsters = $derived(monsters.filter((m) => m.participant?.role === Role.ENEMY));
 
 	import { DateTime } from 'luxon';
 
@@ -59,7 +63,7 @@
 	};
 </script>
 
-{#snippet monster(mon: BattleMonster)}
+{#snippet monster(mon: Monster)}
 	<Card {...props} class="w-[350px]" title={mon.identity?.name}>
 		<div class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
@@ -85,7 +89,7 @@
 <Card {...props} class="w-[350px]" title={job.def!.jobDefId}>
 	<div class="grid grid-cols-2">
 		<p>Monster</p>
-		<p>{job.monsters.map((m) => m.identity!.name)}</p>
+		<p>{monsters.map((m) => m.identity!.name)}</p>
 		<p>Updated</p>
 		<p>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState!.updatedAt)))}</p>
 		<p>Started</p>
