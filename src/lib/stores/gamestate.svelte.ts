@@ -120,6 +120,8 @@ export class GameStateStore {
 			const eventStream = clients.streamClient.getEvents({ userId: userStore.getUser().userId });
 			for await (const payload of eventStream) {
 				for (const event of payload.events) {
+					const eventName = event.eventType || event.eventData.case || 'unknown';
+					console.info('[event]', eventName);
 					window.applyEvent(toJsonString(EventSchema, event));
 				}
 				this.refreshFromWasm();
