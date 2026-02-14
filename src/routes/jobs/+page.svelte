@@ -3,7 +3,7 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 
-	const jobs = await gameStateStore.getJobs();
+	const jobs = $derived(gameStateStore.Jobs);
 
 	async function stopJob(id: string) {
 		await gameStateStore.stopJob(id);

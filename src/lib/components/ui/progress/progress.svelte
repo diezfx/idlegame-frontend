@@ -6,6 +6,7 @@
 		background = 'bg-primary/20',
 		max = 100,
 		value,
+		transition = true,
 		showLabel = false,
 		class: className = undefined,
 		...restProps
@@ -29,7 +30,7 @@
 	{...restProps}
 >
 	<div
-		class={cn('h-full w-full flex-1 transition-all', foreground)}
+		class={cn('h-full w-full flex-1', transition && 'transition-all', foreground)}
 		style="transform: translateX(-{100 - (100 * (value ?? 0)) / (max ?? 1)}%)"
 	></div>
 	{#if showLabel}

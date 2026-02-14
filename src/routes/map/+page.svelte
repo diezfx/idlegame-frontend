@@ -3,7 +3,7 @@
 	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import Map from '../../lib/components/map.svelte';
 
-	const monsters = $derived(Array.from((await gameStateStore.getMonsters()).values()));
+	const monsters = $derived(Array.from(gameStateStore.Monsters.values()));
 	const cities = await masterdataStore.getCities();
 </script>
 

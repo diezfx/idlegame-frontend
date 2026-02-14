@@ -1,6 +1,7 @@
 import { createConnectTransport } from '@connectrpc/connect-web';
 import { createClient } from '@connectrpc/connect';
 import {
+	GamestateService,
 	InventoryService,
 	JobService,
 	MasterdataService,
@@ -20,6 +21,7 @@ function createClients() {
 		monsterClient: createClient(MonsterService, transport),
 		inventoryClient: createClient(InventoryService, transport),
 		jobClient: createClient(JobService, transport),
+		gamestateClient: createClient(GamestateService, transport),
 		masterdataClient: createClient(MasterdataService, transport),
 		tutorialClient: createClient(TutorialService, transport),
 		userClient: createClient(UserService, transport),
