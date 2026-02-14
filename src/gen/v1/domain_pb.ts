@@ -764,29 +764,7 @@ export const EnemyMonsterSchema: GenMessage<EnemyMonster> = /*@__PURE__*/
  */
 export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
   /**
-   * @generated from field: v1.Entity entitiy = 1;
-   */
-  entitiy?: Entity;
-
-  /**
-   * @generated from field: v1.Identity identity = 2;
-   */
-  identity?: Identity;
-};
-
-/**
- * Describes the message v1.EnemyMonster.
- * Use `create(EnemyMonsterSchema)` to create a new message.
- */
-export const EnemyMonsterSchema: GenMessage<EnemyMonster> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 25);
-
-/**
- * @generated from message v1.CargoLoadedEvent
- */
-export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
-  /**
-   * @generated from field: int32 source_id = 1;
+   * @generated from field: string source_id = 1;
    */
   sourceId: string;
 
