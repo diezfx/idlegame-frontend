@@ -51,6 +51,13 @@
 
 		<div class="font-medium">Exp</div>
 		<div>{monster.stat?.experience}</div>
+		<div class="font-medium">Stats</div>
+		<div class="grid grid-cols-4 gap-1 text-[10px]">
+			<span class="rounded bg-red-50 px-1 py-0.5 text-center">STR {monster.stat?.strength ?? 0}</span>
+			<span class="rounded bg-amber-50 px-1 py-0.5 text-center">AGI {monster.stat?.agility ?? 0}</span>
+			<span class="rounded bg-blue-50 px-1 py-0.5 text-center">INT {monster.stat?.intelligence ?? 0}</span>
+			<span class="rounded bg-emerald-50 px-1 py-0.5 text-center">VIT {monster.stat?.vitality ?? 0}</span>
+		</div>
 
 		<div class="font-medium">Job</div>
 		<div class="max-w-[80px]">

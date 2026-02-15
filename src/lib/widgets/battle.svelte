@@ -7,6 +7,7 @@
 	import Cross from 'lucide-svelte/icons/cross';
 	import { Role, type Monster } from '../../gen/v1/domain_pb';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { toBattleMonsterView, type BattleMonsterView } from '$lib/views/battle';
 
 	let { job, ...props }: { job: Job; [key: string]: any } = $props();
 
@@ -21,16 +22,10 @@
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { jobStatusText } from '$lib/utils/enumtext';
 
-	const attackCooldown = 5000;
 	let animationFrameId: number | undefined;
 	let nowMs = $state(Date.now());
-
-	let getAttackProgress = (mon: Monster | undefined): number => {
-		const lastAttackedAt = mon?.lastAction?.lastAttackedAt;
-		if (lastAttackedAt == null) return 0;
-		const elapsed = Math.max(0, nowMs - protoToMilliseconds(lastAttackedAt));
-		return Math.min(attackCooldown, elapsed);
-	};
+	const playerBattleMonsters = $derived(playerMonsters.map((m) => toBattleMonsterView(m, nowMs)));
+	const enemyBattleMonsters = $derived(enemyMonsters.map((m) => toBattleMonsterView(m, nowMs)));
 
 	let animate = () => {
 		nowMs = Date.now();
@@ -59,7 +54,8 @@
 	};
 </script>
 
-{#snippet monster(mon: Monster)}
+{#snippet monster(view: BattleMonsterView)}
+	{@const mon = view.monster}
 	<Card {...props} class="w-[350px]" title={mon.identity?.name}>
 		<div class="grid grid-cols-3">
 			<Cross class=" text-red-500" />
@@ -73,15 +69,21 @@
 				/>
 			</div>
 			<Swords />
-			<p class="col-span-2">10</p>
+			<p class="col-span-2">{mon.stat?.attackPower ?? 0}</p>
+			<div class="col-span-3 mt-1 grid grid-cols-4 gap-1 text-[10px]">
+				<span class="rounded bg-red-50 px-1 py-0.5 text-center">STR {mon.stat?.strength ?? 0}</span>
+				<span class="rounded bg-amber-50 px-1 py-0.5 text-center">AGI {mon.stat?.agility ?? 0}</span>
+				<span class="rounded bg-blue-50 px-1 py-0.5 text-center">INT {mon.stat?.intelligence ?? 0}</span>
+				<span class="rounded bg-emerald-50 px-1 py-0.5 text-center">VIT {mon.stat?.vitality ?? 0}</span>
+			</div>
 			<p>NextAttack</p>
 			<div class="col-span-2">
 				<Progress
 					transition={false}
 					foreground="bg-blue-200"
 					background="bg-gray-200"
-					value={getAttackProgress(mon)}
-					max={attackCooldown}
+					value={view.attackElapsedMs}
+					max={view.attackCooldownMs}
 				/>
 			</div>
 		</div>
@@ -112,13 +114,13 @@
 <div class="grid grid-cols-2 gap-2">
 	<div>
 		<p>My Monsters</p>
-		{#each playerMonsters as mon (mon.entity?.id)}
+		{#each playerBattleMonsters as mon (mon.monster.entity?.id)}
 			{@render monster(mon)}
 		{/each}
 	</div>
 	<div>
 		<p>Enemies</p>
-		{#each enemyMonsters as mon (mon.entity?.id)}
+		{#each enemyBattleMonsters as mon (mon.monster.entity?.id)}
 			{@render monster(mon)}
 		{/each}
 	</div>

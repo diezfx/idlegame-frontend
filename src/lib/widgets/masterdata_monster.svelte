@@ -21,9 +21,13 @@
 		<p>#{monster.id}</p>
 		<div>Element</div>
 		<p>{MonsterElement[monster.element]}</p>
-		<div>Max Health</div>
-		<p>{monster.maxHealth}</p>
-		<div>Max Stamina</div>
-		<p>{monster.maxStamina}</p>
+		<div>STR</div>
+		<p>{monster.strength}</p>
+		<div>AGI</div>
+		<p>{monster.agility}</p>
+		<div>INT</div>
+		<p>{monster.intelligence}</p>
+		<div>VIT</div>
+		<p>{monster.vitality}</p>
 	</div>
 </Card>
