@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { cn } from '$lib/utils';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { Duration } from 'luxon';
-	import type { SvelteMap } from 'svelte/reactivity';
-	import type { ItemDefinition, JobSubType } from '../../gen/v1/masterdata_pb';
+	import type { JobSubType } from '../../gen/v1/masterdata_pb';
 	import { JobSubType as JobSubTypeEnum } from '../../gen/v1/masterdata_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
+	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import {
 		Cog,
 		Factory,
@@ -40,23 +41,28 @@
 		job,
 		selected = false,
 		interactive = true,
-		itemDefs,
 		onclick,
 		class: className,
 	}: {
 		job: JobCardData;
 		selected?: boolean;
 		interactive?: boolean;
-		itemDefs?: SvelteMap<string, ItemDefinition>;
 		onclick?: () => void;
 		class?: string;
 	} = $props();
 
 	const subtype = $derived(job.definition?.subType ?? JobSubTypeEnum.UNSPECIFIED);
 	const visual = $derived(visualForSubtype(subtype));
+	const itemDefs = $derived(masterdataStore.Items);
 	const ingredients = $derived.by(() => {
 		const definition = job.definition as { ingredients?: { id: string; quantity: bigint }[] } | undefined;
 		return definition?.ingredients ?? [];
+	});
+
+	onMount(() => {
+		if (masterdataStore.Items.size === 0) {
+			void masterdataStore.getItems();
+		}
 	});
 
 	function visualForSubtype(subType: JobSubType): VisualConfig {
@@ -153,7 +159,7 @@
 	}
 
 	function rewardLabel(id: string): string {
-		return itemDefs?.get(id)?.name ?? id;
+		return itemDefs.get(id)?.name ?? id;
 	}
 </script>
 

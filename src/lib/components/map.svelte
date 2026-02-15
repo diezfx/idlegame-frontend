@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import type { SvelteMap } from 'svelte/reactivity';
 	import {
 		Anvil,
 		ChefHat,
@@ -16,7 +15,7 @@
 		TreePine,
 		Wheat,
 	} from 'lucide-svelte';
-	import type { CityDefinition, ItemDefinition, JobSubType } from '../../gen/v1/masterdata_pb';
+	import type { CityDefinition, JobSubType } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
@@ -48,13 +47,11 @@
 		cities,
 		productionJobs,
 		battleJobs,
-		items,
 	}: {
 		monsters: Monster[];
 		cities: CityDefinition[];
 		productionJobs: ProductionJobInfo[];
 		battleJobs: BattleJobInfo[];
-		items: SvelteMap<string, ItemDefinition>;
 		[key: string]: unknown;
 	} = $props();
 
@@ -446,7 +443,6 @@
 			{#if selectedJob}
 				<JobDefinitionCard
 					job={{ definition: selectedJob.definition, routeInfo: selectedJob.routeInfo }}
-					itemDefs={items}
 					selected={true}
 					interactive={false}
 					class="mb-3"

@@ -24,7 +24,6 @@
 	const jobDefs = $derived(
 		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === processingType),
 	);
-	const itemDefs = await masterdataStore.getItems();
 
 	let selectedMonster: Monster | undefined = $derived(selectedId ? monsters.get(selectedId) : undefined);
 
@@ -141,7 +140,6 @@
 	{#each jobDefs as job}
 		<JobDefinitionCard
 			job={job}
-			itemDefs={itemDefs}
 			selected={isSelectedJob(job.definition!.id)}
 			onclick={() => (selectedJob = job)}
 		/>
