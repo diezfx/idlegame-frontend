@@ -12,10 +12,9 @@
 	import { page } from '$app/state';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 
-	const selectedColor = 'bg-green-200';
-	let openDialog = $state(false);
-	let selectedId: string | undefined = $state(undefined);
-	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
+let openDialog = $state(false);
+let selectedId: string | undefined = $state(undefined);
+let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
 	const processingType = $derived(parseInt(page.params.processing_type!, 10));
 	const activeJobsMap = $derived(gameStateStore.Jobs);
@@ -55,69 +54,110 @@
 	}
 </script>
 
-<section class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50/40 p-4">
-	<div class="flex flex-wrap items-center justify-between gap-3">
-		<div>
-			<div class="text-xs font-semibold uppercase tracking-wider text-emerald-700">Setup</div>
-			<h2 class="text-lg font-semibold text-gray-900">Create Gathering Job</h2>
-			<p class="text-sm text-gray-600">Select monster and recipe below, then start.</p>
-		</div>
-	</div>
-	<div class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-		<button
-			type="button"
-			class="min-h-[180px] rounded-lg border border-emerald-200 bg-white p-3 text-left transition hover:border-emerald-300 hover:bg-emerald-50/40"
-			onclick={() => {
-				openDialog = true;
-			}}
-		>
-			<div class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">Selected Monster</div>
-			{#if selectedMonster}
-				<div class="grid gap-2 rounded-md border border-emerald-200 bg-emerald-50/60 p-3 text-sm">
-					<div class="font-semibold text-gray-900">{selectedMonster.identity?.name}</div>
-					<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
-						<div>
-							<span class="text-gray-500">Level:</span> {selectedMonster.stat?.level}
+<div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px] items-start">
+	<div>
+		<section class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50/40 p-4">
+			<div class="flex flex-wrap items-center justify-between gap-3">
+				<div>
+					<div class="text-xs font-semibold uppercase tracking-wider text-emerald-700">Setup</div>
+					<h2 class="text-lg font-semibold text-gray-900">Create Gathering Job</h2>
+					<p class="text-sm text-gray-600">Select monster and recipe below, then start.</p>
+				</div>
+			</div>
+			<div class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+				<button
+					type="button"
+					class="min-h-[180px] rounded-lg border border-emerald-200 bg-white p-3 text-left transition hover:border-emerald-300 hover:bg-emerald-50/40"
+					onclick={() => {
+						openDialog = true;
+					}}
+				>
+					<div class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">Selected Monster</div>
+					{#if selectedMonster}
+						<div class="grid gap-2 rounded-md border border-emerald-200 bg-emerald-50/60 p-3 text-sm">
+							<div class="font-semibold text-gray-900">{selectedMonster.identity?.name}</div>
+							<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+								<div>
+									<span class="text-gray-500">Level:</span> {selectedMonster.stat?.level}
+								</div>
+								<div>
+									<span class="text-gray-500">Stamina:</span> {selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
+								</div>
+								<div class="col-span-2">
+									<span class="text-gray-500">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
+										selectedMonster.position?.y ?? 0,
+									)}
+								</div>
+							</div>
+							<div class="text-[11px] text-emerald-700">Click to change monster</div>
 						</div>
-						<div>
-							<span class="text-gray-500">Stamina:</span> {selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
+					{:else}
+						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+							No monster selected, click to choose
 						</div>
-						<div class="col-span-2">
-							<span class="text-gray-500">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
-								selectedMonster.position?.y ?? 0,
-							)}
+					{/if}
+				</button>
+				<div class="rounded-lg border border-emerald-200 bg-white p-3">
+					<div class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">Selected Job</div>
+					{#if selectedJob}
+						<div class="space-y-1 text-sm text-gray-700">
+							<div><span class="font-medium">ID:</span> {selectedJob.definition?.id}</div>
+							<div><span class="font-medium">Stamina:</span> {selectedJob.definition?.staminaCost}</div>
+							<div><span class="font-medium">Reward XP:</span> {selectedJob.definition?.rewards?.experience}</div>
 						</div>
-					</div>
-					<div class="text-[11px] text-emerald-700">Click to change monster</div>
+					{:else}
+						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+							No job selected
+						</div>
+					{/if}
 				</div>
-			{:else}
-				<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
-					No monster selected, click to choose
-				</div>
-			{/if}
-		</button>
-		<div class="rounded-lg border border-emerald-200 bg-white p-3">
-			<div class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">Selected Job</div>
-			{#if selectedJob}
-				<div class="space-y-1 text-sm text-gray-700">
-					<div><span class="font-medium">ID:</span> {selectedJob.definition?.id}</div>
-					<div><span class="font-medium">Stamina:</span> {selectedJob.definition?.staminaCost}</div>
-					<div><span class="font-medium">Reward XP:</span> {selectedJob.definition?.rewards?.experience}</div>
-				</div>
-			{:else}
-				<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
-					No job selected
-				</div>
-			{/if}
-		</div>
-	</div>
-</section>
+			</div>
+			<div class="mt-3 flex flex-col gap-2 border-t border-emerald-200/80 pt-3 sm:flex-row sm:items-center sm:justify-between">
+				<p class="text-sm text-gray-600">
+					{#if jobStartable}
+						Everything is ready. Start this job when you are ready to send your monster out.
+					{:else}
+						Choose both a monster and a job to continue.
+					{/if}
+				</p>
+				<Button
+					onclick={startJob}
+					disabled={!jobStartable}
+					class="w-full shrink-0 bg-emerald-600 text-white hover:bg-emerald-700 disabled:bg-gray-300 sm:w-auto"
+				>
+					Start Gathering
+				</Button>
+			</div>
+		</section>
 
-<div>Currently active Jobs</div>
-<div class="grid grid-cols-3 gap-2">
-	{#each activeJobs as job}
-		<JobView gs={gameStateStore} jobID={job.entity!.id} onStop={() => gameStateStore.stopJob(job.entity?.id!)} {job} />
-	{/each}
+		<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 items-start">
+			{#each jobDefs as job}
+				<JobDefinitionCard
+					job={job}
+					selected={isSelectedJob(job.definition!.id)}
+					onclick={() => (selectedJob = job)}
+				/>
+			{/each}
+		</div>
+	</div>
+
+	<aside class="xl:sticky xl:top-4 h-fit">
+		<div class="rounded-xl border border-gray-200 bg-white p-3">
+			<div class="mb-2 flex items-center justify-between">
+				<h3 class="text-sm font-semibold text-gray-900">Active Jobs</h3>
+				<span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800">{activeJobs.length}</span>
+			</div>
+			<div class="max-h-[75vh] space-y-2 overflow-y-auto pr-1">
+				{#if activeJobs.length === 0}
+					<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">No active jobs</div>
+				{:else}
+					{#each activeJobs as job}
+						<JobView gs={gameStateStore} jobID={job.entity!.id} onStop={() => gameStateStore.stopJob(job.entity?.id!)} {job} />
+					{/each}
+				{/if}
+			</div>
+		</div>
+	</aside>
 </div>
 
 <Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
@@ -135,19 +175,3 @@
 		{/each}
 	</div>
 </Dialog>
-
-<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 items-start">
-	{#each jobDefs as job}
-		<JobDefinitionCard
-			job={job}
-			selected={isSelectedJob(job.definition!.id)}
-			onclick={() => (selectedJob = job)}
-		/>
-	{/each}
-</div>
-
-<div class="mt-4 flex justify-end">
-	<Button onclick={startJob} disabled={!jobStartable} class="bg-emerald-600 text-white hover:bg-emerald-700 disabled:bg-gray-300">
-		Start Gathering
-	</Button>
-</div>

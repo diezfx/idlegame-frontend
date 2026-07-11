@@ -97,6 +97,11 @@
 				? 'text-green-600 bg-green-100' // Completed (assuming 2)
 				: 'text-gray-600 bg-gray-100',
 	);
+
+	function handleStopClick(event: MouseEvent): void {
+		event.stopPropagation();
+		onStop?.();
+	}
 </script>
 
 {#if job}
@@ -162,7 +167,7 @@
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-500 uppercase font-semibold tracking-wider">Updated</span>
 						<span class="text-sm text-gray-900"
-							>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.jobState?.updatedAt!)))}</span
+							>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity?.updatedAt!)))}</span
 						>
 					</div>
 				</div>
@@ -192,7 +197,7 @@
 		<div class="p-4 bg-gray-50/50 border-t border-gray-100 rounded-b-xl flex justify-center">
 			<Button
 				class="w-full bg-red-500 hover:bg-red-600 text-white font-medium shadow-sm hover:shadow transition-all"
-				onclick={onStop}
+				onclick={handleStopClick}
 			>
 				<CircleAlert size={16} class="mr-2" /> Stop Job
 			</Button>

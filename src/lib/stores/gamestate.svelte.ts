@@ -1,7 +1,7 @@
 import { fromJsonString, toJsonString } from '@bufbuild/protobuf';
 import { SvelteMap } from 'svelte/reactivity';
 
-import type { Inventory, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
+import type { Event, Inventory, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
 import { EventSchema, GameStateSchema, InventorySchema, JobSchema, MonsterSchema } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
@@ -25,6 +25,7 @@ export class GameStateStore {
 	Monsters: SvelteMap<string, MonsterType>;
 	Jobs: SvelteMap<string, Job>;
 	Inventories: SvelteMap<string, Inventory>;
+	Events: Event[] = $state([]);
 	private initPromise: Promise<void> | null = null;
 	private streamStarted = false;
 
@@ -64,6 +65,7 @@ export class GameStateStore {
 		}
 		window.loadGameState(toJsonString(GameStateSchema, response.gamestate));
 		this.refreshFromWasm();
+		this.Events = [];
 	}
 
 	private refreshFromWasm(): void {
@@ -122,6 +124,7 @@ export class GameStateStore {
 				for (const event of payload.events) {
 					const eventName = event.eventType || event.eventData.case || 'unknown';
 					console.info('[event]', eventName);
+					this.Events = [event, ...this.Events].slice(0, 200);
 					window.applyEvent(toJsonString(EventSchema, event));
 				}
 				this.refreshFromWasm();

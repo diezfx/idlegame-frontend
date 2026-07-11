@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
-	import BattlewView from '$lib/widgets/battle.svelte';
+	import BattleView from '$lib/widgets/battle.svelte';
 
 	const jobId = page.params.id!;
 
@@ -9,10 +9,8 @@
 
 </script>
 
-<div>Battle State</div>
-
 {#if battleJob === undefined || battleJob === null}
 	Loading...
 {:else}
-	<BattlewView job={battleJob} />
+	<BattleView job={battleJob} />
 {/if}
