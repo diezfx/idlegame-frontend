@@ -17,7 +17,7 @@
 		ChefHat,
 		Swords,
 		Shield,
-		Truck
+		Truck,
 	} from 'lucide-svelte';
 
 	import { DateTime } from 'luxon';
@@ -65,24 +65,54 @@
 					icon: TreePine,
 					iconWrap: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
 					highlight: 'ring-1 ring-emerald-200/70',
-					chip: 'WOOD'
+					chip: 'WOOD',
 				};
 			case JobSubType.MINING:
-				return { icon: Pickaxe, iconWrap: 'bg-slate-100 text-slate-700 border border-slate-200', highlight: '', chip: null };
+				return {
+					icon: Pickaxe,
+					iconWrap: 'bg-slate-100 text-slate-700 border border-slate-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.HARVESTING:
-				return { icon: Wheat, iconWrap: 'bg-amber-100 text-amber-700 border border-amber-200', highlight: '', chip: null };
+				return {
+					icon: Wheat,
+					iconWrap: 'bg-amber-100 text-amber-700 border border-amber-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.FISHING:
 			case JobSubType.FISHERY:
 				return { icon: Fish, iconWrap: 'bg-sky-100 text-sky-700 border border-sky-200', highlight: '', chip: null };
 			case JobSubType.SMELTING:
-				return { icon: Flame, iconWrap: 'bg-orange-100 text-orange-700 border border-orange-200', highlight: '', chip: null };
+				return {
+					icon: Flame,
+					iconWrap: 'bg-orange-100 text-orange-700 border border-orange-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.WEAPON_CRAFTING:
-				return { icon: Swords, iconWrap: 'bg-rose-100 text-rose-700 border border-rose-200', highlight: '', chip: null };
+				return {
+					icon: Swords,
+					iconWrap: 'bg-rose-100 text-rose-700 border border-rose-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.ARMOR_CRAFTING:
-				return { icon: Shield, iconWrap: 'bg-indigo-100 text-indigo-700 border border-indigo-200', highlight: '', chip: null };
+				return {
+					icon: Shield,
+					iconWrap: 'bg-indigo-100 text-indigo-700 border border-indigo-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.COOKING:
 			case JobSubType.FOOD_PROCESSING:
-				return { icon: ChefHat, iconWrap: 'bg-fuchsia-100 text-fuchsia-700 border border-fuchsia-200', highlight: '', chip: null };
+				return {
+					icon: ChefHat,
+					iconWrap: 'bg-fuchsia-100 text-fuchsia-700 border border-fuchsia-200',
+					highlight: '',
+					chip: null,
+				};
 			case JobSubType.TRANSPORT:
 				return { icon: Truck, iconWrap: 'bg-cyan-100 text-cyan-700 border border-cyan-200', highlight: '', chip: null };
 			default:
@@ -102,6 +132,8 @@
 		event.stopPropagation();
 		onStop?.();
 	}
+
+	console.log(job);
 </script>
 
 {#if job}
@@ -164,24 +196,21 @@
 					<div class="mt-0.5 text-gray-400">
 						<CalendarClock size={16} />
 					</div>
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-500 uppercase font-semibold tracking-wider">Updated</span>
-						<span class="text-sm text-gray-900"
-							>{timeAgo(DateTime.fromMillis(protoToMilliseconds(job.entity?.updatedAt!)))}</span
-						>
+					<div>
+						Capacity: {job.inventory?.capacity}
 					</div>
 				</div>
 			</div>
 
 			<!-- Rewards -->
-			{#if job.rewards?.inventory?.items?.length}
+			{#if job.rewards?.items?.length}
 				<Separator class="bg-gray-100" />
 				<div>
 					<div class="grid grid-flow-col justify-start items-center gap-1.5 text-xs text-gray-500 mb-2 font-medium">
 						<Gift size={14} /> Rewards
 					</div>
 					<div class="flex flex-wrap gap-2">
-						{#each job.rewards.inventory.items as reward}
+						{#each job.rewards.items as reward}
 							<span
 								class="inline-flex items-center px-2 py-1 bg-green-50 border border-green-100 rounded-md text-green-700 text-xs font-medium"
 							>
