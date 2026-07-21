@@ -27,8 +27,8 @@
 	};
 </script>
 
-<nav class="sticky top-0 h-screen w-48 flex-none rounded-xl bg-blue-50 p-4 mx-4 overflow-y-auto">
-	<p class="mb-2 flex items-center gap-2 text-2xl font-bold text-blue-700">Character</p>
+<nav class="sticky top-0 h-screen w-48 flex-none rounded-xl bg-sidebar p-4 mx-4 overflow-y-auto">
+	<p class="mb-2 flex items-center gap-2 text-2xl font-bold">Character</p>
 	<ul class="mb-6">
 		<li class="nav-item {activeClass('/jobs')}">
 			<a class="nav-content" href="/jobs"> Jobs</a>
@@ -97,8 +97,8 @@
 	text-lg font-semibold text-blue-600 mt-2 mb-1
 	*/
 	.active {
-		background-color: #bfdbfe; /* Tailwind blue-200 */
-		color: #2563eb; /* Tailwind blue-600 */
+		background-color: var(--color-sidebar-primary);
+		color: var(--color-sidebar-primary-foreground);
 	}
 
 	.nav-header {
@@ -112,8 +112,8 @@
 		border-radius: 0.5rem;
 		transition: background 0.15s;
 	}
-	.nav-item:hover {
-		background-color: #bfdbfe; /* Tailwind blue-200 */
+	.nav-item:not(.active):hover {
+		background-color: var(--color-sidebar-accent); /* Tailwind blue-200 */
 	}
 	.nav-content {
 		padding: 0.5rem; /* Tailwind p-2 */

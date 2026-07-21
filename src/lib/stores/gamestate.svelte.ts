@@ -6,6 +6,7 @@ import { EventSchema, GameStateSchema, InventorySchema, JobSchema, MonsterSchema
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { initializeWasm } from './wasm';
+import { InventoryViewSchema, type InventoryView } from '$gen/v1/views_pb';
 
 declare global {
 	interface Window {
@@ -24,7 +25,7 @@ declare global {
 export class GameStateStore {
 	Monsters: SvelteMap<string, MonsterType>;
 	Jobs: SvelteMap<string, Job>;
-	Inventories: SvelteMap<string, Inventory>;
+	Inventories: SvelteMap<string, InventoryView>;
 	Events: Event[] = $state([]);
 	private initPromise: Promise<void> | null = null;
 	private streamStarted = false;
@@ -32,7 +33,7 @@ export class GameStateStore {
 	constructor() {
 		this.Monsters = new SvelteMap<string, MonsterType>();
 		this.Jobs = new SvelteMap<string, Job>();
-		this.Inventories = new SvelteMap<string, Inventory>();
+		this.Inventories = new SvelteMap<string, InventoryView>();
 	}
 
 	async initialize(): Promise<void> {
@@ -82,7 +83,7 @@ export class GameStateStore {
 
 		const nextMonsters = new SvelteMap<string, MonsterType>();
 		const nextJobs = new SvelteMap<string, Job>();
-		const nextInventories = new SvelteMap<string, Inventory>();
+		const nextInventories = new SvelteMap<string, InventoryView>();
 		const monsterIDs = JSON.parse(window.listMonsterIDs()) as string[];
 		const jobIDs = JSON.parse(window.listJobIDs()) as string[];
 		const inventoryIDs = JSON.parse(window.listInventoryIDs()) as string[];
@@ -102,7 +103,7 @@ export class GameStateStore {
 		for (const id of inventoryIDs) {
 			const raw = window.getInventory(id);
 			if (!raw) continue;
-			nextInventories.set(id, fromJsonString(InventorySchema, raw, { ignoreUnknownFields: true }));
+			nextInventories.set(id, fromJsonString(InventoryViewSchema, raw, { ignoreUnknownFields: true }));
 		}
 
 		this.Monsters.clear();
@@ -159,7 +160,7 @@ export class GameStateStore {
 		return job;
 	}
 
-	async getInventories(): Promise<SvelteMap<string, Inventory>> {
+	async getInventories(): Promise<SvelteMap<string, InventoryView>> {
 		await this.ensureInitialized();
 		return this.Inventories;
 	}
