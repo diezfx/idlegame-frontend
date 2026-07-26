@@ -30,8 +30,8 @@
 {#if monster}
 	<Card {...props} class={cn(classname)} title={monster.identity?.name}>
 		<DescriptionList>
-			<DescriptionRow term={'Level'}>{monster.stat?.level}</DescriptionRow>
-			<DescriptionRow term={'HP'}>
+			<DescriptionRow term="Level">{monster.stat?.level}</DescriptionRow>
+			<DescriptionRow term="HP">
 				<Progress
 					class="w-full"
 					showLabel={true}
@@ -41,7 +41,7 @@
 					max={monster.stat?.maxHealth!}
 				/>
 			</DescriptionRow>
-			<DescriptionRow term={'Stamina'}>
+			<DescriptionRow term="Stamina">
 				<Progress
 					class="w-full"
 					showLabel={true}

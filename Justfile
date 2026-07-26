@@ -1,6 +1,9 @@
 fmt:
-    prettier --write .
+    npx prettier --write .
 proto:
     buf generate
-lint:
-    prettier --check . && eslint .
+
+lint: 
+    npx prettier --check . && npx eslint .
+lint-fix: 
+    npx eslint --fix .

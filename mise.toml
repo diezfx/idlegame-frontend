@@ -4,4 +4,3 @@ buf = '1.72.0'
 protoc-gen-js = '4.0.0'
 prettier = 'latest'
 just = 'latest'
-"npm:eslint" = "10.8.0"

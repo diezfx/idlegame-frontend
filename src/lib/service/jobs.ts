@@ -1,5 +1,5 @@
 import { clients } from './connect';
-import type { Job, JobMonster } from '../../gen/v1/domain_pb';
+import type { Job, Monster } from '../../gen/v1/domain_pb';
 import { getContext, setContext } from 'svelte';
 import { type BattleJobDefinition, type ProductionJobDefinition } from '../../gen/v1/masterdata_pb';
 
@@ -7,7 +7,7 @@ export type { Job } from '../../gen/v1/domain_pb';
 export type { BattleJobDefinition, ProductionJobDefinition } from '../../gen/v1/masterdata_pb';
 
 export type JobMasterdata = ProductionJobDefinition | BattleJobDefinition;
-export type BattleMonster = JobMonster;
+export type BattleMonster = Monster;
 
 export interface Item {
 	quantity: number;

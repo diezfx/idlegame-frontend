@@ -4,39 +4,15 @@
 	import { cn } from '$lib/utils';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { Duration } from 'luxon';
-	import type { JobSubType } from '../../gen/v1/masterdata_pb';
 	import { JobSubType as JobSubTypeEnum } from '../../gen/v1/masterdata_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte';
-	import {
-		Cog,
-		Factory,
-		Fish,
-		Flame,
-		FlaskConical,
-		Footprints,
-		Hammer,
-		Shield,
-		Soup,
-		Swords,
-		TreePine,
-		Wheat,
-	} from 'lucide-svelte';
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
 
 	type JobCardData = {
 		definition?: ProductionJobInfo['definition'] | BattleJobInfo['definition'];
 		routeInfo?: ProductionJobInfo['routeInfo'] | BattleJobInfo['routeInfo'];
-	};
-	type VisualConfig = {
-		icon: any;
-		chip: string;
-		chipClass: string;
-		iconClass: string;
-		highlightClass: string;
-		selectedClass: string;
-		hoverClass: string;
 	};
 
 	let {
@@ -53,7 +29,6 @@
 		class?: string;
 	} = $props();
 
-	const subtype = $derived(job.definition?.subType ?? JobSubTypeEnum.UNSPECIFIED);
 	const itemDefs = $derived(masterdataStore.Items);
 	const ingredients = $derived.by(() => {
 		const definition = job.definition as { ingredients?: { id: string; quantity: bigint }[] } | undefined;
