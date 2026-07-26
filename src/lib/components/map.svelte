@@ -154,7 +154,9 @@
 				canvasHost.appendChild(app.canvas);
 			}
 
-			const textures = await Promise.all(mapData.tileSet.map((tile: { source: string }) => PIXI.Assets.load(`/assets/${tile.source}`)));
+			const textures = await Promise.all(
+				mapData.tileSet.map((tile: { source: string }) => PIXI.Assets.load(`/assets/${tile.source}`)),
+			);
 			if (!isMounted) return;
 
 			for (let y = 0; y < mapData.height; y++) {
@@ -242,7 +244,8 @@
 				return {
 					label: kind === 'battle' ? 'Battle' : 'Production',
 					badgeClass: 'bg-gray-100 text-gray-800 border border-gray-200',
-					pinClass: kind === 'battle' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white',
+					pinClass:
+						kind === 'battle' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white',
 					icon: kind === 'battle' ? Swords : Factory,
 				};
 		}
@@ -368,7 +371,8 @@
 		{#each groupedBySubtype as [_, group]}
 			<button
 				type="button"
-				class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 border transition {subtypeFilters.length === 0 || subtypeFilters.includes(_)
+				class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 border transition {subtypeFilters.length === 0 ||
+				subtypeFilters.includes(_)
 					? group.meta.badgeClass
 					: 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}"
 				onclick={() => toggleSubtypeFilter(_)}
@@ -388,7 +392,10 @@
 	</div>
 
 	<div class="grid gap-4 lg:grid-cols-[1fr_320px]">
-		<div class="relative overflow-hidden rounded-lg border border-gray-300" style="width: {mapPixelWidth}px; height: {mapPixelHeight}px; max-width: 100%;">
+		<div
+			class="relative overflow-hidden rounded-lg border border-gray-300"
+			style="width: {mapPixelWidth}px; height: {mapPixelHeight}px; max-width: 100%;"
+		>
 			<div id="map-canvas" class="absolute inset-0" aria-hidden="true"></div>
 
 			<div class="absolute inset-0">
@@ -396,7 +403,8 @@
 					{#if city.position}
 						<div
 							class="absolute z-20"
-							style="left: {city.position.x * TILE_SIZE}px; top: {city.position.y * TILE_SIZE}px; transform: translate(-50%, -50%);"
+							style="left: {city.position.x * TILE_SIZE}px; top: {city.position.y *
+								TILE_SIZE}px; transform: translate(-50%, -50%);"
 							title={city.name}
 						>
 							<div class="rounded-full border border-amber-300 bg-amber-200 p-1.5 shadow">
@@ -410,7 +418,8 @@
 					{#if monster.position}
 						<div
 							class="absolute z-30"
-							style="left: {monster.position.x * TILE_SIZE}px; top: {monster.position.y * TILE_SIZE}px; transform: translate(-50%, -50%);"
+							style="left: {monster.position.x * TILE_SIZE}px; top: {monster.position.y *
+								TILE_SIZE}px; transform: translate(-50%, -50%);"
 							title={monster.identity?.name}
 						>
 							<div class="rounded-full border border-black/20 bg-white p-1.5 shadow-sm">
@@ -424,7 +433,10 @@
 					{@const meta = getSubtypeMeta(job.subType, job.kind)}
 					<button
 						type="button"
-						class="absolute z-40 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white shadow {meta.pinClass} {selectedJobId === job.id ? 'ring-2 ring-offset-2 ring-black/40' : ''}"
+						class="absolute z-40 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white shadow {meta.pinClass} {selectedJobId ===
+						job.id
+							? 'ring-2 ring-offset-2 ring-black/40'
+							: ''}"
 						style="left: {job.x * TILE_SIZE}px; top: {job.y * TILE_SIZE}px; transform: translate(-50%, -50%);"
 						onclick={() => {
 							selectedJobId = job.id;
@@ -459,14 +471,19 @@
 							{@const eta = estimateMonsterTravel(selectedJob, monster)}
 							<button
 								type="button"
-								class="w-full rounded border px-2 py-1.5 text-left text-xs transition {selectedMonsterId === monster.entity?.id
+								class="w-full rounded border px-2 py-1.5 text-left text-xs transition {selectedMonsterId ===
+								monster.entity?.id
 									? 'border-emerald-300 bg-emerald-50'
 									: 'border-gray-200 bg-white hover:border-gray-300'}"
 								onclick={() => (selectedMonsterId = monster.entity?.id)}
 							>
 								<div class="font-medium text-gray-900">{monster.identity?.name}</div>
-								<div class="text-gray-600">Lv {monster.stat?.level} | Stamina {monster.stat?.stamina}/{monster.stat?.maxStamina}</div>
-								<div class="text-gray-500">Distance {Math.round(eta.distance * 100) / 100}m | ETA {formatDuration(eta.seconds)}</div>
+								<div class="text-gray-600">
+									Lv {monster.stat?.level} | Stamina {monster.stat?.stamina}/{monster.stat?.maxStamina}
+								</div>
+								<div class="text-gray-500">
+									Distance {Math.round(eta.distance * 100) / 100}m | ETA {formatDuration(eta.seconds)}
+								</div>
 							</button>
 						{/each}
 					{/if}

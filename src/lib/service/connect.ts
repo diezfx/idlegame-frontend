@@ -25,7 +25,7 @@ function createClients() {
 		masterdataClient: createClient(MasterdataService, transport),
 		tutorialClient: createClient(TutorialService, transport),
 		userClient: createClient(UserService, transport),
-		streamClient: createClient(StreamService, transport)
+		streamClient: createClient(StreamService, transport),
 	};
 }
 

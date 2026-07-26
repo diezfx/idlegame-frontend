@@ -24,9 +24,7 @@ export const toBattleMonsterView = (monster: Monster, nowMs: number): BattleMons
 	const nextAttackAtMs = combatState.nextAttackAt ? protoToMilliseconds(combatState.nextAttackAt) : null;
 	const cooldown = combatState.attackCooldownMs ?? 0;
 	const elapsed =
-		nextAttackAtMs == null || cooldown <= 0
-			? 0
-			: Math.max(0, Math.min(cooldown, cooldown-(nextAttackAtMs - nowMs)));
+		nextAttackAtMs == null || cooldown <= 0 ? 0 : Math.max(0, Math.min(cooldown, cooldown - (nextAttackAtMs - nowMs)));
 
 	return {
 		monster,

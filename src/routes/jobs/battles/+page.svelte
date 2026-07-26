@@ -73,7 +73,7 @@
 
 		<div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
 			{#each data.masterdata as job}
-				<JobDefinitionCard job={job} selected={isSelectedJob(job.definition!.id)} onclick={() => (selectedJob = job)} />
+				<JobDefinitionCard {job} selected={isSelectedJob(job.definition!.id)} onclick={() => (selectedJob = job)} />
 			{/each}
 		</div>
 
@@ -90,7 +90,9 @@
 			</div>
 			<div class="max-h-[75vh] space-y-2 overflow-y-auto pr-1">
 				{#if activeJobs.size === 0}
-					<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">No active jobs</div>
+					<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+						No active jobs
+					</div>
 				{:else}
 					{#each activeJobs as [_, job]}
 						<JobView

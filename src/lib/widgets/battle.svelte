@@ -10,13 +10,7 @@
 	import { toBattleMonsterView, type BattleMonsterView } from '$lib/views/battle';
 	import type { Event, Monster } from '../../gen/v1/domain_pb';
 	import { Role } from '../../gen/v1/domain_pb';
-	import {
-		CircleDot,
-		Clock3,
-		ScrollText,
-		Shield,
-		Timer,
-	} from 'lucide-svelte';
+	import { CircleDot, Clock3, ScrollText, Shield, Timer } from 'lucide-svelte';
 
 	let { job }: { job: Job; [key: string]: any } = $props();
 
@@ -161,9 +155,14 @@
 				<h1 class="text-xl font-bold text-gray-900">{job.def?.jobDefId}</h1>
 			</div>
 			<div class="flex items-center gap-2 text-sm">
-				<span class="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-gray-700">{jobStatusText(job.jobState?.status!)}</span>
-				<span class="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-gray-700">
-					<Timer size={14} /> {elapsedText}
+				<span class="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-gray-700"
+					>{jobStatusText(job.jobState?.status!)}</span
+				>
+				<span
+					class="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-gray-700"
+				>
+					<Timer size={14} />
+					{elapsedText}
 				</span>
 				<Button class="bg-red-600 text-white hover:bg-red-700" onclick={stopBattle} disabled={stopping}>
 					{stopping ? 'Stopping...' : 'Stop'}
@@ -171,7 +170,9 @@
 			</div>
 		</div>
 		<div class="mt-2 flex flex-wrap gap-1.5 text-xs">
-			<span class="inline-flex items-center gap-1 rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-800">
+			<span
+				class="inline-flex items-center gap-1 rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-800"
+			>
 				<Shield size={12} /> XP +{job.rewards?.experience ?? 0}
 			</span>
 			{#each job.rewards?.inventory?.items ?? [] as reward}
@@ -194,8 +195,13 @@
 								<div class="mb-1 flex items-center justify-between gap-2">
 									<div class="truncate text-sm font-semibold text-gray-900">{mon.identity?.name}</div>
 								</div>
-								<div class="mb-1 text-[11px] text-gray-600">HP {(mon.stat?.health ?? 0)}/{mon.stat?.maxHealth ?? 0}</div>
-								<Progress foreground="bg-red-500" background="bg-gray-200" value={mon.stat?.health ?? 0} max={mon.stat?.maxHealth ?? 1} />
+								<div class="mb-1 text-[11px] text-gray-600">HP {mon.stat?.health ?? 0}/{mon.stat?.maxHealth ?? 0}</div>
+								<Progress
+									foreground="bg-red-500"
+									background="bg-gray-200"
+									value={mon.stat?.health ?? 0}
+									max={mon.stat?.maxHealth ?? 1}
+								/>
 								<div class="mt-2 flex items-center gap-1 text-[10px] text-gray-600">
 									<CircleDot size={12} /> ATK {mon.stat?.attackPower ?? 0} | LV {mon.stat?.level ?? 0}
 								</div>
@@ -206,7 +212,13 @@
 									<span class="rounded bg-emerald-50 px-1 py-0.5 text-center">VIT {mon.stat?.vitality ?? 0}</span>
 								</div>
 								<div class="mt-1">
-									<Progress transition={false} foreground="bg-blue-300" background="bg-gray-200" value={view.attackElapsedMs} max={view.attackCooldownMs || 1} />
+									<Progress
+										transition={false}
+										foreground="bg-blue-300"
+										background="bg-gray-200"
+										value={view.attackElapsedMs}
+										max={view.attackCooldownMs || 1}
+									/>
 								</div>
 							</Card>
 						{/each}
@@ -214,7 +226,11 @@
 				</div>
 
 				<div class="hidden md:flex h-full items-center justify-center px-2">
-					<div class="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold tracking-widest text-red-700">VS</div>
+					<div
+						class="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold tracking-widest text-red-700"
+					>
+						VS
+					</div>
 				</div>
 
 				<div>
@@ -228,8 +244,13 @@
 								<div class="mb-1 flex items-center justify-between gap-2">
 									<div class="truncate text-sm font-semibold text-gray-900">{mon.identity?.name}</div>
 								</div>
-								<div class="mb-1 text-[11px] text-gray-600">HP {(mon.stat?.health ?? 0)}/{mon.stat?.maxHealth ?? 0}</div>
-								<Progress foreground="bg-red-500" background="bg-gray-200" value={mon.stat?.health ?? 0} max={mon.stat?.maxHealth ?? 1} />
+								<div class="mb-1 text-[11px] text-gray-600">HP {mon.stat?.health ?? 0}/{mon.stat?.maxHealth ?? 0}</div>
+								<Progress
+									foreground="bg-red-500"
+									background="bg-gray-200"
+									value={mon.stat?.health ?? 0}
+									max={mon.stat?.maxHealth ?? 1}
+								/>
 								<div class="mt-2 flex items-center gap-1 text-[10px] text-gray-600">
 									<CircleDot size={12} /> ATK {mon.stat?.attackPower ?? 0} | HP {Math.round(hpPercent(mon))}%
 								</div>
@@ -240,7 +261,13 @@
 									<span class="rounded bg-emerald-50 px-1 py-0.5 text-center">VIT {mon.stat?.vitality ?? 0}</span>
 								</div>
 								<div class="mt-1">
-									<Progress transition={false} foreground="bg-blue-300" background="bg-gray-200" value={view.attackElapsedMs} max={view.attackCooldownMs || 1} />
+									<Progress
+										transition={false}
+										foreground="bg-blue-300"
+										background="bg-gray-200"
+										value={view.attackElapsedMs}
+										max={view.attackCooldownMs || 1}
+									/>
 								</div>
 							</Card>
 						{/each}
@@ -251,17 +278,24 @@
 
 		<aside class="rounded-xl border border-gray-200 bg-white p-3">
 			<div class="mb-2 flex items-center justify-between">
-				<h3 class="inline-flex items-center gap-1 text-sm font-semibold text-gray-900"><ScrollText size={14} /> Combat Log</h3>
+				<h3 class="inline-flex items-center gap-1 text-sm font-semibold text-gray-900">
+					<ScrollText size={14} /> Combat Log
+				</h3>
 				<span class="text-xs text-gray-500">Last 10</span>
 			</div>
 			<div class="max-h-[55vh] space-y-1 overflow-y-auto pr-1">
 				{#if recentEvents.length === 0}
-					<div class="rounded border border-dashed border-gray-300 bg-gray-50 px-2 py-2 text-xs text-gray-500">No events yet</div>
+					<div class="rounded border border-dashed border-gray-300 bg-gray-50 px-2 py-2 text-xs text-gray-500">
+						No events yet
+					</div>
 				{:else}
 					{#each recentEvents as event}
 						<div class="rounded border border-gray-200 bg-gray-50 px-2 py-1.5">
 							<div class="text-xs text-gray-800">{eventText(event)}</div>
-							<div class="mt-0.5 inline-flex items-center gap-1 text-[10px] text-gray-500"><Clock3 size={10} /> {eventTime(event)}</div>
+							<div class="mt-0.5 inline-flex items-center gap-1 text-[10px] text-gray-500">
+								<Clock3 size={10} />
+								{eventTime(event)}
+							</div>
 						</div>
 					{/each}
 				{/if}

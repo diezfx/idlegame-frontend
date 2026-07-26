@@ -2,42 +2,55 @@
 // @generated from file v1/views.proto (package v1, edition 2023)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Item } from "./domain_pb";
-import { file_v1_domain } from "./domain_pb";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv2';
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv2';
+import type { Item } from './domain_pb';
+import { file_v1_domain } from './domain_pb';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file v1/views.proto.
  */
-export const file_v1_views: GenFile = /*@__PURE__*/
-  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiSAoNSW52ZW50b3J5VmlldxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUSDAoEdXNlZBgDIAEoBUIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_v1_domain]);
+export const file_v1_views: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		'Cg52MS92aWV3cy5wcm90bxICdjEiSAoNSW52ZW50b3J5VmlldxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUSDAoEdXNlZBgDIAEoBSIMCgpCYXR0bGVWaWV3QitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw',
+		[file_v1_domain],
+	);
 
 /**
  * @generated from message v1.InventoryView
  */
-export type InventoryView = Message<"v1.InventoryView"> & {
-  /**
-   * @generated from field: repeated v1.Item items = 1;
-   */
-  items: Item[];
+export type InventoryView = Message<'v1.InventoryView'> & {
+	/**
+	 * @generated from field: repeated v1.Item items = 1;
+	 */
+	items: Item[];
 
-  /**
-   * @generated from field: int32 capacity = 2;
-   */
-  capacity: number;
+	/**
+	 * @generated from field: int32 capacity = 2;
+	 */
+	capacity: number;
 
-  /**
-   * @generated from field: int32 used = 3;
-   */
-  used: number;
+	/**
+	 * @generated from field: int32 used = 3;
+	 */
+	used: number;
 };
 
 /**
  * Describes the message v1.InventoryView.
  * Use `create(InventoryViewSchema)` to create a new message.
  */
-export const InventoryViewSchema: GenMessage<InventoryView> = /*@__PURE__*/
-  messageDesc(file_v1_views, 0);
+export const InventoryViewSchema: GenMessage<InventoryView> = /*@__PURE__*/ messageDesc(file_v1_views, 0);
 
+/**
+ * @generated from message v1.BattleView
+ */
+export type BattleView = Message<'v1.BattleView'> & {};
+
+/**
+ * Describes the message v1.BattleView.
+ * Use `create(BattleViewSchema)` to create a new message.
+ */
+export const BattleViewSchema: GenMessage<BattleView> = /*@__PURE__*/ messageDesc(file_v1_views, 1);

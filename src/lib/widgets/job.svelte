@@ -59,22 +59,7 @@
 </script>
 
 {#if job}
-	<Card {onclick} {...props} class="w-[350px]">
-		<!-- Header -->
-		<div class="p-4 border-b border-gray-100 grid grid-cols-[1fr_auto] items-center bg-gray-50/50 rounded-t-xl">
-			<div class="flex flex-col">
-				<div class="flex items-center gap-2">
-					<h3 class="font-bold text-gray-800 leading-tight">{job.def?.jobDefId}</h3>
-				</div>
-				<span class="mt-1 text-xs text-gray-500 capitalize">{JobSubType[job.def?.subType!]}</span>
-			</div>
-			{#if job?.jobState?.status}
-				<span class="text-xs font-semibold px-2.5 py-1 rounded-full {statusColor} capitalize">
-					{jobStatusText(job.jobState.status)}
-				</span>
-			{/if}
-		</div>
-
+	<Card {onclick} title={job.def?.jobDefId} class="w-[350px]">
 		<div class="p-4 space-y-4">
 			<h3>Monsters</h3>
 			<Card class="gap-2 p-2" title={mon.identity?.name}>

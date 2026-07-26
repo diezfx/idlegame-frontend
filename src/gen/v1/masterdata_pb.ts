@@ -2,684 +2,672 @@
 // @generated from file v1/masterdata.proto (package v1, edition 2023)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Duration } from "@bufbuild/protobuf/wkt";
-import { file_google_protobuf_duration } from "@bufbuild/protobuf/wkt";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenEnum, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv2';
+import { enumDesc, fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv2';
+import type { Duration } from '@bufbuild/protobuf/wkt';
+import { file_google_protobuf_duration } from '@bufbuild/protobuf/wkt';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file v1/masterdata.proto.
  */
-export const file_v1_masterdata: GenFile = /*@__PURE__*/
-  fileDesc("ChN2MS9tYXN0ZXJkYXRhLnByb3RvEgJ2MSKBAQoOSXRlbURlZmluaXRpb24SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIMCgR0YWdzGAMgAygJEhsKB2VmZmVjdHMYBCADKAsyCi52MS5FZmZlY3QSDAoEdGllchgFIAEoBRIcCgVzdGF0cxgGIAEoCzINLnYxLkl0ZW1TdGF0cyIyCglJdGVtU3RhdHMSFAoMYXR0YWNrX3Bvd2VyGAEgASgFEg8KB2RlZmVuc2UYAiABKAUiNQoGRWZmZWN0EhwKBHR5cGUYASABKA4yDi52MS5FZmZlY3RUeXBlEg0KBXZhbHVlGAIgASgFIjAKEEl0ZW1XaXRoUXVhbnRpdHkSCgoCaWQYASABKAkSEAoIcXVhbnRpdHkYAiABKAUiHwoHVmVjdG9yMhIJCgF4GAEgASgBEgkKAXkYAiABKAEi3QIKF1Byb2R1Y3Rpb25Kb2JEZWZpbml0aW9uEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSIAoIc3ViX3R5cGUYAyABKA4yDi52MS5Kb2JTdWJUeXBlEhkKEWxldmVsX3JlcXVpcmVtZW50GAQgASgFEhQKDHN0YW1pbmFfY29zdBgFIAEoBRIrCghkdXJhdGlvbhgGIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIlCgdyZXdhcmRzGAcgASgLMhQudjEuUmV3YXJkRGVmaW5pdGlvbhIgCgphZmZpbml0aWVzGAggAygLMgwudjEuQWZmaW5pdHkSHQoIcG9zaXRpb24YCSABKAsyCy52MS5WZWN0b3IyEkAKC2luZ3JlZGllbnRzGAogAygLMhQudjEuSXRlbVdpdGhRdWFudGl0eVIVaW5ncmVkaWVudHMsb21pdGVtcHR5IqgCChNCYXR0bGVKb2JEZWZpbml0aW9uEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSIAoIc3ViX3R5cGUYAyABKA4yDi52MS5Kb2JTdWJUeXBlEhkKEWxldmVsX3JlcXVpcmVtZW50GAQgASgFEhQKDHN0YW1pbmFfY29zdBgFIAEoBRIrCghkdXJhdGlvbhgGIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIlCgdyZXdhcmRzGAcgASgLMhQudjEuUmV3YXJkRGVmaW5pdGlvbhIgCgphZmZpbml0aWVzGAggAygLMgwudjEuQWZmaW5pdHkSHQoIcG9zaXRpb24YCSABKAsyCy52MS5WZWN0b3IyEg8KB2VuZW1pZXMYCiADKAkiPwoIQWZmaW5pdHkSIwoHZWxlbWVudBgBIAEoDjISLnYxLk1vbnN0ZXJFbGVtZW50Eg4KBndlaWdodBgCIAEoASJLChBSZXdhcmREZWZpbml0aW9uEiMKBWl0ZW1zGAEgAygLMhQudjEuSXRlbVdpdGhRdWFudGl0eRISCgpleHBlcmllbmNlGAIgASgFIp0BChFNb25zdGVyRGVmaW5pdGlvbhIKCgJpZBgBIAEoBRIMCgRuYW1lGAIgASgJEiMKB2VsZW1lbnQYAyABKA4yEi52MS5Nb25zdGVyRWxlbWVudBIQCghzdHJlbmd0aBgEIAEoBRIPCgdhZ2lsaXR5GAUgASgFEhQKDGludGVsbGlnZW5jZRgGIAEoBRIQCgh2aXRhbGl0eRgHIAEoBSJJCg5DaXR5RGVmaW5pdGlvbhIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEh0KCHBvc2l0aW9uGAMgASgLMgsudjEuVmVjdG9yMiKPAgoJQ29udGFpbmVyEiEKBWl0ZW1zGAEgAygLMhIudjEuSXRlbURlZmluaXRpb24SNAoPcHJvZHVjdGlvbl9qb2JzGAIgAygLMhsudjEuUHJvZHVjdGlvbkpvYkRlZmluaXRpb24SLAoLYmF0dGxlX2pvYnMYAyADKAsyFy52MS5CYXR0bGVKb2JEZWZpbml0aW9uEicKCG1vbnN0ZXJzGAQgAygLMhUudjEuTW9uc3RlckRlZmluaXRpb24SGAoQc3RhcnRlcl9tb25zdGVycxgFIAMoBRIiCgZjaXRpZXMYBiADKAsyEi52MS5DaXR5RGVmaW5pdGlvbhIUCgNtYXAYByABKAsyBy52MS5NYXAiWAoDTWFwEg0KBXdpZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBRIaCgh0aWxlX3NldBgDIAMoCzIILnYxLlRpbGUSFgoFbGF5ZXIYBCADKAsyBy52MS5Sb3ciFAoDUm93Eg0KBXRpbGVzGAEgAygFIjkKBFRpbGUSEwoLdGlsZV9zZXRfaWQYASABKAUSDgoGc291cmNlGAIgASgJEgwKBHR5cGUYAyABKAkqaAoKRWZmZWN0VHlwZRIbChdFRkZFQ1RfVFlQRV9VTlNQRUNJRklFRBAAEhwKGEVGRkVDVF9UWVBFX0lOU1RBTlRfSEVBTBABEh8KG0VGRkVDVF9UWVBFX0lOU1RBTlRfU1RBTUlOQRACKpoBCg5Nb25zdGVyRWxlbWVudBIfChtNT05TVEVSX0VMRU1FTlRfVU5TUEVDSUZJRUQQABIYChRNT05TVEVSX0VMRU1FTlRfRklSRRABEhkKFU1PTlNURVJfRUxFTUVOVF9XQVRFUhACEhkKFU1PTlNURVJfRUxFTUVOVF9FQVJUSBADEhcKE01PTlNURVJfRUxFTUVOVF9BSVIQBCqfAwoKSm9iU3ViVHlwZRIcChhKT0JfU1VCX1RZUEVfVU5TUEVDSUZJRUQQABIcChhKT0JfU1VCX1RZUEVfV09PRENVVFRJTkcQARIXChNKT0JfU1VCX1RZUEVfTUlOSU5HEAISGwoXSk9CX1NVQl9UWVBFX0hBUlZFU1RJTkcQAxIYChRKT0JfU1VCX1RZUEVfRklTSElORxAEEhkKFUpPQl9TVUJfVFlQRV9TTUVMVElORxAFEhwKGEpPQl9TVUJfVFlQRV9XT09EV09SS0lORxAGEhgKFEpPQl9TVUJfVFlQRV9GSVNIRVJZEAcSIAocSk9CX1NVQl9UWVBFX0ZPT0RfUFJPQ0VTU0lORxAIEhgKFEpPQl9TVUJfVFlQRV9DT09LSU5HEAkSIAocSk9CX1NVQl9UWVBFX1dFQVBPTl9DUkFGVElORxAKEh8KG0pPQl9TVUJfVFlQRV9BUk1PUl9DUkFGVElORxALEhcKE0pPQl9TVUJfVFlQRV9CQVRUTEUQDBIaChZKT0JfU1VCX1RZUEVfVFJBTlNQT1JUEA0qaQoHSm9iVHlwZRIYChRKT0JfVFlQRV9VTlNQRUNJRklFRBAAEhYKEkpPQl9UWVBFX0dBVEhFUklORxABEhcKE0pPQl9UWVBFX1BST0NFU1NJTkcQAhITCg9KT0JfVFlQRV9CQVRUTEUQA0IrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_google_protobuf_duration]);
+export const file_v1_masterdata: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		'ChN2MS9tYXN0ZXJkYXRhLnByb3RvEgJ2MSKBAQoOSXRlbURlZmluaXRpb24SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIMCgR0YWdzGAMgAygJEhsKB2VmZmVjdHMYBCADKAsyCi52MS5FZmZlY3QSDAoEdGllchgFIAEoBRIcCgVzdGF0cxgGIAEoCzINLnYxLkl0ZW1TdGF0cyIyCglJdGVtU3RhdHMSFAoMYXR0YWNrX3Bvd2VyGAEgASgFEg8KB2RlZmVuc2UYAiABKAUiNQoGRWZmZWN0EhwKBHR5cGUYASABKA4yDi52MS5FZmZlY3RUeXBlEg0KBXZhbHVlGAIgASgFIjAKEEl0ZW1XaXRoUXVhbnRpdHkSCgoCaWQYASABKAkSEAoIcXVhbnRpdHkYAiABKAUiHwoHVmVjdG9yMhIJCgF4GAEgASgBEgkKAXkYAiABKAEi3QIKF1Byb2R1Y3Rpb25Kb2JEZWZpbml0aW9uEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSIAoIc3ViX3R5cGUYAyABKA4yDi52MS5Kb2JTdWJUeXBlEhkKEWxldmVsX3JlcXVpcmVtZW50GAQgASgFEhQKDHN0YW1pbmFfY29zdBgFIAEoBRIrCghkdXJhdGlvbhgGIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIlCgdyZXdhcmRzGAcgASgLMhQudjEuUmV3YXJkRGVmaW5pdGlvbhIgCgphZmZpbml0aWVzGAggAygLMgwudjEuQWZmaW5pdHkSHQoIcG9zaXRpb24YCSABKAsyCy52MS5WZWN0b3IyEkAKC2luZ3JlZGllbnRzGAogAygLMhQudjEuSXRlbVdpdGhRdWFudGl0eVIVaW5ncmVkaWVudHMsb21pdGVtcHR5IqgCChNCYXR0bGVKb2JEZWZpbml0aW9uEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSIAoIc3ViX3R5cGUYAyABKA4yDi52MS5Kb2JTdWJUeXBlEhkKEWxldmVsX3JlcXVpcmVtZW50GAQgASgFEhQKDHN0YW1pbmFfY29zdBgFIAEoBRIrCghkdXJhdGlvbhgGIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIlCgdyZXdhcmRzGAcgASgLMhQudjEuUmV3YXJkRGVmaW5pdGlvbhIgCgphZmZpbml0aWVzGAggAygLMgwudjEuQWZmaW5pdHkSHQoIcG9zaXRpb24YCSABKAsyCy52MS5WZWN0b3IyEg8KB2VuZW1pZXMYCiADKAkiPwoIQWZmaW5pdHkSIwoHZWxlbWVudBgBIAEoDjISLnYxLk1vbnN0ZXJFbGVtZW50Eg4KBndlaWdodBgCIAEoASJLChBSZXdhcmREZWZpbml0aW9uEiMKBWl0ZW1zGAEgAygLMhQudjEuSXRlbVdpdGhRdWFudGl0eRISCgpleHBlcmllbmNlGAIgASgFIp0BChFNb25zdGVyRGVmaW5pdGlvbhIKCgJpZBgBIAEoBRIMCgRuYW1lGAIgASgJEiMKB2VsZW1lbnQYAyABKA4yEi52MS5Nb25zdGVyRWxlbWVudBIQCghzdHJlbmd0aBgEIAEoBRIPCgdhZ2lsaXR5GAUgASgFEhQKDGludGVsbGlnZW5jZRgGIAEoBRIQCgh2aXRhbGl0eRgHIAEoBSJJCg5DaXR5RGVmaW5pdGlvbhIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEh0KCHBvc2l0aW9uGAMgASgLMgsudjEuVmVjdG9yMiKPAgoJQ29udGFpbmVyEiEKBWl0ZW1zGAEgAygLMhIudjEuSXRlbURlZmluaXRpb24SNAoPcHJvZHVjdGlvbl9qb2JzGAIgAygLMhsudjEuUHJvZHVjdGlvbkpvYkRlZmluaXRpb24SLAoLYmF0dGxlX2pvYnMYAyADKAsyFy52MS5CYXR0bGVKb2JEZWZpbml0aW9uEicKCG1vbnN0ZXJzGAQgAygLMhUudjEuTW9uc3RlckRlZmluaXRpb24SGAoQc3RhcnRlcl9tb25zdGVycxgFIAMoBRIiCgZjaXRpZXMYBiADKAsyEi52MS5DaXR5RGVmaW5pdGlvbhIUCgNtYXAYByABKAsyBy52MS5NYXAiWAoDTWFwEg0KBXdpZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBRIaCgh0aWxlX3NldBgDIAMoCzIILnYxLlRpbGUSFgoFbGF5ZXIYBCADKAsyBy52MS5Sb3ciFAoDUm93Eg0KBXRpbGVzGAEgAygFIjkKBFRpbGUSEwoLdGlsZV9zZXRfaWQYASABKAUSDgoGc291cmNlGAIgASgJEgwKBHR5cGUYAyABKAkqaAoKRWZmZWN0VHlwZRIbChdFRkZFQ1RfVFlQRV9VTlNQRUNJRklFRBAAEhwKGEVGRkVDVF9UWVBFX0lOU1RBTlRfSEVBTBABEh8KG0VGRkVDVF9UWVBFX0lOU1RBTlRfU1RBTUlOQRACKpoBCg5Nb25zdGVyRWxlbWVudBIfChtNT05TVEVSX0VMRU1FTlRfVU5TUEVDSUZJRUQQABIYChRNT05TVEVSX0VMRU1FTlRfRklSRRABEhkKFU1PTlNURVJfRUxFTUVOVF9XQVRFUhACEhkKFU1PTlNURVJfRUxFTUVOVF9FQVJUSBADEhcKE01PTlNURVJfRUxFTUVOVF9BSVIQBCqfAwoKSm9iU3ViVHlwZRIcChhKT0JfU1VCX1RZUEVfVU5TUEVDSUZJRUQQABIcChhKT0JfU1VCX1RZUEVfV09PRENVVFRJTkcQARIXChNKT0JfU1VCX1RZUEVfTUlOSU5HEAISGwoXSk9CX1NVQl9UWVBFX0hBUlZFU1RJTkcQAxIYChRKT0JfU1VCX1RZUEVfRklTSElORxAEEhkKFUpPQl9TVUJfVFlQRV9TTUVMVElORxAFEhwKGEpPQl9TVUJfVFlQRV9XT09EV09SS0lORxAGEhgKFEpPQl9TVUJfVFlQRV9GSVNIRVJZEAcSIAocSk9CX1NVQl9UWVBFX0ZPT0RfUFJPQ0VTU0lORxAIEhgKFEpPQl9TVUJfVFlQRV9DT09LSU5HEAkSIAocSk9CX1NVQl9UWVBFX1dFQVBPTl9DUkFGVElORxAKEh8KG0pPQl9TVUJfVFlQRV9BUk1PUl9DUkFGVElORxALEhcKE0pPQl9TVUJfVFlQRV9CQVRUTEUQDBIaChZKT0JfU1VCX1RZUEVfVFJBTlNQT1JUEA0qaQoHSm9iVHlwZRIYChRKT0JfVFlQRV9VTlNQRUNJRklFRBAAEhYKEkpPQl9UWVBFX0dBVEhFUklORxABEhcKE0pPQl9UWVBFX1BST0NFU1NJTkcQAhITCg9KT0JfVFlQRV9CQVRUTEUQA0IrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac',
+		[file_google_protobuf_duration],
+	);
 
 /**
  * @generated from message v1.ItemDefinition
  */
-export type ItemDefinition = Message<"v1.ItemDefinition"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export type ItemDefinition = Message<'v1.ItemDefinition'> & {
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
+	/**
+	 * @generated from field: string name = 2;
+	 */
+	name: string;
 
-  /**
-   * @generated from field: repeated string tags = 3;
-   */
-  tags: string[];
+	/**
+	 * @generated from field: repeated string tags = 3;
+	 */
+	tags: string[];
 
-  /**
-   * @generated from field: repeated v1.Effect effects = 4;
-   */
-  effects: Effect[];
+	/**
+	 * @generated from field: repeated v1.Effect effects = 4;
+	 */
+	effects: Effect[];
 
-  /**
-   * @generated from field: int32 tier = 5;
-   */
-  tier: number;
+	/**
+	 * @generated from field: int32 tier = 5;
+	 */
+	tier: number;
 
-  /**
-   * @generated from field: v1.ItemStats stats = 6;
-   */
-  stats?: ItemStats;
+	/**
+	 * @generated from field: v1.ItemStats stats = 6;
+	 */
+	stats?: ItemStats;
 };
 
 /**
  * Describes the message v1.ItemDefinition.
  * Use `create(ItemDefinitionSchema)` to create a new message.
  */
-export const ItemDefinitionSchema: GenMessage<ItemDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 0);
+export const ItemDefinitionSchema: GenMessage<ItemDefinition> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 0);
 
 /**
  * @generated from message v1.ItemStats
  */
-export type ItemStats = Message<"v1.ItemStats"> & {
-  /**
-   * @generated from field: int32 attack_power = 1;
-   */
-  attackPower: number;
+export type ItemStats = Message<'v1.ItemStats'> & {
+	/**
+	 * @generated from field: int32 attack_power = 1;
+	 */
+	attackPower: number;
 
-  /**
-   * @generated from field: int32 defense = 2;
-   */
-  defense: number;
+	/**
+	 * @generated from field: int32 defense = 2;
+	 */
+	defense: number;
 };
 
 /**
  * Describes the message v1.ItemStats.
  * Use `create(ItemStatsSchema)` to create a new message.
  */
-export const ItemStatsSchema: GenMessage<ItemStats> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 1);
+export const ItemStatsSchema: GenMessage<ItemStats> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 1);
 
 /**
  * @generated from message v1.Effect
  */
-export type Effect = Message<"v1.Effect"> & {
-  /**
-   * @generated from field: v1.EffectType type = 1;
-   */
-  type: EffectType;
+export type Effect = Message<'v1.Effect'> & {
+	/**
+	 * @generated from field: v1.EffectType type = 1;
+	 */
+	type: EffectType;
 
-  /**
-   * @generated from field: int32 value = 2;
-   */
-  value: number;
+	/**
+	 * @generated from field: int32 value = 2;
+	 */
+	value: number;
 };
 
 /**
  * Describes the message v1.Effect.
  * Use `create(EffectSchema)` to create a new message.
  */
-export const EffectSchema: GenMessage<Effect> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 2);
+export const EffectSchema: GenMessage<Effect> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 2);
 
 /**
  * @generated from message v1.ItemWithQuantity
  */
-export type ItemWithQuantity = Message<"v1.ItemWithQuantity"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export type ItemWithQuantity = Message<'v1.ItemWithQuantity'> & {
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: int32 quantity = 2;
-   */
-  quantity: number;
+	/**
+	 * @generated from field: int32 quantity = 2;
+	 */
+	quantity: number;
 };
 
 /**
  * Describes the message v1.ItemWithQuantity.
  * Use `create(ItemWithQuantitySchema)` to create a new message.
  */
-export const ItemWithQuantitySchema: GenMessage<ItemWithQuantity> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 3);
+export const ItemWithQuantitySchema: GenMessage<ItemWithQuantity> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 3);
 
 /**
  * @generated from message v1.Vector2
  */
-export type Vector2 = Message<"v1.Vector2"> & {
-  /**
-   * @generated from field: double x = 1;
-   */
-  x: number;
+export type Vector2 = Message<'v1.Vector2'> & {
+	/**
+	 * @generated from field: double x = 1;
+	 */
+	x: number;
 
-  /**
-   * @generated from field: double y = 2;
-   */
-  y: number;
+	/**
+	 * @generated from field: double y = 2;
+	 */
+	y: number;
 };
 
 /**
  * Describes the message v1.Vector2.
  * Use `create(Vector2Schema)` to create a new message.
  */
-export const Vector2Schema: GenMessage<Vector2> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 4);
+export const Vector2Schema: GenMessage<Vector2> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 4);
 
 /**
  * @generated from message v1.ProductionJobDefinition
  */
-export type ProductionJobDefinition = Message<"v1.ProductionJobDefinition"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export type ProductionJobDefinition = Message<'v1.ProductionJobDefinition'> & {
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
+	/**
+	 * @generated from field: string name = 2;
+	 */
+	name: string;
 
-  /**
-   * @generated from field: v1.JobSubType sub_type = 3;
-   */
-  subType: JobSubType;
+	/**
+	 * @generated from field: v1.JobSubType sub_type = 3;
+	 */
+	subType: JobSubType;
 
-  /**
-   * @generated from field: int32 level_requirement = 4;
-   */
-  levelRequirement: number;
+	/**
+	 * @generated from field: int32 level_requirement = 4;
+	 */
+	levelRequirement: number;
 
-  /**
-   * @generated from field: int32 stamina_cost = 5;
-   */
-  staminaCost: number;
+	/**
+	 * @generated from field: int32 stamina_cost = 5;
+	 */
+	staminaCost: number;
 
-  /**
-   * @generated from field: google.protobuf.Duration duration = 6;
-   */
-  duration?: Duration;
+	/**
+	 * @generated from field: google.protobuf.Duration duration = 6;
+	 */
+	duration?: Duration;
 
-  /**
-   * @generated from field: v1.RewardDefinition rewards = 7;
-   */
-  rewards?: RewardDefinition;
+	/**
+	 * @generated from field: v1.RewardDefinition rewards = 7;
+	 */
+	rewards?: RewardDefinition;
 
-  /**
-   * @generated from field: repeated v1.Affinity affinities = 8;
-   */
-  affinities: Affinity[];
+	/**
+	 * @generated from field: repeated v1.Affinity affinities = 8;
+	 */
+	affinities: Affinity[];
 
-  /**
-   * @generated from field: v1.Vector2 position = 9;
-   */
-  position?: Vector2;
+	/**
+	 * @generated from field: v1.Vector2 position = 9;
+	 */
+	position?: Vector2;
 
-  /**
-   * @generated from field: repeated v1.ItemWithQuantity ingredients = 10 [json_name = "ingredients,omitempty"];
-   */
-  ingredients: ItemWithQuantity[];
+	/**
+	 * @generated from field: repeated v1.ItemWithQuantity ingredients = 10 [json_name = "ingredients,omitempty"];
+	 */
+	ingredients: ItemWithQuantity[];
 };
 
 /**
  * Describes the message v1.ProductionJobDefinition.
  * Use `create(ProductionJobDefinitionSchema)` to create a new message.
  */
-export const ProductionJobDefinitionSchema: GenMessage<ProductionJobDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 5);
+export const ProductionJobDefinitionSchema: GenMessage<ProductionJobDefinition> =
+	/*@__PURE__*/
+	messageDesc(file_v1_masterdata, 5);
 
 /**
  * @generated from message v1.BattleJobDefinition
  */
-export type BattleJobDefinition = Message<"v1.BattleJobDefinition"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export type BattleJobDefinition = Message<'v1.BattleJobDefinition'> & {
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
+	/**
+	 * @generated from field: string name = 2;
+	 */
+	name: string;
 
-  /**
-   * @generated from field: v1.JobSubType sub_type = 3;
-   */
-  subType: JobSubType;
+	/**
+	 * @generated from field: v1.JobSubType sub_type = 3;
+	 */
+	subType: JobSubType;
 
-  /**
-   * @generated from field: int32 level_requirement = 4;
-   */
-  levelRequirement: number;
+	/**
+	 * @generated from field: int32 level_requirement = 4;
+	 */
+	levelRequirement: number;
 
-  /**
-   * @generated from field: int32 stamina_cost = 5;
-   */
-  staminaCost: number;
+	/**
+	 * @generated from field: int32 stamina_cost = 5;
+	 */
+	staminaCost: number;
 
-  /**
-   * @generated from field: google.protobuf.Duration duration = 6;
-   */
-  duration?: Duration;
+	/**
+	 * @generated from field: google.protobuf.Duration duration = 6;
+	 */
+	duration?: Duration;
 
-  /**
-   * @generated from field: v1.RewardDefinition rewards = 7;
-   */
-  rewards?: RewardDefinition;
+	/**
+	 * @generated from field: v1.RewardDefinition rewards = 7;
+	 */
+	rewards?: RewardDefinition;
 
-  /**
-   * @generated from field: repeated v1.Affinity affinities = 8;
-   */
-  affinities: Affinity[];
+	/**
+	 * @generated from field: repeated v1.Affinity affinities = 8;
+	 */
+	affinities: Affinity[];
 
-  /**
-   * @generated from field: v1.Vector2 position = 9;
-   */
-  position?: Vector2;
+	/**
+	 * @generated from field: v1.Vector2 position = 9;
+	 */
+	position?: Vector2;
 
-  /**
-   * @generated from field: repeated string enemies = 10;
-   */
-  enemies: string[];
+	/**
+	 * @generated from field: repeated string enemies = 10;
+	 */
+	enemies: string[];
 };
 
 /**
  * Describes the message v1.BattleJobDefinition.
  * Use `create(BattleJobDefinitionSchema)` to create a new message.
  */
-export const BattleJobDefinitionSchema: GenMessage<BattleJobDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 6);
+export const BattleJobDefinitionSchema: GenMessage<BattleJobDefinition> =
+	/*@__PURE__*/
+	messageDesc(file_v1_masterdata, 6);
 
 /**
  * @generated from message v1.Affinity
  */
-export type Affinity = Message<"v1.Affinity"> & {
-  /**
-   * @generated from field: v1.MonsterElement element = 1;
-   */
-  element: MonsterElement;
+export type Affinity = Message<'v1.Affinity'> & {
+	/**
+	 * @generated from field: v1.MonsterElement element = 1;
+	 */
+	element: MonsterElement;
 
-  /**
-   * @generated from field: double weight = 2;
-   */
-  weight: number;
+	/**
+	 * @generated from field: double weight = 2;
+	 */
+	weight: number;
 };
 
 /**
  * Describes the message v1.Affinity.
  * Use `create(AffinitySchema)` to create a new message.
  */
-export const AffinitySchema: GenMessage<Affinity> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 7);
+export const AffinitySchema: GenMessage<Affinity> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 7);
 
 /**
  * @generated from message v1.RewardDefinition
  */
-export type RewardDefinition = Message<"v1.RewardDefinition"> & {
-  /**
-   * @generated from field: repeated v1.ItemWithQuantity items = 1;
-   */
-  items: ItemWithQuantity[];
+export type RewardDefinition = Message<'v1.RewardDefinition'> & {
+	/**
+	 * @generated from field: repeated v1.ItemWithQuantity items = 1;
+	 */
+	items: ItemWithQuantity[];
 
-  /**
-   * @generated from field: int32 experience = 2;
-   */
-  experience: number;
+	/**
+	 * @generated from field: int32 experience = 2;
+	 */
+	experience: number;
 };
 
 /**
  * Describes the message v1.RewardDefinition.
  * Use `create(RewardDefinitionSchema)` to create a new message.
  */
-export const RewardDefinitionSchema: GenMessage<RewardDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 8);
+export const RewardDefinitionSchema: GenMessage<RewardDefinition> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 8);
 
 /**
  * @generated from message v1.MonsterDefinition
  */
-export type MonsterDefinition = Message<"v1.MonsterDefinition"> & {
-  /**
-   * @generated from field: int32 id = 1;
-   */
-  id: number;
+export type MonsterDefinition = Message<'v1.MonsterDefinition'> & {
+	/**
+	 * @generated from field: int32 id = 1;
+	 */
+	id: number;
 
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
+	/**
+	 * @generated from field: string name = 2;
+	 */
+	name: string;
 
-  /**
-   * @generated from field: v1.MonsterElement element = 3;
-   */
-  element: MonsterElement;
+	/**
+	 * @generated from field: v1.MonsterElement element = 3;
+	 */
+	element: MonsterElement;
 
-  /**
-   * @generated from field: int32 strength = 4;
-   */
-  strength: number;
+	/**
+	 * @generated from field: int32 strength = 4;
+	 */
+	strength: number;
 
-  /**
-   * @generated from field: int32 agility = 5;
-   */
-  agility: number;
+	/**
+	 * @generated from field: int32 agility = 5;
+	 */
+	agility: number;
 
-  /**
-   * @generated from field: int32 intelligence = 6;
-   */
-  intelligence: number;
+	/**
+	 * @generated from field: int32 intelligence = 6;
+	 */
+	intelligence: number;
 
-  /**
-   * @generated from field: int32 vitality = 7;
-   */
-  vitality: number;
+	/**
+	 * @generated from field: int32 vitality = 7;
+	 */
+	vitality: number;
 };
 
 /**
  * Describes the message v1.MonsterDefinition.
  * Use `create(MonsterDefinitionSchema)` to create a new message.
  */
-export const MonsterDefinitionSchema: GenMessage<MonsterDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 9);
+export const MonsterDefinitionSchema: GenMessage<MonsterDefinition> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 9);
 
 /**
  * @generated from message v1.CityDefinition
  */
-export type CityDefinition = Message<"v1.CityDefinition"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export type CityDefinition = Message<'v1.CityDefinition'> & {
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
+	/**
+	 * @generated from field: string name = 2;
+	 */
+	name: string;
 
-  /**
-   * @generated from field: v1.Vector2 position = 3;
-   */
-  position?: Vector2;
+	/**
+	 * @generated from field: v1.Vector2 position = 3;
+	 */
+	position?: Vector2;
 };
 
 /**
  * Describes the message v1.CityDefinition.
  * Use `create(CityDefinitionSchema)` to create a new message.
  */
-export const CityDefinitionSchema: GenMessage<CityDefinition> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 10);
+export const CityDefinitionSchema: GenMessage<CityDefinition> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 10);
 
 /**
  * @generated from message v1.Container
  */
-export type Container = Message<"v1.Container"> & {
-  /**
-   * @generated from field: repeated v1.ItemDefinition items = 1;
-   */
-  items: ItemDefinition[];
+export type Container = Message<'v1.Container'> & {
+	/**
+	 * @generated from field: repeated v1.ItemDefinition items = 1;
+	 */
+	items: ItemDefinition[];
 
-  /**
-   * @generated from field: repeated v1.ProductionJobDefinition production_jobs = 2;
-   */
-  productionJobs: ProductionJobDefinition[];
+	/**
+	 * @generated from field: repeated v1.ProductionJobDefinition production_jobs = 2;
+	 */
+	productionJobs: ProductionJobDefinition[];
 
-  /**
-   * @generated from field: repeated v1.BattleJobDefinition battle_jobs = 3;
-   */
-  battleJobs: BattleJobDefinition[];
+	/**
+	 * @generated from field: repeated v1.BattleJobDefinition battle_jobs = 3;
+	 */
+	battleJobs: BattleJobDefinition[];
 
-  /**
-   * @generated from field: repeated v1.MonsterDefinition monsters = 4;
-   */
-  monsters: MonsterDefinition[];
+	/**
+	 * @generated from field: repeated v1.MonsterDefinition monsters = 4;
+	 */
+	monsters: MonsterDefinition[];
 
-  /**
-   * @generated from field: repeated int32 starter_monsters = 5;
-   */
-  starterMonsters: number[];
+	/**
+	 * @generated from field: repeated int32 starter_monsters = 5;
+	 */
+	starterMonsters: number[];
 
-  /**
-   * @generated from field: repeated v1.CityDefinition cities = 6;
-   */
-  cities: CityDefinition[];
+	/**
+	 * @generated from field: repeated v1.CityDefinition cities = 6;
+	 */
+	cities: CityDefinition[];
 
-  /**
-   * @generated from field: v1.Map map = 7;
-   */
-  map?: Map;
+	/**
+	 * @generated from field: v1.Map map = 7;
+	 */
+	map?: Map;
 };
 
 /**
  * Describes the message v1.Container.
  * Use `create(ContainerSchema)` to create a new message.
  */
-export const ContainerSchema: GenMessage<Container> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 11);
+export const ContainerSchema: GenMessage<Container> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 11);
 
 /**
  * @generated from message v1.Map
  */
-export type Map = Message<"v1.Map"> & {
-  /**
-   * @generated from field: int32 width = 1;
-   */
-  width: number;
+export type Map = Message<'v1.Map'> & {
+	/**
+	 * @generated from field: int32 width = 1;
+	 */
+	width: number;
 
-  /**
-   * @generated from field: int32 height = 2;
-   */
-  height: number;
+	/**
+	 * @generated from field: int32 height = 2;
+	 */
+	height: number;
 
-  /**
-   * @generated from field: repeated v1.Tile tile_set = 3;
-   */
-  tileSet: Tile[];
+	/**
+	 * @generated from field: repeated v1.Tile tile_set = 3;
+	 */
+	tileSet: Tile[];
 
-  /**
-   * @generated from field: repeated v1.Row layer = 4;
-   */
-  layer: Row[];
+	/**
+	 * @generated from field: repeated v1.Row layer = 4;
+	 */
+	layer: Row[];
 };
 
 /**
  * Describes the message v1.Map.
  * Use `create(MapSchema)` to create a new message.
  */
-export const MapSchema: GenMessage<Map> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 12);
+export const MapSchema: GenMessage<Map> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 12);
 
 /**
  * @generated from message v1.Row
  */
-export type Row = Message<"v1.Row"> & {
-  /**
-   * @generated from field: repeated int32 tiles = 1;
-   */
-  tiles: number[];
+export type Row = Message<'v1.Row'> & {
+	/**
+	 * @generated from field: repeated int32 tiles = 1;
+	 */
+	tiles: number[];
 };
 
 /**
  * Describes the message v1.Row.
  * Use `create(RowSchema)` to create a new message.
  */
-export const RowSchema: GenMessage<Row> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 13);
+export const RowSchema: GenMessage<Row> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 13);
 
 /**
  * @generated from message v1.Tile
  */
-export type Tile = Message<"v1.Tile"> & {
-  /**
-   * @generated from field: int32 tile_set_id = 1;
-   */
-  tileSetId: number;
+export type Tile = Message<'v1.Tile'> & {
+	/**
+	 * @generated from field: int32 tile_set_id = 1;
+	 */
+	tileSetId: number;
 
-  /**
-   * @generated from field: string source = 2;
-   */
-  source: string;
+	/**
+	 * @generated from field: string source = 2;
+	 */
+	source: string;
 
-  /**
-   * @generated from field: string type = 3;
-   */
-  type: string;
+	/**
+	 * @generated from field: string type = 3;
+	 */
+	type: string;
 };
 
 /**
  * Describes the message v1.Tile.
  * Use `create(TileSchema)` to create a new message.
  */
-export const TileSchema: GenMessage<Tile> = /*@__PURE__*/
-  messageDesc(file_v1_masterdata, 14);
+export const TileSchema: GenMessage<Tile> = /*@__PURE__*/ messageDesc(file_v1_masterdata, 14);
 
 /**
  * @generated from enum v1.EffectType
  */
 export enum EffectType {
-  /**
-   * @generated from enum value: EFFECT_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+	/**
+	 * @generated from enum value: EFFECT_TYPE_UNSPECIFIED = 0;
+	 */
+	UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: EFFECT_TYPE_INSTANT_HEAL = 1;
-   */
-  INSTANT_HEAL = 1,
+	/**
+	 * @generated from enum value: EFFECT_TYPE_INSTANT_HEAL = 1;
+	 */
+	INSTANT_HEAL = 1,
 
-  /**
-   * @generated from enum value: EFFECT_TYPE_INSTANT_STAMINA = 2;
-   */
-  INSTANT_STAMINA = 2,
+	/**
+	 * @generated from enum value: EFFECT_TYPE_INSTANT_STAMINA = 2;
+	 */
+	INSTANT_STAMINA = 2,
 }
 
 /**
  * Describes the enum v1.EffectType.
  */
-export const EffectTypeSchema: GenEnum<EffectType> = /*@__PURE__*/
-  enumDesc(file_v1_masterdata, 0);
+export const EffectTypeSchema: GenEnum<EffectType> = /*@__PURE__*/ enumDesc(file_v1_masterdata, 0);
 
 /**
  * @generated from enum v1.MonsterElement
  */
 export enum MonsterElement {
-  /**
-   * @generated from enum value: MONSTER_ELEMENT_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+	/**
+	 * @generated from enum value: MONSTER_ELEMENT_UNSPECIFIED = 0;
+	 */
+	UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: MONSTER_ELEMENT_FIRE = 1;
-   */
-  FIRE = 1,
+	/**
+	 * @generated from enum value: MONSTER_ELEMENT_FIRE = 1;
+	 */
+	FIRE = 1,
 
-  /**
-   * @generated from enum value: MONSTER_ELEMENT_WATER = 2;
-   */
-  WATER = 2,
+	/**
+	 * @generated from enum value: MONSTER_ELEMENT_WATER = 2;
+	 */
+	WATER = 2,
 
-  /**
-   * @generated from enum value: MONSTER_ELEMENT_EARTH = 3;
-   */
-  EARTH = 3,
+	/**
+	 * @generated from enum value: MONSTER_ELEMENT_EARTH = 3;
+	 */
+	EARTH = 3,
 
-  /**
-   * @generated from enum value: MONSTER_ELEMENT_AIR = 4;
-   */
-  AIR = 4,
+	/**
+	 * @generated from enum value: MONSTER_ELEMENT_AIR = 4;
+	 */
+	AIR = 4,
 }
 
 /**
  * Describes the enum v1.MonsterElement.
  */
-export const MonsterElementSchema: GenEnum<MonsterElement> = /*@__PURE__*/
-  enumDesc(file_v1_masterdata, 1);
+export const MonsterElementSchema: GenEnum<MonsterElement> = /*@__PURE__*/ enumDesc(file_v1_masterdata, 1);
 
 /**
  * @generated from enum v1.JobSubType
  */
 export enum JobSubType {
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_UNSPECIFIED = 0;
+	 */
+	UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_WOODCUTTING = 1;
-   */
-  WOODCUTTING = 1,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_WOODCUTTING = 1;
+	 */
+	WOODCUTTING = 1,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_MINING = 2;
-   */
-  MINING = 2,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_MINING = 2;
+	 */
+	MINING = 2,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_HARVESTING = 3;
-   */
-  HARVESTING = 3,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_HARVESTING = 3;
+	 */
+	HARVESTING = 3,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_FISHING = 4;
-   */
-  FISHING = 4,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_FISHING = 4;
+	 */
+	FISHING = 4,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_SMELTING = 5;
-   */
-  SMELTING = 5,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_SMELTING = 5;
+	 */
+	SMELTING = 5,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_WOODWORKING = 6;
-   */
-  WOODWORKING = 6,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_WOODWORKING = 6;
+	 */
+	WOODWORKING = 6,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_FISHERY = 7;
-   */
-  FISHERY = 7,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_FISHERY = 7;
+	 */
+	FISHERY = 7,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_FOOD_PROCESSING = 8;
-   */
-  FOOD_PROCESSING = 8,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_FOOD_PROCESSING = 8;
+	 */
+	FOOD_PROCESSING = 8,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_COOKING = 9;
-   */
-  COOKING = 9,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_COOKING = 9;
+	 */
+	COOKING = 9,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_WEAPON_CRAFTING = 10;
-   */
-  WEAPON_CRAFTING = 10,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_WEAPON_CRAFTING = 10;
+	 */
+	WEAPON_CRAFTING = 10,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_ARMOR_CRAFTING = 11;
-   */
-  ARMOR_CRAFTING = 11,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_ARMOR_CRAFTING = 11;
+	 */
+	ARMOR_CRAFTING = 11,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_BATTLE = 12;
-   */
-  BATTLE = 12,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_BATTLE = 12;
+	 */
+	BATTLE = 12,
 
-  /**
-   * @generated from enum value: JOB_SUB_TYPE_TRANSPORT = 13;
-   */
-  TRANSPORT = 13,
+	/**
+	 * @generated from enum value: JOB_SUB_TYPE_TRANSPORT = 13;
+	 */
+	TRANSPORT = 13,
 }
 
 /**
  * Describes the enum v1.JobSubType.
  */
-export const JobSubTypeSchema: GenEnum<JobSubType> = /*@__PURE__*/
-  enumDesc(file_v1_masterdata, 2);
+export const JobSubTypeSchema: GenEnum<JobSubType> = /*@__PURE__*/ enumDesc(file_v1_masterdata, 2);
 
 /**
  * @generated from enum v1.JobType
  */
 export enum JobType {
-  /**
-   * @generated from enum value: JOB_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+	/**
+	 * @generated from enum value: JOB_TYPE_UNSPECIFIED = 0;
+	 */
+	UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: JOB_TYPE_GATHERING = 1;
-   */
-  GATHERING = 1,
+	/**
+	 * @generated from enum value: JOB_TYPE_GATHERING = 1;
+	 */
+	GATHERING = 1,
 
-  /**
-   * @generated from enum value: JOB_TYPE_PROCESSING = 2;
-   */
-  PROCESSING = 2,
+	/**
+	 * @generated from enum value: JOB_TYPE_PROCESSING = 2;
+	 */
+	PROCESSING = 2,
 
-  /**
-   * @generated from enum value: JOB_TYPE_BATTLE = 3;
-   */
-  BATTLE = 3,
+	/**
+	 * @generated from enum value: JOB_TYPE_BATTLE = 3;
+	 */
+	BATTLE = 3,
 }
 
 /**
  * Describes the enum v1.JobType.
  */
-export const JobTypeSchema: GenEnum<JobType> = /*@__PURE__*/
-  enumDesc(file_v1_masterdata, 3);
-
+export const JobTypeSchema: GenEnum<JobType> = /*@__PURE__*/ enumDesc(file_v1_masterdata, 3);

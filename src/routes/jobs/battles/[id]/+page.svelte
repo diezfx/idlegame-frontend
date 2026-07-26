@@ -6,7 +6,6 @@
 	const jobId = page.params.id!;
 
 	const battleJob = $derived(gameStateStore.Jobs.get(jobId));
-
 </script>
 
 {#if battleJob === undefined || battleJob === null}
