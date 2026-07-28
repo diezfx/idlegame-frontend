@@ -3,5 +3,5 @@
 	let { term, class: classname = '', children } = $props();
 </script>
 
-<dt class={cn('', classname)}>{term}</dt>
-<dd>{@render children?.()}</dd>
+<dt>{term}</dt>
+<dd class={cn('', classname)}>{@render children?.()}</dd>

@@ -56,20 +56,60 @@
 
 <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px] items-start">
 	<div>
-		<div>Start new Job</div>
-		<div class="grid grid-cols-3 gap-2">
-			{#if selectedMonster != undefined}
-				<MonsterView class={selectedColor} monId={selectedMonster.entity?.id!} />
-			{/if}
-			<Card
-				onclick={() => {
-					openDialog = true;
-					selectedMonster;
-				}}
-				class="button text-center text-green-500 text-2xl hover:{selectedColor}"
-				>+
-			</Card>
-		</div>
+		<section class="mb-4 rounded-xl border bg-card p-4">
+			<div class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+				<Card
+					title="Selected Monster"
+					onclick={() => {
+						openDialog = true;
+					}}
+				>
+					{#if selectedMonster}
+						<Card title={selectedMonster.identity?.name}>
+							<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+								<div>
+									<span class="text-gray-500">Level:</span>
+									{selectedMonster.stat?.level}
+								</div>
+								<div>
+									<span class="text-gray-500">Stamina:</span>
+									{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
+								</div>
+								<div class="col-span-2">
+									<span class="text-gray-500">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
+										selectedMonster.position?.y ?? 0,
+									)}
+								</div>
+							</div>
+						</Card>
+					{:else}
+						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+							No monster selected
+						</div>
+					{/if}
+				</Card>
+				<Card title="Selected Job">
+					{#if selectedJob}
+						<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+							<div><span class="font-medium">ID:</span> {selectedJob.definition?.id}</div>
+							<div><span class="font-medium">Stamina:</span> {selectedJob.definition?.staminaCost}</div>
+							<div><span class="font-medium">Reward XP:</span> {selectedJob.definition?.rewards?.experience}</div>
+						</div>
+					{:else}
+						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+							No job selected
+						</div>
+					{/if}
+				</Card>
+			</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Button
+					onclick={startJob}
+					disabled={selectedJob == undefined || selectedMonster == undefined}
+					class="col-span-2 w-full shrink-0 sm:w-auto">Start Battle</Button
+				>
+			</div>
+		</section>
 
 		<div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
 			{#each data.masterdata as job}
