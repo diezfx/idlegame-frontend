@@ -6,7 +6,7 @@ import { EventSchema, GameStateSchema, InventorySchema, JobSchema, MonsterSchema
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { initializeWasm } from './wasm';
-import { BattleViewSchema, InventoryViewSchema, type BattleView, type InventoryView } from '$gen/v1/views_pb';
+import { InventoryViewSchema, type InventoryView } from '$gen/v1/views_pb';
 
 declare global {
 	interface Window {
@@ -16,7 +16,6 @@ declare global {
 		listInventoryIDs: () => string;
 		getMonster: (id: string) => string;
 		getJob: (id: string) => string;
-		getBattleView: (id: string) => string;
 		getInventory: (id: string) => string;
 		applyEvent: (eventJson: string) => void;
 		Go?: any;
@@ -70,12 +69,6 @@ export class GameStateStore {
 		this.Events = [];
 	}
 
-	getBattleView(id: string): BattleView {
-		const raw = window.getBattleView(id);
-		if (!raw) throw "cannot load battleView";
-		return fromJsonString(BattleViewSchema, raw, { ignoreUnknownFields: true });
-	}
-
 	private refreshFromWasm(): void {
 		if (
 			typeof window.listMonsterIDs !== 'function' ||
@@ -83,7 +76,6 @@ export class GameStateStore {
 			typeof window.listInventoryIDs !== 'function' ||
 			typeof window.getMonster !== 'function' ||
 			typeof window.getJob !== 'function' ||
-			typeof window.getBattleView !== 'function' ||
 			typeof window.getInventory !== 'function'
 		) {
 			throw new Error('Required WASM read functions are unavailable');

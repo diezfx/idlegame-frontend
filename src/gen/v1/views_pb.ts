@@ -4,7 +4,7 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
 import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Entity, Item, Job, NextAction, Stat } from "./domain_pb";
+import type { Item } from "./domain_pb";
 import { file_v1_domain } from "./domain_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/views.proto.
  */
 export const file_v1_views: GenFile = /*@__PURE__*/
-  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiSAoNSW52ZW50b3J5VmlldxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUSDAoEdXNlZBgDIAEoBSJsChFCYXR0bGVNb25zdGVyVmlldxIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSFgoEc3RhdBgCIAEoCzIILnYxLlN0YXQSIwoLbmV4dF9hY3Rpb24YAyABKAsyDi52MS5OZXh0QWN0aW9uIksKCkJhdHRsZVZpZXcSFAoDam9iGAEgASgLMgcudjEuSm9iEicKCG1vbnN0ZXJzGAIgAygLMhUudjEuQmF0dGxlTW9uc3RlclZpZXdCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_v1_domain]);
+  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiSAoNSW52ZW50b3J5VmlldxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUSDAoEdXNlZBgDIAEoBUIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_v1_domain]);
 
 /**
  * @generated from message v1.InventoryView
@@ -40,53 +40,4 @@ export type InventoryView = Message<"v1.InventoryView"> & {
  */
 export const InventoryViewSchema: GenMessage<InventoryView> = /*@__PURE__*/
   messageDesc(file_v1_views, 0);
-
-/**
- * @generated from message v1.BattleMonsterView
- */
-export type BattleMonsterView = Message<"v1.BattleMonsterView"> & {
-  /**
-   * @generated from field: v1.Entity entity = 1;
-   */
-  entity?: Entity | undefined;
-
-  /**
-   * @generated from field: v1.Stat stat = 2;
-   */
-  stat?: Stat | undefined;
-
-  /**
-   * @generated from field: v1.NextAction next_action = 3;
-   */
-  nextAction?: NextAction | undefined;
-};
-
-/**
- * Describes the message v1.BattleMonsterView.
- * Use `create(BattleMonsterViewSchema)` to create a new message.
- */
-export const BattleMonsterViewSchema: GenMessage<BattleMonsterView> = /*@__PURE__*/
-  messageDesc(file_v1_views, 1);
-
-/**
- * @generated from message v1.BattleView
- */
-export type BattleView = Message<"v1.BattleView"> & {
-  /**
-   * @generated from field: v1.Job job = 1;
-   */
-  job?: Job | undefined;
-
-  /**
-   * @generated from field: repeated v1.BattleMonsterView monsters = 2;
-   */
-  monsters: BattleMonsterView[];
-};
-
-/**
- * Describes the message v1.BattleView.
- * Use `create(BattleViewSchema)` to create a new message.
- */
-export const BattleViewSchema: GenMessage<BattleView> = /*@__PURE__*/
-  messageDesc(file_v1_views, 2);
 

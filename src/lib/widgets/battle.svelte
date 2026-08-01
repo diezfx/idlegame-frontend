@@ -7,11 +7,9 @@
 	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import type { Job } from '$lib/service/jobs';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
-	import { jobStatusText } from '$lib/utils/enumtext';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
-	import type { Event, LastAction, Monster, NextAction, Stat } from '../../gen/v1/domain_pb';
-	import { Role } from '../../gen/v1/domain_pb';
-	import { CircleDot, Clock3, ScrollText, Shield, Timer } from 'lucide-svelte';
+	import type { ActionState, Event, Monster, Stat } from '../../gen/v1/domain_pb';
+	import { Action, Role } from '../../gen/v1/domain_pb';
 
 	let { job }: { job: Job; [key: string]: any } = $props();
 
@@ -30,7 +28,6 @@
 		return map;
 	});
 
-	const battleView = $derived(gameStateStore.getBattleView(job.entity?.id!));
 	const playerMonsters = $derived(
 		monsters
 			.values()
@@ -44,15 +41,8 @@
 			.toArray(),
 	);
 
-	const playerBattleMonsters = $derived(
-		battleView.monsters.filter((x) => playerMonsters.find((pm) => pm.entity?.id == x.entity?.id)),
-	);
-	const enemyBattleMonsters = $derived(
-		battleView.monsters.filter((x) => enemyMonsters.find((pm) => pm.entity?.id == x.entity?.id)),
-	);
-	$effect(() => console.log(playerMonsters));
-	$effect(() => console.log(battleView.monsters));
-	const startedAtMs = $derived(job.entity?.createdAt ? protoToMilliseconds(job.entity.createdAt) : nowMs);
+	const playerBattleMonsters = $derived(job.monsters.filter((x) => playerMonsters.find((pm) => pm.entity?.id == x)));
+	const enemyBattleMonsters = $derived(job.monsters.filter((x) => enemyMonsters.find((pm) => pm.entity?.id == x)));
 
 	let animate = () => {
 		nowMs = Date.now();
@@ -79,24 +69,27 @@
 		}
 	}
 
-	function calculateLastAction(lastAction?: LastAction): number {
-		if (lastAction == undefined) {
+	function calculateLastAttack(actionStates?: ActionState[]): number {
+		if (actionStates == undefined) {
 			return 0;
 		}
-		const last = Math.max(
-			protoToMilliseconds(lastAction.lastAttackedAt),
-			protoToMilliseconds(lastAction.lastConsumedAt),
-			protoToMilliseconds(job.entity?.createdAt),
-		);
-		return last;
+		const idx = actionStates.findIndex((as) => as.action == Action.ATTACK);
+		if (idx == -1) {
+			return 0;
+		}
+		return protoToMilliseconds(actionStates[idx].lastUsedAt);
 	}
 
-	function calculateDeltaAction(lastAction?: LastAction, nextAction?: NextAction): number {
-		if (nextAction == undefined) {
+	function calculateDeltaAction(actionStates?: ActionState[]): number {
+		if (actionStates == undefined) {
 			return 0;
 		}
-		const last = calculateLastAction(lastAction);
-		const next = protoToMilliseconds(nextAction.actionAt);
+		const idx = actionStates.findIndex((as) => as.action == Action.ATTACK);
+		if (idx == -1) {
+			return 0;
+		}
+		const last = protoToMilliseconds(actionStates[idx].lastUsedAt);
+		const next = protoToMilliseconds(actionStates[idx].nextUseAt);
 		console.log('delta is', next - last);
 		return next - last;
 	}
@@ -108,30 +101,30 @@
 			<div>
 				<h2 class="text-sm font-semibold text-gray-900">Your Team</h2>
 				<div class="grid gap-3 grid-cols-3">
-					{#each playerBattleMonsters as mon, i (mon.entity?.id)}
-						<Card class="p-2 " title={monsters.get(mon.entity?.id!)!.identity?.name}>
+					{#each playerBattleMonsters as mon, i (mon)}
+						<Card class="p-2 " title={monsters.get(mon)!.identity?.name}>
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
 										foreground="bg-red-500"
 										background="bg-gray-200"
-										value={mon.stat?.health ?? 0}
-										max={mon.stat?.maxHealth ?? 1}
+										value={monsters.get(mon)!.stat?.health ?? 0}
+										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
 									/></DescriptionRow
 								>
 
-								<DescriptionRow term="STR">{mon.stat?.strength ?? 0}</DescriptionRow>
-								<DescriptionRow term="AGI">{mon.stat?.agility ?? 0}</DescriptionRow>
-								<DescriptionRow term="INT">{mon.stat?.intelligence ?? 0}</DescriptionRow>
-								<DescriptionRow term="VIT">{mon.stat?.vitality ?? 0}</DescriptionRow>
+								<DescriptionRow term="STR">{monsters.get(mon)!.stat?.strength ?? 0}</DescriptionRow>
+								<DescriptionRow term="AGI">{monsters.get(mon)!.stat?.agility ?? 0}</DescriptionRow>
+								<DescriptionRow term="INT">{monsters.get(mon)!.stat?.intelligence ?? 0}</DescriptionRow>
+								<DescriptionRow term="VIT">{monsters.get(mon)!.stat?.vitality ?? 0}</DescriptionRow>
 								<DescriptionRow term="NextAction" class="self-center">
 									<Progress
 										transition={false}
 										foreground="bg-blue-300"
 										background="bg-gray-200"
-										value={nowMs - calculateLastAction(monsters.get(mon.entity?.id!)?.lastAction)}
-										max={calculateDeltaAction(monsters.get(mon.entity?.id!)?.lastAction, mon.nextAction)}
+										value={nowMs - calculateLastAttack(monsters.get(mon)?.actionStates)}
+										max={calculateDeltaAction(monsters.get(mon)?.actionStates)}
 									/>
 								</DescriptionRow>
 							</DescriptionList>
@@ -145,31 +138,31 @@
 					<h2 class="text-sm font-semibold text-gray-900">Enemies</h2>
 				</div>
 				<div class="grid gap-3 grid-cols-3">
-					{#each enemyBattleMonsters as mon (mon.entity?.id)}
-						<Card class="p-2" title={monsters.get(mon.entity?.id!)!.identity?.name}>
+					{#each enemyBattleMonsters as mon (mon)}
+						<Card class="p-2" title={monsters.get(mon)!.identity?.name}>
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
 										foreground="bg-red-500"
 										background="bg-gray-200"
-										value={mon.stat?.health ?? 0}
-										max={mon.stat?.maxHealth ?? 1}
+										value={monsters.get(mon)!.stat?.health ?? 0}
+										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
 									/></DescriptionRow
 								>
 
-								<DescriptionRow term="STR">{mon.stat?.strength ?? 0}</DescriptionRow>
-								<DescriptionRow term="AGI">{mon.stat?.agility ?? 0}</DescriptionRow>
-								<DescriptionRow term="INT">{mon.stat?.intelligence ?? 0}</DescriptionRow>
-								<DescriptionRow term="VIT">{mon.stat?.vitality ?? 0}</DescriptionRow>
+								<DescriptionRow term="STR">{monsters.get(mon)!.stat?.strength ?? 0}</DescriptionRow>
+								<DescriptionRow term="AGI">{monsters.get(mon)!.stat?.agility ?? 0}</DescriptionRow>
+								<DescriptionRow term="INT">{monsters.get(mon)!.stat?.intelligence ?? 0}</DescriptionRow>
+								<DescriptionRow term="VIT">{monsters.get(mon)!.stat?.vitality ?? 0}</DescriptionRow>
 								<DescriptionRow term="NextAction" class="self-center">
 									<Progress
 										transition={false}
 										class="h5"
 										foreground="bg-blue-300"
 										background="bg-gray-200"
-										value={nowMs - calculateLastAction(monsters.get(mon.entity?.id!)?.lastAction)}
-										max={calculateDeltaAction(monsters.get(mon.entity?.id!)?.lastAction, mon.nextAction)}
+										value={nowMs - calculateLastAttack(monsters.get(mon)?.actionStates)}
+										max={calculateDeltaAction(monsters.get(mon)?.actionStates)}
 									/>
 								</DescriptionRow>
 							</DescriptionList>

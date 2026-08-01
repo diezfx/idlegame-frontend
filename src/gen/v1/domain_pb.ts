@@ -15,7 +15,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/domain.proto.
  */
 export const file_v1_domain: GenFile = /*@__PURE__*/
-  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxIqMBCgZFbnRpdHkSFAoCaWQYASABKAlCCLpIBXIDsAEBEiMKC2VudGl0eV90eXBlGAIgASgOMg4udjEuRW50aXR5VHlwZRIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIvCghJZGVudGl0eRIMCgRuYW1lGAEgASgJEhUKDWRlZmluaXRpb25faWQYAiABKAkiMgoESXRlbRIKCgJpZBgBIAEoCRIQCghxdWFudGl0eRgCIAEoAxIMCgR0YWdzGAMgAygJIjYKCUludmVudG9yeRIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUi+QEKBFN0YXQSIwoHZWxlbWVudBgBIAEoDjISLnYxLk1vbnN0ZXJFbGVtZW50EhIKCmV4cGVyaWVuY2UYAiABKAUSDgoGaGVhbHRoGAMgASgFEhIKCm1heF9oZWFsdGgYBCABKAUSDwoHc3RhbWluYRgFIAEoBRITCgttYXhfc3RhbWluYRgGIAEoBRIUCgxhdHRhY2tfcG93ZXIYByABKAUSDQoFbGV2ZWwYCSABKAUSEAoIc3RyZW5ndGgYCiABKAUSDwoHYWdpbGl0eRgLIAEoBRIUCgxpbnRlbGxpZ2VuY2UYDCABKAUSEAoIdml0YWxpdHkYDSABKAUi8AEKB01vbnN0ZXISGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSKwoLcGFydGljaXBhbnQYBCABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQSFgoEc3RhdBgFIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYBiADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAcgASgLMgsudjEuVmVjdG9yMhIjCgtsYXN0X2FjdGlvbhgIIAEoCzIOLnYxLkxhc3RBY3Rpb24iTQoSTW9uc3RlclBhcnRpY2lwYW50Eh8KDWpvYl9lbnRpdHlfaWQYASABKAlCCLpIBXIDsAEBEhYKBHJvbGUYAiABKA4yCC52MS5Sb2xlIlIKEUpvYkRlZmluaXRpb25MaW5rEhIKCmpvYl9kZWZfaWQYASABKAkSKQoIc3ViX3R5cGUYAiABKA4yDi52MS5Kb2JTdWJUeXBlUgdzdWJ0eXBlIjEKDUpvYkFzc2lnbm1lbnQSIAoOdXNlcl9lbnRpdHlfaWQYASABKAlCCLpIBXIDsAEBIlUKCEpvYlN0YXRlEh0KBnN0YXR1cxgBIAEoDjINLnYxLkpvYlN0YXR1cxISCgppdGVyYXRpb25zGAIgASgDEhYKDm1heF9pdGVyYXRpb25zGAMgASgDIngKCkxhc3RBY3Rpb24SNAoQbGFzdF9hdHRhY2tlZF9hdBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASNAoQbGFzdF9jb25zdW1lZF9hdBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAibAoKTmV4dEFjdGlvbhIaCgZhY3Rpb24YASABKA4yCi52MS5BY3Rpb24SLQoJYWN0aW9uX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtpdGVtX2RlZl9pZBgDIAEoCSLHAgoDSm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIlCgphc3NpZ25tZW50GAMgASgLMhEudjEuSm9iQXNzaWdubWVudBIdCghwb3NpdGlvbhgEIAEoCzILLnYxLlZlY3RvcjISHwoJam9iX3N0YXRlGAUgASgLMgwudjEuSm9iU3RhdGUSHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSHwoIbW9uc3RlcnMYByADKAlCDbpICpIBByIFcgOwAQESHQoLaW5ncmVkaWVudHMYCCADKAsyCC52MS5JdGVtEhkKBmV2ZW50cxgJIAMoCzIJLnYxLkV2ZW50EiAKCWludmVudG9yeRgKIAEoCzINLnYxLkludmVudG9yeSLUAQoMVHJhbnNwb3J0Sm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIiCgNkZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIpCg5yb3V0ZV9tYW5pZmVzdBgDIAEoCzIRLnYxLlJvdXRlTWFuaWZlc3QSGAoFcm91dGUYBCABKAsyCS52MS5Sb3V0ZRIgCglpbnZlbnRvcnkYBiABKAsyDS52MS5JbnZlbnRvcnkSHQoIcG9zaXRpb24YByABKAsyCy52MS5WZWN0b3IyIjYKB1Jld2FyZHMSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtEhIKCmV4cGVyaWVuY2UYAiABKAUiWwoNUm91dGVNYW5pZmVzdBIOCgZzb3VyY2UYASABKAUSDgoGdGFyZ2V0GAIgASgFEioKC2NhcmdvX2l0ZW1zGAMgAygLMggudjEuSXRlbVILY2FyZ29faXRlbXMiJwoFUm91dGUSDgoGc291cmNlGAEgASgFEg4KBnRhcmdldBgCIAEoBSJnCgtBdHRhY2tFdmVudBIaCghhdHRhY2tlchgBIAEoCUIIukgFcgOwAQESGAoGdGFyZ2V0GAIgASgJQgi6SAVyA7ABARIOCgZkYW1hZ2UYAyABKAUSEgoKbmV3X2hlYWx0aBgEIAEoBSIsCgtBcnJpdmVFdmVudBIdCghwb3NpdGlvbhgBIAEoCzILLnYxLlZlY3RvcjIiLAoLUmV0dXJuRXZlbnQSHQoIcG9zaXRpb24YASABKAsyCy52MS5WZWN0b3IyImEKCVdvcmtFdmVudBIcCgdyZXdhcmRzGAEgASgLMgsudjEuUmV3YXJkcxIgCg5jb25zdW1lZF9pdGVtcxgCIAMoCzIILnYxLkl0ZW0SFAoMc3RhbWluYV9jb3N0GAMgASgFIhIKEFN0b3BXb3JraW5nRXZlbnQiVwoQQ29uc3VtZUl0ZW1FdmVudBIcCgptb25zdGVyX2lkGAEgASgJQgi6SAVyA7ABARITCgtpdGVtX2RlZl9pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoBSJsChREZWZlYXRlZEVuZW1pZXNFdmVudBIcCgdyZXdhcmRzGAEgASgLMgsudjEuUmV3YXJkcxIgCgllbmVteV9pZHMYAiADKAlCDbpICpIBByIFcgOwAQESFAoMc3RhbWluYV9jb3N0GAMgASgFIjoKFU5leHRSb3VuZEVuZW1pZXNFdmVudBIhCgdlbmVtaWVzGAEgAygLMhAudjEuRW5lbXlNb25zdGVyIksKDEVuZW15TW9uc3RlchIbCgdlbnRpdGl5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkiYwoQQ2FyZ29Mb2FkZWRFdmVudBIbCglzb3VyY2VfaWQYASABKAlCCLpIBXIDsAEBEhkKB3VzZXJfaWQYAyABKAlCCLpIBXIDsAEBEhcKBWl0ZW1zGAQgAygLMggudjEuSXRlbSJlChJDYXJnb1VubG9hZGVkRXZlbnQSGwoJdGFyZ2V0X2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAIgASgJQgi6SAVyA7ABARIXCgVpdGVtcxgDIAMoCzIILnYxLkl0ZW0iNAoUU3RhcnRSZWNvdmVyaW5nRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOwAQEiSQoMRXZlbnRDb250ZXh0Eh8KCHVzZXJfaWRzGAEgAygJQg26SAqSAQciBXIDsAEBEhgKBmpvYl9pZBgCIAEoCUIIukgFcgOwAQEiwgEKD0pvYlN0YXJ0ZWRFdmVudBIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSJgoHam9iX2RlZhgCIAEoCzIVLnYxLkpvYkRlZmluaXRpb25MaW5rEiIKC21vbnN0ZXJfaWRzGAMgAygJQg26SAqSAQciBXIDsAEBEiUKCmFzc2lnbm1lbnQYBCABKAsyES52MS5Kb2JBc3NpZ25tZW50EiAKCWludmVudG9yeRgFIAEoCzINLnYxLkludmVudG9yeSIsChBKb2JGaW5pc2hlZEV2ZW50EhgKBmpvYl9pZBgBIAEoCUIIukgFcgOwAQEingYKBUV2ZW50EgoKAmlkGAEgASgJEi0KCXRpbWVzdGFtcBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKZXZlbnRfdHlwZRgDIAEoCRInCg1ldmVudF9jb250ZXh0GAQgASgLMhAudjEuRXZlbnRDb250ZXh0EicKDGFycml2ZV9ldmVudBgFIAEoCzIPLnYxLkFycml2ZUV2ZW50SAASJwoMcmV0dXJuX2V2ZW50GAYgASgLMg8udjEuUmV0dXJuRXZlbnRIABIjCgp3b3JrX2V2ZW50GAcgASgLMg0udjEuV29ya0V2ZW50SAASMgoSc3RvcF93b3JraW5nX2V2ZW50GAggASgLMhQudjEuU3RvcFdvcmtpbmdFdmVudEgAEjIKEmNvbnN1bWVfaXRlbV9ldmVudBgKIAEoCzIULnYxLkNvbnN1bWVJdGVtRXZlbnRIABIyChJjYXJnb19sb2FkZWRfZXZlbnQYCyABKAsyFC52MS5DYXJnb0xvYWRlZEV2ZW50SAASNgoUY2FyZ29fdW5sb2FkZWRfZXZlbnQYDCABKAsyFi52MS5DYXJnb1VubG9hZGVkRXZlbnRIABInCgxhdHRhY2tfZXZlbnQYDSABKAsyDy52MS5BdHRhY2tFdmVudEgAEjoKFnN0YXJ0X3JlY292ZXJpbmdfZXZlbnQYDiABKAsyGC52MS5TdGFydFJlY292ZXJpbmdFdmVudEgAEjoKFmRlZmVhdGVkX2VuZW1pZXNfZXZlbnQYDyABKAsyGC52MS5EZWZlYXRlZEVuZW1pZXNFdmVudEgAEj0KGG5leHRfcm91bmRfZW5lbWllc19ldmVudBgQIAEoCzIZLnYxLk5leHRSb3VuZEVuZW1pZXNFdmVudEgAEjAKEWpvYl9zdGFydGVkX2V2ZW50GBEgASgLMhMudjEuSm9iU3RhcnRlZEV2ZW50SAASMgoSam9iX2ZpbmlzaGVkX2V2ZW50GBIgASgLMhQudjEuSm9iRmluaXNoZWRFdmVudEgAQgwKCmV2ZW50X2RhdGEiKwoOUmVwZWF0ZWRFdmVudHMSGQoGZXZlbnRzGAEgAygLMgkudjEuRXZlbnQingMKC0VudGl0eVN0YXRlEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5EhYKBHN0YXQYAyABKAsyCC52MS5TdGF0EiAKDmVxdWlwcGVkX2l0ZW1zGAQgAygLMggudjEuSXRlbRIdCghwb3NpdGlvbhgFIAEoCzILLnYxLlZlY3RvcjISIwoLbGFzdF9hY3Rpb24YBiABKAsyDi52MS5MYXN0QWN0aW9uEjMKE21vbnN0ZXJfcGFydGljaXBhbnQYByABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQSIAoJaW52ZW50b3J5GAggASgLMg0udjEuSW52ZW50b3J5EikKDmpvYl9hc3NpZ25tZW50GAkgASgLMhEudjEuSm9iQXNzaWdubWVudBIfCglqb2Jfc3RhdGUYCiABKAsyDC52MS5Kb2JTdGF0ZRIyChNqb2JfZGVmaW5pdGlvbl9saW5rGAsgASgLMhUudjEuSm9iRGVmaW5pdGlvbkxpbmsiMgoJR2FtZVN0YXRlEiUKDGVudGl0eVN0YXRlcxgBIAMoCzIPLnYxLkVudGl0eVN0YXRlKpEBCgpFbnRpdHlUeXBlEhsKF0VOVElUWV9UWVBFX1VOU1BFQ0lGSUVEEAASFAoQRU5USVRZX1RZUEVfVVNFUhABEhcKE0VOVElUWV9UWVBFX01PTlNURVIQAhITCg9FTlRJVFlfVFlQRV9KT0IQAxIiCh5FTlRJVFlfVFlQRV9MT0NBVElPTl9JTlZFTlRPUlkQBCo9CgRSb2xlEhQKEFJPTEVfVU5TUEVDSUZJRUQQABIOCgpST0xFX0VORU1ZEAESDwoLUk9MRV9QTEFZRVIQAiqLAQoJSm9iU3RhdHVzEhoKFkpPQl9TVEFUVVNfVU5TUEVDSUZJRUQQABIXChNKT0JfU1RBVFVTX0FSUklWSU5HEAESFgoSSk9CX1NUQVRVU19XT1JLSU5HEAISGAoUSk9CX1NUQVRVU19SRVRVUk5JTkcQAxIXChNKT0JfU1RBVFVTX0ZJTklTSEVEEAQqRwoGQWN0aW9uEhYKEkFDVElPTl9VTlNQRUNJRklFRBAAEhEKDUFDVElPTl9BVFRBQ0sQARISCg5BQ1RJT05fQ09OU1VNRRACQitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw", [file_buf_validate_validate, file_google_protobuf_timestamp, file_v1_masterdata]);
+  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxIqMBCgZFbnRpdHkSFAoCaWQYASABKAlCCLpIBXIDsAEBEiMKC2VudGl0eV90eXBlGAIgASgOMg4udjEuRW50aXR5VHlwZRIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIvCghJZGVudGl0eRIMCgRuYW1lGAEgASgJEhUKDWRlZmluaXRpb25faWQYAiABKAkiMgoESXRlbRIKCgJpZBgBIAEoCRIQCghxdWFudGl0eRgCIAEoAxIMCgR0YWdzGAMgAygJIjYKCUludmVudG9yeRIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUi+QEKBFN0YXQSIwoHZWxlbWVudBgBIAEoDjISLnYxLk1vbnN0ZXJFbGVtZW50EhIKCmV4cGVyaWVuY2UYAiABKAUSDgoGaGVhbHRoGAMgASgFEhIKCm1heF9oZWFsdGgYBCABKAUSDwoHc3RhbWluYRgFIAEoBRITCgttYXhfc3RhbWluYRgGIAEoBRIUCgxhdHRhY2tfcG93ZXIYByABKAUSDQoFbGV2ZWwYCSABKAUSEAoIc3RyZW5ndGgYCiABKAUSDwoHYWdpbGl0eRgLIAEoBRIUCgxpbnRlbGxpZ2VuY2UYDCABKAUSEAoIdml0YWxpdHkYDSABKAUi8wEKB01vbnN0ZXISGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSKwoLcGFydGljaXBhbnQYBCABKAsyFi52MS5Nb25zdGVyUGFydGljaXBhbnQSFgoEc3RhdBgFIAEoCzIILnYxLlN0YXQSIAoOZXF1aXBwZWRfaXRlbXMYBiADKAsyCC52MS5JdGVtEh0KCHBvc2l0aW9uGAcgASgLMgsudjEuVmVjdG9yMhImCg1hY3Rpb25fc3RhdGVzGAggAygLMg8udjEuQWN0aW9uU3RhdGUiTQoSTW9uc3RlclBhcnRpY2lwYW50Eh8KDWpvYl9lbnRpdHlfaWQYASABKAlCCLpIBXIDsAEBEhYKBHJvbGUYAiABKA4yCC52MS5Sb2xlIlIKEUpvYkRlZmluaXRpb25MaW5rEhIKCmpvYl9kZWZfaWQYASABKAkSKQoIc3ViX3R5cGUYAiABKA4yDi52MS5Kb2JTdWJUeXBlUgdzdWJ0eXBlIjEKDUpvYkFzc2lnbm1lbnQSIAoOdXNlcl9lbnRpdHlfaWQYASABKAlCCLpIBXIDsAEBIlUKCEpvYlN0YXRlEh0KBnN0YXR1cxgBIAEoDjINLnYxLkpvYlN0YXR1cxISCgppdGVyYXRpb25zGAIgASgDEhYKDm1heF9pdGVyYXRpb25zGAMgASgDIqEBCgtBY3Rpb25TdGF0ZRIaCgZhY3Rpb24YASABKA4yCi52MS5BY3Rpb24SMAoMbGFzdF91c2VkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgtuZXh0X3VzZV9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEwoLaXRlbV9kZWZfaWQYBCABKAkixwIKA0pvYhIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSIgoDZGVmGAIgASgLMhUudjEuSm9iRGVmaW5pdGlvbkxpbmsSJQoKYXNzaWdubWVudBgDIAEoCzIRLnYxLkpvYkFzc2lnbm1lbnQSHQoIcG9zaXRpb24YBCABKAsyCy52MS5WZWN0b3IyEh8KCWpvYl9zdGF0ZRgFIAEoCzIMLnYxLkpvYlN0YXRlEhwKB3Jld2FyZHMYBiABKAsyCy52MS5SZXdhcmRzEh8KCG1vbnN0ZXJzGAcgAygJQg26SAqSAQciBXIDsAEBEh0KC2luZ3JlZGllbnRzGAggAygLMggudjEuSXRlbRIZCgZldmVudHMYCSADKAsyCS52MS5FdmVudBIgCglpbnZlbnRvcnkYCiABKAsyDS52MS5JbnZlbnRvcnki1AEKDFRyYW5zcG9ydEpvYhIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSIgoDZGVmGAIgASgLMhUudjEuSm9iRGVmaW5pdGlvbkxpbmsSKQoOcm91dGVfbWFuaWZlc3QYAyABKAsyES52MS5Sb3V0ZU1hbmlmZXN0EhgKBXJvdXRlGAQgASgLMgkudjEuUm91dGUSIAoJaW52ZW50b3J5GAYgASgLMg0udjEuSW52ZW50b3J5Eh0KCHBvc2l0aW9uGAcgASgLMgsudjEuVmVjdG9yMiI2CgdSZXdhcmRzEhcKBWl0ZW1zGAEgAygLMggudjEuSXRlbRISCgpleHBlcmllbmNlGAIgASgFIlsKDVJvdXRlTWFuaWZlc3QSDgoGc291cmNlGAEgASgFEg4KBnRhcmdldBgCIAEoBRIqCgtjYXJnb19pdGVtcxgDIAMoCzIILnYxLkl0ZW1SC2NhcmdvX2l0ZW1zIicKBVJvdXRlEg4KBnNvdXJjZRgBIAEoBRIOCgZ0YXJnZXQYAiABKAUiZwoLQXR0YWNrRXZlbnQSGgoIYXR0YWNrZXIYASABKAlCCLpIBXIDsAEBEhgKBnRhcmdldBgCIAEoCUIIukgFcgOwAQESDgoGZGFtYWdlGAMgASgFEhIKCm5ld19oZWFsdGgYBCABKAUiLAoLQXJyaXZlRXZlbnQSHQoIcG9zaXRpb24YASABKAsyCy52MS5WZWN0b3IyIiwKC1JldHVybkV2ZW50Eh0KCHBvc2l0aW9uGAEgASgLMgsudjEuVmVjdG9yMiJhCglXb3JrRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoOY29uc3VtZWRfaXRlbXMYAiADKAsyCC52MS5JdGVtEhQKDHN0YW1pbmFfY29zdBgDIAEoBSISChBTdG9wV29ya2luZ0V2ZW50IlcKEENvbnN1bWVJdGVtRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOwAQESEwoLaXRlbV9kZWZfaWQYAiABKAkSEAoIcXVhbnRpdHkYAyABKAUibAoURGVmZWF0ZWRFbmVtaWVzRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoJZW5lbXlfaWRzGAIgAygJQg26SAqSAQciBXIDsAEBEhQKDHN0YW1pbmFfY29zdBgDIAEoBSI6ChVOZXh0Um91bmRFbmVtaWVzRXZlbnQSIQoHZW5lbWllcxgBIAMoCzIQLnYxLkVuZW15TW9uc3RlciJLCgxFbmVteU1vbnN0ZXISGwoHZW50aXRpeRgBIAEoCzIKLnYxLkVudGl0eRIeCghpZGVudGl0eRgCIAEoCzIMLnYxLklkZW50aXR5ImMKEENhcmdvTG9hZGVkRXZlbnQSGwoJc291cmNlX2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAMgASgJQgi6SAVyA7ABARIXCgVpdGVtcxgEIAMoCzIILnYxLkl0ZW0iZQoSQ2FyZ29VbmxvYWRlZEV2ZW50EhsKCXRhcmdldF9pZBgBIAEoCUIIukgFcgOwAQESGQoHdXNlcl9pZBgCIAEoCUIIukgFcgOwAQESFwoFaXRlbXMYAyADKAsyCC52MS5JdGVtIjQKFFN0YXJ0UmVjb3ZlcmluZ0V2ZW50EhwKCm1vbnN0ZXJfaWQYASABKAlCCLpIBXIDsAEBIkkKDEV2ZW50Q29udGV4dBIfCgh1c2VyX2lkcxgBIAMoCUINukgKkgEHIgVyA7ABARIYCgZqb2JfaWQYAiABKAlCCLpIBXIDsAEBIsIBCg9Kb2JTdGFydGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EiYKB2pvYl9kZWYYAiABKAsyFS52MS5Kb2JEZWZpbml0aW9uTGluaxIiCgttb25zdGVyX2lkcxgDIAMoCUINukgKkgEHIgVyA7ABARIlCgphc3NpZ25tZW50GAQgASgLMhEudjEuSm9iQXNzaWdubWVudBIgCglpbnZlbnRvcnkYBSABKAsyDS52MS5JbnZlbnRvcnkiLAoQSm9iRmluaXNoZWRFdmVudBIYCgZqb2JfaWQYASABKAlCCLpIBXIDsAEBIp4GCgVFdmVudBIKCgJpZBgBIAEoCRItCgl0aW1lc3RhbXAYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhIKCmV2ZW50X3R5cGUYAyABKAkSJwoNZXZlbnRfY29udGV4dBgEIAEoCzIQLnYxLkV2ZW50Q29udGV4dBInCgxhcnJpdmVfZXZlbnQYBSABKAsyDy52MS5BcnJpdmVFdmVudEgAEicKDHJldHVybl9ldmVudBgGIAEoCzIPLnYxLlJldHVybkV2ZW50SAASIwoKd29ya19ldmVudBgHIAEoCzINLnYxLldvcmtFdmVudEgAEjIKEnN0b3Bfd29ya2luZ19ldmVudBgIIAEoCzIULnYxLlN0b3BXb3JraW5nRXZlbnRIABIyChJjb25zdW1lX2l0ZW1fZXZlbnQYCiABKAsyFC52MS5Db25zdW1lSXRlbUV2ZW50SAASMgoSY2FyZ29fbG9hZGVkX2V2ZW50GAsgASgLMhQudjEuQ2FyZ29Mb2FkZWRFdmVudEgAEjYKFGNhcmdvX3VubG9hZGVkX2V2ZW50GAwgASgLMhYudjEuQ2FyZ29VbmxvYWRlZEV2ZW50SAASJwoMYXR0YWNrX2V2ZW50GA0gASgLMg8udjEuQXR0YWNrRXZlbnRIABI6ChZzdGFydF9yZWNvdmVyaW5nX2V2ZW50GA4gASgLMhgudjEuU3RhcnRSZWNvdmVyaW5nRXZlbnRIABI6ChZkZWZlYXRlZF9lbmVtaWVzX2V2ZW50GA8gASgLMhgudjEuRGVmZWF0ZWRFbmVtaWVzRXZlbnRIABI9ChhuZXh0X3JvdW5kX2VuZW1pZXNfZXZlbnQYECABKAsyGS52MS5OZXh0Um91bmRFbmVtaWVzRXZlbnRIABIwChFqb2Jfc3RhcnRlZF9ldmVudBgRIAEoCzITLnYxLkpvYlN0YXJ0ZWRFdmVudEgAEjIKEmpvYl9maW5pc2hlZF9ldmVudBgSIAEoCzIULnYxLkpvYkZpbmlzaGVkRXZlbnRIAEIMCgpldmVudF9kYXRhIisKDlJlcGVhdGVkRXZlbnRzEhkKBmV2ZW50cxgBIAMoCzIJLnYxLkV2ZW50IqEDCgtFbnRpdHlTdGF0ZRIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIWCgRzdGF0GAMgASgLMggudjEuU3RhdBIgCg5lcXVpcHBlZF9pdGVtcxgEIAMoCzIILnYxLkl0ZW0SHQoIcG9zaXRpb24YBSABKAsyCy52MS5WZWN0b3IyEiYKDWFjdGlvbl9zdGF0ZXMYBiADKAsyDy52MS5BY3Rpb25TdGF0ZRIzChNtb25zdGVyX3BhcnRpY2lwYW50GAcgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EiAKCWludmVudG9yeRgIIAEoCzINLnYxLkludmVudG9yeRIpCg5qb2JfYXNzaWdubWVudBgJIAEoCzIRLnYxLkpvYkFzc2lnbm1lbnQSHwoJam9iX3N0YXRlGAogASgLMgwudjEuSm9iU3RhdGUSMgoTam9iX2RlZmluaXRpb25fbGluaxgLIAEoCzIVLnYxLkpvYkRlZmluaXRpb25MaW5rIjMKCUdhbWVTdGF0ZRImCg1lbnRpdHlfc3RhdGVzGAEgAygLMg8udjEuRW50aXR5U3RhdGUqkQEKCkVudGl0eVR5cGUSGwoXRU5USVRZX1RZUEVfVU5TUEVDSUZJRUQQABIUChBFTlRJVFlfVFlQRV9VU0VSEAESFwoTRU5USVRZX1RZUEVfTU9OU1RFUhACEhMKD0VOVElUWV9UWVBFX0pPQhADEiIKHkVOVElUWV9UWVBFX0xPQ0FUSU9OX0lOVkVOVE9SWRAEKj0KBFJvbGUSFAoQUk9MRV9VTlNQRUNJRklFRBAAEg4KClJPTEVfRU5FTVkQARIPCgtST0xFX1BMQVlFUhACKosBCglKb2JTdGF0dXMSGgoWSk9CX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0pPQl9TVEFUVVNfQVJSSVZJTkcQARIWChJKT0JfU1RBVFVTX1dPUktJTkcQAhIYChRKT0JfU1RBVFVTX1JFVFVSTklORxADEhcKE0pPQl9TVEFUVVNfRklOSVNIRUQQBCpHCgZBY3Rpb24SFgoSQUNUSU9OX1VOU1BFQ0lGSUVEEAASEQoNQUNUSU9OX0FUVEFDSxABEhIKDkFDVElPTl9DT05TVU1FEAJCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_buf_validate_validate, file_google_protobuf_timestamp, file_v1_masterdata]);
 
 /**
  * @generated from message v1.Entity
@@ -227,9 +227,9 @@ export type Monster = Message<"v1.Monster"> & {
   position?: Vector2 | undefined;
 
   /**
-   * @generated from field: v1.LastAction last_action = 8;
+   * @generated from field: repeated v1.ActionState action_states = 8;
    */
-  lastAction?: LastAction | undefined;
+  actionStates: ActionState[];
 };
 
 /**
@@ -328,53 +328,36 @@ export const JobStateSchema: GenMessage<JobState> = /*@__PURE__*/
   messageDesc(file_v1_domain, 9);
 
 /**
- * @generated from message v1.LastAction
+ * @generated from message v1.ActionState
  */
-export type LastAction = Message<"v1.LastAction"> & {
-  /**
-   * @generated from field: google.protobuf.Timestamp last_attacked_at = 1;
-   */
-  lastAttackedAt?: Timestamp | undefined;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp last_consumed_at = 2;
-   */
-  lastConsumedAt?: Timestamp | undefined;
-};
-
-/**
- * Describes the message v1.LastAction.
- * Use `create(LastActionSchema)` to create a new message.
- */
-export const LastActionSchema: GenMessage<LastAction> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 10);
-
-/**
- * @generated from message v1.NextAction
- */
-export type NextAction = Message<"v1.NextAction"> & {
+export type ActionState = Message<"v1.ActionState"> & {
   /**
    * @generated from field: v1.Action action = 1;
    */
   action: Action;
 
   /**
-   * @generated from field: google.protobuf.Timestamp action_at = 2;
+   * @generated from field: google.protobuf.Timestamp last_used_at = 2;
    */
-  actionAt?: Timestamp | undefined;
+  lastUsedAt?: Timestamp | undefined;
 
   /**
-   * @generated from field: string item_def_id = 3;
+   * @generated from field: google.protobuf.Timestamp next_use_at = 3;
+   */
+  nextUseAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: string item_def_id = 4;
    */
   itemDefId: string;
 };
 
 /**
- * Describes the message v1.NextAction.
- * Use `create(NextActionSchema)` to create a new message.
+ * Describes the message v1.ActionState.
+ * Use `create(ActionStateSchema)` to create a new message.
  */
-export const NextActionSchema: GenMessage<NextAction> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 11);
+export const ActionStateSchema: GenMessage<ActionState> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 10);
 
 /**
  * @generated from message v1.Job
@@ -436,7 +419,7 @@ export type Job = Message<"v1.Job"> & {
  * Use `create(JobSchema)` to create a new message.
  */
 export const JobSchema: GenMessage<Job> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 12);
+  messageDesc(file_v1_domain, 11);
 
 /**
  * @generated from message v1.TransportJob
@@ -478,7 +461,7 @@ export type TransportJob = Message<"v1.TransportJob"> & {
  * Use `create(TransportJobSchema)` to create a new message.
  */
 export const TransportJobSchema: GenMessage<TransportJob> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 13);
+  messageDesc(file_v1_domain, 12);
 
 /**
  * @generated from message v1.Rewards
@@ -500,7 +483,7 @@ export type Rewards = Message<"v1.Rewards"> & {
  * Use `create(RewardsSchema)` to create a new message.
  */
 export const RewardsSchema: GenMessage<Rewards> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 14);
+  messageDesc(file_v1_domain, 13);
 
 /**
  * @generated from message v1.RouteManifest
@@ -527,7 +510,7 @@ export type RouteManifest = Message<"v1.RouteManifest"> & {
  * Use `create(RouteManifestSchema)` to create a new message.
  */
 export const RouteManifestSchema: GenMessage<RouteManifest> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 15);
+  messageDesc(file_v1_domain, 14);
 
 /**
  * @generated from message v1.Route
@@ -549,7 +532,7 @@ export type Route = Message<"v1.Route"> & {
  * Use `create(RouteSchema)` to create a new message.
  */
 export const RouteSchema: GenMessage<Route> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 16);
+  messageDesc(file_v1_domain, 15);
 
 /**
  * @generated from message v1.AttackEvent
@@ -581,7 +564,7 @@ export type AttackEvent = Message<"v1.AttackEvent"> & {
  * Use `create(AttackEventSchema)` to create a new message.
  */
 export const AttackEventSchema: GenMessage<AttackEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 17);
+  messageDesc(file_v1_domain, 16);
 
 /**
  * @generated from message v1.ArriveEvent
@@ -598,7 +581,7 @@ export type ArriveEvent = Message<"v1.ArriveEvent"> & {
  * Use `create(ArriveEventSchema)` to create a new message.
  */
 export const ArriveEventSchema: GenMessage<ArriveEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 18);
+  messageDesc(file_v1_domain, 17);
 
 /**
  * @generated from message v1.ReturnEvent
@@ -615,7 +598,7 @@ export type ReturnEvent = Message<"v1.ReturnEvent"> & {
  * Use `create(ReturnEventSchema)` to create a new message.
  */
 export const ReturnEventSchema: GenMessage<ReturnEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 19);
+  messageDesc(file_v1_domain, 18);
 
 /**
  * @generated from message v1.WorkEvent
@@ -642,7 +625,7 @@ export type WorkEvent = Message<"v1.WorkEvent"> & {
  * Use `create(WorkEventSchema)` to create a new message.
  */
 export const WorkEventSchema: GenMessage<WorkEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 20);
+  messageDesc(file_v1_domain, 19);
 
 /**
  * No specific fields
@@ -657,7 +640,7 @@ export type StopWorkingEvent = Message<"v1.StopWorkingEvent"> & {
  * Use `create(StopWorkingEventSchema)` to create a new message.
  */
 export const StopWorkingEventSchema: GenMessage<StopWorkingEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 21);
+  messageDesc(file_v1_domain, 20);
 
 /**
  * @generated from message v1.ConsumeItemEvent
@@ -686,7 +669,7 @@ export type ConsumeItemEvent = Message<"v1.ConsumeItemEvent"> & {
  * Use `create(ConsumeItemEventSchema)` to create a new message.
  */
 export const ConsumeItemEventSchema: GenMessage<ConsumeItemEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 22);
+  messageDesc(file_v1_domain, 21);
 
 /**
  * @generated from message v1.DefeatedEnemiesEvent
@@ -713,7 +696,7 @@ export type DefeatedEnemiesEvent = Message<"v1.DefeatedEnemiesEvent"> & {
  * Use `create(DefeatedEnemiesEventSchema)` to create a new message.
  */
 export const DefeatedEnemiesEventSchema: GenMessage<DefeatedEnemiesEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 23);
+  messageDesc(file_v1_domain, 22);
 
 /**
  * @generated from message v1.NextRoundEnemiesEvent
@@ -730,7 +713,7 @@ export type NextRoundEnemiesEvent = Message<"v1.NextRoundEnemiesEvent"> & {
  * Use `create(NextRoundEnemiesEventSchema)` to create a new message.
  */
 export const NextRoundEnemiesEventSchema: GenMessage<NextRoundEnemiesEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 24);
+  messageDesc(file_v1_domain, 23);
 
 /**
  * @generated from message v1.EnemyMonster
@@ -752,7 +735,7 @@ export type EnemyMonster = Message<"v1.EnemyMonster"> & {
  * Use `create(EnemyMonsterSchema)` to create a new message.
  */
 export const EnemyMonsterSchema: GenMessage<EnemyMonster> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 25);
+  messageDesc(file_v1_domain, 24);
 
 /**
  * @generated from message v1.CargoLoadedEvent
@@ -781,7 +764,7 @@ export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
  * Use `create(CargoLoadedEventSchema)` to create a new message.
  */
 export const CargoLoadedEventSchema: GenMessage<CargoLoadedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 26);
+  messageDesc(file_v1_domain, 25);
 
 /**
  * @generated from message v1.CargoUnloadedEvent
@@ -810,7 +793,7 @@ export type CargoUnloadedEvent = Message<"v1.CargoUnloadedEvent"> & {
  * Use `create(CargoUnloadedEventSchema)` to create a new message.
  */
 export const CargoUnloadedEventSchema: GenMessage<CargoUnloadedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 27);
+  messageDesc(file_v1_domain, 26);
 
 /**
  * @generated from message v1.StartRecoveringEvent
@@ -827,7 +810,7 @@ export type StartRecoveringEvent = Message<"v1.StartRecoveringEvent"> & {
  * Use `create(StartRecoveringEventSchema)` to create a new message.
  */
 export const StartRecoveringEventSchema: GenMessage<StartRecoveringEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 28);
+  messageDesc(file_v1_domain, 27);
 
 /**
  * @generated from message v1.EventContext
@@ -849,7 +832,7 @@ export type EventContext = Message<"v1.EventContext"> & {
  * Use `create(EventContextSchema)` to create a new message.
  */
 export const EventContextSchema: GenMessage<EventContext> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 29);
+  messageDesc(file_v1_domain, 28);
 
 /**
  * @generated from message v1.JobStartedEvent
@@ -886,7 +869,7 @@ export type JobStartedEvent = Message<"v1.JobStartedEvent"> & {
  * Use `create(JobStartedEventSchema)` to create a new message.
  */
 export const JobStartedEventSchema: GenMessage<JobStartedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 30);
+  messageDesc(file_v1_domain, 29);
 
 /**
  * @generated from message v1.JobFinishedEvent
@@ -903,7 +886,7 @@ export type JobFinishedEvent = Message<"v1.JobFinishedEvent"> & {
  * Use `create(JobFinishedEventSchema)` to create a new message.
  */
 export const JobFinishedEventSchema: GenMessage<JobFinishedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 31);
+  messageDesc(file_v1_domain, 30);
 
 /**
  * @generated from message v1.Event
@@ -1020,7 +1003,7 @@ export type Event = Message<"v1.Event"> & {
  * Use `create(EventSchema)` to create a new message.
  */
 export const EventSchema: GenMessage<Event> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 32);
+  messageDesc(file_v1_domain, 31);
 
 /**
  * @generated from message v1.RepeatedEvents
@@ -1037,7 +1020,7 @@ export type RepeatedEvents = Message<"v1.RepeatedEvents"> & {
  * Use `create(RepeatedEventsSchema)` to create a new message.
  */
 export const RepeatedEventsSchema: GenMessage<RepeatedEvents> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 33);
+  messageDesc(file_v1_domain, 32);
 
 /**
  * @generated from message v1.EntityState
@@ -1069,9 +1052,9 @@ export type EntityState = Message<"v1.EntityState"> & {
   position?: Vector2 | undefined;
 
   /**
-   * @generated from field: v1.LastAction last_action = 6;
+   * @generated from field: repeated v1.ActionState action_states = 6;
    */
-  lastAction?: LastAction | undefined;
+  actionStates: ActionState[];
 
   /**
    * @generated from field: v1.MonsterParticipant monster_participant = 7;
@@ -1104,14 +1087,14 @@ export type EntityState = Message<"v1.EntityState"> & {
  * Use `create(EntityStateSchema)` to create a new message.
  */
 export const EntityStateSchema: GenMessage<EntityState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 34);
+  messageDesc(file_v1_domain, 33);
 
 /**
  * @generated from message v1.GameState
  */
 export type GameState = Message<"v1.GameState"> & {
   /**
-   * @generated from field: repeated v1.EntityState entityStates = 1;
+   * @generated from field: repeated v1.EntityState entity_states = 1;
    */
   entityStates: EntityState[];
 };
@@ -1121,7 +1104,7 @@ export type GameState = Message<"v1.GameState"> & {
  * Use `create(GameStateSchema)` to create a new message.
  */
 export const GameStateSchema: GenMessage<GameState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 35);
+  messageDesc(file_v1_domain, 34);
 
 /**
  * @generated from enum v1.EntityType
