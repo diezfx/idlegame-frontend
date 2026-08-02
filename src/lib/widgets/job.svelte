@@ -31,7 +31,7 @@
 	};
 
 	const job = $derived(gameStateStore.Jobs.get(jobID));
-	const inv = $derived(await gameStateStore.getInventory(jobID));
+	const inv = $derived(gameStateStore.Inventories.get(jobID));
 	const monsters = $derived(
 		(job?.monsters ?? [])
 			.map((id) => gameStateStore.Monsters.get(id))
@@ -66,7 +66,7 @@
 					showLabel={true}
 					foreground="bg-cyan-200"
 					background="bg-cyan-200/50"
-					value={inv.used ?? 0}
+					value={inv?.used ?? 0}
 					max={inv?.inventory?.capacity ?? 100}
 				></Progress>
 				<div class="grid grid-cols-3 gap-1 mt-2">

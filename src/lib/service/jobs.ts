@@ -27,11 +27,6 @@ export class JobsClient {
 		this.jobClient = jobClient;
 	}
 
-	async getJobs(): Promise<Job[]> {
-		const response = await this.jobClient.listJobs({});
-		return response.jobs;
-	}
-
 	async getBattleJob(jobId: string): Promise<Job | undefined> {
 		return await this.jobClient.getJob({ id: jobId });
 	}
