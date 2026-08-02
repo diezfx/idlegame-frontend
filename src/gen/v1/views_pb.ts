@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/views.proto.
  */
 export const file_v1_views: GenFile = /*@__PURE__*/
-  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiwwEKDUludmVudG9yeVZpZXcSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5EhAKCGNhcGFjaXR5GAQgASgFEgwKBHVzZWQYBSABKAUSGgoGcGFyZW50GAYgASgLMgoudjEuUGFyZW50EhgKBW93bmVyGAcgASgLMgkudjEuT3duZXJCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_v1_domain]);
+  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEisQEKDUludmVudG9yeVZpZXcSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5EgwKBHVzZWQYBSABKAUSGgoGcGFyZW50GAYgASgLMgoudjEuUGFyZW50EhgKBW93bmVyGAcgASgLMgkudjEuT3duZXJCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_v1_domain]);
 
 /**
  * @generated from message v1.InventoryView
@@ -32,11 +32,6 @@ export type InventoryView = Message<"v1.InventoryView"> & {
    * @generated from field: v1.Inventory inventory = 3;
    */
   inventory?: Inventory | undefined;
-
-  /**
-   * @generated from field: int32 capacity = 4;
-   */
-  capacity: number;
 
   /**
    * @generated from field: int32 used = 5;

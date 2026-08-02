@@ -7,7 +7,7 @@ import {
 } from '../../gen/v1/wasm_pb';
 import { type DescMessage, type DescMethodUnary, type MessageInitShape, type DescMethodStreaming, create, fromJsonString, toJsonString } from '@bufbuild/protobuf';
 import type { Channel } from '$lib/stores/wasm';
-import { InventoryService, MonsterService } from '$gen/v1/service_pb';
+import { InventoryService, JobService, MonsterService } from '$gen/v1/service_pb';
 
 
 class LocalTransport implements Transport {
@@ -48,6 +48,7 @@ class LocalTransport implements Transport {
 export interface WasmServices {
     monsterService: Client<typeof MonsterService>
     inventoryService: Client<typeof InventoryService>
+    jobService: Client<typeof JobService>
 }
 
 function createWasmClients(chan: Channel): WasmServices {
@@ -55,8 +56,9 @@ function createWasmClients(chan: Channel): WasmServices {
 
     const monsterService = createClient(MonsterService, transport);
     const inventoryService = createClient(InventoryService, transport)
+    const jobService = createClient(JobService, transport);
 
-    return { monsterService, inventoryService }
+    return { monsterService, inventoryService, jobService }
 }
 
 

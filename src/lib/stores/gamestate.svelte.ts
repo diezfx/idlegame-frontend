@@ -1,12 +1,12 @@
-import { fromJsonString, toJsonString } from '@bufbuild/protobuf';
+import { toJsonString } from '@bufbuild/protobuf';
 import { SvelteMap } from 'svelte/reactivity';
 
-import type { Event, Inventory, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
-import { EventSchema, GameStateSchema, InventorySchema, JobSchema, MonsterSchema } from '../../gen/v1/domain_pb';
+import type { Event, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
+import { EventSchema, GameStateSchema } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { initializeWasm } from './wasm';
-import { InventoryViewSchema, type InventoryView } from '$gen/v1/views_pb';
+import { type InventoryView } from '$gen/v1/views_pb';
 import { createWasmClients, type WasmServices } from '$lib/service/wasm';
 
 declare global {
@@ -14,10 +14,6 @@ declare global {
 		loadGameState: (gameStateJson: string) => void;
 		invokeWasm: (reqJson: string) => string;
 		listMonsterIDs: () => string;
-		listJobIDs: () => string;
-		listInventoryIDs: () => string;
-		getJob: (id: string) => string;
-		getInventory: (id: string) => string;
 		applyEvent: (eventJson: string) => void;
 		Go?: any;
 	}
@@ -77,17 +73,13 @@ export class GameStateStore {
 	}
 
 	private async refreshFromWasm(): Promise<void> {
-		if (
-			typeof window.listJobIDs !== 'function' ||
-			typeof window.getJob !== 'function'
-		) {
-			throw new Error('Required WASM read functions are unavailable');
-		}
-
 		const nextMonsters = new SvelteMap<string, MonsterType>();
 		const nextJobs = new SvelteMap<string, Job>();
 		const nextInventories = new SvelteMap<string, InventoryView>();
-		const jobIDs = JSON.parse(window.listJobIDs()) as string[];
+		const jobs = await this.wasmClients.jobService.listJobs({})
+		for (const job of jobs.jobs) {
+			nextJobs.set(job.entity?.id!, job)
+		}
 
 		const userId = userStore.getUser().userId;
 		const monsters = await this.wasmClients.monsterService.listMonsters({ ownerId: userId });
@@ -96,14 +88,7 @@ export class GameStateStore {
 
 		}
 
-		for (const id of jobIDs) {
-			const raw = window.getJob(id);
-			if (!raw) continue;
-			nextJobs.set(id, fromJsonString(JobSchema, raw, { ignoreUnknownFields: true }));
-		}
-
 		const inventories = await this.wasmClients.inventoryService.getPlayerInventory({ userId: userId })
-		console.log(inventories)
 
 		for (const inv of inventories.locations) {
 			nextInventories.set(inv.entity?.id!, inv);
@@ -158,9 +143,18 @@ export class GameStateStore {
 
 	async getJob(id: string): Promise<Job> {
 		await this.ensureInitialized();
-		const job = this.Jobs.get(id);
+		const job = await this.wasmClients.jobService.getJob({ id: id })
 		if (!job) throw 'job not found';
+		//this.Jobs.set(id, job)
 		return job;
+	}
+
+	async getInventory(id: string): Promise<InventoryView> {
+		await this.ensureInitialized();
+		const inv = await this.wasmClients.inventoryService.getInventory({ userId: id })
+		if (!inv) throw 'inv not found';
+		//this.Jobs.set(id, job)
+		return inv.inventory!;
 	}
 
 	async getInventories(): Promise<SvelteMap<string, InventoryView>> {

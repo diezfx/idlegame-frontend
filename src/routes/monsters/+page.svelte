@@ -18,7 +18,7 @@
 	let inventory = $derived(Array.from(gameStateStore.Inventories.values())[0]);
 
 	let equippableItems = $derived(
-		(inventory?.items ?? []).filter((i) => {
+		(inventory?.inventory?.items ?? []).filter((i) => {
 			return itemMasterdata.get(i.id)?.effects.length ?? 0 > 0;
 		}),
 	);

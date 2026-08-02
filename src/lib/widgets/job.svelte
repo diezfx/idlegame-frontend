@@ -1,13 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
-	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import ItemView from '$lib/widgets/item.svelte';
-	import { Gift } from 'lucide-svelte';
 
 	import { DateTime } from 'luxon';
-	import { JobSubType } from '../../gen/v1/masterdata_pb';
-	import { jobStatusText } from '$lib/utils/enumtext';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
 	let {
@@ -35,22 +31,13 @@
 	};
 
 	const job = $derived(gameStateStore.Jobs.get(jobID));
+	const inv = $derived(await gameStateStore.getInventory(jobID));
 	const monsters = $derived(
 		(job?.monsters ?? [])
 			.map((id) => gameStateStore.Monsters.get(id))
 			.filter((m): m is NonNullable<typeof m> => m != null),
 	);
 	const mon = $derived(monsters.at(0))!;
-	const inv = $derived(gameStateStore.Inventories.get(jobID));
-	const subtype = $derived(job?.def?.subType ?? JobSubType.UNSPECIFIED);
-
-	const statusColor = $derived(
-		job?.jobState?.status === 1
-			? 'text-yellow-600 bg-yellow-100' // In Progress (assuming 1)
-			: job?.jobState?.status === 2
-				? 'text-green-600 bg-green-100' // Completed (assuming 2)
-				: 'text-gray-600 bg-gray-100',
-	);
 
 	function handleStopClick(event: MouseEvent): void {
 		event.stopPropagation();
@@ -79,11 +66,11 @@
 					showLabel={true}
 					foreground="bg-cyan-200"
 					background="bg-cyan-200/50"
-					value={inv?.used ?? 0}
-					max={inv?.capacity ?? 100}
+					value={inv.used ?? 0}
+					max={inv?.inventory?.capacity ?? 100}
 				></Progress>
 				<div class="grid grid-cols-3 gap-1 mt-2">
-					{#each inv!.items! as item (item.id)}
+					{#each inv!.inventory!.items! as item (item.id)}
 						<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
 					{/each}
 				</div>
