@@ -4,7 +4,7 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
 import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Item } from "./domain_pb";
+import type { Entity, Identity, Inventory, Owner, Parent } from "./domain_pb";
 import { file_v1_domain } from "./domain_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,26 +12,46 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/views.proto.
  */
 export const file_v1_views: GenFile = /*@__PURE__*/
-  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiSAoNSW52ZW50b3J5VmlldxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEAoIY2FwYWNpdHkYAiABKAUSDAoEdXNlZBgDIAEoBUIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_v1_domain]);
+  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEiwwEKDUludmVudG9yeVZpZXcSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5EhAKCGNhcGFjaXR5GAQgASgFEgwKBHVzZWQYBSABKAUSGgoGcGFyZW50GAYgASgLMgoudjEuUGFyZW50EhgKBW93bmVyGAcgASgLMgkudjEuT3duZXJCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_v1_domain]);
 
 /**
  * @generated from message v1.InventoryView
  */
 export type InventoryView = Message<"v1.InventoryView"> & {
   /**
-   * @generated from field: repeated v1.Item items = 1;
+   * @generated from field: v1.Entity entity = 1;
    */
-  items: Item[];
+  entity?: Entity | undefined;
 
   /**
-   * @generated from field: int32 capacity = 2;
+   * @generated from field: v1.Identity identity = 2;
+   */
+  identity?: Identity | undefined;
+
+  /**
+   * @generated from field: v1.Inventory inventory = 3;
+   */
+  inventory?: Inventory | undefined;
+
+  /**
+   * @generated from field: int32 capacity = 4;
    */
   capacity: number;
 
   /**
-   * @generated from field: int32 used = 3;
+   * @generated from field: int32 used = 5;
    */
   used: number;
+
+  /**
+   * @generated from field: v1.Parent parent = 6;
+   */
+  parent?: Parent | undefined;
+
+  /**
+   * @generated from field: v1.Owner owner = 7;
+   */
+  owner?: Owner | undefined;
 };
 
 /**

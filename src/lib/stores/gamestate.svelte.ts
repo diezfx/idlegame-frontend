@@ -7,14 +7,15 @@ import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
 import { initializeWasm } from './wasm';
 import { InventoryViewSchema, type InventoryView } from '$gen/v1/views_pb';
+import { createWasmClients, type WasmServices } from '$lib/service/wasm';
 
 declare global {
 	interface Window {
 		loadGameState: (gameStateJson: string) => void;
+		invokeWasm: (reqJson: string) => string;
 		listMonsterIDs: () => string;
 		listJobIDs: () => string;
 		listInventoryIDs: () => string;
-		getMonster: (id: string) => string;
 		getJob: (id: string) => string;
 		getInventory: (id: string) => string;
 		applyEvent: (eventJson: string) => void;
@@ -29,6 +30,7 @@ export class GameStateStore {
 	Events: Event[] = $state([]);
 	private initPromise: Promise<void> | null = null;
 	private streamStarted = false;
+	wasmClients!: WasmServices
 
 	constructor() {
 		this.Monsters = new SvelteMap<string, MonsterType>();
@@ -41,6 +43,8 @@ export class GameStateStore {
 
 		this.initPromise = (async () => {
 			await initializeWasm();
+
+			this.wasmClients = createWasmClients({ invoke: window.invokeWasm });
 			await this.bootstrapFromGamestateByUser();
 			this.startEventStream();
 		})();
@@ -61,22 +65,21 @@ export class GameStateStore {
 		if (!response.gamestate) {
 			throw new Error('GetGamestateByUser returned empty gamestate');
 		}
+		if (typeof window.invokeWasm !== 'function') {
+			throw new Error('WASM function `invokeWasm` is unavailable');
+		}
 		if (typeof window.loadGameState !== 'function') {
 			throw new Error('WASM function `loadGameState` is unavailable');
 		}
 		window.loadGameState(toJsonString(GameStateSchema, response.gamestate));
-		this.refreshFromWasm();
+		await this.refreshFromWasm();
 		this.Events = [];
 	}
 
-	private refreshFromWasm(): void {
+	private async refreshFromWasm(): Promise<void> {
 		if (
-			typeof window.listMonsterIDs !== 'function' ||
 			typeof window.listJobIDs !== 'function' ||
-			typeof window.listInventoryIDs !== 'function' ||
-			typeof window.getMonster !== 'function' ||
-			typeof window.getJob !== 'function' ||
-			typeof window.getInventory !== 'function'
+			typeof window.getJob !== 'function'
 		) {
 			throw new Error('Required WASM read functions are unavailable');
 		}
@@ -84,14 +87,13 @@ export class GameStateStore {
 		const nextMonsters = new SvelteMap<string, MonsterType>();
 		const nextJobs = new SvelteMap<string, Job>();
 		const nextInventories = new SvelteMap<string, InventoryView>();
-		const monsterIDs = JSON.parse(window.listMonsterIDs()) as string[];
 		const jobIDs = JSON.parse(window.listJobIDs()) as string[];
-		const inventoryIDs = JSON.parse(window.listInventoryIDs()) as string[];
 
-		for (const id of monsterIDs) {
-			const raw = window.getMonster(id);
-			if (!raw) continue;
-			nextMonsters.set(id, fromJsonString(MonsterSchema, raw, { ignoreUnknownFields: true }));
+		const userId = userStore.getUser().userId;
+		const monsters = await this.wasmClients.monsterService.listMonsters({ ownerId: userId });
+		for (const mon of monsters.monsters) {
+			nextMonsters.set(mon.entity?.id!, mon)
+
 		}
 
 		for (const id of jobIDs) {
@@ -100,10 +102,11 @@ export class GameStateStore {
 			nextJobs.set(id, fromJsonString(JobSchema, raw, { ignoreUnknownFields: true }));
 		}
 
-		for (const id of inventoryIDs) {
-			const raw = window.getInventory(id);
-			if (!raw) continue;
-			nextInventories.set(id, fromJsonString(InventoryViewSchema, raw, { ignoreUnknownFields: true }));
+		const inventories = await this.wasmClients.inventoryService.getPlayerInventory({ userId: userId })
+		console.log(inventories)
+
+		for (const inv of inventories.locations) {
+			nextInventories.set(inv.entity?.id!, inv);
 		}
 
 		this.Monsters.clear();

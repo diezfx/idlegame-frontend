@@ -56,4 +56,9 @@ export function initializeWasm(): Promise<void> {
 
 	return wasmReady;
 }
-export { wasmReady };
+
+interface Channel {
+	invoke: (msg: string) => string
+}
+
+export { wasmReady, type Channel };
