@@ -6,16 +6,16 @@
 	import { DateTime } from 'luxon';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
+	import { Action, type ActionState, JobStatus } from '$gen/v1/domain_pb';
+	import { protoToMilliseconds } from '$lib/utils/prototime';
 	let {
 		jobID,
 		onclick,
 		onStop,
-		...props
 	}: {
 		jobID: string;
 		onclick?: () => void;
 		onStop?: () => void;
-		[key: string]: any;
 	} = $props();
 
 	const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
@@ -38,6 +38,36 @@
 			.filter((m): m is NonNullable<typeof m> => m != null),
 	);
 	const mon = $derived(monsters.at(0))!;
+	let animationFrameId: number | undefined;
+	let nowMs = $state(Date.now());
+
+	let animate = () => {
+		nowMs = Date.now();
+		animationFrameId = requestAnimationFrame(animate);
+	};
+	$effect(() => {
+		animationFrameId = requestAnimationFrame(animate);
+		return () => {
+			if (animationFrameId !== undefined) {
+				cancelAnimationFrame(animationFrameId);
+				animationFrameId = undefined;
+			}
+		};
+	});
+
+	const currentAction = $derived.by(() => {
+		return job?.actionStates
+			.filter((state) => state.action !== Action.UNSPECIFIED)
+			.toSorted((left, right) => actionStartedAt(right) - actionStartedAt(left))[0];
+	});
+
+	function actionStartedAt(state: ActionState): number {
+		return protoToMilliseconds(state.lastUsedAt);
+	}
+
+	function actionDuration(state: ActionState): number {
+		return protoToMilliseconds(state.nextUseAt) - actionStartedAt(state);
+	}
 
 	function handleStopClick(event: MouseEvent): void {
 		event.stopPropagation();
@@ -48,6 +78,21 @@
 {#if job}
 	<Card {onclick} title={job.definitionId} class="w-full">
 		<div class="p-4 space-y-4">
+			<div class="space-y-1">
+				<div class="flex items-center justify-between gap-2">
+					<h3>Current action</h3>
+					<span class="text-sm font-medium">
+						{currentAction ? Action[currentAction.action] : job.jobState ? JobStatus[job.jobState.status] : 'IDLE'}
+					</span>
+				</div>
+				{#if currentAction && actionDuration(currentAction) > 0}
+					<Progress
+						transition={false}
+						value={nowMs - actionStartedAt(currentAction)}
+						max={actionDuration(currentAction)}
+					/>
+				{/if}
+			</div>
 			<h3>Monsters</h3>
 			<Card class="gap-2 p-2" title={mon.identity?.name}>
 				<span>Stamina</span>

@@ -130,7 +130,7 @@
 					</div>
 				{:else}
 					{#each activeJobs as job}
-						<JobView jobID={job.entity!.id} onStop={() => jobService.stopJob(job.entity?.id!)} {job} />
+						<JobView jobID={job.entity!.id} onStop={() => jobService.stopJob(job.entity?.id!)} />
 					{/each}
 				{/if}
 			</div>
