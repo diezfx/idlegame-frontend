@@ -22,11 +22,15 @@
 
 	const processingType = $derived(parseInt(page.params.processing_type!, 10));
 	const activeJobsMap = $derived(gameStateStore.Jobs);
-	let activeJobs = $derived(Array.from(activeJobsMap.values()).filter((job) => job.def?.subType === processingType));
-	const monsters = $derived(gameStateStore.Monsters);
 	const jobDefs = $derived(
 		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === processingType),
 	);
+	let activeJobs = $derived(
+		Array.from(activeJobsMap.values()).filter(
+			(job) => jobDefs.find((j) => j.definition?.id == job.definitionId)?.definition?.subType === processingType,
+		),
+	);
+	const monsters = $derived(gameStateStore.Monsters);
 
 	let selectedMonster: Monster | undefined = $derived(selectedId ? monsters.get(selectedId) : undefined);
 

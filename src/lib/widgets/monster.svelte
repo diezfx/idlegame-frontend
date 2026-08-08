@@ -3,6 +3,7 @@
 	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import { cn } from '$lib/utils';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import { JobSubType } from '$gen/v1/masterdata_pb';
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
@@ -21,6 +22,7 @@
 	} = $props();
 
 	const monster = $derived(gameStateStore.Monsters.get(monId));
+	const jobMasterdata = $derived(await masterdataStore.getProductionJobs());
 	const monJob = $derived(
 		monster?.participant?.jobEntityId ? gameStateStore.Jobs.get(monster.participant.jobEntityId) : undefined,
 	);
@@ -56,7 +58,7 @@
 			</DescriptionRow>
 			<DescriptionRow term="Job" class="text-right">
 				{#if monJob}
-					{JobSubType[monJob.def?.subType!]}
+					{JobSubType[jobMasterdata.find((j) => j.definition?.id == monJob.definitionId)?.definition?.subType!]}
 				{:else}
 					Idle
 				{/if}

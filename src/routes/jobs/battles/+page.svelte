@@ -14,12 +14,18 @@
 	import { JobSubType } from '$gen/v1/masterdata_pb.js';
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
+	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 
 	let { data } = $props();
 	const { battles: battleService, jobs: jobService } = getServicesContext();
 
+	const jobDefs = $derived(
+		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === JobSubType.BATTLE),
+	);
 	const activeJobs = $derived(
-		Array.from(gameStateStore.Jobs.values()).filter((job) => job.def?.subType === JobSubType.BATTLE),
+		Array.from(gameStateStore.Jobs.values()).filter(
+			(job) => jobDefs.find((j) => job.definitionId == j.definition?.id)?.definition?.subType === JobSubType.BATTLE,
+		),
 	);
 	const monsters = $derived(gameStateStore.Monsters);
 

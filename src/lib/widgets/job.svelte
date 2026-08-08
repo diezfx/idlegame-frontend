@@ -46,7 +46,7 @@
 </script>
 
 {#if job}
-	<Card {onclick} title={job.def?.jobDefId} class="w-full">
+	<Card {onclick} title={job.definitionId} class="w-full">
 		<div class="p-4 space-y-4">
 			<h3>Monsters</h3>
 			<Card class="gap-2 p-2" title={mon.identity?.name}>
