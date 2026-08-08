@@ -75,7 +75,8 @@ export class GameStateStore {
 
 		const userId = userStore.getUser().userId;
 		const monsters = await this.wasmClients.monsterService.listMonsters({ ownerId: userId });
-		for (const mon of monsters.monsters) {
+
+		for (const mon of monsters.monsters.toSorted((x, y) => x.entity!.id!.localeCompare(y.entity?.id!))) {
 			nextMonsters.set(mon.entity?.id!, mon);
 		}
 
