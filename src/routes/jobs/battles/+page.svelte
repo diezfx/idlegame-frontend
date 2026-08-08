@@ -10,11 +10,11 @@
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import type { BattleJobInfo } from '../../../gen/v1/service_pb.js';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
-	import { startBattle } from '$lib/service/battles.js';
-	import { stopJob } from '$lib/service/jobs.js';
+	import { getServicesContext } from '$lib/service/context.js';
 	import { JobSubType } from '$gen/v1/masterdata_pb.js';
 
 	let { data } = $props();
+	const { battles: battleService, jobs: jobService } = getServicesContext();
 
 	const activeJobs = $derived(
 		Array.from(gameStateStore.Jobs.values()).filter((job) => job.def?.subType === JobSubType.BATTLE),
@@ -43,7 +43,7 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await startBattle({
+		await battleService.startBattle({
 			jobDefinitionId: selectedJob?.definition!.id,
 			monsterId: selectedMonster.entity!.id,
 		});
@@ -136,7 +136,7 @@
 				{:else}
 					{#each activeJobs as job}
 						<JobView
-							onStop={() => stopJob(job.entity?.id!)}
+							onStop={() => jobService.stopJob(job.entity?.id!)}
 							jobID={job.entity!.id}
 							onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
 						/>

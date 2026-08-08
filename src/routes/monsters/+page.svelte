@@ -5,11 +5,12 @@
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
-	import { equipItem, unequipItem } from '$lib/service/inventory.js';
+	import { getServicesContext } from '$lib/service/context.js';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 	import { EffectType } from '$gen/v1/masterdata_pb.js';
 
 	let openDialog = $state(false);
+	const { inventory: inventoryService } = getServicesContext();
 	let selectedMonster: Monster | undefined = $state(undefined);
 	let selectedItem: Item | undefined = $state(undefined);
 	let itemAmount = $state(1);
@@ -39,7 +40,7 @@
 			log.error('No monster selected');
 			return;
 		}
-		equipItem({
+		inventoryService.equipItem({
 			monsterId: selectedMonster.entity!.id,
 			itemId: item.id,
 			quantity: itemAmount,
@@ -48,7 +49,7 @@
 	}
 
 	async function itemDeleteAction(monsterId: string, itemId: string): Promise<void> {
-		await unequipItem({
+		await inventoryService.unequipItem({
 			monsterId: monsterId,
 			itemId: itemId,
 		});

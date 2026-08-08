@@ -9,12 +9,13 @@
 	import type { ProductionJobInfo } from '../../../../gen/v1/service_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
-	import { startJob as startJobMutation, stopJob } from '$lib/service/jobs.js';
+	import { getServicesContext } from '$lib/service/context.js';
 	import { page } from '$app/state';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 	import Collapsible from '$lib/components/ui/collapsible/collapsible.svelte';
 
 	let openDialog = $state(false);
+	const { jobs: jobService } = getServicesContext();
 	let selectedId: string | undefined = $state(undefined);
 	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
@@ -47,7 +48,7 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await startJobMutation({
+		await jobService.startJob({
 			jobDefinitionId: selectedJob?.definition!.id,
 			monsterId: selectedMonster.entity!.id,
 		});
@@ -131,7 +132,7 @@
 					</div>
 				{:else}
 					{#each activeJobs as job}
-						<JobView jobID={job.entity!.id} onStop={() => stopJob(job.entity?.id!)} {job} />
+						<JobView jobID={job.entity!.id} onStop={() => jobService.stopJob(job.entity?.id!)} {job} />
 					{/each}
 				{/if}
 			</div>

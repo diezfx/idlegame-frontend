@@ -20,8 +20,7 @@
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
-	import { startJob } from '$lib/service/jobs';
-	import { startBattle } from '$lib/service/battles';
+	import { getServicesContext } from '$lib/service/context';
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 
@@ -58,6 +57,7 @@
 
 	const TILE_SIZE = 10;
 	const FALLBACK_WALK_SPEED = 1;
+	const { jobs: jobService, battles: battleService } = getServicesContext();
 
 	let mapPixelWidth = $state(1000);
 	let mapPixelHeight = $state(1000);
@@ -317,12 +317,12 @@
 		startError = undefined;
 		try {
 			if (selectedJob.kind === 'production') {
-				await startJob({
+				await jobService.startJob({
 					monsterId: selectedMonster.entity.id,
 					jobDefinitionId: selectedJob.definition.id,
 				});
 			} else {
-				await startBattle({
+				await battleService.startBattle({
 					monsterId: selectedMonster.entity.id,
 					jobDefinitionId: selectedJob.definition.id,
 				});

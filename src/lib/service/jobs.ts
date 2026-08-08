@@ -1,24 +1,30 @@
-import { clients } from '$lib/service/connect';
-import { gameStateStore } from '$lib/stores/gamestate.svelte';
-import { userStore } from '$lib/stores/user.svelte';
+import type { Client } from '@connectrpc/connect';
+import { JobService as JobServiceDefinition } from '$gen/v1/service_pb';
+import type { GameStateStore } from '$lib/stores/gamestate.svelte';
 
-export async function startJob({
-	monsterId,
-	jobDefinitionId,
-}: {
+export type StartJobRequest = {
 	monsterId: string;
 	jobDefinitionId: string;
-}): Promise<string> {
-	await gameStateStore.initialize();
-	const response = await clients.jobClient.startProductionJob({
-		userId: userStore.getUser().userId,
-		monsterId,
-		jobDefinitionId,
-	});
-	return response.jobId;
-}
+};
 
-export async function stopJob(id: string): Promise<void> {
-	await gameStateStore.initialize();
-	await clients.jobClient.deleteJob({ id });
+export class JobService {
+	constructor(
+		private readonly client: Client<typeof JobServiceDefinition>,
+		private readonly gameState: GameStateStore,
+		private readonly getUserId: () => string,
+	) {}
+
+	async startJob(request: StartJobRequest): Promise<string> {
+		await this.gameState.initialize();
+		const response = await this.client.startProductionJob({
+			...request,
+			userId: this.getUserId(),
+		});
+		return response.jobId;
+	}
+
+	async stopJob(id: string): Promise<void> {
+		await this.gameState.initialize();
+		await this.client.deleteJob({ id });
+	}
 }

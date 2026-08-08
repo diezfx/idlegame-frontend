@@ -1,19 +1,25 @@
-import { clients } from '$lib/service/connect';
-import { gameStateStore } from '$lib/stores/gamestate.svelte';
-import { userStore } from '$lib/stores/user.svelte';
+import type { Client } from '@connectrpc/connect';
+import { JobService as JobServiceDefinition } from '$gen/v1/service_pb';
+import type { GameStateStore } from '$lib/stores/gamestate.svelte';
 
-export async function startBattle({
-	monsterId,
-	jobDefinitionId,
-}: {
+export type StartBattleRequest = {
 	monsterId: string;
 	jobDefinitionId: string;
-}): Promise<string> {
-	await gameStateStore.initialize();
-	const response = await clients.jobClient.startBattle({
-		userId: userStore.getUser().userId,
-		monsterId,
-		jobDefinitionId,
-	});
-	return response.jobId;
+};
+
+export class BattleService {
+	constructor(
+		private readonly client: Client<typeof JobServiceDefinition>,
+		private readonly gameState: GameStateStore,
+		private readonly getUserId: () => string,
+	) {}
+
+	async startBattle(request: StartBattleRequest): Promise<string> {
+		await this.gameState.initialize();
+		const response = await this.client.startBattle({
+			...request,
+			userId: this.getUserId(),
+		});
+		return response.jobId;
+	}
 }

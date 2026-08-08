@@ -3,6 +3,21 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { clients } from '$lib/service/connect';
+	import { userStore } from '$lib/stores/user.svelte';
+	import { JobService } from '$lib/service/jobs';
+	import { BattleService } from '$lib/service/battles';
+	import { InventoryService } from '$lib/service/inventory';
+	import { TutorialService } from '$lib/service/tutorial';
+	import { setServicesContext } from '$lib/service/context';
+
+	const getUserId = () => userStore.getUser().userId;
+	setServicesContext({
+		jobs: new JobService(clients.jobClient, gameStateStore, getUserId),
+		battles: new BattleService(clients.jobClient, gameStateStore, getUserId),
+		inventory: new InventoryService(clients.inventoryClient, gameStateStore, getUserId),
+		tutorial: new TutorialService(clients.tutorialClient, gameStateStore, getUserId),
+	});
 
 	onMount(() => {
 		gameStateStore.initialize().catch((error) => {

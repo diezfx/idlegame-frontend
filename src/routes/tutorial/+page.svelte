@@ -2,9 +2,10 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MasterdataMonster from '$lib/widgets/masterdata_monster.svelte';
 	import type { PageProps } from './$types';
-	import { chooseStarter as chooseStarterMutation } from '$lib/service/tutorial';
+	import { getServicesContext } from '$lib/service/context';
 	import { goto } from '$app/navigation';
 	let { data }: PageProps = $props();
+	const { tutorial: tutorialService } = getServicesContext();
 
 	const selectedColor = 'bg-primary/20';
 
@@ -12,7 +13,7 @@
 
 	const starterMons = data.monsters.filter((m) => data.starterMonsters.includes(m.id));
 	async function chooseStarter(): Promise<void> {
-		await chooseStarterMutation(selectedMonster!);
+		await tutorialService.chooseStarter(selectedMonster!);
 		await goto('/monsters');
 	}
 </script>
