@@ -4,7 +4,7 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
 import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Entity, Identity, Inventory, Owner, Parent } from "./domain_pb";
+import type { Entity, Identity, Inventory, Owner } from "./domain_pb";
 import { file_v1_domain } from "./domain_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/views.proto.
  */
 export const file_v1_views: GenFile = /*@__PURE__*/
-  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEisQEKDUludmVudG9yeVZpZXcSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5EgwKBHVzZWQYBSABKAUSGgoGcGFyZW50GAYgASgLMgoudjEuUGFyZW50EhgKBW93bmVyGAcgASgLMgkudjEuT3duZXJCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_v1_domain]);
+  fileDesc("Cg52MS92aWV3cy5wcm90bxICdjEilQEKDUludmVudG9yeVZpZXcSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIAoJaW52ZW50b3J5GAMgASgLMg0udjEuSW52ZW50b3J5EgwKBHVzZWQYBSABKAUSGAoFb3duZXIYByABKAsyCS52MS5Pd25lckIrWilnaXRodWIuY29tL2RpZXpmeC9pZGxlZ2FtZS1iYWNrZW5kL2dlbi92MWIIZWRpdGlvbnNw6Ac", [file_v1_domain]);
 
 /**
  * @generated from message v1.InventoryView
@@ -37,11 +37,6 @@ export type InventoryView = Message<"v1.InventoryView"> & {
    * @generated from field: int32 used = 5;
    */
   used: number;
-
-  /**
-   * @generated from field: v1.Parent parent = 6;
-   */
-  parent?: Parent | undefined;
 
   /**
    * @generated from field: v1.Owner owner = 7;
