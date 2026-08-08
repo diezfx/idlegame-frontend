@@ -4,11 +4,11 @@
 	import { cn } from '$lib/utils';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { Duration } from 'luxon';
-	import { JobSubType as JobSubTypeEnum } from '../../gen/v1/masterdata_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
+	import Separator from '$lib/components/ui/separator/separator.svelte';
 
 	type JobCardData = {
 		definition?: ProductionJobInfo['definition'] | BattleJobInfo['definition'];
@@ -46,7 +46,11 @@
 	}
 </script>
 
-<Card {onclick} class={cn('w-full border', interactive ? 'cursor-pointer' : '', className)}>
+<Card
+	title={job.definition?.name ?? job.definition?.id}
+	{onclick}
+	class={cn('w-full border', interactive ? 'cursor-pointer' : '', className)}
+>
 	<DescriptionList>
 		<DescriptionRow term="Required Lvl">{job.definition?.levelRequirement}</DescriptionRow>
 		<DescriptionRow term="Stamina Cost">{job.definition?.staminaCost}</DescriptionRow>
@@ -63,35 +67,21 @@
 		>
 	</DescriptionList>
 
-	<div class="space-y-1.5">
-		<div class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Rewards</div>
-		<div class="flex flex-wrap gap-1.5">
-			<span
-				class="inline-flex items-center gap-1 rounded-md border border-border bg-secondary px-2 py-1 text-xs text-secondary-foreground"
-			>
-				XP
-				<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">+{job.definition?.rewards?.experience ?? 0}</span>
-			</span>
-			{#each job.definition?.rewards?.items ?? [] as rewardItem}
-				<span class="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-xs">
-					<span class="font-medium">{rewardLabel(rewardItem.id)}</span>
-					<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">x{rewardItem.quantity}</span>
-				</span>
-			{/each}
-		</div>
-	</div>
-
 	{#if ingredients.length}
-		<div class="space-y-1.5">
-			<div class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Ingredients</div>
-			<div class="flex flex-wrap gap-1.5">
-				{#each ingredients as ingredient}
-					<span class="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-xs">
-						<span class="font-medium">{rewardLabel(ingredient.id)}</span>
-						<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">x{ingredient.quantity}</span>
-					</span>
-				{/each}
-			</div>
-		</div>
+		<Separator class="my-2" />
+		<DescriptionList>
+			<DescriptionRow term="Ingredients">
+				{#each ingredients as ingredient, index}{index ? ', ' : ''}{rewardLabel(ingredient.id)}: {ingredient.quantity}{/each}
+			</DescriptionRow>
+		</DescriptionList>
 	{/if}
+
+	<Separator class="my-2" />
+	<DescriptionList>
+		<DescriptionRow term="Rewards">
+			XP: {job.definition?.rewards?.experience ?? 0}{#each job.definition?.rewards?.items ?? [] as rewardItem}, {rewardLabel(
+					rewardItem.id,
+				)}: {rewardItem.quantity}{/each}
+		</DescriptionRow>
+	</DescriptionList>
 </Card>
