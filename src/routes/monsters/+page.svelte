@@ -56,7 +56,7 @@
 </script>
 
 <h1>Monsters</h1>
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4">
 	{#each monsters as [_, monster]}
 		<div class="gap-2">
 			<MonsterView
