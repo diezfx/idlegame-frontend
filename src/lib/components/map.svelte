@@ -1,20 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import {
-		Anvil,
-		ChefHat,
-		Factory,
-		Fish,
-		Flame,
-		House,
-		Pickaxe,
-		Shield,
-		Sword,
-		Swords,
-		TreePine,
-		Wheat,
-	} from 'lucide-svelte';
+	import { House, Sword } from 'lucide-svelte';
 	import type { CityDefinition, JobSubType } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
@@ -23,6 +10,7 @@
 	import { getServicesContext } from '$lib/service/context';
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import MultiSelect from '$lib/components/ui/multi-select/multi-select.svelte';
 
 	type MapJobKind = 'production' | 'battle';
 	type MapJob = {
@@ -37,9 +25,6 @@
 
 	type SubtypeMeta = {
 		label: string;
-		badgeClass: string;
-		pinClass: string;
-		icon: any;
 	};
 
 	let {
@@ -65,7 +50,6 @@
 	let selectedMonsterId = $state<string | undefined>(undefined);
 	let isStarting = $state(false);
 	let startError = $state<string | undefined>(undefined);
-	let jobKindFilter = $state<'all' | 'production' | 'battle'>('all');
 	let subtypeFilters = $state<number[]>([]);
 
 	const allJobs = $derived.by(() => {
@@ -100,11 +84,7 @@
 	});
 
 	const visibleJobs = $derived.by(() =>
-		allJobs.filter((job) => {
-			const matchesKind = jobKindFilter === 'all' || job.kind === jobKindFilter;
-			const matchesSubtype = subtypeFilters.length === 0 || subtypeFilters.includes(job.subType);
-			return matchesKind && matchesSubtype;
-		}),
+		allJobs.filter((job) => subtypeFilters.length === 0 || subtypeFilters.includes(job.subType)),
 	);
 	const selectedJob = $derived(visibleJobs.find((job) => job.id === selectedJobId));
 	const availableMonsters = $derived(monsters.filter((monster) => !monster.participant?.jobEntityId));
@@ -112,16 +92,18 @@
 	const groupedBySubtype = $derived.by(() => {
 		const groups = new Map<JobSubType, { count: number; meta: SubtypeMeta }>();
 		for (const job of allJobs) {
-			if (jobKindFilter !== 'all' && job.kind !== jobKindFilter) continue;
 			const curr = groups.get(job.subType);
 			if (curr) {
 				curr.count += 1;
 				continue;
 			}
-			groups.set(job.subType, { count: 1, meta: getSubtypeMeta(job.subType, job.kind) });
+			groups.set(job.subType, { count: 1, meta: getSubtypeMeta(job.subType) });
 		}
 		return Array.from(groups.entries());
 	});
+	const subtypeOptions = $derived(
+		groupedBySubtype.map(([value, group]) => ({ value, label: group.meta.label, count: group.count })),
+	);
 
 	$effect(() => {
 		if (!selectedJobId) return;
@@ -182,74 +164,26 @@
 		};
 	});
 
-	function getSubtypeMeta(subType: JobSubType, kind: MapJobKind): SubtypeMeta {
+	function getSubtypeMeta(subType: JobSubType): SubtypeMeta {
 		switch (subType) {
 			case 1:
-				return {
-					label: 'Woodcutting',
-					badgeClass: 'bg-secondary text-secondary-foreground border border-border',
-					pinClass: 'bg-primary hover:bg-primary/90 text-primary-foreground',
-					icon: TreePine,
-				};
+				return { label: 'Woodcutting' };
 			case 2:
-				return {
-					label: 'Mining',
-					badgeClass: 'bg-slate-100 text-slate-800 border border-slate-200',
-					pinClass: 'bg-slate-600 hover:bg-slate-700 text-primary-foreground',
-					icon: Pickaxe,
-				};
+				return { label: 'Mining' };
 			case 3:
-				return {
-					label: 'Harvesting',
-					badgeClass: 'bg-amber-100 text-amber-900 border border-amber-200',
-					pinClass: 'bg-amber-500 hover:bg-amber-600 text-primary-foreground',
-					icon: Wheat,
-				};
+				return { label: 'Harvesting' };
 			case 4:
-				return {
-					label: 'Fishing',
-					badgeClass: 'bg-sky-100 text-sky-800 border border-sky-200',
-					pinClass: 'bg-sky-600 hover:bg-sky-700 text-primary-foreground',
-					icon: Fish,
-				};
+				return { label: 'Fishing' };
 			case 5:
-				return {
-					label: 'Smelting',
-					badgeClass: 'bg-orange-100 text-orange-800 border border-orange-200',
-					pinClass: 'bg-orange-600 hover:bg-orange-700 text-primary-foreground',
-					icon: Flame,
-				};
+				return { label: 'Smelting' };
 			case 7:
-				return {
-					label: 'Cooking',
-					badgeClass: 'bg-rose-100 text-rose-800 border border-rose-200',
-					pinClass: 'bg-rose-600 hover:bg-rose-700 text-primary-foreground',
-					icon: ChefHat,
-				};
+				return { label: 'Cooking' };
 			case 8:
-				return {
-					label: 'Battle',
-					badgeClass: 'bg-destructive/10 text-destructive border border-destructive/30',
-					pinClass: 'bg-destructive hover:bg-destructive/90 text-primary-foreground',
-					icon: Swords,
-				};
+				return { label: 'Battle' };
 			case 9:
-				return {
-					label: 'Armor Crafting',
-					badgeClass: 'bg-indigo-100 text-indigo-800 border border-indigo-200',
-					pinClass: 'bg-indigo-600 hover:bg-indigo-700 text-primary-foreground',
-					icon: Shield,
-				};
+				return { label: 'Armor Crafting' };
 			default:
-				return {
-					label: kind === 'battle' ? 'Battle' : 'Production',
-					badgeClass: 'bg-secondary text-foreground border border-border',
-					pinClass:
-						kind === 'battle'
-							? 'bg-destructive hover:bg-destructive/90 text-primary-foreground'
-							: 'bg-cyan-600 hover:bg-cyan-700 text-primary-foreground',
-					icon: kind === 'battle' ? Swords : Factory,
-				};
+				return { label: 'Production' };
 		}
 	}
 
@@ -296,19 +230,6 @@
 		startError = undefined;
 	}
 
-	function toggleSubtypeFilter(subType: number): void {
-		if (subtypeFilters.includes(subType)) {
-			subtypeFilters = subtypeFilters.filter((s) => s !== subType);
-			return;
-		}
-		subtypeFilters = [...subtypeFilters, subType];
-	}
-
-	function clearFilters(): void {
-		jobKindFilter = 'all';
-		subtypeFilters = [];
-	}
-
 	async function startSelectedJob(): Promise<void> {
 		if (!selectedJob || !selectedMonster?.entity?.id || !selectedJob.definition?.id) {
 			return;
@@ -338,59 +259,7 @@
 </script>
 
 <div class="space-y-3">
-	<div class="flex flex-wrap items-center gap-2 text-xs">
-		<button
-			type="button"
-			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'all'
-				? 'border-foreground bg-foreground text-primary-foreground'
-				: 'border-border bg-card text-foreground hover:border-border'}"
-			onclick={() => (jobKindFilter = 'all')}
-		>
-			All
-		</button>
-		<button
-			type="button"
-			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'production'
-				? 'border-primary bg-primary/90 text-primary-foreground'
-				: 'border-primary/40 bg-card text-secondary-foreground hover:border-primary'}"
-			onclick={() => (jobKindFilter = 'production')}
-		>
-			Production
-		</button>
-		<button
-			type="button"
-			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'battle'
-				? 'border-destructive bg-destructive/90 text-primary-foreground'
-				: 'border-destructive/30 bg-card text-destructive hover:border-destructive'}"
-			onclick={() => (jobKindFilter = 'battle')}
-		>
-			Battle
-		</button>
-
-		<div class="mx-1 h-5 w-px bg-muted"></div>
-
-		{#each groupedBySubtype as [_, group]}
-			<button
-				type="button"
-				class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 border transition {subtypeFilters.length === 0 ||
-				subtypeFilters.includes(_)
-					? group.meta.badgeClass
-					: 'bg-card text-muted-foreground border-border hover:border-border'}"
-				onclick={() => toggleSubtypeFilter(_)}
-			>
-				<group.meta.icon size={12} />
-				{group.meta.label} ({group.count})
-			</button>
-		{/each}
-
-		<button
-			type="button"
-			class="rounded-md border border-border bg-card px-2 py-1 text-foreground hover:border-border"
-			onclick={clearFilters}
-		>
-			Reset
-		</button>
-	</div>
+	<MultiSelect label="Jobs" options={subtypeOptions} bind:selected={subtypeFilters} />
 
 	<div class="grid grid-cols-3 gap-4">
 		<div
@@ -431,13 +300,11 @@
 				{/each}
 
 				{#each visibleJobs as job}
-					{@const meta = getSubtypeMeta(job.subType, job.kind)}
 					<button
 						type="button"
-						class="absolute z-40 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white shadow {meta.pinClass} {selectedJobId ===
-						job.id
-							? 'ring-2 ring-offset-2 ring-black/40'
-							: ''}"
+						class="absolute z-40 h-6 w-6 rounded-full border-2 border-white shadow {job.kind === 'battle'
+							? 'bg-red-600 hover:bg-red-700'
+							: 'bg-blue-600 hover:bg-blue-700'} {selectedJobId === job.id ? 'ring-2 ring-offset-2 ring-black/40' : ''}"
 						style="left: {job.x * TILE_SIZE}px; top: {job.y * TILE_SIZE}px; transform: translate(-50%, -50%);"
 						onclick={() => {
 							selectedJobId = job.id;
@@ -445,9 +312,7 @@
 							startError = undefined;
 						}}
 						title={job.definition?.id ?? job.id}
-					>
-						<meta.icon size={12} />
-					</button>
+					></button>
 				{/each}
 			</div>
 		</div>
