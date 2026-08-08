@@ -17,7 +17,7 @@
 
 <div class="flex min-h-screen bg-background">
 	<Nav />
-	<main class="flex-1 p-2">
+	<main class="min-w-0 flex-1 p-2">
 		{@render children()}
 	</main>
 </div>
