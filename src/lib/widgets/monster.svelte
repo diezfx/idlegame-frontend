@@ -35,8 +35,8 @@
 				<Progress
 					class="w-full"
 					showLabel={true}
-					foreground="bg-primary/100"
-					background="bg-primary/20"
+					foreground="bg-emerald-500"
+					background="bg-emerald-500/20"
 					value={monster.stat?.health!}
 					max={monster.stat?.maxHealth!}
 				/>

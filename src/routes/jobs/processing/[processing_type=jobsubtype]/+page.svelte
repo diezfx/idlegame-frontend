@@ -55,8 +55,8 @@
 	}
 </script>
 
-<div class="grid grid-cols-3 gap-4">
-	<div>
+<div class="grid gap-4 lg:grid-cols-3">
+	<div class="lg:col-span-2">
 		<Card class="mb-4 p-4">
 			<div class="mt-3 grid grid-cols-2 gap-3">
 				<Card

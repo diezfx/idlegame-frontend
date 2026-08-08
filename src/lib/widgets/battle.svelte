@@ -106,8 +106,8 @@
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
-										foreground="bg-destructive"
-										background="bg-muted"
+										foreground="bg-emerald-500"
+										background="bg-emerald-500/20"
 										value={monsters.get(mon)!.stat?.health ?? 0}
 										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
@@ -143,8 +143,8 @@
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
-										foreground="bg-destructive"
-										background="bg-muted"
+										foreground="bg-emerald-500"
+										background="bg-emerald-500/20"
 										value={monsters.get(mon)!.stat?.health ?? 0}
 										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
