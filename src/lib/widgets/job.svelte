@@ -46,7 +46,7 @@
 </script>
 
 {#if job}
-	<Card {onclick} title={job.def?.jobDefId} class="w-[350px]">
+	<Card {onclick} title={job.def?.jobDefId} class="w-full">
 		<div class="p-4 space-y-4">
 			<h3>Monsters</h3>
 			<Card class="gap-2 p-2" title={mon.identity?.name}>
@@ -78,9 +78,9 @@
 		</div>
 
 		<!-- Action Footer -->
-		<div class="p-4 bg-gray-50/50 border-t border-gray-100 rounded-b-xl flex justify-center">
+		<div class="p-4 bg-muted/50 border-t border-border rounded-b-xl flex justify-center">
 			<Button
-				class="w-full bg-destructive hover:bg-destructive/90 text-white font-medium shadow-sm hover:shadow transition-all"
+				class="w-full bg-destructive hover:bg-destructive/90 text-primary-foreground font-medium shadow-sm hover:shadow transition-all"
 				onclick={handleStopClick}
 			>
 				Stop Job

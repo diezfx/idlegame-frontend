@@ -15,7 +15,7 @@
 	} = $props();
 </script>
 
-<Card {...props} class={cn(classname, 'w-[350px]')} title={monster.name}>
+<Card {...props} class={cn(classname, 'w-full')} title={monster.name}>
 	<div class="grid grid-cols-2">
 		<div>ID</div>
 		<p>#{monster.id}</p>

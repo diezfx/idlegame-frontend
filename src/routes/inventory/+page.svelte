@@ -17,7 +17,7 @@
 <div class="gap-3">
 	{#each invs as inv}
 		<Collapsible open={true} class="m-3" title={inv.identity?.name!}>
-			<div class="grid grid-cols-4 m-2 gap-3">
+			<div class="m-2 grid grid-cols-4 gap-3">
 				{#each inv.inventory!.items! as item (item.id)}
 					<ItemView {item} class="bg-secondary text-secondary-foreground w-full" />
 				{/each}

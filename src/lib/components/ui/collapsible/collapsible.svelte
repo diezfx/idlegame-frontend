@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
 	let { title, open = false, class: classname, children } = $props();
 	let isOpen = $state(open);
 
@@ -8,9 +9,9 @@
 </script>
 
 <div class={classname}>
-	<button
+	<Button
 		onclick={toggle}
-		class="w-full py-2 px-4 text-primary-foreground bg-primary text-xl rounded-sm hover:cursor-pointer">{title}</button
+		class="w-full text-xl rounded-sm">{title}</Button
 	>
 	{#if isOpen}
 		<div>

@@ -64,18 +64,18 @@
 	</DescriptionList>
 
 	<div class="space-y-1.5">
-		<div class="text-xs font-semibold uppercase tracking-wider text-gray-600">Rewards</div>
+		<div class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Rewards</div>
 		<div class="flex flex-wrap gap-1.5">
 			<span
-				class="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs text-emerald-800"
+				class="inline-flex items-center gap-1 rounded-md border border-border bg-secondary px-2 py-1 text-xs text-secondary-foreground"
 			>
 				XP
-				<span class="rounded bg-emerald-100 px-1 py-0.5 text-[10px]">+{job.definition?.rewards?.experience ?? 0}</span>
+				<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">+{job.definition?.rewards?.experience ?? 0}</span>
 			</span>
 			{#each job.definition?.rewards?.items ?? [] as rewardItem}
-				<span class="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs">
+				<span class="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-xs">
 					<span class="font-medium">{rewardLabel(rewardItem.id)}</span>
-					<span class="rounded bg-gray-100 px-1 py-0.5 text-[10px]">x{rewardItem.quantity}</span>
+					<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">x{rewardItem.quantity}</span>
 				</span>
 			{/each}
 		</div>
@@ -83,12 +83,12 @@
 
 	{#if ingredients.length}
 		<div class="space-y-1.5">
-			<div class="text-xs font-semibold uppercase tracking-wider text-gray-600">Ingredients</div>
+			<div class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Ingredients</div>
 			<div class="flex flex-wrap gap-1.5">
 				{#each ingredients as ingredient}
-					<span class="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs">
+					<span class="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-xs">
 						<span class="font-medium">{rewardLabel(ingredient.id)}</span>
-						<span class="rounded bg-gray-100 px-1 py-0.5 text-[10px]">x{ingredient.quantity}</span>
+						<span class="rounded bg-secondary px-1 py-0.5 text-[10px]">x{ingredient.quantity}</span>
 					</span>
 				{/each}
 			</div>

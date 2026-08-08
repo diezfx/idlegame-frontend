@@ -23,6 +23,7 @@
 	import { userStore } from '$lib/stores/user.svelte';
 	import { JobsClient } from '$lib/service/jobs';
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	type MapJobKind = 'production' | 'battle';
 	type MapJob = {
@@ -187,65 +188,65 @@
 			case 1:
 				return {
 					label: 'Woodcutting',
-					badgeClass: 'bg-emerald-100 text-emerald-800 border border-emerald-200',
-					pinClass: 'bg-emerald-600 hover:bg-emerald-700 text-white',
+					badgeClass: 'bg-secondary text-secondary-foreground border border-border',
+					pinClass: 'bg-primary hover:bg-primary/90 text-primary-foreground',
 					icon: TreePine,
 				};
 			case 2:
 				return {
 					label: 'Mining',
 					badgeClass: 'bg-slate-100 text-slate-800 border border-slate-200',
-					pinClass: 'bg-slate-600 hover:bg-slate-700 text-white',
+					pinClass: 'bg-slate-600 hover:bg-slate-700 text-primary-foreground',
 					icon: Pickaxe,
 				};
 			case 3:
 				return {
 					label: 'Harvesting',
 					badgeClass: 'bg-amber-100 text-amber-900 border border-amber-200',
-					pinClass: 'bg-amber-500 hover:bg-amber-600 text-white',
+					pinClass: 'bg-amber-500 hover:bg-amber-600 text-primary-foreground',
 					icon: Wheat,
 				};
 			case 4:
 				return {
 					label: 'Fishing',
 					badgeClass: 'bg-sky-100 text-sky-800 border border-sky-200',
-					pinClass: 'bg-sky-600 hover:bg-sky-700 text-white',
+					pinClass: 'bg-sky-600 hover:bg-sky-700 text-primary-foreground',
 					icon: Fish,
 				};
 			case 5:
 				return {
 					label: 'Smelting',
 					badgeClass: 'bg-orange-100 text-orange-800 border border-orange-200',
-					pinClass: 'bg-orange-600 hover:bg-orange-700 text-white',
+					pinClass: 'bg-orange-600 hover:bg-orange-700 text-primary-foreground',
 					icon: Flame,
 				};
 			case 7:
 				return {
 					label: 'Cooking',
 					badgeClass: 'bg-rose-100 text-rose-800 border border-rose-200',
-					pinClass: 'bg-rose-600 hover:bg-rose-700 text-white',
+					pinClass: 'bg-rose-600 hover:bg-rose-700 text-primary-foreground',
 					icon: ChefHat,
 				};
 			case 8:
 				return {
 					label: 'Battle',
-					badgeClass: 'bg-red-100 text-red-800 border border-red-200',
-					pinClass: 'bg-red-600 hover:bg-red-700 text-white',
+					badgeClass: 'bg-destructive/10 text-destructive border border-destructive/30',
+					pinClass: 'bg-destructive hover:bg-destructive/90 text-primary-foreground',
 					icon: Swords,
 				};
 			case 9:
 				return {
 					label: 'Armor Crafting',
 					badgeClass: 'bg-indigo-100 text-indigo-800 border border-indigo-200',
-					pinClass: 'bg-indigo-600 hover:bg-indigo-700 text-white',
+					pinClass: 'bg-indigo-600 hover:bg-indigo-700 text-primary-foreground',
 					icon: Shield,
 				};
 			default:
 				return {
 					label: kind === 'battle' ? 'Battle' : 'Production',
-					badgeClass: 'bg-gray-100 text-gray-800 border border-gray-200',
+					badgeClass: 'bg-secondary text-foreground border border-border',
 					pinClass:
-						kind === 'battle' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white',
+						kind === 'battle' ? 'bg-destructive hover:bg-destructive/90 text-primary-foreground' : 'bg-cyan-600 hover:bg-cyan-700 text-primary-foreground',
 					icon: kind === 'battle' ? Swords : Factory,
 				};
 		}
@@ -341,8 +342,8 @@
 		<button
 			type="button"
 			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'all'
-				? 'border-gray-700 bg-gray-700 text-white'
-				: 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'}"
+				? 'border-foreground bg-foreground text-primary-foreground'
+				: 'border-border bg-card text-foreground hover:border-border'}"
 			onclick={() => (jobKindFilter = 'all')}
 		>
 			All
@@ -350,8 +351,8 @@
 		<button
 			type="button"
 			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'production'
-				? 'border-emerald-700 bg-emerald-700 text-white'
-				: 'border-emerald-300 bg-white text-emerald-700 hover:border-emerald-400'}"
+				? 'border-primary bg-primary/90 text-primary-foreground'
+				: 'border-primary/40 bg-card text-secondary-foreground hover:border-primary'}"
 			onclick={() => (jobKindFilter = 'production')}
 		>
 			Production
@@ -359,14 +360,14 @@
 		<button
 			type="button"
 			class="rounded-md border px-2 py-1 font-medium {jobKindFilter === 'battle'
-				? 'border-red-700 bg-red-700 text-white'
-				: 'border-red-300 bg-white text-red-700 hover:border-red-400'}"
+				? 'border-destructive bg-destructive/90 text-primary-foreground'
+				: 'border-destructive/30 bg-card text-destructive hover:border-destructive'}"
 			onclick={() => (jobKindFilter = 'battle')}
 		>
 			Battle
 		</button>
 
-		<div class="mx-1 h-5 w-px bg-gray-300"></div>
+		<div class="mx-1 h-5 w-px bg-muted"></div>
 
 		{#each groupedBySubtype as [_, group]}
 			<button
@@ -374,7 +375,7 @@
 				class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 border transition {subtypeFilters.length === 0 ||
 				subtypeFilters.includes(_)
 					? group.meta.badgeClass
-					: 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}"
+					: 'bg-card text-muted-foreground border-border hover:border-border'}"
 				onclick={() => toggleSubtypeFilter(_)}
 			>
 				<group.meta.icon size={12} />
@@ -384,16 +385,16 @@
 
 		<button
 			type="button"
-			class="rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-700 hover:border-gray-400"
+			class="rounded-md border border-border bg-card px-2 py-1 text-foreground hover:border-border"
 			onclick={clearFilters}
 		>
 			Reset
 		</button>
 	</div>
 
-	<div class="grid gap-4 lg:grid-cols-[1fr_320px]">
+	<div class="grid grid-cols-3 gap-4">
 		<div
-			class="relative overflow-hidden rounded-lg border border-gray-300"
+			class="relative overflow-hidden rounded-lg border border-border"
 			style="width: {mapPixelWidth}px; height: {mapPixelHeight}px; max-width: 100%;"
 		>
 			<div id="map-canvas" class="absolute inset-0" aria-hidden="true"></div>
@@ -422,7 +423,7 @@
 								TILE_SIZE}px; transform: translate(-50%, -50%);"
 							title={monster.identity?.name}
 						>
-							<div class="rounded-full border border-black/20 bg-white p-1.5 shadow-sm">
+							<div class="rounded-full border border-black/20 bg-card p-1.5 shadow-sm">
 								<Sword class="h-4 w-4" />
 							</div>
 						</div>
@@ -451,7 +452,7 @@
 			</div>
 		</div>
 
-		<aside class="h-fit rounded-lg border border-gray-200 bg-white p-3">
+		<aside class="h-fit rounded-lg border border-border bg-card p-3">
 			{#if selectedJob}
 				<JobDefinitionCard
 					job={{ definition: selectedJob.definition, routeInfo: selectedJob.routeInfo }}
@@ -460,10 +461,10 @@
 					class="mb-3"
 				/>
 
-				<div class="mb-2 text-xs font-medium text-gray-600">Available Monsters</div>
+				<div class="mb-2 text-xs font-medium text-muted-foreground">Available Monsters</div>
 				<div class="max-h-56 space-y-1.5 overflow-y-auto pr-1">
 					{#if availableMonsters.length === 0}
-						<div class="rounded border border-dashed border-gray-300 bg-gray-50 px-2 py-2 text-xs text-gray-500">
+						<div class="rounded border border-dashed border-border bg-muted px-2 py-2 text-xs text-muted-foreground">
 							All monsters are currently busy.
 						</div>
 					{:else}
@@ -473,15 +474,15 @@
 								type="button"
 								class="w-full rounded border px-2 py-1.5 text-left text-xs transition {selectedMonsterId ===
 								monster.entity?.id
-									? 'border-emerald-300 bg-emerald-50'
-									: 'border-gray-200 bg-white hover:border-gray-300'}"
+									? 'border-primary/40 bg-secondary'
+									: 'border-border bg-card hover:border-border'}"
 								onclick={() => (selectedMonsterId = monster.entity?.id)}
 							>
-								<div class="font-medium text-gray-900">{monster.identity?.name}</div>
-								<div class="text-gray-600">
+								<div class="font-medium text-foreground">{monster.identity?.name}</div>
+								<div class="text-muted-foreground">
 									Lv {monster.stat?.level} | Stamina {monster.stat?.stamina}/{monster.stat?.maxStamina}
 								</div>
-								<div class="text-gray-500">
+								<div class="text-muted-foreground">
 									Distance {Math.round(eta.distance * 100) / 100}m | ETA {formatDuration(eta.seconds)}
 								</div>
 							</button>
@@ -490,28 +491,27 @@
 				</div>
 
 				{#if startError}
-					<div class="mt-2 rounded border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{startError}</div>
+					<div class="mt-2 rounded border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive">{startError}</div>
 				{/if}
 
 				<div class="mt-3 flex gap-2">
-					<button
-						type="button"
-						class="flex-1 rounded bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+					<Button
+						class="flex-1 text-sm font-medium"
 						disabled={!selectedMonster || isStarting}
 						onclick={startSelectedJob}
 					>
 						{isStarting ? 'Starting...' : 'Start Job'}
-					</button>
+					</Button>
 					<button
 						type="button"
-						class="rounded border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+						class="rounded border border-border px-3 py-2 text-sm text-foreground hover:bg-muted"
 						onclick={clearSelection}
 					>
 						Clear
 					</button>
 				</div>
 			{:else}
-				<div class="rounded border border-dashed border-gray-300 bg-gray-50 px-3 py-6 text-sm text-gray-600">
+				<div class="rounded border border-dashed border-border bg-muted px-3 py-6 text-sm text-muted-foreground">
 					Select a colored job pin on the map to open start controls.
 				</div>
 			{/if}

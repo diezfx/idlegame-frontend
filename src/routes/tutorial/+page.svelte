@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	let { data }: PageProps = $props();
 
-	const selectedColor = 'bg-green-200';
+	const selectedColor = 'bg-primary/20';
 
 	const user = userStore.getUser()!;
 
