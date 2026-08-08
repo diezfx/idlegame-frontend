@@ -29,6 +29,7 @@
 	<Card {...props} class={cn('w-full', classname)} title={monster.identity?.name}>
 		<DescriptionList class="gap-y-2 text-sm">
 			<DescriptionRow term="Level" class="text-right">{monster.stat?.level}</DescriptionRow>
+			<DescriptionRow term="Experience" class="text-right">{monster.stat?.experience}</DescriptionRow>
 			<DescriptionRow term="HP">
 				<Progress
 					showLabel={true}
@@ -48,7 +49,6 @@
 					max={monster.stat?.maxStamina ?? 100}
 				/>
 			</DescriptionRow>
-			<DescriptionRow term="Experience" class="text-right">{monster.stat?.experience}</DescriptionRow>
 			<DescriptionRow term="STR · AGI · INT · VIT" class="text-right">
 				{monster.stat?.strength ?? 0} · {monster.stat?.agility ?? 0} · {monster.stat?.intelligence ?? 0} · {monster.stat
 					?.vitality ?? 0}
