@@ -9,11 +9,13 @@
 	import type { ProductionJobInfo } from '../../../../gen/v1/service_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
+	import { getServicesContext } from '$lib/service/context.js';
 	import { page } from '$app/state';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 	import Collapsible from '$lib/components/ui/collapsible/collapsible.svelte';
 
 	let openDialog = $state(false);
+	const { jobs: jobService } = getServicesContext();
 	let selectedId: string | undefined = $state(undefined);
 	let selectedJob: ProductionJobInfo | undefined = $state(undefined);
 
@@ -46,7 +48,7 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await gameStateStore.startJob({
+		await jobService.startJob({
 			jobDefinitionId: selectedJob?.definition!.id,
 			monsterId: selectedMonster.entity!.id,
 		});
@@ -104,9 +106,7 @@
 				</Card>
 			</div>
 			<div class="grid grid-cols-2 gap-2">
-				<Button onclick={startJob} disabled={!jobStartable} class="col-span-2 w-auto"
-					>Start Gathering</Button
-				>
+				<Button onclick={startJob} disabled={!jobStartable} class="col-span-2 w-auto">Start Gathering</Button>
 			</div>
 		</Card>
 
@@ -132,12 +132,7 @@
 					</div>
 				{:else}
 					{#each activeJobs as job}
-						<JobView
-							gs={gameStateStore}
-							jobID={job.entity!.id}
-							onStop={() => gameStateStore.stopJob(job.entity?.id!)}
-							{job}
-						/>
+						<JobView jobID={job.entity!.id} onStop={() => jobService.stopJob(job.entity?.id!)} {job} />
 					{/each}
 				{/if}
 			</div>
@@ -151,7 +146,6 @@
 		{#each monsters as [_, monster]}
 			{#if monster.participant == undefined}
 				<MonsterView
-					gs={gameStateStore}
 					onclick={() => dialogClicked(monster.entity?.id!)}
 					monId={monster.entity?.id!}
 					class="hover:bg-muted"

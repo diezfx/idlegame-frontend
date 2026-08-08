@@ -1,27 +1,20 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { clients } from '$lib/service/connect';
 	import MasterdataMonster from '$lib/widgets/masterdata_monster.svelte';
 	import type { PageProps } from './$types';
-	import { userStore } from '$lib/stores/user.svelte';
+	import { getServicesContext } from '$lib/service/context';
 	import { goto } from '$app/navigation';
 	let { data }: PageProps = $props();
+	const { tutorial: tutorialService } = getServicesContext();
 
 	const selectedColor = 'bg-primary/20';
-
-	const user = userStore.getUser()!;
 
 	let selectedMonster: number | undefined = $state(undefined);
 
 	const starterMons = data.monsters.filter((m) => data.starterMonsters.includes(m.id));
-	const tutorialClient = clients.tutorialClient;
-
 	async function chooseStarter(): Promise<void> {
-		const result = await tutorialClient.chooseStarter({
-			id: user.userId,
-			monDefinitionId: BigInt(selectedMonster!),
-		});
-		goto('/monsters');
+		await tutorialService.chooseStarter(selectedMonster!);
+		await goto('/monsters');
 	}
 </script>
 

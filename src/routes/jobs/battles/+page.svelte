@@ -1,26 +1,25 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
-	import { JobsClient } from '$lib/service/jobs';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
 	import JobView from '$lib/widgets/job.svelte';
 	import log from '$lib/log/log.js';
-	import { userStore } from '$lib/stores/user.svelte.js';
 	import { goto, invalidateAll } from '$app/navigation';
 	import type { Monster } from '../../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import type { BattleJobInfo } from '../../../gen/v1/service_pb.js';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
+	import { getServicesContext } from '$lib/service/context.js';
+	import { JobSubType } from '$gen/v1/masterdata_pb.js';
 
 	let { data } = $props();
+	const { battles: battleService, jobs: jobService } = getServicesContext();
 
-	const selectedColor = 'bg-primary/20';
-
-	const user = userStore.getUser();
-	const activeJobs = $derived(gameStateStore.Jobs);
+	const activeJobs = $derived(
+		Array.from(gameStateStore.Jobs.values()).filter((job) => job.def?.subType === JobSubType.BATTLE),
+	);
 	const monsters = $derived(gameStateStore.Monsters);
-	const jobClient = new JobsClient(fetch);
 
 	let openDialog = $state(false);
 	let selectedMonster: Monster | undefined = $state(undefined);
@@ -44,9 +43,8 @@
 			log.error('No job or monster selected');
 			return;
 		}
-		await jobClient.startBattleJob({
+		await battleService.startBattle({
 			jobDefinitionId: selectedJob?.definition!.id,
-			userId: user.userId,
 			monsterId: selectedMonster.entity!.id,
 		});
 		reset();
@@ -126,17 +124,19 @@
 		<Card class="p-3">
 			<div class="mb-2 flex items-center justify-between">
 				<h3 class="text-sm font-semibold text-foreground">Active Jobs</h3>
-				<span class="rounded-full bg-destructive/10 px-2 py-0.5 text-xs font-semibold text-destructive">{activeJobs.size}</span>
+				<span class="rounded-full bg-destructive/10 px-2 py-0.5 text-xs font-semibold text-destructive"
+					>{activeJobs.length}</span
+				>
 			</div>
 			<div class="max-h-[75vh] space-y-2 overflow-y-auto pr-1">
-				{#if activeJobs.size === 0}
+				{#if activeJobs.length === 0}
 					<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 						No active jobs
 					</div>
 				{:else}
-					{#each activeJobs as [_, job]}
+					{#each activeJobs as job}
 						<JobView
-							onStop={() => gameStateStore.stopJob(job.entity?.id!)}
+							onStop={() => jobService.stopJob(job.entity?.id!)}
 							jobID={job.entity!.id}
 							onclick={() => goto(`/jobs/battles/${job.entity?.id!}`)}
 						/>

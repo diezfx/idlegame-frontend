@@ -20,9 +20,10 @@
 		[key: string]: any;
 	} = $props();
 
-	const gs = gameStateStore;
-	const monster = $derived(gs.Monsters.get(monId));
-	const monJob = $derived(monster?.participant?.jobEntityId ? gs.Jobs.get(monster.participant.jobEntityId) : undefined);
+	const monster = $derived(gameStateStore.Monsters.get(monId));
+	const monJob = $derived(
+		monster?.participant?.jobEntityId ? gameStateStore.Jobs.get(monster.participant.jobEntityId) : undefined,
+	);
 </script>
 
 {#if monster}

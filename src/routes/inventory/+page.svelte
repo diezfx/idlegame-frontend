@@ -4,7 +4,7 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 	import ItemView from '$lib/widgets/item.svelte';
 
-	const allInvs = $derived(await gameStateStore.getInventories());
+	const allInvs = $derived(gameStateStore.Inventories);
 	const invs = $derived(
 		allInvs
 			.values()

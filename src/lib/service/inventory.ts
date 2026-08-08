@@ -1,25 +1,40 @@
-import { clients } from './connect';
-import type { Item } from '../../gen/v1/domain_pb';
+import type { Client } from '@connectrpc/connect';
+import { InventoryService as InventoryServiceDefinition } from '$gen/v1/service_pb';
+import type { GameStateStore } from '$lib/stores/gamestate.svelte';
+import type { UserStore } from '$lib/stores/user.svelte';
 
-export type { Item } from '../../gen/v1/domain_pb';
+export type EquipItemRequest = {
+	monsterId: string;
+	itemId: string;
+	quantity: number;
+};
 
-export class InventoryClient {
-	private readonly inventoryClient;
+export type UnequipItemRequest = {
+	monsterId: string;
+	itemId: string;
+};
 
-	constructor(customFetch?: typeof globalThis.fetch) {
-		this.inventoryClient = clients.inventoryClient;
+export class InventoryService {
+	constructor(
+		private readonly client: Client<typeof InventoryServiceDefinition>,
+		private readonly gameState: GameStateStore,
+		private readonly userState: UserStore,
+	) {}
+
+	async equipItem(request: EquipItemRequest): Promise<void> {
+		await this.gameState.initialize();
+		await this.client.equipItem({
+			...request,
+			userId: this.userState.getUser().userId,
+			quantity: BigInt(request.quantity),
+		});
 	}
 
-	async equipItem(request: { userId: string; monsterId: string; itemId: string; quantity: bigint }): Promise<void> {
-		await this.inventoryClient.equipItem(request);
-	}
-
-	async unEquipItem(request: { userId: string; monsterId: string; itemId: string }): Promise<void> {
-		await this.inventoryClient.unEquipItem(request);
-	}
-
-	async getEquipment(monsterId: string): Promise<Item[]> {
-		const response = await this.inventoryClient.getEquipment({ monsterId });
-		return response.items;
+	async unequipItem(request: UnequipItemRequest): Promise<void> {
+		await this.gameState.initialize();
+		await this.client.unEquipItem({
+			...request,
+			userId: this.userState.getUser().userId,
+		});
 	}
 }

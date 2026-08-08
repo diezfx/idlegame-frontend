@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { getServicesContext } from '$lib/service/context';
 	import JobView from '$lib/widgets/job.svelte';
 
 	const jobs = $derived(gameStateStore.Jobs);
+	const { jobs: jobService } = getServicesContext();
 
 	async function stopJob(id: string) {
-		await gameStateStore.stopJob(id);
+		await jobService.stopJob(id);
 		invalidateAll();
 	}
 </script>

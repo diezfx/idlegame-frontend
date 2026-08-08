@@ -10,7 +10,7 @@ const defaultUser: User = {
 	isLoggedIn: true,
 };
 
-class UserStore {
+export class UserStore {
 	//TODO: add actual user data from somewhere
 	user = $state(defaultUser);
 
