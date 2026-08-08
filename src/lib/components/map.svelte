@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { House, Sword } from 'lucide-svelte';
-	import type { CityDefinition, JobSubType } from '../../gen/v1/masterdata_pb';
+	import { JobSubType, type CityDefinition } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
@@ -166,22 +166,32 @@
 
 	function getSubtypeMeta(subType: JobSubType): SubtypeMeta {
 		switch (subType) {
-			case 1:
+			case JobSubType.WOODCUTTING:
 				return { label: 'Woodcutting' };
-			case 2:
+			case JobSubType.MINING:
 				return { label: 'Mining' };
-			case 3:
+			case JobSubType.HARVESTING:
 				return { label: 'Harvesting' };
-			case 4:
+			case JobSubType.FISHING:
 				return { label: 'Fishing' };
-			case 5:
+			case JobSubType.SMELTING:
 				return { label: 'Smelting' };
-			case 7:
+			case JobSubType.WOODWORKING:
+				return { label: 'Woodworking' };
+			case JobSubType.FISHERY:
+				return { label: 'Fishery' };
+			case JobSubType.FOOD_PROCESSING:
+				return { label: 'Food Processing' };
+			case JobSubType.COOKING:
 				return { label: 'Cooking' };
-			case 8:
-				return { label: 'Battle' };
-			case 9:
+			case JobSubType.WEAPON_CRAFTING:
+				return { label: 'Weapon Crafting' };
+			case JobSubType.ARMOR_CRAFTING:
 				return { label: 'Armor Crafting' };
+			case JobSubType.BATTLE:
+				return { label: 'Battle' };
+			case JobSubType.TRANSPORT:
+				return { label: 'Transport' };
 			default:
 				return { label: 'Production' };
 		}
