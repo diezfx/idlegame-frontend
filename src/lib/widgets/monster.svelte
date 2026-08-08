@@ -58,6 +58,7 @@
 			</DescriptionRow>
 			<DescriptionRow term="Job" class="text-right">
 				{#if monJob}
+					<!--TODO add current status, e.g. for gather and production this should show current action, e.g walking, with a progress bar-->
 					{JobSubType[jobMasterdata.find((j) => j.definition?.id == monJob.definitionId)?.definition?.subType!]}
 				{:else}
 					Idle
