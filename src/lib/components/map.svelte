@@ -261,7 +261,7 @@
 <div class="space-y-3">
 	<MultiSelect label="Jobs" options={subtypeOptions} bind:selected={subtypeFilters} />
 
-	<div class="grid grid-cols-3 gap-4">
+	<div class="grid grid-cols-[minmax(0,1fr)_16rem] gap-4">
 		<div
 			class="relative overflow-hidden rounded-lg border border-border"
 			style="width: {mapPixelWidth}px; height: {mapPixelHeight}px; max-width: 100%;"
