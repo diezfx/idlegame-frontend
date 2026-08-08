@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
-	import type { Item } from '$lib/service/inventory';
+	import type { Item } from '../../gen/v1/domain_pb';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte';
 	import { cn } from '$lib/utils';
 	let { item, class: classname }: { item: Item; class: string } = $props();

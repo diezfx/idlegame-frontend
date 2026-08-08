@@ -9,12 +9,23 @@ class MasterdataStore {
 	BattleJobs: BattleJobInfo[];
 	Items: SvelteMap<string, ItemDefinition>;
 	Cities: CityDefinition[];
+	StarterMonsters: number[];
 	constructor() {
 		this.Monsters = [];
 		this.ProductionJobs = [];
 		this.BattleJobs = [];
 		this.Cities = [];
+		this.StarterMonsters = [];
 		this.Items = new SvelteMap<string, ItemDefinition>();
+	}
+
+	async getStarterMonsters(): Promise<number[]> {
+		if (this.StarterMonsters.length > 0) {
+			return this.StarterMonsters;
+		}
+		const monsters = await clients.masterdataClient.getStarterMonsters({});
+		this.StarterMonsters = monsters.monsters;
+		return this.StarterMonsters;
 	}
 
 	async getMonsters(): Promise<MonsterDefinition[]> {

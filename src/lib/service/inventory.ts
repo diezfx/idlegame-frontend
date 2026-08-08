@@ -1,25 +1,30 @@
-import { clients } from './connect';
-import type { Item } from '../../gen/v1/domain_pb';
+import { clients } from '$lib/service/connect';
+import { gameStateStore } from '$lib/stores/gamestate.svelte';
+import { userStore } from '$lib/stores/user.svelte';
 
-export type { Item } from '../../gen/v1/domain_pb';
+export async function equipItem({
+	monsterId,
+	itemId,
+	quantity,
+}: {
+	monsterId: string;
+	itemId: string;
+	quantity: number;
+}): Promise<void> {
+	await gameStateStore.initialize();
+	await clients.inventoryClient.equipItem({
+		userId: userStore.getUser().userId,
+		monsterId,
+		itemId,
+		quantity: BigInt(quantity),
+	});
+}
 
-export class InventoryClient {
-	private readonly inventoryClient;
-
-	constructor(customFetch?: typeof globalThis.fetch) {
-		this.inventoryClient = clients.inventoryClient;
-	}
-
-	async equipItem(request: { userId: string; monsterId: string; itemId: string; quantity: bigint }): Promise<void> {
-		await this.inventoryClient.equipItem(request);
-	}
-
-	async unEquipItem(request: { userId: string; monsterId: string; itemId: string }): Promise<void> {
-		await this.inventoryClient.unEquipItem(request);
-	}
-
-	async getEquipment(monsterId: string): Promise<Item[]> {
-		const response = await this.inventoryClient.getEquipment({ monsterId });
-		return response.items;
-	}
+export async function unequipItem({ monsterId, itemId }: { monsterId: string; itemId: string }): Promise<void> {
+	await gameStateStore.initialize();
+	await clients.inventoryClient.unEquipItem({
+		userId: userStore.getUser().userId,
+		monsterId,
+		itemId,
+	});
 }

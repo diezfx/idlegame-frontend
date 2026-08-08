@@ -2,7 +2,7 @@ import { clients } from '$lib/service/connect';
 import { gameStateStore } from '$lib/stores/gamestate.svelte';
 import { userStore } from '$lib/stores/user.svelte';
 
-export async function startJob({
+export async function startBattle({
 	monsterId,
 	jobDefinitionId,
 }: {
@@ -10,15 +10,10 @@ export async function startJob({
 	jobDefinitionId: string;
 }): Promise<string> {
 	await gameStateStore.initialize();
-	const response = await clients.jobClient.startProductionJob({
+	const response = await clients.jobClient.startBattle({
 		userId: userStore.getUser().userId,
 		monsterId,
 		jobDefinitionId,
 	});
 	return response.jobId;
-}
-
-export async function stopJob(id: string): Promise<void> {
-	await gameStateStore.initialize();
-	await clients.jobClient.deleteJob({ id });
 }

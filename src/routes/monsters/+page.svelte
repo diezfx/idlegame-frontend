@@ -5,6 +5,7 @@
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
+	import { equipItem, unequipItem } from '$lib/service/inventory.js';
 	import { masterdataStore } from '$lib/stores/masterdata.svelte.js';
 	import { EffectType } from '$gen/v1/masterdata_pb.js';
 
@@ -38,7 +39,7 @@
 			log.error('No monster selected');
 			return;
 		}
-		gameStateStore.equipItem({
+		equipItem({
 			monsterId: selectedMonster.entity!.id,
 			itemId: item.id,
 			quantity: itemAmount,
@@ -47,7 +48,7 @@
 	}
 
 	async function itemDeleteAction(monsterId: string, itemId: string): Promise<void> {
-		await gameStateStore.unEquipItem({
+		await unequipItem({
 			monsterId: monsterId,
 			itemId: itemId,
 		});
@@ -75,7 +76,9 @@
 	<div class="flex flex-col gap-4">
 		<div class="flex items-center justify-between">
 			<h2 class="text-lg font-semibold">Equip Item</h2>
-			<button class="text-sm text-muted-foreground hover:text-foreground" onclick={() => (openDialog = false)}> Close </button>
+			<button class="text-sm text-muted-foreground hover:text-foreground" onclick={() => (openDialog = false)}>
+				Close
+			</button>
 		</div>
 
 		<div class="grid grid-cols-2 max-h-[360px] gap-2 overflow-y-auto">
@@ -135,11 +138,7 @@
 			>
 				Cancel
 			</button>
-			<Button
-				class="text-sm"
-				disabled={selectedItem == undefined}
-				onclick={() => dialogClicked(selectedItem!)}
-			>
+			<Button class="text-sm" disabled={selectedItem == undefined} onclick={() => dialogClicked(selectedItem!)}>
 				Equip
 			</Button>
 		</div>

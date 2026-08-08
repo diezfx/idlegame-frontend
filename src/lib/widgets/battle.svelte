@@ -5,8 +5,9 @@
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import type { Job } from '$lib/service/jobs';
+	import type { Job } from '../../gen/v1/domain_pb';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import { stopJob } from '$lib/service/jobs';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import type { ActionState, Event, Monster, Stat } from '../../gen/v1/domain_pb';
 	import { Action, Role } from '../../gen/v1/domain_pb';
@@ -62,7 +63,7 @@
 		if (!job.entity?.id || stopping) return;
 		stopping = true;
 		try {
-			await gameStateStore.stopJob(job.entity.id);
+			await stopJob(job.entity.id);
 			await goto('/jobs/battles');
 		} finally {
 			stopping = false;

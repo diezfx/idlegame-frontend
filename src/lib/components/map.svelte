@@ -20,8 +20,8 @@
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
-	import { userStore } from '$lib/stores/user.svelte';
-	import { JobsClient } from '$lib/service/jobs';
+	import { startJob } from '$lib/service/jobs';
+	import { startBattle } from '$lib/service/battles';
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 
@@ -58,7 +58,6 @@
 
 	const TILE_SIZE = 10;
 	const FALLBACK_WALK_SPEED = 1;
-	const jobClient = new JobsClient(fetch);
 
 	let mapPixelWidth = $state(1000);
 	let mapPixelHeight = $state(1000);
@@ -246,7 +245,9 @@
 					label: kind === 'battle' ? 'Battle' : 'Production',
 					badgeClass: 'bg-secondary text-foreground border border-border',
 					pinClass:
-						kind === 'battle' ? 'bg-destructive hover:bg-destructive/90 text-primary-foreground' : 'bg-cyan-600 hover:bg-cyan-700 text-primary-foreground',
+						kind === 'battle'
+							? 'bg-destructive hover:bg-destructive/90 text-primary-foreground'
+							: 'bg-cyan-600 hover:bg-cyan-700 text-primary-foreground',
 					icon: kind === 'battle' ? Swords : Factory,
 				};
 		}
@@ -316,13 +317,12 @@
 		startError = undefined;
 		try {
 			if (selectedJob.kind === 'production') {
-				await gameStateStore.startJob({
+				await startJob({
 					monsterId: selectedMonster.entity.id,
 					jobDefinitionId: selectedJob.definition.id,
 				});
 			} else {
-				await jobClient.startBattleJob({
-					userId: userStore.getUser().userId,
+				await startBattle({
 					monsterId: selectedMonster.entity.id,
 					jobDefinitionId: selectedJob.definition.id,
 				});
@@ -491,7 +491,9 @@
 				</div>
 
 				{#if startError}
-					<div class="mt-2 rounded border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive">{startError}</div>
+					<div class="mt-2 rounded border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive">
+						{startError}
+					</div>
 				{/if}
 
 				<div class="mt-3 flex gap-2">

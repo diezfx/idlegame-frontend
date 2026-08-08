@@ -1,18 +1,17 @@
 <script>
-	import { JobsClient, setJobsClientContext } from '$lib/service/jobs';
 	import Nav from '$lib/widgets/nav.svelte';
 	import { onMount } from 'svelte';
 	import '../app.css';
-	import { initializeWasm } from '$lib/stores/wasm';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 
 	onMount(() => {
-		initializeWasm().then(() => gameStateStore.initialize());
+		gameStateStore.initialize().catch((error) => {
+			console.error('Failed to initialize game state', error);
+		});
 	});
 
 	console.log('Layout loaded');
 	let { children } = $props();
-	setJobsClientContext(new JobsClient(fetch));
 </script>
 
 <div class="flex min-h-screen bg-background">

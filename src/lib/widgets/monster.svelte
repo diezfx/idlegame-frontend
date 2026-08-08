@@ -4,7 +4,7 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import { cn } from '$lib/utils';
 	import { Plus, ArrowLeftRight } from 'lucide-svelte';
-	import { gameStateStore, type GameStateStore } from '$lib/stores/gamestate.svelte';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 	import { JobSubType } from '$gen/v1/masterdata_pb';
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
@@ -22,9 +22,10 @@
 		[key: string]: any;
 	} = $props();
 
-	const gs = gameStateStore;
-	const monster = $derived(gs.Monsters.get(monId));
-	const monJob = $derived(monster?.participant?.jobEntityId ? gs.Jobs.get(monster.participant.jobEntityId) : undefined);
+	const monster = $derived(gameStateStore.Monsters.get(monId));
+	const monJob = $derived(
+		monster?.participant?.jobEntityId ? gameStateStore.Jobs.get(monster.participant.jobEntityId) : undefined,
+	);
 </script>
 
 {#if monster}
