@@ -12,6 +12,8 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import { getServicesContext } from '$lib/service/context.js';
 	import { JobSubType } from '$gen/v1/masterdata_pb.js';
+	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
+	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
 
 	let { data } = $props();
 	const { battles: battleService, jobs: jobService } = getServicesContext();
@@ -63,23 +65,16 @@
 					}}
 				>
 					{#if selectedMonster}
-						<Card title={selectedMonster.identity?.name}>
-							<div class="grid grid-cols-2 gap-2 text-xs text-foreground">
-								<div>
-									<span class="text-muted-foreground">Level:</span>
-									{selectedMonster.stat?.level}
-								</div>
-								<div>
-									<span class="text-muted-foreground">Stamina:</span>
-									{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
-								</div>
-								<div class="col-span-2">
-									<span class="text-muted-foreground">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
-										selectedMonster.position?.y ?? 0,
-									)}
-								</div>
-							</div>
-						</Card>
+						<DescriptionList>
+							<DescriptionRow term="Name">{selectedMonster.identity?.name}</DescriptionRow>
+							<DescriptionRow term="Level">{selectedMonster.stat?.level}</DescriptionRow>
+							<DescriptionRow term="Stamina">
+								{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
+							</DescriptionRow>
+							<DescriptionRow term="Position">
+								X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(selectedMonster.position?.y ?? 0)}
+							</DescriptionRow>
+						</DescriptionList>
 					{:else}
 						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 							No monster selected
@@ -88,11 +83,11 @@
 				</Card>
 				<Card title="Selected Job">
 					{#if selectedJob}
-						<div class="grid grid-cols-2 gap-2 text-xs text-foreground">
-							<div><span class="font-medium">ID:</span> {selectedJob.definition?.id}</div>
-							<div><span class="font-medium">Stamina:</span> {selectedJob.definition?.staminaCost}</div>
-							<div><span class="font-medium">Reward XP:</span> {selectedJob.definition?.rewards?.experience}</div>
-						</div>
+						<DescriptionList>
+							<DescriptionRow term="ID">{selectedJob.definition?.id}</DescriptionRow>
+							<DescriptionRow term="Stamina">{selectedJob.definition?.staminaCost}</DescriptionRow>
+							<DescriptionRow term="Reward XP">{selectedJob.definition?.rewards?.experience}</DescriptionRow>
+						</DescriptionList>
 					{:else}
 						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 							No job selected
