@@ -96,18 +96,18 @@
 </script>
 
 <div class="space-y-4">
-	<section class="rounded-xl border border-gray-200 bg-white p-3">
+	<section class="rounded-xl border border-border bg-card p-3">
 		<div class="grid grid-cols-2">
 			<div>
-				<h2 class="text-sm font-semibold text-gray-900">Your Team</h2>
+				<h2 class="text-sm font-semibold text-foreground">Your Team</h2>
 				<div class="grid gap-3 grid-cols-3">
 					{#each playerBattleMonsters as mon, i (mon)}
 						<Card class="p-2 " title={monsters.get(mon)!.identity?.name}>
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
-										foreground="bg-red-500"
-										background="bg-gray-200"
+										foreground="bg-destructive"
+										background="bg-muted"
 										value={monsters.get(mon)!.stat?.health ?? 0}
 										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
@@ -121,8 +121,8 @@
 								<DescriptionRow term="NextAction" class="self-center">
 									<Progress
 										transition={false}
-										foreground="bg-blue-300"
-										background="bg-gray-200"
+										foreground="bg-primary"
+										background="bg-muted"
 										value={nowMs - calculateLastAttack(monsters.get(mon)?.actionStates)}
 										max={calculateDeltaAction(monsters.get(mon)?.actionStates)}
 									/>
@@ -135,7 +135,7 @@
 
 			<div>
 				<div class="mb-2 flex items-center justify-between">
-					<h2 class="text-sm font-semibold text-gray-900">Enemies</h2>
+					<h2 class="text-sm font-semibold text-foreground">Enemies</h2>
 				</div>
 				<div class="grid gap-3 grid-cols-3">
 					{#each enemyBattleMonsters as mon (mon)}
@@ -143,8 +143,8 @@
 							<DescriptionList>
 								<DescriptionRow term="HP">
 									<Progress
-										foreground="bg-red-500"
-										background="bg-gray-200"
+										foreground="bg-destructive"
+										background="bg-muted"
 										value={monsters.get(mon)!.stat?.health ?? 0}
 										max={monsters.get(mon)!.stat?.maxHealth ?? 1}
 										showLabel={true}
@@ -159,8 +159,8 @@
 									<Progress
 										transition={false}
 										class="h5"
-										foreground="bg-blue-300"
-										background="bg-gray-200"
+										foreground="bg-primary"
+										background="bg-muted"
 										value={nowMs - calculateLastAttack(monsters.get(mon)?.actionStates)}
 										max={calculateDeltaAction(monsters.get(mon)?.actionStates)}
 									/>

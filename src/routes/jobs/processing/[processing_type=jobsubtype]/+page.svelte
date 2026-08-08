@@ -55,10 +55,10 @@
 	}
 </script>
 
-<div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px] items-start">
+<div class="grid grid-cols-3 gap-4">
 	<div>
-		<section class="mb-4 rounded-xl border bg-card p-4">
-			<div class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+		<Card class="mb-4 p-4">
+			<div class="mt-3 grid grid-cols-2 gap-3">
 				<Card
 					title="Selected Monster"
 					onclick={() => {
@@ -67,67 +67,67 @@
 				>
 					{#if selectedMonster}
 						<Card title={selectedMonster.identity?.name}>
-							<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+							<div class="grid grid-cols-2 gap-2 text-xs text-foreground">
 								<div>
-									<span class="text-gray-500">Level:</span>
+									<span class="text-muted-foreground">Level:</span>
 									{selectedMonster.stat?.level}
 								</div>
 								<div>
-									<span class="text-gray-500">Stamina:</span>
+									<span class="text-muted-foreground">Stamina:</span>
 									{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
 								</div>
 								<div class="col-span-2">
-									<span class="text-gray-500">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
+									<span class="text-muted-foreground">Pos:</span> X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(
 										selectedMonster.position?.y ?? 0,
 									)}
 								</div>
 							</div>
 						</Card>
 					{:else}
-						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 							No monster selected
 						</div>
 					{/if}
 				</Card>
 				<Card title="Selected Job">
 					{#if selectedJob}
-						<div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+						<div class="grid grid-cols-2 gap-2 text-xs text-foreground">
 							<div><span class="font-medium">ID:</span> {selectedJob.definition?.id}</div>
 							<div><span class="font-medium">Stamina:</span> {selectedJob.definition?.staminaCost}</div>
 							<div><span class="font-medium">Reward XP:</span> {selectedJob.definition?.rewards?.experience}</div>
 						</div>
 					{:else}
-						<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 							No job selected
 						</div>
 					{/if}
 				</Card>
 			</div>
 			<div class="grid grid-cols-2 gap-2">
-				<Button onclick={startJob} disabled={!jobStartable} class="col-span-2 w-full shrink-0 sm:w-auto"
+				<Button onclick={startJob} disabled={!jobStartable} class="col-span-2 w-auto"
 					>Start Gathering</Button
 				>
 			</div>
-		</section>
+		</Card>
 
-		<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 items-start">
+		<div class="grid grid-cols-3 gap-3">
 			{#each jobDefs as job}
 				<JobDefinitionCard {job} selected={isSelectedJob(job.definition!.id)} onclick={() => (selectedJob = job)} />
 			{/each}
 		</div>
 	</div>
 
-	<aside class="xl:sticky xl:top-4 h-fit">
-		<div class="rounded-xl border border-gray-200 bg-white">
+	<aside class="sticky top-4 h-fit">
+		<Card>
 			<div class="mb-2 flex items-center justify-between">
-				<h3 class="text-sm font-semibold text-gray-900">Active Jobs</h3>
-				<span class="rounded-full bg-emerald-100 py-0.5 text-xs font-semibold text-emerald-800"
+				<h3 class="text-sm font-semibold text-foreground">Active Jobs</h3>
+				<span class="rounded-full bg-secondary py-0.5 text-xs font-semibold text-secondary-foreground"
 					>{activeJobs.length}</span
 				>
 			</div>
 			<div class="max-h-[75vh] space-y-2 overflow-y-auto">
 				{#if activeJobs.length === 0}
-					<div class="rounded-md border border-dashed border-gray-300 bg-gray-50 p-3 text-sm text-gray-500">
+					<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
 						No active jobs
 					</div>
 				{:else}
@@ -141,20 +141,20 @@
 					{/each}
 				{/if}
 			</div>
-		</div>
+		</Card>
 	</aside>
 </div>
 
 <Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
 	Choose Monster
-	<div class="grid grid-cols-3 gap-2 items-start">
+	<div class="grid grid-cols-3 gap-2">
 		{#each monsters as [_, monster]}
 			{#if monster.participant == undefined}
 				<MonsterView
 					gs={gameStateStore}
 					onclick={() => dialogClicked(monster.entity?.id!)}
 					monId={monster.entity?.id!}
-					class="hover:bg-gray-200"
+					class="hover:bg-muted"
 				/>
 			{/if}
 		{/each}

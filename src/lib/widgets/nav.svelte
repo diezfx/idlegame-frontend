@@ -43,7 +43,7 @@
 			<a class="nav-content" href="/map">{navIcons.map} Map</a>
 		</li>
 	</ul>
-	<p class="mt-2 flex items-center gap-2 text-2xl font-bold text-blue-700">
+	<p class="mt-2 flex items-center gap-2 text-2xl font-bold text-primary">
 		<span>{navIcons.jobs}</span> Jobs
 	</p>
 	<ul class="mt-2">
@@ -104,7 +104,7 @@
 	.nav-header {
 		font-size: 1.125rem; /* Tailwind text-lg */
 		font-weight: 600; /* Tailwind font-semibold */
-		color: #2563eb; /* Tailwind blue-600 */
+		color: var(--color-primary);
 		margin-top: 0.5rem; /* Tailwind mt-2 */
 		margin-bottom: 0.25rem; /* Tailwind mb-1 */
 	}
