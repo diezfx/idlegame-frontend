@@ -11,12 +11,11 @@
 	import { TutorialService } from '$lib/service/tutorial';
 	import { setServicesContext } from '$lib/service/context';
 
-	const getUserId = () => userStore.getUser().userId;
 	setServicesContext({
-		jobs: new JobService(clients.jobClient, gameStateStore, getUserId),
-		battles: new BattleService(clients.jobClient, gameStateStore, getUserId),
-		inventory: new InventoryService(clients.inventoryClient, gameStateStore, getUserId),
-		tutorial: new TutorialService(clients.tutorialClient, gameStateStore, getUserId),
+		jobs: new JobService(clients.jobClient, gameStateStore, userStore),
+		battles: new BattleService(clients.jobClient, gameStateStore, userStore),
+		inventory: new InventoryService(clients.inventoryClient, gameStateStore, userStore),
+		tutorial: new TutorialService(clients.tutorialClient, gameStateStore, userStore),
 	});
 
 	onMount(() => {
