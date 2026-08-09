@@ -5,19 +5,22 @@
 		foreground = 'bg-primary',
 		background = 'bg-primary/20',
 		max = 100,
-		value,
+		val,
 		transition = true,
 		showLabel = false,
 		class: className = undefined,
 		...restProps
 	} = $props();
 
-	if (value > max) {
-		value = max;
-	}
-	if (value < 0) {
-		value = 0;
-	}
+	const value = $derived.by(() => {
+		if (val > max) {
+			return max;
+		}
+		if (val < 0) {
+			return 0;
+		}
+		return val;
+	});
 </script>
 
 <div
