@@ -20,12 +20,11 @@
 	const { battles: battleService, jobs: jobService } = getServicesContext();
 
 	const jobDefs = $derived(
-		(await masterdataStore.getProductionJobs()).filter((job) => job.definition?.subType === JobSubType.BATTLE),
+		(await masterdataStore.getBattleJobs()).filter((job) => job.definition?.subType === JobSubType.BATTLE),
 	);
+
 	const activeJobs = $derived(
-		Array.from(gameStateStore.Jobs.values()).filter(
-			(job) => jobDefs.find((j) => job.definitionId == j.definition?.id)?.definition?.subType === JobSubType.BATTLE,
-		),
+		Array.from(gameStateStore.Jobs.values()).filter((job) => jobDefs.find((j) => job.definitionId == j.definition?.id)),
 	);
 	const monsters = $derived(gameStateStore.Monsters);
 

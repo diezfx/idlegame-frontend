@@ -5,28 +5,28 @@
 		foreground = 'bg-primary',
 		background = 'bg-primary/20',
 		max = 100,
-		val,
+		value,
 		transition = true,
 		showLabel = false,
 		class: className = undefined,
 		...restProps
 	} = $props();
 
-	const value = $derived.by(() => {
-		if (val > max) {
+	const val = $derived.by(() => {
+		if (value > max) {
 			return max;
 		}
-		if (val < 0) {
+		if (value) {
 			return 0;
 		}
-		return val;
+		return value;
 	});
 </script>
 
 <div
 	class={cn('relative w-full overflow-hidden rounded-full', showLabel ? 'h-4' : 'h-2', background, className)}
 	role="progressbar"
-	aria-valuenow={value ?? 0}
+	aria-valuenow={val ?? 0}
 	aria-valuemin="0"
 	aria-valuemax={max}
 	aria-label="Progress"
