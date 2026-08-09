@@ -63,40 +63,45 @@
 </script>
 
 <div class="grid gap-4 lg:grid-cols-3">
-	<div class="lg:col-span-2">
+	<div class="content lg:col-span-2">
 		<Card class="mb-4 p-4">
 			<div class="mt-3 grid grid-cols-2 gap-3">
 				<Card
 					title="Selected Monster"
+					class="min-h-[8.5rem]"
 					onclick={() => {
 						openDialog = true;
 					}}
 				>
-					{#if selectedMonster}
-						<DescriptionList>
-							<DescriptionRow term="Name">{selectedMonster.identity?.name}</DescriptionRow>
-							<DescriptionRow term="Level">{selectedMonster.stat?.level}</DescriptionRow>
-							<DescriptionRow term="Stamina">
-								{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
-							</DescriptionRow>
-							<DescriptionRow term="Position">
-								X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(selectedMonster.position?.y ?? 0)}
-							</DescriptionRow>
-						</DescriptionList>
-					{:else}
-						<div class="text-center">No monster selected</div>
-					{/if}
+					<div class="grid min-h-[6rem] items-center">
+						{#if selectedMonster}
+							<DescriptionList class="w-full">
+								<DescriptionRow term="Name">{selectedMonster.identity?.name}</DescriptionRow>
+								<DescriptionRow term="Level">{selectedMonster.stat?.level}</DescriptionRow>
+								<DescriptionRow term="Stamina">
+									{selectedMonster.stat?.stamina}/{selectedMonster.stat?.maxStamina}
+								</DescriptionRow>
+								<DescriptionRow term="Position">
+									X:{Math.round(selectedMonster.position?.x ?? 0)} Y:{Math.round(selectedMonster.position?.y ?? 0)}
+								</DescriptionRow>
+							</DescriptionList>
+						{:else}
+							<div class="w-full text-center">No monster selected</div>
+						{/if}
+					</div>
 				</Card>
-				<Card title="Selected Job">
-					{#if selectedJob}
-						<DescriptionList>
-							<DescriptionRow term="ID">{selectedJob.definition?.id}</DescriptionRow>
-							<DescriptionRow term="Stamina">{selectedJob.definition?.staminaCost}</DescriptionRow>
-							<DescriptionRow term="Reward XP">{selectedJob.definition?.rewards?.experience}</DescriptionRow>
-						</DescriptionList>
-					{:else}
-						<div class="text-center">No job selected</div>
-					{/if}
+				<Card title="Selected Job" class="min-h-[8.5rem]">
+					<div class="grid min-h-[6rem] items-center">
+						{#if selectedJob}
+							<DescriptionList class="w-full">
+								<DescriptionRow term="ID">{selectedJob.definition?.id}</DescriptionRow>
+								<DescriptionRow term="Stamina">{selectedJob.definition?.staminaCost}</DescriptionRow>
+								<DescriptionRow term="Reward XP">{selectedJob.definition?.rewards?.experience}</DescriptionRow>
+							</DescriptionList>
+						{:else}
+							<div class="w-full text-center">No job selected</div>
+						{/if}
+					</div>
 				</Card>
 			</div>
 			<div class="mt-3 grid grid-cols-2 gap-2">
@@ -136,7 +141,7 @@
 
 <Dialog open={openDialog} class="max-w-5xl" onClose={() => (openDialog = false)}>
 	Choose Monster
-	<div class="grid grid-cols-3 gap-2">
+	<div class="grid grid-cols-3 gap-2 mb">
 		{#each monsters as [_, monster]}
 			{#if monster.participant == undefined}
 				<MonsterView
