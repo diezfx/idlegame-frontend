@@ -30,7 +30,7 @@
 		return relativeFormatter.format(Math.trunc(diff.as(unit)), unit);
 	};
 
-	const job = $derived(gameStateStore.Jobs.get(jobID));
+	const job = $derived(gameStateStore.Jobs.get(jobID)!);
 	const inv = $derived(gameStateStore.Inventories.get(jobID));
 	const monsters = $derived(
 		(job?.monsters ?? [])
@@ -57,7 +57,7 @@
 
 	const currentAction = $derived.by(() => {
 		return job?.actionStates
-			.filter((state) => state.action !== Action.UNSPECIFIED)
+			.filter((state) => state.action !== Action.UNSPECIFIED && state.action !== Action.CONSUME)
 			.toSorted((left, right) => actionStartedAt(right) - actionStartedAt(left))[0];
 	});
 
@@ -75,61 +75,59 @@
 	}
 </script>
 
-{#if job}
-	<Card {onclick} title={job.definitionId} class="w-full">
-		<div class="p-4 space-y-4">
-			<div class="space-y-1">
-				<div class="flex items-center justify-between gap-2">
-					<h3>Current action</h3>
-					<span class="text-sm font-medium">
-						{currentAction ? Action[currentAction.action] : job.jobState ? JobStatus[job.jobState.status] : 'IDLE'}
-					</span>
-				</div>
-				{#if currentAction && actionDuration(currentAction) > 0}
-					<Progress
-						transition={false}
-						value={nowMs - actionStartedAt(currentAction)}
-						max={actionDuration(currentAction)}
-					/>
-				{/if}
+<Card {onclick} title={job.definitionId} class="w-full">
+	<div class="p-4 space-y-4">
+		<div class="space-y-1">
+			<div class="flex items-center justify-between gap-2">
+				<h3>Current action</h3>
+				<span class="text-sm font-medium">
+					{currentAction ? Action[currentAction.action] : job.jobState ? JobStatus[job.jobState.status] : 'IDLE'}
+				</span>
 			</div>
-			<h3>Monsters</h3>
-			<Card class="gap-2 p-2" title={mon.identity?.name}>
-				<span>Stamina</span>
+			{#if currentAction && actionDuration(currentAction) > 0}
 				<Progress
-					showLabel={true}
-					foreground="bg-yellow-200"
-					background="bg-yellow-200/30"
-					value={mon.stat?.stamina ?? 0}
-					max={mon.stat?.maxStamina ?? 100}
+					transition={false}
+					value={nowMs - actionStartedAt(currentAction)}
+					max={actionDuration(currentAction)}
 				/>
-			</Card>
-			<h3>Inventory</h3>
-			<Card class="gap-1 p-1">
-				<Progress
-					class="p-2"
-					showLabel={true}
-					foreground="bg-cyan-200"
-					background="bg-cyan-200/50"
-					value={inv?.used ?? 0}
-					max={inv?.inventory?.capacity ?? 100}
-				></Progress>
-				<div class="grid grid-cols-3 gap-1 mt-2">
-					{#each inv!.inventory!.items! as item (item.id)}
-						<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
-					{/each}
-				</div>
-			</Card>
+			{/if}
 		</div>
+		<h3>Monsters</h3>
+		<Card class="gap-2 p-2" title={mon.identity?.name}>
+			<span>Stamina</span>
+			<Progress
+				showLabel={true}
+				foreground="bg-yellow-200"
+				background="bg-yellow-200/30"
+				value={mon.stat?.stamina ?? 0}
+				max={mon.stat?.maxStamina ?? 100}
+			/>
+		</Card>
+		<h3>Inventory</h3>
+		<Card class="gap-1 p-1">
+			<Progress
+				class="p-2"
+				showLabel={true}
+				foreground="bg-cyan-200"
+				background="bg-cyan-200/50"
+				value={inv?.used ?? 0}
+				max={inv?.inventory?.capacity ?? 100}
+			></Progress>
+			<div class="grid grid-cols-3 gap-1 mt-2">
+				{#each inv!.inventory!.items! as item (item.id)}
+					<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
+				{/each}
+			</div>
+		</Card>
+	</div>
 
-		<!-- Action Footer -->
-		<div class="p-4 bg-muted/50 border-t border-border rounded-b-xl flex justify-center">
-			<Button
-				class="w-full bg-destructive hover:bg-destructive/90 text-primary-foreground font-medium shadow-sm hover:shadow transition-all"
-				onclick={handleStopClick}
-			>
-				Stop Job
-			</Button>
-		</div>
-	</Card>
-{/if}
+	<!-- Action Footer -->
+	<div class="p-4 bg-muted/50 border-t border-border rounded-b-xl flex justify-center">
+		<Button
+			class="w-full bg-destructive hover:bg-destructive/90 text-primary-foreground font-medium shadow-sm hover:shadow transition-all"
+			onclick={handleStopClick}
+		>
+			Stop Job
+		</Button>
+	</div>
+</Card>

@@ -9,14 +9,16 @@
 		children?: Snippet;
 	} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>;
 
-	let { title, class: className, children, ...restProps }: Props = $props();
+	let { title, class: className, onclick, children, ...restProps }: Props = $props();
 </script>
 
 <div
 	class={cn(
 		'bg-card text-card-foreground flex flex-col gap-2 rounded-xl border border-gray-200 p-2 shadow-sm',
+		onclick && 'cursor-pointer transition hover:bg-accent hover:shadow',
 		className,
 	)}
+	{onclick}
 	{...restProps}
 >
 	{#if title}

@@ -49,7 +49,7 @@
 <Card
 	title={job.definition?.name ?? job.definition?.id}
 	{onclick}
-	class={cn('w-full border', interactive ? 'cursor-pointer' : '', className)}
+	class={cn('w-full border', interactive ? 'cursor-pointer' : '', selected && 'bg-accent', className)}
 >
 	<DescriptionList>
 		<DescriptionRow term="Required Lvl">{job.definition?.levelRequirement}</DescriptionRow>

@@ -82,9 +82,7 @@
 							</DescriptionRow>
 						</DescriptionList>
 					{:else}
-						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
-							No monster selected
-						</div>
+						<div class="text-center">No monster selected</div>
 					{/if}
 				</Card>
 				<Card title="Selected Job">
@@ -95,9 +93,7 @@
 							<DescriptionRow term="Reward XP">{selectedJob.definition?.rewards?.experience}</DescriptionRow>
 						</DescriptionList>
 					{:else}
-						<div class="rounded-md border border-dashed border-border bg-muted p-3 text-sm text-muted-foreground">
-							No job selected
-						</div>
+						<div class="text-center">No job selected</div>
 					{/if}
 				</Card>
 			</div>
