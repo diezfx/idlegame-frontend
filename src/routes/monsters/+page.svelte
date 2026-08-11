@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import log from '$lib/log/log';
-	import type { Item, Monster } from '../../gen/v1/domain_pb.js';
+	import { EntityType, type Item, type Monster } from '../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
@@ -18,11 +18,20 @@
 
 	let itemMasterdata = await masterdataStore.getItems();
 
-	let inventory = $derived(Array.from(gameStateStore.Inventories.values())[0]);
+	let inventory = $derived(
+		Array.from(
+			gameStateStore.Inventories.values().filter((x) => x.entity?.entityType == EntityType.LOCATION_INVENTORY),
+		)[0], //TODO this is a hack,
+	);
+
+	$effect(() => console.log(inventory));
 
 	let equippableItems = $derived(
 		(inventory?.inventory?.items ?? []).filter((i) => {
-			return itemMasterdata.get(i.id)?.effects.length ?? 0 > 0;
+			const md = itemMasterdata.get(i.id);
+			const consumable = md?.effects.length ?? 0 > 0;
+			const equipment = md?.stats ? true : false;
+			return consumable || equipment;
 		}),
 	);
 
