@@ -68,7 +68,7 @@
 
 <h1>Monsters</h1>
 <div class="grid grid-cols-3 gap-4">
-	{#each monsters as [_, monster]}
+	{#each monsters as monster}
 		<div class="gap-2">
 			<MonsterView
 				monId={monster.entity?.id!}

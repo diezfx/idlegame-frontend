@@ -11,7 +11,7 @@
 
 	let selectedMonster: number | undefined = $state(undefined);
 
-	const starterMons = data.monsters.filter((m) => data.starterMonsters.includes(m.id));
+	const starterMons = $derived(data.monsters.filter((m) => data.starterMonsters.includes(m.id)));
 	async function chooseStarter(): Promise<void> {
 		await tutorialService.chooseStarter(selectedMonster!);
 		await goto('/monsters');
