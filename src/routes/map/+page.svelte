@@ -11,5 +11,4 @@
 	]);
 </script>
 
-<h1>Map</h1>
 <Map {cities} {monsters} {productionJobs} {battleJobs} />
