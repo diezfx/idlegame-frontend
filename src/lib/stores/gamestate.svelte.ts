@@ -13,7 +13,6 @@ declare global {
 	interface Window {
 		loadGameState: (gameStateJson: string) => void;
 		invokeWasm: (reqJson: string) => string;
-		listMonsterIDs: () => string;
 		applyEvent: (eventJson: string) => void;
 		Go?: any;
 	}
@@ -32,6 +31,12 @@ export class GameStateStore {
 		this.Monsters = new SvelteMap<string, MonsterType>();
 		this.Jobs = new SvelteMap<string, Job>();
 		this.Inventories = new SvelteMap<string, InventoryView>();
+	}
+
+	getUserMonsters(): MonsterType[] {
+		return Array.from(this.Monsters.values()).filter(
+			(m) => m.owner?.entity == userStore.getUser().userId
+		);
 	}
 
 	async initialize(): Promise<void> {
@@ -74,7 +79,7 @@ export class GameStateStore {
 		}
 
 		const userId = userStore.getUser().userId;
-		const monsters = await this.wasmClients.monsterService.listMonsters({ ownerId: userId });
+		const monsters = await this.wasmClients.monsterService.listMonsters({});
 
 		for (const mon of monsters.monsters.toSorted((x, y) => x.entity!.id!.localeCompare(y.entity?.id!))) {
 			nextMonsters.set(mon.entity?.id!, mon);

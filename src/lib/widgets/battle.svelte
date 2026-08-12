@@ -92,7 +92,6 @@
 		}
 		const last = protoToMilliseconds(actionStates[idx].lastUsedAt);
 		const next = protoToMilliseconds(actionStates[idx].nextUseAt);
-		console.log('delta is', next - last);
 		return next - last;
 	}
 </script>

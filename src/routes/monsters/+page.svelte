@@ -14,7 +14,7 @@
 	let selectedMonster: Monster | undefined = $state(undefined);
 	let selectedItem: Item | undefined = $state(undefined);
 	let itemAmount = $state(1);
-	let monsters = $derived(gameStateStore.Monsters);
+	let monsters = $derived(gameStateStore.getUserMonsters());
 
 	let itemMasterdata = await masterdataStore.getItems();
 
