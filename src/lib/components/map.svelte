@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { House, Sword, X } from 'lucide-svelte';
+	import { Check, House, Sword, X } from 'lucide-svelte';
 	import { JobSubType, type CityDefinition } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
@@ -10,6 +10,7 @@
 	import JobDefinitionCard from '$lib/widgets/job-definition-card.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MultiSelect from '$lib/components/ui/multi-select/multi-select.svelte';
+	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 
 	type MapJob = {
 		id: string;
@@ -103,6 +104,7 @@
 		allJobs.filter((job) => subtypeFilters.length === 0 || subtypeFilters.includes(job.subType)),
 	);
 	const selectedJob = $derived(visibleJobs.find((job) => job.id === selectedJobId));
+	const activeJobDefinitionIds = $derived.by(() => Array.from(gameStateStore.Jobs.values(), (job) => job.definitionId));
 	const availableMonsters = $derived(monsters.filter((monster) => !monster.participant?.jobEntityId));
 	const selectedMonster = $derived(availableMonsters.find((monster) => monster.entity?.id === selectedMonsterId));
 	const subtypeOptions = $derived.by(() => {
@@ -285,21 +287,28 @@
 				{/each}
 
 				{#each visibleJobs as job (job.id)}
+					{@const isActive = activeJobDefinitionIds.includes(job.id)}
 					<button
 						type="button"
-						class="pointer-events-auto absolute z-40 h-6 w-6 rounded-full border-2 border-white shadow {job.kind ===
+						class="pointer-events-auto absolute z-40 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white shadow {job.kind ===
 						'battle'
 							? 'bg-red-600 hover:bg-red-700'
-							: 'bg-blue-600 hover:bg-blue-700'} {selectedJobId === job.id ? 'ring-2 ring-offset-2 ring-black/40' : ''}"
+							: 'bg-blue-600 hover:bg-blue-700'} {isActive
+							? 'outline-2 outline-offset-2 outline-amber-300'
+							: ''} {selectedJobId === job.id ? 'ring-2 ring-offset-2 ring-black/40' : ''}"
 						style="left: {job.x * TILE_SIZE}px; top: {job.y * TILE_SIZE}px; transform: translate(-50%, -50%);"
 						onclick={() => {
 							selectedJobId = job.id;
 							selectedMonsterId = undefined;
 							startError = undefined;
 						}}
-						title={job.definition?.name ?? job.id}
-						aria-label={`Select ${job.definition?.name ?? 'job'}`}
-					></button>
+						title={`${job.definition?.name ?? job.id}${isActive ? ' (active)' : ''}`}
+						aria-label={`Select ${job.definition?.name ?? 'job'}${isActive ? ' (active)' : ''}`}
+					>
+						{#if isActive}
+							<Check class="h-4 w-4 text-white" aria-hidden="true" />
+						{/if}
+					</button>
 				{/each}
 			</div>
 		</div>
