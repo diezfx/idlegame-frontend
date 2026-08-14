@@ -23,7 +23,24 @@ export default tseslint.config(
 		languageOptions: {
 			parserOptions: {
 				parser: tseslint.parser,
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
 			},
+		},
+		rules: {
+			'@typescript-eslint/switch-exhaustiveness-check': 'error',
+		},
+	},
+	{
+		files: ['**/*.ts'],
+		languageOptions: {
+			parser: tseslint.parser,
+			parserOptions: {
+				projectService: true,
+			},
+		},
+		rules: {
+			'@typescript-eslint/switch-exhaustiveness-check': 'error',
 		},
 	},
 	{

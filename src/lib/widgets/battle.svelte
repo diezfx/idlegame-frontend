@@ -11,6 +11,7 @@
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import type { ActionState, Event, Monster, Stat } from '../../gen/v1/domain_pb';
 	import { Action, Role } from '../../gen/v1/domain_pb';
+	import EventLog from './event-log.svelte';
 
 	let { job }: { job: Job; [key: string]: any } = $props();
 	const { jobs: jobService } = getServicesContext();
@@ -173,4 +174,5 @@
 			</div>
 		</div>
 	</section>
+	<EventLog jobId={job.entity?.id}></EventLog>
 </div>
