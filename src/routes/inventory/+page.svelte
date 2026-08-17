@@ -8,7 +8,7 @@
 	const invs = $derived(
 		allInvs
 			.values()
-			.filter((x) => x.entity?.entityType == EntityType.LOCATION_INVENTORY)
+			.filter((x) => x.entity?.entityType == EntityType.PLAYER_LOCATION)
 			.toArray(),
 	);
 </script>

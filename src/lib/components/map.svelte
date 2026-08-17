@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { Check, House, Sword, X } from 'lucide-svelte';
-	import { JobSubType, type CityDefinition } from '../../gen/v1/masterdata_pb';
+	import { JobSubType, LocationType, type LocationDefinition } from '../../gen/v1/masterdata_pb';
 	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
@@ -25,18 +25,18 @@
 	type MapData = {
 		width: number;
 		height: number;
-		tileSet: { tileSetId: number; source: string }[];
+		tileSet: { tileSetId: number; source: string; type: string }[];
 		layer: number[][];
 	};
 
 	let {
 		monsters,
-		cities,
+		locations,
 		productionJobs,
 		battleJobs,
 	}: {
 		monsters: Monster[];
-		cities: CityDefinition[];
+		locations: LocationDefinition[];
 		productionJobs: ProductionJobInfo[];
 		battleJobs: BattleJobInfo[];
 	} = $props();
@@ -69,30 +69,49 @@
 	let startError = $state<string | undefined>(undefined);
 	let subtypeFilters = $state<number[]>([]);
 
+	function getProductionJobPosition(
+		definition: NonNullable<ProductionJobInfo['definition']>,
+	): LocationDefinition['position'] {
+		const gatheringLocation = locations.find((location) => location.gatheringJobDefinitionIds.includes(definition.id));
+		if (gatheringLocation?.position) return gatheringLocation.position;
+
+		return locations.find((location) =>
+			location.workstations.some((workstation) => workstation.supportedSubTypes.includes(definition.subType)),
+		)?.position;
+	}
+
+	function getBattleJobPosition(definition: NonNullable<BattleJobInfo['definition']>): LocationDefinition['position'] {
+		return locations.find((location) => location.battleJobDefinitionIds.includes(definition.id))?.position;
+	}
+
 	const allJobs = $derived.by(() => {
 		const jobs: MapJob[] = [];
 		for (const info of productionJobs) {
 			const def = info.definition;
-			if (!def?.position) continue;
+			if (!def) continue;
+			const position = getProductionJobPosition(def);
+			if (!position) continue;
 			jobs.push({
 				id: def.id,
 				kind: 'production',
 				subType: def.subType,
-				x: def.position.x,
-				y: def.position.y,
+				x: position.x,
+				y: position.y,
 				definition: def,
 				routeInfo: info.routeInfo,
 			});
 		}
 		for (const info of battleJobs) {
 			const def = info.definition;
-			if (!def?.position) continue;
+			if (!def) continue;
+			const position = getBattleJobPosition(def);
+			if (!position) continue;
 			jobs.push({
 				id: def.id,
 				kind: 'battle',
 				subType: def.subType,
-				x: def.position.x,
-				y: def.position.y,
+				x: position.x,
+				y: position.y,
 				definition: def,
 				routeInfo: info.routeInfo,
 			});
@@ -109,8 +128,15 @@
 	const selectedMonster = $derived(availableMonsters.find((monster) => monster.entity?.id === selectedMonsterId));
 	const subtypeOptions = $derived.by(() => {
 		const counts: Record<number, number> = {};
-		for (const job of allJobs) {
-			counts[job.subType] = (counts[job.subType] ?? 0) + 1;
+		for (const info of productionJobs) {
+			if (!info.definition) continue;
+			const subType = info.definition.subType;
+			counts[subType] = (counts[subType] ?? 0) + 1;
+		}
+		for (const info of battleJobs) {
+			if (!info.definition) continue;
+			const subType = info.definition.subType;
+			counts[subType] = (counts[subType] ?? 0) + 1;
 		}
 		return Object.entries(counts).map(([value, count]) => {
 			const subType = Number(value) as JobSubType;
@@ -256,13 +282,13 @@
 			<canvas bind:this={canvas} class="absolute inset-0" aria-hidden="true"></canvas>
 
 			<div class="pointer-events-none absolute inset-0">
-				{#each cities as city (city.id)}
-					{#if city.position}
+				{#each locations as location (location.id)}
+					{#if location.type === LocationType.CITY && location.position}
 						<div
 							class="absolute z-20"
-							style="left: {city.position.x * TILE_SIZE}px; top: {city.position.y *
+							style="left: {location.position.x * TILE_SIZE}px; top: {location.position.y *
 								TILE_SIZE}px; transform: translate(-50%, -50%);"
-							title={city.name}
+							title={location.name}
 						>
 							<div class="rounded-full border border-amber-300 bg-amber-200 p-1.5 shadow">
 								<House class="h-4 w-4" />

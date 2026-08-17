@@ -4,11 +4,11 @@
 	import Map from '../../lib/components/map.svelte';
 
 	const monsters = $derived(Array.from(gameStateStore.Monsters.values()));
-	const [cities, productionJobs, battleJobs] = await Promise.all([
-		masterdataStore.getCities(),
+	const [locations, productionJobs, battleJobs] = await Promise.all([
+		masterdataStore.getLocations(),
 		masterdataStore.getProductionJobs(),
 		masterdataStore.getBattleJobs(),
 	]);
 </script>
 
-<Map {cities} {monsters} {productionJobs} {battleJobs} />
+<Map {locations} {monsters} {productionJobs} {battleJobs} />

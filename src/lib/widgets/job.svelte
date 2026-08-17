@@ -31,7 +31,7 @@
 	};
 
 	const job = $derived(gameStateStore.Jobs.get(jobID)!);
-	const inv = $derived(gameStateStore.Inventories.get(jobID));
+	const jobsite = $derived(gameStateStore.Inventories.get(job.parent?.entityId ?? ''));
 	const monsters = $derived(
 		(job?.monsters ?? [])
 			.map((id) => gameStateStore.Monsters.get(id))
@@ -103,18 +103,18 @@
 				max={mon.stat?.maxStamina ?? 100}
 			/>
 		</Card>
-		<h3>Inventory</h3>
+		<h3>Jobsite storage</h3>
 		<Card class="gap-1 p-1">
 			<Progress
 				class="p-2"
 				showLabel={true}
 				foreground="bg-cyan-200"
 				background="bg-cyan-200/50"
-				value={inv?.used ?? 0}
-				max={inv?.inventory?.capacity ?? 100}
+				value={jobsite?.used ?? 0}
+				max={jobsite?.inventory?.capacity ?? 100}
 			></Progress>
 			<div class="grid grid-cols-3 gap-1 mt-2">
-				{#each inv!.inventory!.items! as item (item.id)}
+				{#each jobsite?.inventory?.items ?? [] as item (item.id)}
 					<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
 				{/each}
 			</div>

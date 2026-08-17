@@ -4,7 +4,7 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import List from '$lib/components/ui/list/List.svelte';
 	import ListElement from '$lib/components/ui/list/ListElement.svelte';
-	import type { Event } from '$gen/v1/domain_pb';
+	import { JobStatus, type Event } from '$gen/v1/domain_pb';
 	let {
 		userId,
 		jobId,
@@ -40,6 +40,18 @@
 			case 'stopWorkingEvent': {
 				return 'The monsters stopped working.';
 			}
+			case 'jobStatusChangedEvent': {
+				switch (eventData.value.status) {
+					case JobStatus.WAITING_INPUT:
+						return 'The job paused because required ingredients are missing.';
+					case JobStatus.WAITING_OUTPUT:
+						return 'The job paused because its output does not fit in storage.';
+					case JobStatus.WORKING:
+						return 'The required inventory is available and work resumed.';
+					default:
+						return `The job status changed to ${JobStatus[eventData.value.status]}.`;
+				}
+			}
 			case 'consumeItemEvent': {
 				return `${monsterName(eventData.value.monsterId)} consumed ${eventData.value.quantity}× ${eventData.value.itemDefId}.`;
 			}
@@ -50,7 +62,7 @@
 				return `${count(eventData.value.items.length, 'cargo stack')} unloaded at ${eventData.value.targetId}.`;
 			}
 			case 'attackEvent': {
-				return `${monsterName(eventData.value.attacker)} hit ${monsterName(eventData.value.target)} for ${eventData.value.damage} damage. The target has ${eventData.value.newHealth} health remaining.`;
+				return `${monsterName(eventData.value.attacker)} hit ${monsterName(eventData.value.target)} for ${eventData.value.damage} damage.`;
 			}
 			case 'startRecoveringEvent': {
 				return `Monster ${eventData.value.monsterId} started recovering.`;
@@ -72,6 +84,9 @@
 			}
 			case 'unequippedEvent': {
 				return `Monster ${eventData.value.monsterId} unequipped ${eventData.value.quantity}× ${eventData.value.itemDefId}.`;
+			}
+			case 'playerLocationCreatedEvent': {
+				return `You established a presence at ${eventData.value.definitionId}.`;
 			}
 			case undefined:
 				return 'An event was received without details.';

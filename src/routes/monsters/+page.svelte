@@ -20,7 +20,7 @@
 
 	let inventory = $derived(
 		Array.from(
-			gameStateStore.Inventories.values().filter((x) => x.entity?.entityType == EntityType.LOCATION_INVENTORY),
+			gameStateStore.Inventories.values().filter((x) => x.entity?.entityType == EntityType.PLAYER_LOCATION),
 		)[0], //TODO this is a hack,
 	);
 

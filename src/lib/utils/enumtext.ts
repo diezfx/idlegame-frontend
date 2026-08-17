@@ -12,5 +12,9 @@ export const jobStatusText = (status: JobStatus) => {
 			return 'Returning';
 		case JobStatus.FINISHED:
 			return 'Finished';
+		case JobStatus.WAITING_INPUT:
+			return 'Waiting for input';
+		case JobStatus.WAITING_OUTPUT:
+			return 'Waiting for output space';
 	}
 };
