@@ -111,10 +111,10 @@
 				foreground="bg-cyan-200"
 				background="bg-cyan-200/50"
 				value={jobsite?.used ?? 0}
-				max={jobsite?.inventory?.capacity ?? 100}
+				max={jobsite?.entity?.inventory?.capacity ?? 100}
 			></Progress>
 			<div class="grid grid-cols-3 gap-1 mt-2">
-				{#each jobsite?.inventory?.items ?? [] as item (item.id)}
+				{#each jobsite?.entity?.inventory?.items ?? [] as item (item.id)}
 					<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
 				{/each}
 			</div>

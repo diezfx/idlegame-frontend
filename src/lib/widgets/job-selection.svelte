@@ -27,7 +27,7 @@
 	const monsters = $derived(gameStateStore.Monsters);
 	const availableMonsterIds = $derived(
 		Array.from(monsters.values())
-			.filter((monster) => monster.participant == undefined)
+			.filter((monster) => monster.monsterParticipant == undefined)
 			.map((monster) => monster.entity?.id)
 			.filter((monsterId): monsterId is string => monsterId != undefined),
 	);

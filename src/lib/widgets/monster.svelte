@@ -24,7 +24,9 @@
 	const monster = $derived(gameStateStore.Monsters.get(monId));
 	const jobMasterdata = $derived(await masterdataStore.getProductionJobs());
 	const monJob = $derived(
-		monster?.participant?.jobEntityId ? gameStateStore.Jobs.get(monster.participant.jobEntityId) : undefined,
+		monster?.monsterParticipant?.jobEntityId
+			? gameStateStore.Jobs.get(monster.monsterParticipant.jobEntityId)
+			: undefined,
 	);
 </script>
 

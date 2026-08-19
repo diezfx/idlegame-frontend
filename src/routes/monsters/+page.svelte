@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MonsterView from '$lib/widgets/monster.svelte';
 	import log from '$lib/log/log';
-	import { EntityType, type Item, type Monster } from '../../gen/v1/domain_pb.js';
+	import { EntityType, type EntityState, type Item } from '../../gen/v1/domain_pb.js';
 	import Dialog from '$lib/components/ui/dialog/dialog.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
@@ -11,7 +11,7 @@
 
 	let openDialog = $state(false);
 	const { inventory: inventoryService } = getServicesContext();
-	let selectedMonster: Monster | undefined = $state(undefined);
+	let selectedMonster: EntityState | undefined = $state(undefined);
 	let selectedItem: Item | undefined = $state(undefined);
 	let itemAmount = $state(1);
 	let monsters = $derived(gameStateStore.getUserMonsters());
@@ -20,14 +20,14 @@
 
 	let inventory = $derived(
 		Array.from(
-			gameStateStore.Inventories.values().filter((x) => x.entity?.entityType == EntityType.PLAYER_LOCATION),
+			gameStateStore.Inventories.values().filter((x) => x.entity?.entity?.entityType == EntityType.PLAYER_LOCATION),
 		)[0], //TODO this is a hack,
 	);
 
 	$effect(() => console.log(inventory));
 
 	let equippableItems = $derived(
-		(inventory?.inventory?.items ?? []).filter((i) => {
+		(inventory.entity?.inventory?.items ?? []).filter((i) => {
 			const md = itemMasterdata.get(i.id);
 			const consumable = md?.effects.length ?? 0 > 0;
 			const equipment = md?.stats ? true : false;
@@ -91,7 +91,7 @@
 			</button>
 		</div>
 
-		<div class="grid grid-cols-2 max-h-[360px] gap-2 overflow-y-auto">
+		<div class="grid grid-cols-2 max-h-90 gap-2 overflow-y-auto">
 			{#each equippableItems as item}
 				<button
 					onclick={() => (selectedItem = item)}

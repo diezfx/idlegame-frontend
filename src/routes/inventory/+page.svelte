@@ -14,7 +14,7 @@
 	const invs = $derived(
 		allInvs
 			.values()
-			.filter((x) => x.entity?.entityType == EntityType.PLAYER_LOCATION)
+			.filter((x) => x.entity?.entity?.entityType == EntityType.PLAYER_LOCATION)
 			.toArray(),
 	);
 </script>
@@ -30,18 +30,18 @@
 		>
 			{#snippet title()}
 				<div class="flex w-full items-center justify-between gap-3">
-					<span>{inv.identity?.name}</span>
+					<span>{inv.entity?.identity?.name}</span>
 					<span class="text-right text-xs font-normal tabular-nums">
-						<span class="block">{inv.used} / {inv.inventory?.capacity ?? 0} used</span>
+						<span class="block">{inv.used} / {inv.entity?.inventory?.capacity ?? 0} used</span>
 						<span class="text-muted-foreground block">
-							{Math.max((inv.inventory?.capacity ?? 0) - inv.used, 0)} free
+							{Math.max((inv.entity?.inventory?.capacity ?? 0) - inv.used, 0)} free
 						</span>
 					</span>
 				</div>
 			{/snippet}
 			<Progress
 				value={inv.used}
-				max={inv.inventory?.capacity}
+				max={inv.entity?.inventory?.capacity}
 				class="mx-3 my-2 h-1 w-auto"
 				foreground="bg-primary/70"
 				background="bg-accent/30"
@@ -55,7 +55,7 @@
 				</TableHeader>
 
 				<TableBody>
-					{#each inv.inventory!.items! as item (item.id)}
+					{#each inv.entity?.inventory!.items! as item (item.id)}
 						<TableRow>
 							<TableCell>{item.id}</TableCell>
 							<TableCell class="text-right tabular-nums">{item.quantity}</TableCell>

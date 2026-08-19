@@ -1,7 +1,7 @@
 import { toJsonString } from '@bufbuild/protobuf';
 import { SvelteMap } from 'svelte/reactivity';
 
-import type { Event, Job, Monster as MonsterType } from '../../gen/v1/domain_pb';
+import type { EntityState, Event, Job, EntityState as MonsterType } from '../../gen/v1/domain_pb';
 import { EventSchema, GameStateSchema } from '../../gen/v1/domain_pb';
 import { clients } from '$lib/service/connect';
 import { userStore } from './user.svelte';
@@ -19,7 +19,7 @@ declare global {
 }
 
 export class GameStateStore {
-	Monsters: SvelteMap<string, MonsterType>;
+	Monsters: SvelteMap<string, EntityState>;
 	Jobs: SvelteMap<string, Job>;
 	Inventories: SvelteMap<string, InventoryView>;
 	Events: Event[] = $state([]);
@@ -91,7 +91,7 @@ export class GameStateStore {
 		const inventories = await this.wasmClients.inventoryService.getPlayerInventory({ userId: userId });
 
 		for (const inv of inventories.locations) {
-			nextInventories.set(inv.entity?.id!, inv);
+			nextInventories.set(inv.entity?.entity?.id!, inv);
 		}
 
 		this.Monsters.clear();

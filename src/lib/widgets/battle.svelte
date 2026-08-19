@@ -5,11 +5,11 @@
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import type { Job } from '../../gen/v1/domain_pb';
+	import type { EntityState, Job } from '../../gen/v1/domain_pb';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 	import { getServicesContext } from '$lib/service/context';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
-	import type { ActionState, Event, Monster, Stat } from '../../gen/v1/domain_pb';
+	import type { ActionState, Event, Stat } from '../../gen/v1/domain_pb';
 	import { Action, Role } from '../../gen/v1/domain_pb';
 	import EventLog from './event-log.svelte';
 
@@ -21,7 +21,7 @@
 	let stopping = $state(false);
 
 	const monsters = $derived.by(() => {
-		const map = new Map<string, Monster>();
+		const map = new Map<string, EntityState>();
 		for (const id of job.monsters) {
 			const monster = gameStateStore.Monsters.get(id);
 			if (monster) {
@@ -34,13 +34,13 @@
 	const playerMonsters = $derived(
 		monsters
 			.values()
-			.filter((m) => m.participant?.role === Role.PLAYER)
+			.filter((m) => m.monsterParticipant?.role === Role.PLAYER)
 			.toArray(),
 	);
 	const enemyMonsters = $derived(
 		monsters
 			.values()
-			.filter((m) => m.participant?.role === Role.ENEMY)
+			.filter((m) => m.monsterParticipant?.role === Role.ENEMY)
 			.toArray(),
 	);
 

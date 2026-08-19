@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import { Check, House, Sword, X } from 'lucide-svelte';
 	import { JobSubType, LocationType, type LocationDefinition } from '../../gen/v1/masterdata_pb';
-	import type { Monster } from '../../gen/v1/domain_pb';
 	import type { BattleJobInfo, ProductionJobInfo } from '../../gen/v1/service_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	import { getServicesContext } from '$lib/service/context';
@@ -11,6 +10,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import MultiSelect from '$lib/components/ui/multi-select/multi-select.svelte';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
+	import type { EntityState } from '$gen/v1/domain_pb';
 
 	type MapJob = {
 		id: string;
@@ -35,7 +35,7 @@
 		productionJobs,
 		battleJobs,
 	}: {
-		monsters: Monster[];
+		monsters: EntityState[];
 		locations: LocationDefinition[];
 		productionJobs: ProductionJobInfo[];
 		battleJobs: BattleJobInfo[];
@@ -124,7 +124,7 @@
 	);
 	const selectedJob = $derived(visibleJobs.find((job) => job.id === selectedJobId));
 	const activeJobDefinitionIds = $derived.by(() => Array.from(gameStateStore.Jobs.values(), (job) => job.definitionId));
-	const availableMonsters = $derived(monsters.filter((monster) => !monster.participant?.jobEntityId));
+	const availableMonsters = $derived(monsters.filter((monster) => !monster.monsterParticipant?.jobEntityId));
 	const selectedMonster = $derived(availableMonsters.find((monster) => monster.entity?.id === selectedMonsterId));
 	const subtypeOptions = $derived.by(() => {
 		const counts: Record<number, number> = {};
@@ -222,7 +222,7 @@
 		return job.routeInfo.distance / seconds;
 	}
 
-	function estimateMonsterTravel(job: MapJob, monster: Monster): { distance: number; seconds: number } {
+	function estimateMonsterTravel(job: MapJob, monster: EntityState): { distance: number; seconds: number } {
 		const monsterPos = monster.position;
 		if (!monsterPos) {
 			return { distance: 0, seconds: 0 };

@@ -88,6 +88,12 @@
 			case 'playerLocationCreatedEvent': {
 				return `You established a presence at ${eventData.value.definitionId}.`;
 			}
+			case 'exportRequestCreatedEvent': {
+				return `New export request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
+			}
+			case 'importRequestCreatedEvent': {
+				return `New import request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
+			}
 			case undefined:
 				return 'An event was received without details.';
 			default: {
