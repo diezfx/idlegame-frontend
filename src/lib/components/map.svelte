@@ -123,7 +123,9 @@
 		allJobs.filter((job) => subtypeFilters.length === 0 || subtypeFilters.includes(job.subType)),
 	);
 	const selectedJob = $derived(visibleJobs.find((job) => job.id === selectedJobId));
-	const activeJobDefinitionIds = $derived.by(() => Array.from(gameStateStore.Jobs.values(), (job) => job.definitionId));
+	const activeJobDefinitionIds = $derived.by(() =>
+		Array.from(gameStateStore.Jobs.values(), (job) => job.definition?.id),
+	);
 	const availableMonsters = $derived(monsters.filter((monster) => !monster.monsterParticipant?.jobEntityId));
 	const selectedMonster = $derived(availableMonsters.find((monster) => monster.entity?.id === selectedMonsterId));
 	const subtypeOptions = $derived.by(() => {

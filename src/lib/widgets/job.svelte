@@ -2,11 +2,12 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import ItemView from '$lib/widgets/item.svelte';
+	import { JobSubType } from '$gen/v1/masterdata_pb';
 
 	import { DateTime } from 'luxon';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import { Action, type ActionState, type Job, JobStatus } from '$gen/v1/domain_pb';
+	import { Action, type ActionState, JobStatus } from '$gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	let {
 		jobID,
@@ -31,12 +32,13 @@
 	};
 
 	const job = $derived(gameStateStore.Jobs.get(jobID)!);
-	const jobsite = $derived(gameStateStore.Inventories.get(job.parent?.entityId ?? ''));
 	const monsters = $derived(
 		(job?.monsters ?? [])
 			.map((id) => gameStateStore.Monsters.get(id))
 			.filter((m): m is NonNullable<typeof m> => m != null),
 	);
+	const inventoryEntityId = $derived(job.job?.subType === JobSubType.TRANSPORT ? job.entity?.id : job.parent?.entityId);
+	const relevantInventory = $derived(inventoryEntityId ? gameStateStore.Inventories.get(inventoryEntityId) : undefined);
 	const mon = $derived(monsters.at(0))!;
 	let animationFrameId: number | undefined;
 	let nowMs = $state(Date.now());
@@ -78,13 +80,13 @@
 	}
 </script>
 
-<Card {onclick} title={job.definitionId} class="w-full">
+<Card {onclick} title={JobSubType[job.job?.subType!] + `(${job.definition?.id ?? ''})`} class="w-full">
 	<div class="p-4 space-y-4">
 		<div class="space-y-1">
 			<div class="flex items-center justify-between gap-2">
 				<h3>Current action</h3>
 				<span class="text-sm font-medium">
-					{currentAction ? Action[currentAction.action] : job.jobState ? JobStatus[job.jobState.status] : 'IDLE'}
+					{currentAction ? Action[currentAction.action] : job.job ? JobStatus[job.job.status] : 'IDLE'}
 				</span>
 			</div>
 			{#if currentAction && actionDuration(currentAction) > 0}
@@ -106,18 +108,18 @@
 				max={mon.stat?.maxStamina ?? 100}
 			/>
 		</Card>
-		<h3>Jobsite storage</h3>
+		<h3>Storage</h3>
 		<Card class="gap-1 p-1">
 			<Progress
 				class="p-2"
 				showLabel={true}
 				foreground="bg-cyan-200"
 				background="bg-cyan-200/50"
-				value={jobsite?.used ?? 0}
-				max={jobsite?.entity?.inventory?.capacity ?? 100}
+				value={relevantInventory?.used ?? 0}
+				max={relevantInventory?.entity?.inventory?.capacity ?? 100}
 			></Progress>
 			<div class="grid grid-cols-3 gap-1 mt-2">
-				{#each jobsite?.entity?.inventory?.items ?? [] as item (item.id)}
+				{#each relevantInventory?.entity?.inventory?.items ?? [] as item (item.id)}
 					<ItemView {item} class="scale bg-secondary text-secondary-foreground" />
 				{/each}
 			</div>

@@ -4,7 +4,7 @@
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import List from '$lib/components/ui/list/List.svelte';
 	import ListElement from '$lib/components/ui/list/ListElement.svelte';
-	import { JobStatus, type Event } from '$gen/v1/domain_pb';
+	import { JobStatus, ShippingDirection, type Event } from '$gen/v1/domain_pb';
 	let {
 		userId,
 		jobId,
@@ -74,7 +74,7 @@
 				return `A new battle round began against ${count(eventData.value.enemies.length, 'enemy')}.`;
 			}
 			case 'jobStartedEvent': {
-				return `The ${eventData.value.definitionId} job started with ${count(eventData.value.monsterIds.length, 'monster')}.`;
+				return `The ${eventData.value.definition?.id ?? 'unknown'} job started with ${count(eventData.value.monsterIds.length, 'monster')}.`;
 			}
 			case 'jobFinishedEvent': {
 				return `Job ${eventData.value.jobId} finished.`;
@@ -86,13 +86,16 @@
 				return `Monster ${eventData.value.monsterId} unequipped ${eventData.value.quantity}× ${eventData.value.itemDefId}.`;
 			}
 			case 'playerLocationCreatedEvent': {
-				return `You established a presence at ${eventData.value.definitionId}.`;
+				return `You established a presence at ${eventData.value.definition?.id ?? 'an unknown location'}.`;
 			}
-			case 'exportRequestChangedEvent': {
-				return `New export request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
-			}
-			case 'importRequestChangedEvent': {
-				return `New import request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
+			case 'shippingRequestChangedEvent': {
+				const direction =
+					eventData.value.request?.direction === ShippingDirection.IMPORT
+						? 'import'
+						: eventData.value.request?.direction === ShippingDirection.EXPORT
+							? 'export'
+							: 'shipping';
+				return `New ${direction} request for ${eventData.value.location} with ${eventData.value.request?.items.length ?? 0} items`;
 			}
 			case 'monsterChosenEvent': {
 				return `Startermonster was chosen ${eventData.value.monster?.identity?.name}`;

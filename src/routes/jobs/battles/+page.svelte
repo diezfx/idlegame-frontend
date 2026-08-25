@@ -17,7 +17,9 @@
 	);
 
 	const activeJobs = $derived(
-		Array.from(gameStateStore.Jobs.values()).filter((job) => jobDefs.find((j) => job.definitionId == j.definition?.id)),
+		Array.from(gameStateStore.Jobs.values()).filter((job) =>
+			jobDefs.find((j) => job.definition?.id == j.definition?.id),
+		),
 	);
 
 	async function startJob(selection: { jobDefinitionId: string; monsterId: string }): Promise<void> {

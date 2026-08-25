@@ -16,7 +16,7 @@
 	);
 	let activeJobs = $derived(
 		Array.from(activeJobsMap.values()).filter(
-			(job) => jobDefs.find((j) => j.definition?.id == job.definitionId)?.definition?.subType === processingType,
+			(job) => jobDefs.find((j) => j.definition?.id == job.definition?.id)?.definition?.subType === processingType,
 		),
 	);
 	async function startJob(selection: { jobDefinitionId: string; monsterId: string }): Promise<void> {

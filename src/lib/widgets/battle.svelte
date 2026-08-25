@@ -5,7 +5,7 @@
 	import DescriptionList from '$lib/components/ui/descriptionlist/DescriptionList.svelte';
 	import DescriptionRow from '$lib/components/ui/descriptionlist/DescriptionRow.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import type { EntityState, Job } from '../../gen/v1/domain_pb';
+	import type { EntityState, JobView } from '../../gen/v1/domain_pb';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte';
 	import { getServicesContext } from '$lib/service/context';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
@@ -13,7 +13,7 @@
 	import { Action, Role } from '../../gen/v1/domain_pb';
 	import EventLog from './event-log.svelte';
 
-	let { job }: { job: Job; [key: string]: any } = $props();
+	let { job }: { job: JobView; [key: string]: any } = $props();
 	const { jobs: jobService } = getServicesContext();
 
 	let animationFrameId: number | undefined;

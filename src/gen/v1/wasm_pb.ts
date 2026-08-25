@@ -2,15 +2,108 @@
 // @generated from file v1/wasm.proto (package v1, edition 2023)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import { file_buf_validate_validate } from "../buf/validate/validate_pb";
+import type { EntityState, Event } from "./domain_pb";
+import { file_v1_domain } from "./domain_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file v1/wasm.proto.
  */
 export const file_v1_wasm: GenFile = /*@__PURE__*/
-  fileDesc("Cg12MS93YXNtLnByb3RvEgJ2MSIqCgdSZXF1ZXN0Eg4KBm1ldGhvZBgBIAEoCRIPCgdwYXlsb2FkGAIgASgMIisKCFJlc3BvbnNlEg8KB3BheWxvYWQYASABKAwSDgoGc3RhdHVzGAIgASgFQitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw");
+  fileDesc("Cg12MS93YXNtLnByb3RvEgJ2MSJPCgxFbnRpdHlDaGFuZ2USGwoJZW50aXR5X2lkGAEgASgJQgi6SAVyA7ABARIiCgRraW5kGAIgASgOMhQudjEuRW50aXR5Q2hhbmdlS2luZCItChFBcHBseUV2ZW50UmVxdWVzdBIYCgVldmVudBgBIAEoCzIJLnYxLkV2ZW50Ij4KEkFwcGx5RXZlbnRSZXNwb25zZRIoCg5lbnRpdHlfY2hhbmdlcxgBIAMoCzIQLnYxLkVudGl0eUNoYW5nZSIvChBHZXRFbnRpdHlSZXF1ZXN0EhsKCWVudGl0eV9pZBgBIAEoCUIIukgFcgOwAQEiNAoRR2V0RW50aXR5UmVzcG9uc2USHwoGZW50aXR5GAEgASgLMg8udjEuRW50aXR5U3RhdGUiKgoHUmVxdWVzdBIOCgZtZXRob2QYASABKAkSDwoHcGF5bG9hZBgCIAEoDCIrCghSZXNwb25zZRIPCgdwYXlsb2FkGAEgASgMEg4KBnN0YXR1cxgCIAEoBSqUAQoQRW50aXR5Q2hhbmdlS2luZBIiCh5FTlRJVFlfQ0hBTkdFX0tJTkRfVU5TUEVDSUZJRUQQABIcChhFTlRJVFlfQ0hBTkdFX0tJTkRfQURERUQQARIeChpFTlRJVFlfQ0hBTkdFX0tJTkRfVVBEQVRFRBACEh4KGkVOVElUWV9DSEFOR0VfS0lORF9SRU1PVkVEEAMyhAEKC1dhc21TZXJ2aWNlEjsKCkFwcGx5RXZlbnQSFS52MS5BcHBseUV2ZW50UmVxdWVzdBoWLnYxLkFwcGx5RXZlbnRSZXNwb25zZRI4CglHZXRFbnRpdHkSFC52MS5HZXRFbnRpdHlSZXF1ZXN0GhUudjEuR2V0RW50aXR5UmVzcG9uc2VCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_buf_validate_validate, file_v1_domain]);
+
+/**
+ * @generated from message v1.EntityChange
+ */
+export type EntityChange = Message<"v1.EntityChange"> & {
+  /**
+   * @generated from field: string entity_id = 1;
+   */
+  entityId: string;
+
+  /**
+   * @generated from field: v1.EntityChangeKind kind = 2;
+   */
+  kind: EntityChangeKind;
+};
+
+/**
+ * Describes the message v1.EntityChange.
+ * Use `create(EntityChangeSchema)` to create a new message.
+ */
+export const EntityChangeSchema: GenMessage<EntityChange> = /*@__PURE__*/
+  messageDesc(file_v1_wasm, 0);
+
+/**
+ * @generated from message v1.ApplyEventRequest
+ */
+export type ApplyEventRequest = Message<"v1.ApplyEventRequest"> & {
+  /**
+   * @generated from field: v1.Event event = 1;
+   */
+  event?: Event | undefined;
+};
+
+/**
+ * Describes the message v1.ApplyEventRequest.
+ * Use `create(ApplyEventRequestSchema)` to create a new message.
+ */
+export const ApplyEventRequestSchema: GenMessage<ApplyEventRequest> = /*@__PURE__*/
+  messageDesc(file_v1_wasm, 1);
+
+/**
+ * @generated from message v1.ApplyEventResponse
+ */
+export type ApplyEventResponse = Message<"v1.ApplyEventResponse"> & {
+  /**
+   * @generated from field: repeated v1.EntityChange entity_changes = 1;
+   */
+  entityChanges: EntityChange[];
+};
+
+/**
+ * Describes the message v1.ApplyEventResponse.
+ * Use `create(ApplyEventResponseSchema)` to create a new message.
+ */
+export const ApplyEventResponseSchema: GenMessage<ApplyEventResponse> = /*@__PURE__*/
+  messageDesc(file_v1_wasm, 2);
+
+/**
+ * @generated from message v1.GetEntityRequest
+ */
+export type GetEntityRequest = Message<"v1.GetEntityRequest"> & {
+  /**
+   * @generated from field: string entity_id = 1;
+   */
+  entityId: string;
+};
+
+/**
+ * Describes the message v1.GetEntityRequest.
+ * Use `create(GetEntityRequestSchema)` to create a new message.
+ */
+export const GetEntityRequestSchema: GenMessage<GetEntityRequest> = /*@__PURE__*/
+  messageDesc(file_v1_wasm, 3);
+
+/**
+ * @generated from message v1.GetEntityResponse
+ */
+export type GetEntityResponse = Message<"v1.GetEntityResponse"> & {
+  /**
+   * @generated from field: v1.EntityState entity = 1;
+   */
+  entity?: EntityState | undefined;
+};
+
+/**
+ * Describes the message v1.GetEntityResponse.
+ * Use `create(GetEntityResponseSchema)` to create a new message.
+ */
+export const GetEntityResponseSchema: GenMessage<GetEntityResponse> = /*@__PURE__*/
+  messageDesc(file_v1_wasm, 4);
 
 /**
  * @generated from message v1.Request
@@ -32,7 +125,7 @@ export type Request = Message<"v1.Request"> & {
  * Use `create(RequestSchema)` to create a new message.
  */
 export const RequestSchema: GenMessage<Request> = /*@__PURE__*/
-  messageDesc(file_v1_wasm, 0);
+  messageDesc(file_v1_wasm, 5);
 
 /**
  * @generated from message v1.Response
@@ -54,5 +147,59 @@ export type Response = Message<"v1.Response"> & {
  * Use `create(ResponseSchema)` to create a new message.
  */
 export const ResponseSchema: GenMessage<Response> = /*@__PURE__*/
-  messageDesc(file_v1_wasm, 1);
+  messageDesc(file_v1_wasm, 6);
+
+/**
+ * @generated from enum v1.EntityChangeKind
+ */
+export enum EntityChangeKind {
+  /**
+   * @generated from enum value: ENTITY_CHANGE_KIND_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: ENTITY_CHANGE_KIND_ADDED = 1;
+   */
+  ADDED = 1,
+
+  /**
+   * @generated from enum value: ENTITY_CHANGE_KIND_UPDATED = 2;
+   */
+  UPDATED = 2,
+
+  /**
+   * @generated from enum value: ENTITY_CHANGE_KIND_REMOVED = 3;
+   */
+  REMOVED = 3,
+}
+
+/**
+ * Describes the enum v1.EntityChangeKind.
+ */
+export const EntityChangeKindSchema: GenEnum<EntityChangeKind> = /*@__PURE__*/
+  enumDesc(file_v1_wasm, 0);
+
+/**
+ * @generated from service v1.WasmService
+ */
+export const WasmService: GenService<{
+  /**
+   * @generated from rpc v1.WasmService.ApplyEvent
+   */
+  applyEvent: {
+    methodKind: "unary";
+    input: typeof ApplyEventRequestSchema;
+    output: typeof ApplyEventResponseSchema;
+  },
+  /**
+   * @generated from rpc v1.WasmService.GetEntity
+   */
+  getEntity: {
+    methodKind: "unary";
+    input: typeof GetEntityRequestSchema;
+    output: typeof GetEntityResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_v1_wasm, 0);
 

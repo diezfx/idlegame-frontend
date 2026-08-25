@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { EntityType } from '$gen/v1/domain_pb';
+	import { EntityType, ShippingDirection } from '$gen/v1/domain_pb';
 	import type { InventoryView } from '$gen/v1/views_pb';
 	import Collapsible from '$lib/components/ui/collapsible/collapsible.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
@@ -39,13 +39,15 @@
 			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
 			row.quantity += item.quantity;
 		}
-		for (const item of inv.entity?.importRequest?.items ?? []) {
-			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
-			row.importQuantity += item.quantity;
-		}
-		for (const item of inv.entity?.exportRequest?.items ?? []) {
-			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
-			row.exportQuantity += item.quantity;
+		for (const request of inv.entity?.shippingRequests ?? []) {
+			for (const item of request.items) {
+				const row = rows.getOrInsert(item.id, defaultEntry(item.id));
+				if (request.direction === ShippingDirection.IMPORT) {
+					row.importQuantity += item.quantity;
+				} else if (request.direction === ShippingDirection.EXPORT) {
+					row.exportQuantity += item.quantity;
+				}
+			}
 		}
 
 		return rows;
