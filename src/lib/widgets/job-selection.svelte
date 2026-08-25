@@ -57,8 +57,8 @@
 
 <Card class="mb-4 p-4">
 	<div class="mt-3 grid grid-cols-2 gap-3">
-		<Card title="Selected Monster" class="min-h-[8.5rem]" onclick={() => (openMonsterDialog = true)}>
-			<div class="grid min-h-[6rem] items-center">
+		<Card title="Selected Monster" class="min-h-34" onclick={() => (openMonsterDialog = true)}>
+			<div class="grid min-h-24 items-center">
 				{#if selectedMonster}
 					<DescriptionList class="w-full">
 						<DescriptionRow term="Name">{selectedMonster.identity?.name}</DescriptionRow>

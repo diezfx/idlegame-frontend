@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { EntityType } from '$gen/v1/domain_pb';
+	import type { InventoryView } from '$gen/v1/views_pb';
 	import Collapsible from '$lib/components/ui/collapsible/collapsible.svelte';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
 	import Table from '$lib/components/ui/table/Table.svelte';
@@ -17,6 +18,38 @@
 			.filter((x) => x.entity?.entity?.entityType == EntityType.PLAYER_LOCATION)
 			.toArray(),
 	);
+
+	type InventoryRow = {
+		id: string;
+		quantity: bigint;
+		importQuantity: bigint;
+		exportQuantity: bigint;
+	};
+
+	const getFullInv = (inv: InventoryView): Map<string, InventoryRow> => {
+		const rows = new Map<string, InventoryRow>();
+
+		const defaultEntry = (id: string): InventoryRow => ({
+			id,
+			quantity: 0n,
+			exportQuantity: 0n,
+			importQuantity: 0n,
+		});
+		for (const item of inv.entity?.inventory?.items ?? []) {
+			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
+			row.quantity += item.quantity;
+		}
+		for (const item of inv.entity?.importRequest?.items ?? []) {
+			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
+			row.importQuantity += item.quantity;
+		}
+		for (const item of inv.entity?.exportRequest?.items ?? []) {
+			const row = rows.getOrInsert(item.id, defaultEntry(item.id));
+			row.exportQuantity += item.quantity;
+		}
+
+		return rows;
+	};
 </script>
 
 <h1>Inventory</h1>
@@ -51,14 +84,18 @@
 					<TableRow>
 						<TableHead>Name</TableHead>
 						<TableHead class="text-right">Quantity</TableHead>
+						<TableHead class="text-right">Import</TableHead>
+						<TableHead class="text-right">Export</TableHead>
 					</TableRow>
 				</TableHeader>
 
 				<TableBody>
-					{#each inv.entity?.inventory!.items! as item (item.id)}
+					{#each getFullInv(inv)! as [_, row]}
 						<TableRow>
-							<TableCell>{item.id}</TableCell>
-							<TableCell class="text-right tabular-nums">{item.quantity}</TableCell>
+							<TableCell>{row.id}</TableCell>
+							<TableCell class="text-right tabular-nums">{row.quantity}</TableCell>
+							<TableCell class="text-right tabular-nums">{row.importQuantity}</TableCell>
+							<TableCell class="text-right tabular-nums">{row.exportQuantity}</TableCell>
 						</TableRow>
 					{/each}
 				</TableBody>

@@ -6,7 +6,7 @@
 	import { DateTime } from 'luxon';
 	import { gameStateStore } from '$lib/stores/gamestate.svelte.js';
 	import Progress from '$lib/components/ui/progress/progress.svelte';
-	import { Action, type ActionState, JobStatus } from '$gen/v1/domain_pb';
+	import { Action, type ActionState, type Job, JobStatus } from '$gen/v1/domain_pb';
 	import { protoToMilliseconds } from '$lib/utils/prototime';
 	let {
 		jobID,
@@ -57,7 +57,10 @@
 
 	const currentAction = $derived.by(() => {
 		return job?.actionStates
-			.filter((state) => state.action !== Action.UNSPECIFIED && state.action !== Action.CONSUME)
+			.filter(
+				(state) =>
+					state.action !== Action.UNSPECIFIED && state.action !== Action.CONSUME && state.action !== Action.TRANSPORT,
+			)
 			.toSorted((left, right) => actionStartedAt(right) - actionStartedAt(left))[0];
 	});
 

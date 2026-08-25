@@ -7,7 +7,7 @@ import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
 import { file_buf_validate_validate } from "../buf/validate/validate_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import type { MonsterElement, Vector2 } from "./masterdata_pb";
+import type { JobSubType, LocationType, MonsterElement, Vector2 } from "./masterdata_pb";
 import { file_v1_masterdata } from "./masterdata_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -15,7 +15,41 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file v1/domain.proto.
  */
 export const file_v1_domain: GenFile = /*@__PURE__*/
-  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxIqMBCgZFbnRpdHkSFAoCaWQYASABKAlCCLpIBXIDsAEBEiMKC2VudGl0eV90eXBlGAIgASgOMg4udjEuRW50aXR5VHlwZRIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIeCghJZGVudGl0eRIMCgRuYW1lGAEgASgJSgQIAhADIjIKBEl0ZW0SCgoCaWQYASABKAkSEAoIcXVhbnRpdHkYAiABKAMSDAoEdGFncxgDIAMoCSI2CglJbnZlbnRvcnkSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtEhAKCGNhcGFjaXR5GAIgASgFIvkBCgRTdGF0EiMKB2VsZW1lbnQYASABKA4yEi52MS5Nb25zdGVyRWxlbWVudBISCgpleHBlcmllbmNlGAIgASgFEg4KBmhlYWx0aBgDIAEoBRISCgptYXhfaGVhbHRoGAQgASgFEg8KB3N0YW1pbmEYBSABKAUSEwoLbWF4X3N0YW1pbmEYBiABKAUSFAoMYXR0YWNrX3Bvd2VyGAcgASgFEg0KBWxldmVsGAkgASgFEhAKCHN0cmVuZ3RoGAogASgFEg8KB2FnaWxpdHkYCyABKAUSFAoMaW50ZWxsaWdlbmNlGAwgASgFEhAKCHZpdGFsaXR5GA0gASgFIk0KEk1vbnN0ZXJQYXJ0aWNpcGFudBIfCg1qb2JfZW50aXR5X2lkGAEgASgJQgi6SAVyA7ABARIWCgRyb2xlGAIgASgOMggudjEuUm9sZSIhCgVPd25lchIYCgZlbnRpdHkYASABKAlCCLpIBXIDsAEBIiUKBlBhcmVudBIbCgllbnRpdHlfaWQYASABKAlCCLpIBXIDsAEBIjoKDUltcG9ydFJlcXVlc3QSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtEhAKCHByaW9yaXR5GAIgASgFIjoKDUV4cG9ydFJlcXVlc3QSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtEhAKCHByaW9yaXR5GAIgASgFIlUKCEpvYlN0YXRlEh0KBnN0YXR1cxgBIAEoDjINLnYxLkpvYlN0YXR1cxISCgppdGVyYXRpb25zGAIgASgDEhYKDm1heF9pdGVyYXRpb25zGAMgASgDIqEBCgtBY3Rpb25TdGF0ZRIaCgZhY3Rpb24YASABKA4yCi52MS5BY3Rpb24SMAoMbGFzdF91c2VkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgtuZXh0X3VzZV9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEwoLaXRlbV9kZWZfaWQYBCABKAki9gIKA0pvYhIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSFQoNZGVmaW5pdGlvbl9pZBgCIAEoCRIdCgphc3NpZ25tZW50GAMgASgLMgkudjEuT3duZXISHQoIcG9zaXRpb24YBCABKAsyCy52MS5WZWN0b3IyEh8KCWpvYl9zdGF0ZRgFIAEoCzIMLnYxLkpvYlN0YXRlEhwKB3Jld2FyZHMYBiABKAsyCy52MS5SZXdhcmRzEh8KCG1vbnN0ZXJzGAcgAygJQg26SAqSAQciBXIDsAEBEh0KC2luZ3JlZGllbnRzGAggAygLMggudjEuSXRlbRIZCgZldmVudHMYCSADKAsyCS52MS5FdmVudBIgCglpbnZlbnRvcnkYCiABKAsyDS52MS5JbnZlbnRvcnkSJgoNYWN0aW9uX3N0YXRlcxgLIAMoCzIPLnYxLkFjdGlvblN0YXRlEhoKBnBhcmVudBgMIAEoCzIKLnYxLlBhcmVudCLHAQoMVHJhbnNwb3J0Sm9iEhoKBmVudGl0eRgBIAEoCzIKLnYxLkVudGl0eRIVCg1kZWZpbml0aW9uX2lkGAIgASgJEikKDnJvdXRlX21hbmlmZXN0GAMgASgLMhEudjEuUm91dGVNYW5pZmVzdBIYCgVyb3V0ZRgEIAEoCzIJLnYxLlJvdXRlEiAKCWludmVudG9yeRgGIAEoCzINLnYxLkludmVudG9yeRIdCghwb3NpdGlvbhgHIAEoCzILLnYxLlZlY3RvcjIiNgoHUmV3YXJkcxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEgoKZXhwZXJpZW5jZRgCIAEoBSJbCg1Sb3V0ZU1hbmlmZXN0Eg4KBnNvdXJjZRgBIAEoBRIOCgZ0YXJnZXQYAiABKAUSKgoLY2FyZ29faXRlbXMYAyADKAsyCC52MS5JdGVtUgtjYXJnb19pdGVtcyInCgVSb3V0ZRIOCgZzb3VyY2UYASABKAUSDgoGdGFyZ2V0GAIgASgFIlMKC0F0dGFja0V2ZW50EhoKCGF0dGFja2VyGAEgASgJQgi6SAVyA7ABARIYCgZ0YXJnZXQYAiABKAlCCLpIBXIDsAEBEg4KBmRhbWFnZRgDIAEoBSIsCgtBcnJpdmVFdmVudBIdCghwb3NpdGlvbhgBIAEoCzILLnYxLlZlY3RvcjIiLAoLUmV0dXJuRXZlbnQSHQoIcG9zaXRpb24YASABKAsyCy52MS5WZWN0b3IyImEKCVdvcmtFdmVudBIcCgdyZXdhcmRzGAEgASgLMgsudjEuUmV3YXJkcxIgCg5jb25zdW1lZF9pdGVtcxgCIAMoCzIILnYxLkl0ZW0SFAoMc3RhbWluYV9jb3N0GAMgASgFIhIKEFN0b3BXb3JraW5nRXZlbnQiWAoZSW1wb3J0UmVxdWVzdENyZWF0ZWRFdmVudBIiCgdyZXF1ZXN0GAEgASgLMhEudjEuSW1wb3J0UmVxdWVzdBIXCg9wbGF5ZXJfbG9jYXRpb24YAiABKAkiWAoZRXhwb3J0UmVxdWVzdENyZWF0ZWRFdmVudBIiCgdyZXF1ZXN0GAEgASgLMhEudjEuRXhwb3J0UmVxdWVzdBIXCg9wbGF5ZXJfbG9jYXRpb24YAiABKAkiXgoVSm9iU3RhdHVzQ2hhbmdlZEV2ZW50EiYKD3ByZXZpb3VzX3N0YXR1cxgBIAEoDjINLnYxLkpvYlN0YXR1cxIdCgZzdGF0dXMYAiABKA4yDS52MS5Kb2JTdGF0dXMiVwoQQ29uc3VtZUl0ZW1FdmVudBIcCgptb25zdGVyX2lkGAEgASgJQgi6SAVyA7ABARITCgtpdGVtX2RlZl9pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoBSJsChREZWZlYXRlZEVuZW1pZXNFdmVudBIcCgdyZXdhcmRzGAEgASgLMgsudjEuUmV3YXJkcxIgCgllbmVteV9pZHMYAiADKAlCDbpICpIBByIFcgOwAQESFAoMc3RhbWluYV9jb3N0GAMgASgFIlgKEUVxdWlwcGVkSXRlbUV2ZW50EhwKCm1vbnN0ZXJfaWQYASABKAlCCLpIBXIDsAEBEhMKC2l0ZW1fZGVmX2lkGAIgASgJEhAKCHF1YW50aXR5GAMgASgFIloKE1VuZXF1aXBwZWRJdGVtRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOwAQESEwoLaXRlbV9kZWZfaWQYAiABKAkSEAoIcXVhbnRpdHkYAyABKAUiOgoVTmV4dFJvdW5kRW5lbWllc0V2ZW50EiEKB2VuZW1pZXMYASADKAsyEC52MS5FbmVteU1vbnN0ZXIiYgoMRW5lbXlNb25zdGVyEhsKB2VudGl0aXkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIVCg1kZWZpbml0aW9uX2lkGAMgASgJImMKEENhcmdvTG9hZGVkRXZlbnQSGwoJc291cmNlX2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAMgASgJQgi6SAVyA7ABARIXCgVpdGVtcxgEIAMoCzIILnYxLkl0ZW0iZQoSQ2FyZ29VbmxvYWRlZEV2ZW50EhsKCXRhcmdldF9pZBgBIAEoCUIIukgFcgOwAQESGQoHdXNlcl9pZBgCIAEoCUIIukgFcgOwAQESFwoFaXRlbXMYAyADKAsyCC52MS5JdGVtIjQKFFN0YXJ0UmVjb3ZlcmluZ0V2ZW50EhwKCm1vbnN0ZXJfaWQYASABKAlCCLpIBXIDsAEBIkkKDEV2ZW50Q29udGV4dBIfCgh1c2VyX2lkcxgBIAMoCUINukgKkgEHIgVyA7ABARIYCgZqb2JfaWQYAiABKAlCCLpIBXIDsAEBIsUBCg9Kb2JTdGFydGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EhUKDWRlZmluaXRpb25faWQYAiABKAkSIgoLbW9uc3Rlcl9pZHMYAyADKAlCDbpICpIBByIFcgOwAQESHQoKYXNzaWdubWVudBgEIAEoCzIJLnYxLk93bmVyEiAKCWludmVudG9yeRgFIAEoCzINLnYxLkludmVudG9yeRIaCgZwYXJlbnQYBiABKAsyCi52MS5QYXJlbnQiLAoQSm9iRmluaXNoZWRFdmVudBIYCgZqb2JfaWQYASABKAlCCLpIBXIDsAEBIsoBChpQbGF5ZXJMb2NhdGlvbkNyZWF0ZWRFdmVudBIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSFQoNZGVmaW5pdGlvbl9pZBgCIAEoCRIYCgVvd25lchgDIAEoCzIJLnYxLk93bmVyEh0KCHBvc2l0aW9uGAQgASgLMgsudjEuVmVjdG9yMhIgCglpbnZlbnRvcnkYBSABKAsyDS52MS5JbnZlbnRvcnkSHgoIaWRlbnRpdHkYBiABKAsyDC52MS5JZGVudGl0eSKaCQoFRXZlbnQSCgoCaWQYASABKAkSLQoJdGltZXN0YW1wGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgpldmVudF90eXBlGAMgASgJEicKDWV2ZW50X2NvbnRleHQYBCABKAsyEC52MS5FdmVudENvbnRleHQSJwoMYXJyaXZlX2V2ZW50GAUgASgLMg8udjEuQXJyaXZlRXZlbnRIABInCgxyZXR1cm5fZXZlbnQYBiABKAsyDy52MS5SZXR1cm5FdmVudEgAEiMKCndvcmtfZXZlbnQYByABKAsyDS52MS5Xb3JrRXZlbnRIABIyChJzdG9wX3dvcmtpbmdfZXZlbnQYCCABKAsyFC52MS5TdG9wV29ya2luZ0V2ZW50SAASMgoSY29uc3VtZV9pdGVtX2V2ZW50GAogASgLMhQudjEuQ29uc3VtZUl0ZW1FdmVudEgAEjIKEmNhcmdvX2xvYWRlZF9ldmVudBgLIAEoCzIULnYxLkNhcmdvTG9hZGVkRXZlbnRIABI2ChRjYXJnb191bmxvYWRlZF9ldmVudBgMIAEoCzIWLnYxLkNhcmdvVW5sb2FkZWRFdmVudEgAEicKDGF0dGFja19ldmVudBgNIAEoCzIPLnYxLkF0dGFja0V2ZW50SAASOgoWc3RhcnRfcmVjb3ZlcmluZ19ldmVudBgOIAEoCzIYLnYxLlN0YXJ0UmVjb3ZlcmluZ0V2ZW50SAASOgoWZGVmZWF0ZWRfZW5lbWllc19ldmVudBgPIAEoCzIYLnYxLkRlZmVhdGVkRW5lbWllc0V2ZW50SAASPQoYbmV4dF9yb3VuZF9lbmVtaWVzX2V2ZW50GBAgASgLMhkudjEuTmV4dFJvdW5kRW5lbWllc0V2ZW50SAASMAoRam9iX3N0YXJ0ZWRfZXZlbnQYESABKAsyEy52MS5Kb2JTdGFydGVkRXZlbnRIABIyChJqb2JfZmluaXNoZWRfZXZlbnQYEiABKAsyFC52MS5Kb2JGaW5pc2hlZEV2ZW50SAASLwoOZXF1aXBwZWRfZXZlbnQYEyABKAsyFS52MS5FcXVpcHBlZEl0ZW1FdmVudEgAEjMKEHVuZXF1aXBwZWRfZXZlbnQYFCABKAsyFy52MS5VbmVxdWlwcGVkSXRlbUV2ZW50SAASRwodcGxheWVyX2xvY2F0aW9uX2NyZWF0ZWRfZXZlbnQYFSABKAsyHi52MS5QbGF5ZXJMb2NhdGlvbkNyZWF0ZWRFdmVudEgAEj0KGGpvYl9zdGF0dXNfY2hhbmdlZF9ldmVudBgWIAEoCzIZLnYxLkpvYlN0YXR1c0NoYW5nZWRFdmVudEgAEkUKHGltcG9ydF9yZXF1ZXN0X2NyZWF0ZWRfZXZlbnQYFyABKAsyHS52MS5JbXBvcnRSZXF1ZXN0Q3JlYXRlZEV2ZW50SAASRQocZXhwb3J0X3JlcXVlc3RfY3JlYXRlZF9ldmVudBgYIAEoCzIdLnYxLkV4cG9ydFJlcXVlc3RDcmVhdGVkRXZlbnRIAEIMCgpldmVudF9kYXRhIisKDlJlcGVhdGVkRXZlbnRzEhkKBmV2ZW50cxgBIAMoCzIJLnYxLkV2ZW50IuUDCgtFbnRpdHlTdGF0ZRIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIWCgRzdGF0GAMgASgLMggudjEuU3RhdBIgCg5lcXVpcHBlZF9pdGVtcxgEIAMoCzIILnYxLkl0ZW0SHQoIcG9zaXRpb24YBSABKAsyCy52MS5WZWN0b3IyEiYKDWFjdGlvbl9zdGF0ZXMYBiADKAsyDy52MS5BY3Rpb25TdGF0ZRIzChNtb25zdGVyX3BhcnRpY2lwYW50GAcgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EiAKCWludmVudG9yeRgIIAEoCzINLnYxLkludmVudG9yeRIYCgVvd25lchgJIAEoCzIJLnYxLk93bmVyEh8KCWpvYl9zdGF0ZRgKIAEoCzIMLnYxLkpvYlN0YXRlEhUKDWRlZmluaXRpb25faWQYCyABKAkSGgoGcGFyZW50GAwgASgLMgoudjEuUGFyZW50EikKDmltcG9ydF9yZXF1ZXN0GA0gASgLMhEudjEuSW1wb3J0UmVxdWVzdBIpCg5leHBvcnRfcmVxdWVzdBgOIAEoCzIRLnYxLkV4cG9ydFJlcXVlc3QiMwoJR2FtZVN0YXRlEiYKDWVudGl0eV9zdGF0ZXMYASADKAsyDy52MS5FbnRpdHlTdGF0ZSqOAQoKRW50aXR5VHlwZRIbChdFTlRJVFlfVFlQRV9VTlNQRUNJRklFRBAAEhQKEEVOVElUWV9UWVBFX1VTRVIQARIXChNFTlRJVFlfVFlQRV9NT05TVEVSEAISEwoPRU5USVRZX1RZUEVfSk9CEAMSHwobRU5USVRZX1RZUEVfUExBWUVSX0xPQ0FUSU9OEAQqPQoEUm9sZRIUChBST0xFX1VOU1BFQ0lGSUVEEAASDgoKUk9MRV9FTkVNWRABEg8KC1JPTEVfUExBWUVSEAIqyAEKCUpvYlN0YXR1cxIaChZKT0JfU1RBVFVTX1VOU1BFQ0lGSUVEEAASFwoTSk9CX1NUQVRVU19BUlJJVklORxABEhYKEkpPQl9TVEFUVVNfV09SS0lORxACEhgKFEpPQl9TVEFUVVNfUkVUVVJOSU5HEAMSFwoTSk9CX1NUQVRVU19GSU5JU0hFRBAEEhwKGEpPQl9TVEFUVVNfV0FJVElOR19JTlBVVBAFEh0KGUpPQl9TVEFUVVNfV0FJVElOR19PVVRQVVQQBippCgZBY3Rpb24SFgoSQUNUSU9OX1VOU1BFQ0lGSUVEEAASEQoNQUNUSU9OX0FUVEFDSxABEhIKDkFDVElPTl9DT05TVU1FEAISDwoLQUNUSU9OX1dBTEsQAxIPCgtBQ1RJT05fV09SSxAEQitaKWdpdGh1Yi5jb20vZGllemZ4L2lkbGVnYW1lLWJhY2tlbmQvZ2VuL3YxYghlZGl0aW9uc3DoBw", [file_buf_validate_validate, file_google_protobuf_timestamp, file_v1_masterdata]);
+  fileDesc("Cg92MS9kb21haW4ucHJvdG8SAnYxIhgKCkRlZmluaXRpb24SCgoCaWQYASABKAkiKgoITG9jYXRpb24SHgoEdHlwZRgBIAEoDjIQLnYxLkxvY2F0aW9uVHlwZSKjAQoGRW50aXR5EhQKAmlkGAEgASgJQgi6SAVyA7ABARIjCgtlbnRpdHlfdHlwZRgCIAEoDjIOLnYxLkVudGl0eVR5cGUSLgoKY3JlYXRlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiGAoISWRlbnRpdHkSDAoEbmFtZRgBIAEoCSIyCgRJdGVtEgoKAmlkGAEgASgJEhAKCHF1YW50aXR5GAIgASgDEgwKBHRhZ3MYAyADKAkiNgoJSW52ZW50b3J5EhcKBWl0ZW1zGAEgAygLMggudjEuSXRlbRIQCghjYXBhY2l0eRgCIAEoBSL5AQoEU3RhdBIjCgdlbGVtZW50GAEgASgOMhIudjEuTW9uc3RlckVsZW1lbnQSEgoKZXhwZXJpZW5jZRgCIAEoBRIOCgZoZWFsdGgYAyABKAUSEgoKbWF4X2hlYWx0aBgEIAEoBRIPCgdzdGFtaW5hGAUgASgFEhMKC21heF9zdGFtaW5hGAYgASgFEhQKDGF0dGFja19wb3dlchgHIAEoBRINCgVsZXZlbBgJIAEoBRIQCghzdHJlbmd0aBgKIAEoBRIPCgdhZ2lsaXR5GAsgASgFEhQKDGludGVsbGlnZW5jZRgMIAEoBRIQCgh2aXRhbGl0eRgNIAEoBSJNChJNb25zdGVyUGFydGljaXBhbnQSHwoNam9iX2VudGl0eV9pZBgBIAEoCUIIukgFcgOwAQESFgoEcm9sZRgCIAEoDjIILnYxLlJvbGUiIQoFT3duZXISGAoGZW50aXR5GAEgASgJQgi6SAVyA7ABASIlCgZQYXJlbnQSGwoJZW50aXR5X2lkGAEgASgJQgi6SAVyA7ABASJUCg9TaGlwcGluZ1JlcXVlc3QSFwoFaXRlbXMYASADKAsyCC52MS5JdGVtEigKCWRpcmVjdGlvbhgCIAEoDjIVLnYxLlNoaXBwaW5nRGlyZWN0aW9uInIKA0pvYhIdCgZzdGF0dXMYASABKA4yDS52MS5Kb2JTdGF0dXMSEgoKaXRlcmF0aW9ucxgCIAEoAxIWCg5tYXhfaXRlcmF0aW9ucxgDIAEoAxIgCghzdWJfdHlwZRgEIAEoDjIOLnYxLkpvYlN1YlR5cGUioQEKC0FjdGlvblN0YXRlEhoKBmFjdGlvbhgBIAEoDjIKLnYxLkFjdGlvbhIwCgxsYXN0X3VzZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KC25leHRfdXNlX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtpdGVtX2RlZl9pZBgEIAEoCSL8AgoHSm9iVmlldxIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSIgoKZGVmaW5pdGlvbhgCIAEoCzIOLnYxLkRlZmluaXRpb24SHQoKYXNzaWdubWVudBgDIAEoCzIJLnYxLk93bmVyEh0KCHBvc2l0aW9uGAQgASgLMgsudjEuVmVjdG9yMhIUCgNqb2IYBSABKAsyBy52MS5Kb2ISHAoHcmV3YXJkcxgGIAEoCzILLnYxLlJld2FyZHMSHwoIbW9uc3RlcnMYByADKAlCDbpICpIBByIFcgOwAQESHQoLaW5ncmVkaWVudHMYCCADKAsyCC52MS5JdGVtEhkKBmV2ZW50cxgJIAMoCzIJLnYxLkV2ZW50EiAKCWludmVudG9yeRgKIAEoCzINLnYxLkludmVudG9yeRImCg1hY3Rpb25fc3RhdGVzGAsgAygLMg8udjEuQWN0aW9uU3RhdGUSGgoGcGFyZW50GAwgASgLMgoudjEuUGFyZW50IngKDVRyYW5zcG9ydFBsYW4SIgoQc291cmNlX2VudGl0eV9pZBgBIAEoCUIIukgFcgOwAQESIgoQdGFyZ2V0X2VudGl0eV9pZBgCIAEoCUIIukgFcgOwAQESHwoNcGxhbm5lZF9jYXJnbxgDIAMoCzIILnYxLkl0ZW0iNgoHUmV3YXJkcxIXCgVpdGVtcxgBIAMoCzIILnYxLkl0ZW0SEgoKZXhwZXJpZW5jZRgCIAEoBSJTCgtBdHRhY2tFdmVudBIaCghhdHRhY2tlchgBIAEoCUIIukgFcgOwAQESGAoGdGFyZ2V0GAIgASgJQgi6SAVyA7ABARIOCgZkYW1hZ2UYAyABKAUiLAoLQXJyaXZlRXZlbnQSHQoIcG9zaXRpb24YASABKAsyCy52MS5WZWN0b3IyIiwKC1JldHVybkV2ZW50Eh0KCHBvc2l0aW9uGAEgASgLMgsudjEuVmVjdG9yMiJhCglXb3JrRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoOY29uc3VtZWRfaXRlbXMYAiADKAsyCC52MS5JdGVtEhQKDHN0YW1pbmFfY29zdBgDIAEoBSISChBTdG9wV29ya2luZ0V2ZW50IlUKG1NoaXBwaW5nUmVxdWVzdENoYW5nZWRFdmVudBIkCgdyZXF1ZXN0GAEgASgLMhMudjEuU2hpcHBpbmdSZXF1ZXN0EhAKCGxvY2F0aW9uGAIgASgJIl4KFUpvYlN0YXR1c0NoYW5nZWRFdmVudBImCg9wcmV2aW91c19zdGF0dXMYASABKA4yDS52MS5Kb2JTdGF0dXMSHQoGc3RhdHVzGAIgASgOMg0udjEuSm9iU3RhdHVzIlcKEENvbnN1bWVJdGVtRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOwAQESEwoLaXRlbV9kZWZfaWQYAiABKAkSEAoIcXVhbnRpdHkYAyABKAUibAoURGVmZWF0ZWRFbmVtaWVzRXZlbnQSHAoHcmV3YXJkcxgBIAEoCzILLnYxLlJld2FyZHMSIAoJZW5lbXlfaWRzGAIgAygJQg26SAqSAQciBXIDsAEBEhQKDHN0YW1pbmFfY29zdBgDIAEoBSJYChFFcXVpcHBlZEl0ZW1FdmVudBIcCgptb25zdGVyX2lkGAEgASgJQgi6SAVyA7ABARITCgtpdGVtX2RlZl9pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoBSJaChNVbmVxdWlwcGVkSXRlbUV2ZW50EhwKCm1vbnN0ZXJfaWQYASABKAlCCLpIBXIDsAEBEhMKC2l0ZW1fZGVmX2lkGAIgASgJEhAKCHF1YW50aXR5GAMgASgFIjoKFU5leHRSb3VuZEVuZW1pZXNFdmVudBIhCgdlbmVtaWVzGAEgAygLMhAudjEuRW5lbXlNb25zdGVyIm8KDEVuZW15TW9uc3RlchIbCgdlbnRpdGl5GAEgASgLMgoudjEuRW50aXR5Eh4KCGlkZW50aXR5GAIgASgLMgwudjEuSWRlbnRpdHkSIgoKZGVmaW5pdGlvbhgDIAEoCzIOLnYxLkRlZmluaXRpb24iYwoQQ2FyZ29Mb2FkZWRFdmVudBIbCglzb3VyY2VfaWQYASABKAlCCLpIBXIDsAEBEhkKB3VzZXJfaWQYAyABKAlCCLpIBXIDsAEBEhcKBWl0ZW1zGAQgAygLMggudjEuSXRlbSJlChJDYXJnb1VubG9hZGVkRXZlbnQSGwoJdGFyZ2V0X2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAIgASgJQgi6SAVyA7ABARIXCgVpdGVtcxgDIAMoCzIILnYxLkl0ZW0iNAoUU3RhcnRSZWNvdmVyaW5nRXZlbnQSHAoKbW9uc3Rlcl9pZBgBIAEoCUIIukgFcgOwAQEiSQoMRXZlbnRDb250ZXh0Eh8KCHVzZXJfaWRzGAEgAygJQg26SAqSAQciBXIDsAEBEhgKBmpvYl9pZBgCIAEoCUIIukgFcgOwAQEi6AEKD0pvYlN0YXJ0ZWRFdmVudBIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSIgoKZGVmaW5pdGlvbhgCIAEoCzIOLnYxLkRlZmluaXRpb24SIgoLbW9uc3Rlcl9pZHMYAyADKAlCDbpICpIBByIFcgOwAQESHQoKYXNzaWdubWVudBgEIAEoCzIJLnYxLk93bmVyEiAKCWludmVudG9yeRgFIAEoCzINLnYxLkludmVudG9yeRIaCgZwYXJlbnQYBiABKAsyCi52MS5QYXJlbnQSFAoDam9iGAcgASgLMgcudjEuSm9iIqsBChhUcmFuc3BvcnRKb2JTdGFydGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EiIKC21vbnN0ZXJfaWRzGAIgAygJQg26SAqSAQciBXIDsAEBEhgKBW93bmVyGAMgASgLMgkudjEuT3duZXISHwoEcGxhbhgEIAEoCzIRLnYxLlRyYW5zcG9ydFBsYW4SFAoDam9iGAUgASgLMgcudjEuSm9iIiwKEEpvYkZpbmlzaGVkRXZlbnQSGAoGam9iX2lkGAEgASgJQgi6SAVyA7ABASL3AQoaUGxheWVyTG9jYXRpb25DcmVhdGVkRXZlbnQSGgoGZW50aXR5GAEgASgLMgoudjEuRW50aXR5EiIKCmRlZmluaXRpb24YAiABKAsyDi52MS5EZWZpbml0aW9uEhgKBW93bmVyGAMgASgLMgkudjEuT3duZXISHQoIcG9zaXRpb24YBCABKAsyCy52MS5WZWN0b3IyEiAKCWludmVudG9yeRgFIAEoCzINLnYxLkludmVudG9yeRIeCghpZGVudGl0eRgGIAEoCzIMLnYxLklkZW50aXR5Eh4KCGxvY2F0aW9uGAcgASgLMgwudjEuTG9jYXRpb24iNgoSTW9uc3RlckNob3NlbkV2ZW50EiAKB21vbnN0ZXIYASABKAsyDy52MS5FbnRpdHlTdGF0ZSJNChZUcmFuc3BvcnRQcm9ncmVzc0V2ZW50EhQKDHN0YW1pbmFfdXNlZBgBIAEoBRIdCghwb3NpdGlvbhgCIAEoCzILLnYxLlZlY3RvcjIilAoKBUV2ZW50EgoKAmlkGAEgASgJEi0KCXRpbWVzdGFtcBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKZXZlbnRfdHlwZRgDIAEoCRInCg1ldmVudF9jb250ZXh0GAQgASgLMhAudjEuRXZlbnRDb250ZXh0EicKDGFycml2ZV9ldmVudBgFIAEoCzIPLnYxLkFycml2ZUV2ZW50SAASJwoMcmV0dXJuX2V2ZW50GAYgASgLMg8udjEuUmV0dXJuRXZlbnRIABIjCgp3b3JrX2V2ZW50GAcgASgLMg0udjEuV29ya0V2ZW50SAASMgoSc3RvcF93b3JraW5nX2V2ZW50GAggASgLMhQudjEuU3RvcFdvcmtpbmdFdmVudEgAEjIKEmNvbnN1bWVfaXRlbV9ldmVudBgKIAEoCzIULnYxLkNvbnN1bWVJdGVtRXZlbnRIABIyChJjYXJnb19sb2FkZWRfZXZlbnQYCyABKAsyFC52MS5DYXJnb0xvYWRlZEV2ZW50SAASNgoUY2FyZ29fdW5sb2FkZWRfZXZlbnQYDCABKAsyFi52MS5DYXJnb1VubG9hZGVkRXZlbnRIABInCgxhdHRhY2tfZXZlbnQYDSABKAsyDy52MS5BdHRhY2tFdmVudEgAEjoKFnN0YXJ0X3JlY292ZXJpbmdfZXZlbnQYDiABKAsyGC52MS5TdGFydFJlY292ZXJpbmdFdmVudEgAEjoKFmRlZmVhdGVkX2VuZW1pZXNfZXZlbnQYDyABKAsyGC52MS5EZWZlYXRlZEVuZW1pZXNFdmVudEgAEj0KGG5leHRfcm91bmRfZW5lbWllc19ldmVudBgQIAEoCzIZLnYxLk5leHRSb3VuZEVuZW1pZXNFdmVudEgAEjAKEWpvYl9zdGFydGVkX2V2ZW50GBEgASgLMhMudjEuSm9iU3RhcnRlZEV2ZW50SAASMgoSam9iX2ZpbmlzaGVkX2V2ZW50GBIgASgLMhQudjEuSm9iRmluaXNoZWRFdmVudEgAEi8KDmVxdWlwcGVkX2V2ZW50GBMgASgLMhUudjEuRXF1aXBwZWRJdGVtRXZlbnRIABIzChB1bmVxdWlwcGVkX2V2ZW50GBQgASgLMhcudjEuVW5lcXVpcHBlZEl0ZW1FdmVudEgAEkcKHXBsYXllcl9sb2NhdGlvbl9jcmVhdGVkX2V2ZW50GBUgASgLMh4udjEuUGxheWVyTG9jYXRpb25DcmVhdGVkRXZlbnRIABI9Chhqb2Jfc3RhdHVzX2NoYW5nZWRfZXZlbnQYFiABKAsyGS52MS5Kb2JTdGF0dXNDaGFuZ2VkRXZlbnRIABJJCh5zaGlwcGluZ19yZXF1ZXN0X2NoYW5nZWRfZXZlbnQYFyABKAsyHy52MS5TaGlwcGluZ1JlcXVlc3RDaGFuZ2VkRXZlbnRIABJDCht0cmFuc3BvcnRfam9iX3N0YXJ0ZWRfZXZlbnQYGSABKAsyHC52MS5UcmFuc3BvcnRKb2JTdGFydGVkRXZlbnRIABI2ChRtb25zdGVyX2Nob3Nlbl9ldmVudBgaIAEoCzIWLnYxLk1vbnN0ZXJDaG9zZW5FdmVudEgAEj4KGHRyYW5zcG9ydF9wcm9ncmVzc19ldmVudBgbIAEoCzIaLnYxLlRyYW5zcG9ydFByb2dyZXNzRXZlbnRIAEIMCgpldmVudF9kYXRhIisKDlJlcGVhdGVkRXZlbnRzEhkKBmV2ZW50cxgBIAMoCzIJLnYxLkV2ZW50IrUECgtFbnRpdHlTdGF0ZRIaCgZlbnRpdHkYASABKAsyCi52MS5FbnRpdHkSHgoIaWRlbnRpdHkYAiABKAsyDC52MS5JZGVudGl0eRIWCgRzdGF0GAMgASgLMggudjEuU3RhdBIgCg5lcXVpcHBlZF9pdGVtcxgEIAMoCzIILnYxLkl0ZW0SHQoIcG9zaXRpb24YBSABKAsyCy52MS5WZWN0b3IyEiYKDWFjdGlvbl9zdGF0ZXMYBiADKAsyDy52MS5BY3Rpb25TdGF0ZRIzChNtb25zdGVyX3BhcnRpY2lwYW50GAcgASgLMhYudjEuTW9uc3RlclBhcnRpY2lwYW50EiAKCWludmVudG9yeRgIIAEoCzINLnYxLkludmVudG9yeRIYCgVvd25lchgJIAEoCzIJLnYxLk93bmVyEhQKA2pvYhgKIAEoCzIHLnYxLkpvYhIiCgpkZWZpbml0aW9uGAsgASgLMg4udjEuRGVmaW5pdGlvbhIaCgZwYXJlbnQYDCABKAsyCi52MS5QYXJlbnQSLgoRc2hpcHBpbmdfcmVxdWVzdHMYDSADKAsyEy52MS5TaGlwcGluZ1JlcXVlc3QSKQoOdHJhbnNwb3J0X3BsYW4YDyABKAsyES52MS5UcmFuc3BvcnRQbGFuEicKDXVzZXJfcHJvZ3Jlc3MYECABKAsyEC52MS5Vc2VyUHJvZ3Jlc3MSHgoIbG9jYXRpb24YESABKAsyDC52MS5Mb2NhdGlvbiIzCglHYW1lU3RhdGUSJgoNZW50aXR5X3N0YXRlcxgBIAMoCzIPLnYxLkVudGl0eVN0YXRlIkYKDFVzZXJQcm9ncmVzcxI2ChJ0dXRvcmlhbF9jb21wbGV0ZWQYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wKo4BCgpFbnRpdHlUeXBlEhsKF0VOVElUWV9UWVBFX1VOU1BFQ0lGSUVEEAASFAoQRU5USVRZX1RZUEVfVVNFUhABEhcKE0VOVElUWV9UWVBFX01PTlNURVIQAhITCg9FTlRJVFlfVFlQRV9KT0IQAxIfChtFTlRJVFlfVFlQRV9QTEFZRVJfTE9DQVRJT04QBCo9CgRSb2xlEhQKEFJPTEVfVU5TUEVDSUZJRUQQABIOCgpST0xFX0VORU1ZEAESDwoLUk9MRV9QTEFZRVIQAip1ChFTaGlwcGluZ0RpcmVjdGlvbhIiCh5TSElQUElOR19ESVJFQ1RJT05fVU5TUEVDSUZJRUQQABIdChlTSElQUElOR19ESVJFQ1RJT05fSU1QT1JUEAESHQoZU0hJUFBJTkdfRElSRUNUSU9OX0VYUE9SVBACKsgBCglKb2JTdGF0dXMSGgoWSk9CX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0pPQl9TVEFUVVNfQVJSSVZJTkcQARIWChJKT0JfU1RBVFVTX1dPUktJTkcQAhIYChRKT0JfU1RBVFVTX1JFVFVSTklORxADEhcKE0pPQl9TVEFUVVNfRklOSVNIRUQQBBIcChhKT0JfU1RBVFVTX1dBSVRJTkdfSU5QVVQQBRIdChlKT0JfU1RBVFVTX1dBSVRJTkdfT1VUUFVUEAYqfwoGQWN0aW9uEhYKEkFDVElPTl9VTlNQRUNJRklFRBAAEhEKDUFDVElPTl9BVFRBQ0sQARISCg5BQ1RJT05fQ09OU1VNRRACEg8KC0FDVElPTl9XQUxLEAMSDwoLQUNUSU9OX1dPUksQBBIUChBBQ1RJT05fVFJBTlNQT1JUEAVCK1opZ2l0aHViLmNvbS9kaWV6ZngvaWRsZWdhbWUtYmFja2VuZC9nZW4vdjFiCGVkaXRpb25zcOgH", [file_buf_validate_validate, file_google_protobuf_timestamp, file_v1_masterdata]);
+
+/**
+ * @generated from message v1.Definition
+ */
+export type Definition = Message<"v1.Definition"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+};
+
+/**
+ * Describes the message v1.Definition.
+ * Use `create(DefinitionSchema)` to create a new message.
+ */
+export const DefinitionSchema: GenMessage<Definition> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 0);
+
+/**
+ * @generated from message v1.Location
+ */
+export type Location = Message<"v1.Location"> & {
+  /**
+   * @generated from field: v1.LocationType type = 1;
+   */
+  type: LocationType;
+};
+
+/**
+ * Describes the message v1.Location.
+ * Use `create(LocationSchema)` to create a new message.
+ */
+export const LocationSchema: GenMessage<Location> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 1);
 
 /**
  * @generated from message v1.Entity
@@ -47,7 +81,7 @@ export type Entity = Message<"v1.Entity"> & {
  * Use `create(EntitySchema)` to create a new message.
  */
 export const EntitySchema: GenMessage<Entity> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 0);
+  messageDesc(file_v1_domain, 2);
 
 /**
  * @generated from message v1.Identity
@@ -64,7 +98,7 @@ export type Identity = Message<"v1.Identity"> & {
  * Use `create(IdentitySchema)` to create a new message.
  */
 export const IdentitySchema: GenMessage<Identity> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 1);
+  messageDesc(file_v1_domain, 3);
 
 /**
  * @generated from message v1.Item
@@ -91,7 +125,7 @@ export type Item = Message<"v1.Item"> & {
  * Use `create(ItemSchema)` to create a new message.
  */
 export const ItemSchema: GenMessage<Item> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 2);
+  messageDesc(file_v1_domain, 4);
 
 /**
  * @generated from message v1.Inventory
@@ -113,7 +147,7 @@ export type Inventory = Message<"v1.Inventory"> & {
  * Use `create(InventorySchema)` to create a new message.
  */
 export const InventorySchema: GenMessage<Inventory> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 3);
+  messageDesc(file_v1_domain, 5);
 
 /**
  * @generated from message v1.Stat
@@ -185,7 +219,7 @@ export type Stat = Message<"v1.Stat"> & {
  * Use `create(StatSchema)` to create a new message.
  */
 export const StatSchema: GenMessage<Stat> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 4);
+  messageDesc(file_v1_domain, 6);
 
 /**
  * @generated from message v1.MonsterParticipant
@@ -207,7 +241,7 @@ export type MonsterParticipant = Message<"v1.MonsterParticipant"> & {
  * Use `create(MonsterParticipantSchema)` to create a new message.
  */
 export const MonsterParticipantSchema: GenMessage<MonsterParticipant> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 5);
+  messageDesc(file_v1_domain, 7);
 
 /**
  * @generated from message v1.Owner
@@ -224,7 +258,7 @@ export type Owner = Message<"v1.Owner"> & {
  * Use `create(OwnerSchema)` to create a new message.
  */
 export const OwnerSchema: GenMessage<Owner> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 6);
+  messageDesc(file_v1_domain, 8);
 
 /**
  * @generated from message v1.Parent
@@ -241,56 +275,34 @@ export type Parent = Message<"v1.Parent"> & {
  * Use `create(ParentSchema)` to create a new message.
  */
 export const ParentSchema: GenMessage<Parent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 7);
-
-/**
- * @generated from message v1.ImportRequest
- */
-export type ImportRequest = Message<"v1.ImportRequest"> & {
-  /**
-   * @generated from field: repeated v1.Item items = 1;
-   */
-  items: Item[];
-
-  /**
-   * @generated from field: int32 priority = 2;
-   */
-  priority: number;
-};
-
-/**
- * Describes the message v1.ImportRequest.
- * Use `create(ImportRequestSchema)` to create a new message.
- */
-export const ImportRequestSchema: GenMessage<ImportRequest> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 8);
-
-/**
- * @generated from message v1.ExportRequest
- */
-export type ExportRequest = Message<"v1.ExportRequest"> & {
-  /**
-   * @generated from field: repeated v1.Item items = 1;
-   */
-  items: Item[];
-
-  /**
-   * @generated from field: int32 priority = 2;
-   */
-  priority: number;
-};
-
-/**
- * Describes the message v1.ExportRequest.
- * Use `create(ExportRequestSchema)` to create a new message.
- */
-export const ExportRequestSchema: GenMessage<ExportRequest> = /*@__PURE__*/
   messageDesc(file_v1_domain, 9);
 
 /**
- * @generated from message v1.JobState
+ * @generated from message v1.ShippingRequest
  */
-export type JobState = Message<"v1.JobState"> & {
+export type ShippingRequest = Message<"v1.ShippingRequest"> & {
+  /**
+   * @generated from field: repeated v1.Item items = 1;
+   */
+  items: Item[];
+
+  /**
+   * @generated from field: v1.ShippingDirection direction = 2;
+   */
+  direction: ShippingDirection;
+};
+
+/**
+ * Describes the message v1.ShippingRequest.
+ * Use `create(ShippingRequestSchema)` to create a new message.
+ */
+export const ShippingRequestSchema: GenMessage<ShippingRequest> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 10);
+
+/**
+ * @generated from message v1.Job
+ */
+export type Job = Message<"v1.Job"> & {
   /**
    * @generated from field: v1.JobStatus status = 1;
    */
@@ -305,14 +317,19 @@ export type JobState = Message<"v1.JobState"> & {
    * @generated from field: int64 max_iterations = 3;
    */
   maxIterations: bigint;
+
+  /**
+   * @generated from field: v1.JobSubType sub_type = 4;
+   */
+  subType: JobSubType;
 };
 
 /**
- * Describes the message v1.JobState.
- * Use `create(JobStateSchema)` to create a new message.
+ * Describes the message v1.Job.
+ * Use `create(JobSchema)` to create a new message.
  */
-export const JobStateSchema: GenMessage<JobState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 10);
+export const JobSchema: GenMessage<Job> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 11);
 
 /**
  * @generated from message v1.ActionState
@@ -344,21 +361,21 @@ export type ActionState = Message<"v1.ActionState"> & {
  * Use `create(ActionStateSchema)` to create a new message.
  */
 export const ActionStateSchema: GenMessage<ActionState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 11);
+  messageDesc(file_v1_domain, 12);
 
 /**
- * @generated from message v1.Job
+ * @generated from message v1.JobView
  */
-export type Job = Message<"v1.Job"> & {
+export type JobView = Message<"v1.JobView"> & {
   /**
    * @generated from field: v1.Entity entity = 1;
    */
   entity?: Entity | undefined;
 
   /**
-   * @generated from field: string definition_id = 2;
+   * @generated from field: v1.Definition definition = 2;
    */
-  definitionId: string;
+  definition?: Definition | undefined;
 
   /**
    * @generated from field: v1.Owner assignment = 3;
@@ -371,9 +388,9 @@ export type Job = Message<"v1.Job"> & {
   position?: Vector2 | undefined;
 
   /**
-   * @generated from field: v1.JobState job_state = 5;
+   * @generated from field: v1.Job job = 5;
    */
-  jobState?: JobState | undefined;
+  job?: Job | undefined;
 
   /**
    * @generated from field: v1.Rewards rewards = 6;
@@ -412,53 +429,38 @@ export type Job = Message<"v1.Job"> & {
 };
 
 /**
- * Describes the message v1.Job.
- * Use `create(JobSchema)` to create a new message.
+ * Describes the message v1.JobView.
+ * Use `create(JobViewSchema)` to create a new message.
  */
-export const JobSchema: GenMessage<Job> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 12);
+export const JobViewSchema: GenMessage<JobView> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 13);
 
 /**
- * @generated from message v1.TransportJob
+ * @generated from message v1.TransportPlan
  */
-export type TransportJob = Message<"v1.TransportJob"> & {
+export type TransportPlan = Message<"v1.TransportPlan"> & {
   /**
-   * @generated from field: v1.Entity entity = 1;
+   * @generated from field: string source_entity_id = 1;
    */
-  entity?: Entity | undefined;
+  sourceEntityId: string;
 
   /**
-   * @generated from field: string definition_id = 2;
+   * @generated from field: string target_entity_id = 2;
    */
-  definitionId: string;
+  targetEntityId: string;
 
   /**
-   * @generated from field: v1.RouteManifest route_manifest = 3;
+   * @generated from field: repeated v1.Item planned_cargo = 3;
    */
-  routeManifest?: RouteManifest | undefined;
-
-  /**
-   * @generated from field: v1.Route route = 4;
-   */
-  route?: Route | undefined;
-
-  /**
-   * @generated from field: v1.Inventory inventory = 6;
-   */
-  inventory?: Inventory | undefined;
-
-  /**
-   * @generated from field: v1.Vector2 position = 7;
-   */
-  position?: Vector2 | undefined;
+  plannedCargo: Item[];
 };
 
 /**
- * Describes the message v1.TransportJob.
- * Use `create(TransportJobSchema)` to create a new message.
+ * Describes the message v1.TransportPlan.
+ * Use `create(TransportPlanSchema)` to create a new message.
  */
-export const TransportJobSchema: GenMessage<TransportJob> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 13);
+export const TransportPlanSchema: GenMessage<TransportPlan> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 14);
 
 /**
  * @generated from message v1.Rewards
@@ -480,56 +482,7 @@ export type Rewards = Message<"v1.Rewards"> & {
  * Use `create(RewardsSchema)` to create a new message.
  */
 export const RewardsSchema: GenMessage<Rewards> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 14);
-
-/**
- * @generated from message v1.RouteManifest
- */
-export type RouteManifest = Message<"v1.RouteManifest"> & {
-  /**
-   * @generated from field: int32 source = 1;
-   */
-  source: number;
-
-  /**
-   * @generated from field: int32 target = 2;
-   */
-  target: number;
-
-  /**
-   * @generated from field: repeated v1.Item cargo_items = 3 [json_name = "cargo_items"];
-   */
-  cargoItems: Item[];
-};
-
-/**
- * Describes the message v1.RouteManifest.
- * Use `create(RouteManifestSchema)` to create a new message.
- */
-export const RouteManifestSchema: GenMessage<RouteManifest> = /*@__PURE__*/
   messageDesc(file_v1_domain, 15);
-
-/**
- * @generated from message v1.Route
- */
-export type Route = Message<"v1.Route"> & {
-  /**
-   * @generated from field: int32 source = 1;
-   */
-  source: number;
-
-  /**
-   * @generated from field: int32 target = 2;
-   */
-  target: number;
-};
-
-/**
- * Describes the message v1.Route.
- * Use `create(RouteSchema)` to create a new message.
- */
-export const RouteSchema: GenMessage<Route> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 16);
 
 /**
  * @generated from message v1.AttackEvent
@@ -556,7 +509,7 @@ export type AttackEvent = Message<"v1.AttackEvent"> & {
  * Use `create(AttackEventSchema)` to create a new message.
  */
 export const AttackEventSchema: GenMessage<AttackEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 17);
+  messageDesc(file_v1_domain, 16);
 
 /**
  * @generated from message v1.ArriveEvent
@@ -573,7 +526,7 @@ export type ArriveEvent = Message<"v1.ArriveEvent"> & {
  * Use `create(ArriveEventSchema)` to create a new message.
  */
 export const ArriveEventSchema: GenMessage<ArriveEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 18);
+  messageDesc(file_v1_domain, 17);
 
 /**
  * @generated from message v1.ReturnEvent
@@ -590,7 +543,7 @@ export type ReturnEvent = Message<"v1.ReturnEvent"> & {
  * Use `create(ReturnEventSchema)` to create a new message.
  */
 export const ReturnEventSchema: GenMessage<ReturnEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 19);
+  messageDesc(file_v1_domain, 18);
 
 /**
  * @generated from message v1.WorkEvent
@@ -617,7 +570,7 @@ export type WorkEvent = Message<"v1.WorkEvent"> & {
  * Use `create(WorkEventSchema)` to create a new message.
  */
 export const WorkEventSchema: GenMessage<WorkEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 20);
+  messageDesc(file_v1_domain, 19);
 
 /**
  * No specific fields
@@ -632,51 +585,29 @@ export type StopWorkingEvent = Message<"v1.StopWorkingEvent"> & {
  * Use `create(StopWorkingEventSchema)` to create a new message.
  */
 export const StopWorkingEventSchema: GenMessage<StopWorkingEvent> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 20);
+
+/**
+ * @generated from message v1.ShippingRequestChangedEvent
+ */
+export type ShippingRequestChangedEvent = Message<"v1.ShippingRequestChangedEvent"> & {
+  /**
+   * @generated from field: v1.ShippingRequest request = 1;
+   */
+  request?: ShippingRequest | undefined;
+
+  /**
+   * @generated from field: string location = 2;
+   */
+  location: string;
+};
+
+/**
+ * Describes the message v1.ShippingRequestChangedEvent.
+ * Use `create(ShippingRequestChangedEventSchema)` to create a new message.
+ */
+export const ShippingRequestChangedEventSchema: GenMessage<ShippingRequestChangedEvent> = /*@__PURE__*/
   messageDesc(file_v1_domain, 21);
-
-/**
- * @generated from message v1.ImportRequestCreatedEvent
- */
-export type ImportRequestCreatedEvent = Message<"v1.ImportRequestCreatedEvent"> & {
-  /**
-   * @generated from field: v1.ImportRequest request = 1;
-   */
-  request?: ImportRequest | undefined;
-
-  /**
-   * @generated from field: string player_location = 2;
-   */
-  playerLocation: string;
-};
-
-/**
- * Describes the message v1.ImportRequestCreatedEvent.
- * Use `create(ImportRequestCreatedEventSchema)` to create a new message.
- */
-export const ImportRequestCreatedEventSchema: GenMessage<ImportRequestCreatedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 22);
-
-/**
- * @generated from message v1.ExportRequestCreatedEvent
- */
-export type ExportRequestCreatedEvent = Message<"v1.ExportRequestCreatedEvent"> & {
-  /**
-   * @generated from field: v1.ExportRequest request = 1;
-   */
-  request?: ExportRequest | undefined;
-
-  /**
-   * @generated from field: string player_location = 2;
-   */
-  playerLocation: string;
-};
-
-/**
- * Describes the message v1.ExportRequestCreatedEvent.
- * Use `create(ExportRequestCreatedEventSchema)` to create a new message.
- */
-export const ExportRequestCreatedEventSchema: GenMessage<ExportRequestCreatedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 23);
 
 /**
  * @generated from message v1.JobStatusChangedEvent
@@ -698,7 +629,7 @@ export type JobStatusChangedEvent = Message<"v1.JobStatusChangedEvent"> & {
  * Use `create(JobStatusChangedEventSchema)` to create a new message.
  */
 export const JobStatusChangedEventSchema: GenMessage<JobStatusChangedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 24);
+  messageDesc(file_v1_domain, 22);
 
 /**
  * @generated from message v1.ConsumeItemEvent
@@ -725,7 +656,7 @@ export type ConsumeItemEvent = Message<"v1.ConsumeItemEvent"> & {
  * Use `create(ConsumeItemEventSchema)` to create a new message.
  */
 export const ConsumeItemEventSchema: GenMessage<ConsumeItemEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 25);
+  messageDesc(file_v1_domain, 23);
 
 /**
  * @generated from message v1.DefeatedEnemiesEvent
@@ -752,7 +683,7 @@ export type DefeatedEnemiesEvent = Message<"v1.DefeatedEnemiesEvent"> & {
  * Use `create(DefeatedEnemiesEventSchema)` to create a new message.
  */
 export const DefeatedEnemiesEventSchema: GenMessage<DefeatedEnemiesEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 26);
+  messageDesc(file_v1_domain, 24);
 
 /**
  * @generated from message v1.EquippedItemEvent
@@ -779,7 +710,7 @@ export type EquippedItemEvent = Message<"v1.EquippedItemEvent"> & {
  * Use `create(EquippedItemEventSchema)` to create a new message.
  */
 export const EquippedItemEventSchema: GenMessage<EquippedItemEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 27);
+  messageDesc(file_v1_domain, 25);
 
 /**
  * @generated from message v1.UnequippedItemEvent
@@ -806,7 +737,7 @@ export type UnequippedItemEvent = Message<"v1.UnequippedItemEvent"> & {
  * Use `create(UnequippedItemEventSchema)` to create a new message.
  */
 export const UnequippedItemEventSchema: GenMessage<UnequippedItemEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 28);
+  messageDesc(file_v1_domain, 26);
 
 /**
  * @generated from message v1.NextRoundEnemiesEvent
@@ -823,7 +754,7 @@ export type NextRoundEnemiesEvent = Message<"v1.NextRoundEnemiesEvent"> & {
  * Use `create(NextRoundEnemiesEventSchema)` to create a new message.
  */
 export const NextRoundEnemiesEventSchema: GenMessage<NextRoundEnemiesEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 29);
+  messageDesc(file_v1_domain, 27);
 
 /**
  * @generated from message v1.EnemyMonster
@@ -840,9 +771,9 @@ export type EnemyMonster = Message<"v1.EnemyMonster"> & {
   identity?: Identity | undefined;
 
   /**
-   * @generated from field: string definition_id = 3;
+   * @generated from field: v1.Definition definition = 3;
    */
-  definitionId: string;
+  definition?: Definition | undefined;
 };
 
 /**
@@ -850,7 +781,7 @@ export type EnemyMonster = Message<"v1.EnemyMonster"> & {
  * Use `create(EnemyMonsterSchema)` to create a new message.
  */
 export const EnemyMonsterSchema: GenMessage<EnemyMonster> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 30);
+  messageDesc(file_v1_domain, 28);
 
 /**
  * @generated from message v1.CargoLoadedEvent
@@ -879,7 +810,7 @@ export type CargoLoadedEvent = Message<"v1.CargoLoadedEvent"> & {
  * Use `create(CargoLoadedEventSchema)` to create a new message.
  */
 export const CargoLoadedEventSchema: GenMessage<CargoLoadedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 31);
+  messageDesc(file_v1_domain, 29);
 
 /**
  * @generated from message v1.CargoUnloadedEvent
@@ -908,7 +839,7 @@ export type CargoUnloadedEvent = Message<"v1.CargoUnloadedEvent"> & {
  * Use `create(CargoUnloadedEventSchema)` to create a new message.
  */
 export const CargoUnloadedEventSchema: GenMessage<CargoUnloadedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 32);
+  messageDesc(file_v1_domain, 30);
 
 /**
  * @generated from message v1.StartRecoveringEvent
@@ -925,7 +856,7 @@ export type StartRecoveringEvent = Message<"v1.StartRecoveringEvent"> & {
  * Use `create(StartRecoveringEventSchema)` to create a new message.
  */
 export const StartRecoveringEventSchema: GenMessage<StartRecoveringEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 33);
+  messageDesc(file_v1_domain, 31);
 
 /**
  * @generated from message v1.EventContext
@@ -947,7 +878,7 @@ export type EventContext = Message<"v1.EventContext"> & {
  * Use `create(EventContextSchema)` to create a new message.
  */
 export const EventContextSchema: GenMessage<EventContext> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 34);
+  messageDesc(file_v1_domain, 32);
 
 /**
  * @generated from message v1.JobStartedEvent
@@ -959,9 +890,9 @@ export type JobStartedEvent = Message<"v1.JobStartedEvent"> & {
   entity?: Entity | undefined;
 
   /**
-   * @generated from field: string definition_id = 2;
+   * @generated from field: v1.Definition definition = 2;
    */
-  definitionId: string;
+  definition?: Definition | undefined;
 
   /**
    * @generated from field: repeated string monster_ids = 3;
@@ -982,6 +913,11 @@ export type JobStartedEvent = Message<"v1.JobStartedEvent"> & {
    * @generated from field: v1.Parent parent = 6;
    */
   parent?: Parent | undefined;
+
+  /**
+   * @generated from field: v1.Job job = 7;
+   */
+  job?: Job | undefined;
 };
 
 /**
@@ -989,7 +925,44 @@ export type JobStartedEvent = Message<"v1.JobStartedEvent"> & {
  * Use `create(JobStartedEventSchema)` to create a new message.
  */
 export const JobStartedEventSchema: GenMessage<JobStartedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 35);
+  messageDesc(file_v1_domain, 33);
+
+/**
+ * @generated from message v1.TransportJobStartedEvent
+ */
+export type TransportJobStartedEvent = Message<"v1.TransportJobStartedEvent"> & {
+  /**
+   * @generated from field: v1.Entity entity = 1;
+   */
+  entity?: Entity | undefined;
+
+  /**
+   * @generated from field: repeated string monster_ids = 2;
+   */
+  monsterIds: string[];
+
+  /**
+   * @generated from field: v1.Owner owner = 3;
+   */
+  owner?: Owner | undefined;
+
+  /**
+   * @generated from field: v1.TransportPlan plan = 4;
+   */
+  plan?: TransportPlan | undefined;
+
+  /**
+   * @generated from field: v1.Job job = 5;
+   */
+  job?: Job | undefined;
+};
+
+/**
+ * Describes the message v1.TransportJobStartedEvent.
+ * Use `create(TransportJobStartedEventSchema)` to create a new message.
+ */
+export const TransportJobStartedEventSchema: GenMessage<TransportJobStartedEvent> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 34);
 
 /**
  * @generated from message v1.JobFinishedEvent
@@ -1006,7 +979,7 @@ export type JobFinishedEvent = Message<"v1.JobFinishedEvent"> & {
  * Use `create(JobFinishedEventSchema)` to create a new message.
  */
 export const JobFinishedEventSchema: GenMessage<JobFinishedEvent> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 36);
+  messageDesc(file_v1_domain, 35);
 
 /**
  * @generated from message v1.PlayerLocationCreatedEvent
@@ -1018,9 +991,9 @@ export type PlayerLocationCreatedEvent = Message<"v1.PlayerLocationCreatedEvent"
   entity?: Entity | undefined;
 
   /**
-   * @generated from field: string definition_id = 2;
+   * @generated from field: v1.Definition definition = 2;
    */
-  definitionId: string;
+  definition?: Definition | undefined;
 
   /**
    * @generated from field: v1.Owner owner = 3;
@@ -1041,6 +1014,11 @@ export type PlayerLocationCreatedEvent = Message<"v1.PlayerLocationCreatedEvent"
    * @generated from field: v1.Identity identity = 6;
    */
   identity?: Identity | undefined;
+
+  /**
+   * @generated from field: v1.Location location = 7;
+   */
+  location?: Location | undefined;
 };
 
 /**
@@ -1048,7 +1026,46 @@ export type PlayerLocationCreatedEvent = Message<"v1.PlayerLocationCreatedEvent"
  * Use `create(PlayerLocationCreatedEventSchema)` to create a new message.
  */
 export const PlayerLocationCreatedEventSchema: GenMessage<PlayerLocationCreatedEvent> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 36);
+
+/**
+ * @generated from message v1.MonsterChosenEvent
+ */
+export type MonsterChosenEvent = Message<"v1.MonsterChosenEvent"> & {
+  /**
+   * @generated from field: v1.EntityState monster = 1;
+   */
+  monster?: EntityState | undefined;
+};
+
+/**
+ * Describes the message v1.MonsterChosenEvent.
+ * Use `create(MonsterChosenEventSchema)` to create a new message.
+ */
+export const MonsterChosenEventSchema: GenMessage<MonsterChosenEvent> = /*@__PURE__*/
   messageDesc(file_v1_domain, 37);
+
+/**
+ * @generated from message v1.TransportProgressEvent
+ */
+export type TransportProgressEvent = Message<"v1.TransportProgressEvent"> & {
+  /**
+   * @generated from field: int32 stamina_used = 1;
+   */
+  staminaUsed: number;
+
+  /**
+   * @generated from field: v1.Vector2 position = 2;
+   */
+  position?: Vector2 | undefined;
+};
+
+/**
+ * Describes the message v1.TransportProgressEvent.
+ * Use `create(TransportProgressEventSchema)` to create a new message.
+ */
+export const TransportProgressEventSchema: GenMessage<TransportProgressEvent> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 38);
 
 /**
  * @generated from message v1.Event
@@ -1065,7 +1082,7 @@ export type Event = Message<"v1.Event"> & {
   timestamp?: Timestamp | undefined;
 
   /**
-   * Corresponds to BaseEvent.Type
+   * Stable event name used for persistence and diagnostics.
    *
    * @generated from field: string event_type = 3;
    */
@@ -1183,16 +1200,28 @@ export type Event = Message<"v1.Event"> & {
     case: "jobStatusChangedEvent";
   } | {
     /**
-     * @generated from field: v1.ImportRequestCreatedEvent import_request_created_event = 23;
+     * @generated from field: v1.ShippingRequestChangedEvent shipping_request_changed_event = 23;
      */
-    value: ImportRequestCreatedEvent;
-    case: "importRequestCreatedEvent";
+    value: ShippingRequestChangedEvent;
+    case: "shippingRequestChangedEvent";
   } | {
     /**
-     * @generated from field: v1.ExportRequestCreatedEvent export_request_created_event = 24;
+     * @generated from field: v1.TransportJobStartedEvent transport_job_started_event = 25;
      */
-    value: ExportRequestCreatedEvent;
-    case: "exportRequestCreatedEvent";
+    value: TransportJobStartedEvent;
+    case: "transportJobStartedEvent";
+  } | {
+    /**
+     * @generated from field: v1.MonsterChosenEvent monster_chosen_event = 26;
+     */
+    value: MonsterChosenEvent;
+    case: "monsterChosenEvent";
+  } | {
+    /**
+     * @generated from field: v1.TransportProgressEvent transport_progress_event = 27;
+     */
+    value: TransportProgressEvent;
+    case: "transportProgressEvent";
   } | { case: undefined; value?: undefined };
 };
 
@@ -1201,7 +1230,7 @@ export type Event = Message<"v1.Event"> & {
  * Use `create(EventSchema)` to create a new message.
  */
 export const EventSchema: GenMessage<Event> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 38);
+  messageDesc(file_v1_domain, 39);
 
 /**
  * @generated from message v1.RepeatedEvents
@@ -1218,7 +1247,7 @@ export type RepeatedEvents = Message<"v1.RepeatedEvents"> & {
  * Use `create(RepeatedEventsSchema)` to create a new message.
  */
 export const RepeatedEventsSchema: GenMessage<RepeatedEvents> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 39);
+  messageDesc(file_v1_domain, 40);
 
 /**
  * @generated from message v1.EntityState
@@ -1270,14 +1299,14 @@ export type EntityState = Message<"v1.EntityState"> & {
   owner?: Owner | undefined;
 
   /**
-   * @generated from field: v1.JobState job_state = 10;
+   * @generated from field: v1.Job job = 10;
    */
-  jobState?: JobState | undefined;
+  job?: Job | undefined;
 
   /**
-   * @generated from field: string definition_id = 11;
+   * @generated from field: v1.Definition definition = 11;
    */
-  definitionId: string;
+  definition?: Definition | undefined;
 
   /**
    * @generated from field: v1.Parent parent = 12;
@@ -1285,14 +1314,24 @@ export type EntityState = Message<"v1.EntityState"> & {
   parent?: Parent | undefined;
 
   /**
-   * @generated from field: v1.ImportRequest import_request = 13;
+   * @generated from field: repeated v1.ShippingRequest shipping_requests = 13;
    */
-  importRequest?: ImportRequest | undefined;
+  shippingRequests: ShippingRequest[];
 
   /**
-   * @generated from field: v1.ExportRequest export_request = 14;
+   * @generated from field: v1.TransportPlan transport_plan = 15;
    */
-  exportRequest?: ExportRequest | undefined;
+  transportPlan?: TransportPlan | undefined;
+
+  /**
+   * @generated from field: v1.UserProgress user_progress = 16;
+   */
+  userProgress?: UserProgress | undefined;
+
+  /**
+   * @generated from field: v1.Location location = 17;
+   */
+  location?: Location | undefined;
 };
 
 /**
@@ -1300,7 +1339,7 @@ export type EntityState = Message<"v1.EntityState"> & {
  * Use `create(EntityStateSchema)` to create a new message.
  */
 export const EntityStateSchema: GenMessage<EntityState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 40);
+  messageDesc(file_v1_domain, 41);
 
 /**
  * @generated from message v1.GameState
@@ -1317,7 +1356,24 @@ export type GameState = Message<"v1.GameState"> & {
  * Use `create(GameStateSchema)` to create a new message.
  */
 export const GameStateSchema: GenMessage<GameState> = /*@__PURE__*/
-  messageDesc(file_v1_domain, 41);
+  messageDesc(file_v1_domain, 42);
+
+/**
+ * @generated from message v1.UserProgress
+ */
+export type UserProgress = Message<"v1.UserProgress"> & {
+  /**
+   * @generated from field: google.protobuf.Timestamp tutorial_completed = 1;
+   */
+  tutorialCompleted?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message v1.UserProgress.
+ * Use `create(UserProgressSchema)` to create a new message.
+ */
+export const UserProgressSchema: GenMessage<UserProgress> = /*@__PURE__*/
+  messageDesc(file_v1_domain, 43);
 
 /**
  * @generated from enum v1.EntityType
@@ -1382,6 +1438,34 @@ export const RoleSchema: GenEnum<Role> = /*@__PURE__*/
   enumDesc(file_v1_domain, 1);
 
 /**
+ * @generated from enum v1.ShippingDirection
+ */
+export enum ShippingDirection {
+  /**
+   * @generated from enum value: SHIPPING_DIRECTION_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: SHIPPING_DIRECTION_IMPORT = 1;
+   */
+  IMPORT = 1,
+
+  /**
+   * @generated from enum value: SHIPPING_DIRECTION_EXPORT = 2;
+   */
+  EXPORT = 2,
+}
+
+/**
+ * Describes the enum v1.ShippingDirection.
+ */
+export const ShippingDirectionSchema: GenEnum<ShippingDirection> = /*@__PURE__*/
+  enumDesc(file_v1_domain, 2);
+
+/**
+ * TODO split that up for 3 differnt job types
+ *
  * @generated from enum v1.JobStatus
  */
 export enum JobStatus {
@@ -1425,7 +1509,7 @@ export enum JobStatus {
  * Describes the enum v1.JobStatus.
  */
 export const JobStatusSchema: GenEnum<JobStatus> = /*@__PURE__*/
-  enumDesc(file_v1_domain, 2);
+  enumDesc(file_v1_domain, 3);
 
 /**
  * @generated from enum v1.Action
@@ -1455,11 +1539,16 @@ export enum Action {
    * @generated from enum value: ACTION_WORK = 4;
    */
   WORK = 4,
+
+  /**
+   * @generated from enum value: ACTION_TRANSPORT = 5;
+   */
+  TRANSPORT = 5,
 }
 
 /**
  * Describes the enum v1.Action.
  */
 export const ActionSchema: GenEnum<Action> = /*@__PURE__*/
-  enumDesc(file_v1_domain, 3);
+  enumDesc(file_v1_domain, 4);
 

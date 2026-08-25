@@ -88,11 +88,20 @@
 			case 'playerLocationCreatedEvent': {
 				return `You established a presence at ${eventData.value.definitionId}.`;
 			}
-			case 'exportRequestCreatedEvent': {
+			case 'exportRequestChangedEvent': {
 				return `New export request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
 			}
-			case 'importRequestCreatedEvent': {
+			case 'importRequestChangedEvent': {
 				return `New import request for ${eventData.value.playerLocation} with ${eventData.value.request?.items.length} items`;
+			}
+			case 'monsterChosenEvent': {
+				return `Startermonster was chosen ${eventData.value.monster?.identity?.name}`;
+			}
+			case 'transportJobStartedEvent': {
+				return `Started a transport from ${eventData.value.plan?.sourceEntityId} to ${eventData.value.plan?.targetEntityId}`;
+			}
+			case 'transportProgressEvent': {
+				return `Transport progressed ${eventData.value.position} and used ${eventData.value.staminaUsed} stamina`;
 			}
 			case undefined:
 				return 'An event was received without details.';
