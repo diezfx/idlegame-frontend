@@ -61,7 +61,7 @@
 		return job?.actionStates
 			.filter(
 				(state) =>
-					state.action !== Action.UNSPECIFIED && state.action !== Action.CONSUME && state.action !== Action.TRANSPORT,
+					state.action !== Action.UNSPECIFIED && state.action !== Action.CONSUME && state.action !== Action.TRAVEL_TICK,
 			)
 			.toSorted((left, right) => actionStartedAt(right) - actionStartedAt(left))[0];
 	});

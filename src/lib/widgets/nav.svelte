@@ -90,6 +90,7 @@
 			<a class="nav-content" href="/jobs/battles">{navIcons.battles} Battles</a>
 		</li>
 	</ul>
+	<a class="nav-content" href="/events">EventLog</a>
 </nav>
 
 <style>

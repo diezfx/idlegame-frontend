@@ -20,6 +20,7 @@
 		if (jobId != undefined) {
 			return gameStateStore.Events.filter((e) => e.eventContext?.jobId == jobId);
 		}
+		return gameStateStore.Events;
 	});
 
 	const eventText = (e: Event): string => {
@@ -64,9 +65,6 @@
 			case 'attackEvent': {
 				return `${monsterName(eventData.value.attacker)} hit ${monsterName(eventData.value.target)} for ${eventData.value.damage} damage.`;
 			}
-			case 'startRecoveringEvent': {
-				return `Monster ${eventData.value.monsterId} started recovering.`;
-			}
 			case 'defeatedEnemiesEvent': {
 				return `${count(eventData.value.enemyIds.length, 'enemy')} defeated at a cost of ${count(eventData.value.staminaCost, 'stamina point')}.`;
 			}
@@ -103,8 +101,11 @@
 			case 'transportJobStartedEvent': {
 				return `Started a transport from ${eventData.value.plan?.sourceEntityId} to ${eventData.value.plan?.targetEntityId}`;
 			}
-			case 'transportProgressEvent': {
-				return `Transport progressed ${eventData.value.position} and used ${eventData.value.staminaUsed} stamina`;
+			case 'travelProgressEvent': {
+				return `Transport progressed (${eventData.value.position?.x},${eventData.value.position?.y}) and used ${eventData.value.staminaUsed} stamina`;
+			}
+			case 'regenerationEvent': {
+				return `Monster ${eventData.value.monsterId} regenerated stamina: ${eventData.value.stamina}, health: ${eventData.value.health}`;
 			}
 			case undefined:
 				return 'An event was received without details.';
